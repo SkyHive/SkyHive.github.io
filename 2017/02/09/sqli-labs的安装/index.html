@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>sqli-labs的安装 | SkyHive&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="笔者前段时间安装了sqli-labs，就想把sqli-labs和lamp环境的搭建都写出来，其实这两个东西都很简单，感觉比我折腾hexo要简单的得多了（手动滑稽）。
+sqli 即 sql injection(sql注入)，sqli-labs是一个印度程序员写的用来学习sql注入的游戏教程，Youtube上有一套视频教程(需要科学上网)，github上也有开源的项目。
+那么接下来就可以进行安装了：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqli-labs的安装">
+<meta property="og:url" content="http://SkyHive.github.io/2017/02/09/sqli-labs的安装/index.html">
+<meta property="og:site_name" content="SkyHive's Blog">
+<meta property="og:description" content="笔者前段时间安装了sqli-labs，就想把sqli-labs和lamp环境的搭建都写出来，其实这两个东西都很简单，感觉比我折腾hexo要简单的得多了（手动滑稽）。
+sqli 即 sql injection(sql注入)，sqli-labs是一个印度程序员写的用来学习sql注入的游戏教程，Youtube上有一套视频教程(需要科学上网)，github上也有开源的项目。
+那么接下来就可以进行安装了：">
+<meta property="og:updated_time" content="2017-02-09T05:26:03.601Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sqli-labs的安装">
+<meta name="twitter:description" content="笔者前段时间安装了sqli-labs，就想把sqli-labs和lamp环境的搭建都写出来，其实这两个东西都很简单，感觉比我折腾hexo要简单的得多了（手动滑稽）。
+sqli 即 sql injection(sql注入)，sqli-labs是一个印度程序员写的用来学习sql注入的游戏教程，Youtube上有一套视频教程(需要科学上网)，github上也有开源的项目。
+那么接下来就可以进行安装了：">
+  
+  
+    <link rel="icon" href="/favicon.jpg">
+  
+  <link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/scrollUp/image.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div class="logo">
+        <img src="/logo.jpg" alt="Profile Picture">
+      </div>
+      <div id="title">SkyHive's Blog</div>
+      
+       <ul class="my-socials">
+  
+ 
+</ul>
+    </div>
+  </div>
+  <div id="header-inner" class="">
+    <nav id="main-nav">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <!--
+        
+          
+            <a class="main-nav-link" href="/">首页</a>
+          
+            <a class="main-nav-link" href="/archives">归档</a>
+          
+            <a class="main-nav-link" href="/about">关于</a>
+          
+        
+      -->
+    </nav>
+    <nav id="title-nav" style="display:none">
+      <a href="/">SkyHive&#39;s Blog</a>
+      <img src="/logo.jpg" alt="Profile Picture">
+      <!--
+      <span id="title-nav-socials">
+        
+       
+     </span>
+      -->
+    </nav>
+    <nav id="sub-nav">
+      
+      <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+    </nav>
+    <div id="search-form-wrap">
+      <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+        <input type="submit" value="" class="search-form-submit">
+        <input name=tn type=hidden value="bds">
+        <input name=cl type=hidden value="3">
+        <input name=ct type=hidden value="2097152">
+        <input type="hidden" name="si" value="SkyHive.github.io">
+      </form>
+    </div>
+  </div>
+  <div class="site-nav" style="display: none;">
+    <ul>
+      
+      
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+      
+    </ul>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-sqli-labs的安装" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/09/sqli-labs的安装/" class="article-date">
+  <time datetime="2017-02-09T05:24:18.000Z" itemprop="datePublished">2017-02-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Mysql/">Mysql</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      sqli-labs的安装
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>笔者前段时间安装了sqli-labs，就想把sqli-labs和lamp环境的搭建都写出来，其实这两个东西都很简单，感觉比我折腾hexo要简单的得多了（手动滑稽）。</p>
+<p>sqli 即 sql injection(sql注入)，sqli-labs是一个印度程序员写的用来学习sql注入的游戏教程，<a href="https://www.youtube.com/playlist?list=PLkiAz1NPnw8qEgzS7cgVMKavvOAdogsro" target="_blank" rel="external">Youtube上有一套视频教程</a>(需要科学上网)，<a href="https://github.com/Audi-1/sqli-labs" target="_blank" rel="external">github上也有开源的项目</a>。</p>
+<p>那么接下来就可以进行安装了：<br><a id="more"></a><br>首先搭建lamp环境,我用的是ubuntu 16.04的系统</p>
+<p>1.安装apache2<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install apache2</div></pre></td></tr></table></figure></p>
+<p>2.安装mysql<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get <span class="keyword">install</span> mysql-<span class="keyword">server</span></div></pre></td></tr></table></figure></p>
+<p>3.安装php7(ubuntu16.04开始支持php7.0，之前的版本可以只支持到php5)<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install php7<span class="number">.0</span></div><div class="line">php7<span class="number">.0</span>  -v<span class="comment">#查看版本信息，ç¡®认安装成功</span></div></pre></td></tr></table></figure></p>
+<p>4.整合php与mysql<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install php7<span class="number">.0</span>-mysql</div></pre></td></tr></table></figure></p>
+<p>5.重启apache和mysql服务<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo service apache2 <span class="built_in">restart</span></div><div class="line">sudo service mysql <span class="built_in">restart</span></div></pre></td></tr></table></figure></p>
+<p>此时在浏览器输入localhost,便能显示apache的页面，也代表lamp环境到目前为止算是成功搭建完毕。</p>
+<p>下面开始安装sqli-labs<br>先从github上克隆sqli-labs代码：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="keyword">clone</span> <span class="title">https</span>://github.com/Audi-<span class="number">1</span>/sqli-labs.git</div></pre></td></tr></table></figure></p>
+<p>然后修改sqli-labs数据库配置文件：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">vim sqli-labs/sql-connections/db-creds.inc#编辑配置文ä  ¶</div><div class="line">修改如下：</div><div class="line"><span class="php"><span class="meta">&lt;?php</span></span></div><div class="line"><span class="comment">//give your mysql connection username n password</span></div><div class="line">$dbuser =<span class="string">'root'</span>;</div><div class="line">$dbpass =<span class="string">'你数据库密码'</span>;</div><div class="line">$dbname =<span class="string">"security"</span>;</div><div class="line">$host = <span class="string">'localhost'</span>;</div><div class="line">$dbname1 = <span class="string">"challenges"</span>;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>然后将目录复制到apache的web目录：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cp -r sqli-labs <span class="regexp">/var/</span>www<span class="regexp">/html#默认是/</span>var<span class="regexp">/www/</span>html这个目录，也可以在apac        he的配置文件中修改目录</div></pre></td></tr></table></figure></p>
+<p>然后在浏览器中访问 <a href="http://127.0.0.1/sqli-labs" target="_blank" rel="external">http://127.0.0.1/sqli-labs</a>或者<a href="http://localhost/sqli-labs" target="_blank" rel="external">http://localhost/sqli-labs</a> 就能看到启动页面，点击页面中的<code>Setup/reset Database for labs</code>链接，让其进行安装。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://SkyHive.github.io/2017/02/09/sqli-labs的安装/" data-id="ciyxxye3i0005bycpfejoz2xu" class="article-share-link">Share</a>
+      
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/02/09/关于timestamp自动更新/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关于timestamp自动更新</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 SkyHive<br>
+      Theme <a href="https://github.com/henryhuang/oishi" target="_blank">Oishi</a>, Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <!--
+      <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    -->
+    
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.transform.js"></script>
+<script src="/js/menu.js"></script>
+
+<script src="/js/script.js"></script>
+<script src="/js/scrollUp.js"></script>
+
+  </div>
+</body>
+</html>
