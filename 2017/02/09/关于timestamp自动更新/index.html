@@ -3,17 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>SkyHive&#39;s Blog</title>
+  <title>关于timestamp自动更新 | SkyHive&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Just a Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="SkyHive's Blog">
-<meta property="og:url" content="http://SkyHive.github.io/index.html">
+  <meta name="description" content="最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。
+Mysql中常用到的除了timestamp之外还有datetime，我们先来比较一下这两个的区别：
+
+timestamp占用的存储空间为4个字节，所以它能表示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于timestamp自动更新">
+<meta property="og:url" content="http://SkyHive.github.io/2017/02/09/关于timestamp自动更新/index.html">
 <meta property="og:site_name" content="SkyHive's Blog">
-<meta property="og:description" content="Just a Blog">
+<meta property="og:description" content="最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。
+Mysql中常用到的除了timestamp之外还有datetime，我们先来比较一下这两个的区别：
+
+timestamp占用的存储空间为4个字节，所以它能表示">
+<meta property="og:updated_time" content="2017-02-09T03:30:51.148Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SkyHive's Blog">
-<meta name="twitter:description" content="Just a Blog">
+<meta name="twitter:title" content="关于timestamp自动更新">
+<meta name="twitter:description" content="最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。
+Mysql中常用到的除了timestamp之外还有datetime，我们先来比较一下这两个的区别：
+
+timestamp占用的存储空间为4个字节，所以它能表示">
   
   
     <link rel="icon" href="/favicon.jpg">
@@ -104,11 +114,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-
-    
-    <article id="post-关于timestamp自动更新" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-关于timestamp自动更新" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/02/09/关于timestamp自动更新/" class="article-date">
   <time datetime="2017-02-09T03:10:32.000Z" itemprop="datePublished">2017-02-09</time>
@@ -125,8 +131,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/09/关于timestamp自动更新/">关于timestamp自动更新</a>
+    <h1 class="article-title" itemprop="name">
+      关于timestamp自动更新
     </h1>
   
 
@@ -160,112 +166,20 @@
     </footer>
   </div>
   
-</article>
-
-
     
+<nav id="article-nav">
   
-
-    
-    <article id="post-Hexo的建站之旅" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/15/Hexo的建站之旅/" class="article-date">
-  <time datetime="2017-01-15T12:25:39.004Z" itemprop="datePublished">2017-01-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Blog/">Blog</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/15/Hexo的建站之旅/">Hexo的建站之旅</a>
-    </h1>
+    <a href="/2017/01/15/Hexo的建站之旅/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hexo的建站之旅</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> 这几天觉得wordpress作为博客实在是太臃肿了，而且访问的后台以及跟新都极其的慢，以至于想把博客迁到Hexo上去。<br>Hexo 是个简洁快速且高效的博客框架，是个台湾的学生写的，所以对中文还是挺友好的，我们用起来也很方便，而且Hexo仅依赖node，易于安装。<br>首先准备的工具仅需要node.js,git即可，在ubuntu上安装这两样工具也是极其简单：<br>
-        
-          <p class="article-more-link">
-            <a href="/2017/01/15/Hexo的建站之旅/#more">......</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://SkyHive.github.io/2017/01/15/Hexo的建站之旅/" data-id="ciyxt8vno0000mrcpgfgl8i97" class="article-share-link">공유</a>
-      
-
-      
-    </footer>
-  </div>
   
 </article>
 
-
-    
-  
-
-    
-    <article id="post-琐事——换回Apache" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/15/琐事——换回Apache/" class="article-date">
-  <time datetime="2017-01-15T12:03:30.000Z" itemprop="datePublished">2017-01-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux/">Linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/15/琐事——换回Apache/">琐事——换回Apache</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>由于之前在ubuntu上使用nginx总是会出现各种各样的问题，所以打算将自己机器上的nginx换成Apache，服务器上继续使用nginx，下面开始干活儿：<br>
-        
-          <p class="article-more-link">
-            <a href="/2017/01/15/琐事——换回Apache/#more">......</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://SkyHive.github.io/2017/01/15/琐事——换回Apache/" data-id="ciyxt8vnx0002mrcph4su18bo" class="article-share-link">공유</a>
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-    
-  
-  
 </section>
         
       </div>
