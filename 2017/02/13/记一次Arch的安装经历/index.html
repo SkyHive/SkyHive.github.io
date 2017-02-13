@@ -7,23 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。
 那么下面打开虚拟机，进入安装界面：
-首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk1cfdisk        #使用cfdisk进行分区
-选择第二个doc类型，这是将sda设置成MBR类型的分区，之前在遇到这个选项的时候，我下意识的选了第一个">
+首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk1cfdisk        #使用cfdisk进行分区">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记一次Arch的安装经历">
 <meta property="og:url" content="http://SkyHive.github.io/2017/02/13/记一次Arch的安装经历/index.html">
 <meta property="og:site_name" content="SkyHive's Blog">
 <meta property="og:description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。
 那么下面打开虚拟机，进入安装界面：
-首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk1cfdisk        #使用cfdisk进行分区
-选择第二个doc类型，这是将sda设置成MBR类型的分区，之前在遇到这个选项的时候，我下意识的选了第一个">
-<meta property="og:updated_time" content="2017-02-13T10:05:23.753Z">
+首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk1cfdisk        #使用cfdisk进行分区">
+<meta property="og:updated_time" content="2017-02-13T10:08:06.802Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次Arch的安装经历">
 <meta name="twitter:description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。
 那么下面打开虚拟机，进入安装界面：
-首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk1cfdisk        #使用cfdisk进行分区
-选择第二个doc类型，这是将sda设置成MBR类型的分区，之前在遇到这个选项的时候，我下意识的选了第一个">
+首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk1cfdisk        #使用cfdisk进行分区">
   
   
     <link rel="icon" href="/favicon.jpg">
@@ -85,7 +82,7 @@
     </nav>
     <div id="search-form-wrap">
       <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
-        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="검색">
         <input type="submit" value="" class="search-form-submit">
         <input name=tn type=hidden value="bds">
         <input name=cl type=hidden value="3">
@@ -139,6 +136,7 @@
         <p>最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。</p>
 <p>那么下面打开虚拟机，进入安装界面：</p>
 <p>首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">cfdisk</span>        <span class="comment">#使用cfdisk进行分区</span></div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p><em>选择第二个doc类型</em>，这是将sda设置成MBR类型的分区，之前在遇到这个选项的时候，我下意识的选了第一个GPT，然后还去google了一下，说GPT很好,就使用这个吧，结果后面分区的时候和教程不一样，装好系统后怎么也进不去。</p>
 <p>接下来你可以把整个硬盘设置成一个根分区或者分成一个根分区和一个boot分区。<em>如果设置成一个根分区记得要把那个分区设置bootable；如果是一个根分区和一个boot分区记得要把boot分区设置bootable。</em></p>
 <p>退出cfdisk后格式化新设置的分区<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">lsblk       <span class="comment">#查看存储设备的状态，sda1、sda2这样的就是我们刚刚分出来的</span></div><div class="line">mkfs.ext4 <span class="regexp">/dev/</span>sda1</div><div class="line">mkfs.ext4 <span class="regexp">/dev/</span>sda2         <span class="comment">#将根分区和boot分区格式化成ext4格式</span></div></pre></td></tr></table></figure></p>
@@ -160,7 +158,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://SkyHive.github.io/2017/02/13/记一次Arch的安装经历/" data-id="ciz3xp03r0001s7cp60kmyr84" class="article-share-link">Share</a>
+        <a data-url="http://SkyHive.github.io/2017/02/13/记一次Arch的安装经历/" data-id="ciz3xsh7400066qcp171qstn1" class="article-share-link">공유</a>
       
 
       
