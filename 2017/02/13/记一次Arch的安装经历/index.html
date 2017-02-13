@@ -3,17 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>SkyHive&#39;s Blog</title>
+  <title>记一次Arch的安装经历 | SkyHive&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Just a Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="SkyHive's Blog">
-<meta property="og:url" content="http://SkyHive.github.io/index.html">
+  <meta name="description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。
+那么下面打开虚拟机，进入安装界面：
+首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk1cfdisk        #使用cfdisk进行分区
+选择第二个doc类型，这是将sda设置成MBR类型的分区，之前在遇到这个选项的时候，我下意识的选了第一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次Arch的安装经历">
+<meta property="og:url" content="http://SkyHive.github.io/2017/02/13/记一次Arch的安装经历/index.html">
 <meta property="og:site_name" content="SkyHive's Blog">
-<meta property="og:description" content="Just a Blog">
+<meta property="og:description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。
+那么下面打开虚拟机，进入安装界面：
+首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk1cfdisk        #使用cfdisk进行分区
+选择第二个doc类型，这是将sda设置成MBR类型的分区，之前在遇到这个选项的时候，我下意识的选了第一个">
+<meta property="og:updated_time" content="2017-02-13T10:05:23.753Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SkyHive's Blog">
-<meta name="twitter:description" content="Just a Blog">
+<meta name="twitter:title" content="记一次Arch的安装经历">
+<meta name="twitter:description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。
+那么下面打开虚拟机，进入安装界面：
+首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk1cfdisk        #使用cfdisk进行分区
+选择第二个doc类型，这是将sda设置成MBR类型的分区，之前在遇到这个选项的时候，我下意识的选了第一个">
   
   
     <link rel="icon" href="/favicon.jpg">
@@ -100,11 +110,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-
-    
-    <article id="post-记一次Arch的安装经历" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-记一次Arch的安装经历" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/02/13/记一次Arch的安装经历/" class="article-date">
   <time datetime="2017-02-13T09:57:58.000Z" itemprop="datePublished">2017-02-13</time>
@@ -121,8 +127,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/13/记一次Arch的安装经历/">记一次Arch的安装经历</a>
+    <h1 class="article-title" itemprop="name">
+      记一次Arch的安装经历
     </h1>
   
 
@@ -161,214 +167,20 @@
     </footer>
   </div>
   
-</article>
-
-
     
+<nav id="article-nav">
   
-
-    
-    <article id="post-sqli-labs的安装" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/09/sqli-labs的安装/" class="article-date">
-  <time datetime="2017-02-09T05:24:18.000Z" itemprop="datePublished">2017-02-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Mysql/">Mysql</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/09/sqli-labs的安装/">sqli-labs的安装</a>
-    </h1>
+    <a href="/2017/02/09/sqli-labs的安装/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">sqli-labs的安装</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>笔者前段时间安装了sqli-labs，就想把sqli-labs和lamp环境的搭建都写出来，其实这两个东西都很简单，感觉比我折腾hexo要简单的得多了（手动滑稽）。</p>
-<p>sqli 即 sql injection(sql注入)，sqli-labs是一个印度程序员写的用来学习sql注入的游戏教程，<a href="https://www.youtube.com/playlist?list=PLkiAz1NPnw8qEgzS7cgVMKavvOAdogsro">Youtube上有一套视频教程</a>(需要科学上网)，<a href="https://github.com/Audi-1/sqli-labs">github上也有开源的项目</a>。</p>
-<p>那么接下来就可以进行安装了：<br>
-        
-          <p class="article-more-link">
-            <a href="/2017/02/09/sqli-labs的安装/#more">......</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://SkyHive.github.io/2017/02/09/sqli-labs的安装/" data-id="ciz3xp04u000cs7cp3c6czt3e" class="article-share-link">Share</a>
-      
-
-      
-    </footer>
-  </div>
   
 </article>
 
-
-    
-  
-
-    
-    <article id="post-关于timestamp自动更新" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/09/关于timestamp自动更新/" class="article-date">
-  <time datetime="2017-02-09T03:10:32.000Z" itemprop="datePublished">2017-02-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Mysql/">Mysql</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/09/关于timestamp自动更新/">关于timestamp自动更新</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。<br>
-        
-          <p class="article-more-link">
-            <a href="/2017/02/09/关于timestamp自动更新/#more">......</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://SkyHive.github.io/2017/02/09/关于timestamp自动更新/" data-id="ciz3xp04e0009s7cp507fuuzz" class="article-share-link">Share</a>
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-    
-  
-
-    
-    <article id="post-Hexo的建站之旅" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/15/Hexo的建站之旅/" class="article-date">
-  <time datetime="2017-01-15T12:25:39.004Z" itemprop="datePublished">2017-01-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Blog/">Blog</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/15/Hexo的建站之旅/">Hexo的建站之旅</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> 这几天觉得wordpress作为博客实在是太臃肿了，而且访问的后台以及跟新都极其的慢，以至于想把博客迁到Hexo上去。<br>Hexo 是个简洁快速且高效的博客框架，是个台湾的学生写的，所以对中文还是挺友好的，我们用起来也很方便，而且Hexo仅依赖node，易于安装。<br>首先准备的工具仅需要node.js,git即可，在ubuntu上安装这两样工具也是极其简单：<br>
-        
-          <p class="article-more-link">
-            <a href="/2017/01/15/Hexo的建站之旅/#more">......</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://SkyHive.github.io/2017/01/15/Hexo的建站之旅/" data-id="ciz3xp03v0003s7cp7z2bt3y8" class="article-share-link">Share</a>
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-    
-  
-
-    
-    <article id="post-琐事——换回Apache" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/15/琐事——换回Apache/" class="article-date">
-  <time datetime="2017-01-15T12:03:30.000Z" itemprop="datePublished">2017-01-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux/">Linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/15/琐事——换回Apache/">琐事——换回Apache</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>由于之前在ubuntu上使用nginx总是会出现各种各样的问题，所以打算将自己机器上的nginx换成Apache，服务器上继续使用nginx，下面开始干活儿：<br>
-        
-          <p class="article-more-link">
-            <a href="/2017/01/15/琐事——换回Apache/#more">......</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      
-        <a data-url="http://SkyHive.github.io/2017/01/15/琐事——换回Apache/" data-id="ciz3xp03n0000s7cpklsbmb4v" class="article-share-link">Share</a>
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-    
-  
-  
 </section>
         
       </div>
