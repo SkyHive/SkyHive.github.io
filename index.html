@@ -75,7 +75,7 @@
     </nav>
     <div id="search-form-wrap">
       <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
-        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="검색">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Pesquisar">
         <input type="submit" value="" class="search-form-submit">
         <input name=tn type=hidden value="bds">
         <input name=cl type=hidden value="3">
@@ -101,6 +101,55 @@
 
       <div class="outer">
         <section id="main">
+  
+
+    
+    <article id="post-解决Ubuntu系统设置打不开" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/14/解决Ubuntu系统设置打不开/" class="article-date">
+  <time datetime="2017-02-14T11:23:32.000Z" itemprop="datePublished">2017-02-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/14/解决Ubuntu系统设置打不开/">解决Ubuntu系统设置打不开</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install ubuntu-desktop         <span class="comment">#这个会把Ubuntu预装的软件office还有Amazon什么的装回来，装完自己再慢慢卸载吧</span></div></pre></td></tr></table></figure></p>
+<p>或者他也提供了一次性的安装办法<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="built_in">get</span> install ibus-pinyin unity-control-<span class="built_in">center</span> unity-control-<span class="built_in">center</span>-signon webaccounts-extension-common xul-ext-webaccounts</div></pre></td></tr></table></figure></p>
+<p>但是我眉头一皱，发现事情并不简单，我继续搜了下去，也有很多人遇到这种问题，发现还有更简单的办法<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="built_in">get</span> install gnome-control-<span class="built_in">center</span>           #如果系统设置打不开，请重新安装gnome-control-<span class="built_in">center</span></div><div class="line">sudo apt-<span class="built_in">get</span> install unity-control-<span class="built_in">center</span>           #如果设置里只有很少的几个图标请重新安装unity-control-<span class="built_in">center</span></div></pre></td></tr></table></figure></p>
+<p>当然上面两个方法并没有尝试过，我也无从得知导致我系统设置打不开的原因是不是卸载了iBus</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://SkyHive.github.io/2017/02/14/解决Ubuntu系统设置打不开/" data-id="ciz5g00c70003uqcpzija2l0r" class="article-share-link">Compartilhar</a>
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+    
   
 
     
@@ -142,7 +191,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://SkyHive.github.io/2017/02/13/记一次Arch的安装经历/" data-id="ciz3xsh7400066qcp171qstn1" class="article-share-link">공유</a>
+        <a data-url="http://SkyHive.github.io/2017/02/13/记一次Arch的安装经历/" data-id="ciz5g00c90004uqcp53ryo7gx" class="article-share-link">Compartilhar</a>
       
 
       
@@ -194,7 +243,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://SkyHive.github.io/2017/02/09/sqli-labs的安装/" data-id="ciz3xsh7300056qcp1hyijelt" class="article-share-link">공유</a>
+        <a data-url="http://SkyHive.github.io/2017/02/09/sqli-labs的安装/" data-id="ciz5g00c20001uqcpadgwnek6" class="article-share-link">Compartilhar</a>
       
 
       
@@ -244,7 +293,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://SkyHive.github.io/2017/02/09/关于timestamp自动更新/" data-id="ciz3xsh6x00026qcplkmjdz8y" class="article-share-link">공유</a>
+        <a data-url="http://SkyHive.github.io/2017/02/09/关于timestamp自动更新/" data-id="ciz5g00cb0005uqcpukv0c9gb" class="article-share-link">Compartilhar</a>
       
 
       
@@ -294,7 +343,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://SkyHive.github.io/2017/01/15/Hexo的建站之旅/" data-id="ciz3xsh6r00006qcp99zvklr5" class="article-share-link">공유</a>
+        <a data-url="http://SkyHive.github.io/2017/01/15/Hexo的建站之旅/" data-id="ciz5g00bw0000uqcpv3zdb4t6" class="article-share-link">Compartilhar</a>
       
 
       
@@ -344,7 +393,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://SkyHive.github.io/2017/01/15/琐事——换回Apache/" data-id="ciz3xsh7600076qcpma974hrd" class="article-share-link">공유</a>
+        <a data-url="http://SkyHive.github.io/2017/01/15/琐事——换回Apache/" data-id="ciz5g00cu000fuqcpmlcsa55b" class="article-share-link">Compartilhar</a>
       
 
       
