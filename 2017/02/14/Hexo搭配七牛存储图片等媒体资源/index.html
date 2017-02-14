@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo搭配七牛存储图片等媒体资源 | SkyHive&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT/DELETE 请求。如果想要注册可以点击这里，这样可以为我增加每月5GB的容量。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo搭配七牛存储图片等媒体资源">
+<meta property="og:url" content="http://SkyHive.github.io/2017/02/14/Hexo搭配七牛存储图片等媒体资源/index.html">
+<meta property="og:site_name" content="SkyHive's Blog">
+<meta property="og:description" content="今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT/DELETE 请求。如果想要注册可以点击这里，这样可以为我增加每月5GB的容量。">
+<meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/qiniu_create.png">
+<meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/qiniu_set.png">
+<meta property="og:updated_time" content="2017-02-14T15:07:59.170Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo搭配七牛存储图片等媒体资源">
+<meta name="twitter:description" content="今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT/DELETE 请求。如果想要注册可以点击这里，这样可以为我增加每月5GB的容量。">
+<meta name="twitter:image" content="http://old5ws7lp.bkt.clouddn.com/images/qiniu_create.png">
+  
+  
+    <link rel="icon" href="/favicon.jpg">
+  
+  <link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/scrollUp/image.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div class="logo">
+        <img src="/logo.jpg" alt="Profile Picture">
+      </div>
+      <div id="title">SkyHive's Blog</div>
+      
+       <ul class="my-socials">
+  
+ 
+</ul>
+    </div>
+  </div>
+  <div id="header-inner" class="">
+    <nav id="main-nav">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <!--
+        
+          
+            <a class="main-nav-link" href="/">首页</a>
+          
+            <a class="main-nav-link" href="/archives">归档</a>
+          
+            <a class="main-nav-link" href="/about">关于</a>
+          
+        
+      -->
+    </nav>
+    <nav id="title-nav" style="display:none">
+      <a href="/">SkyHive&#39;s Blog</a>
+      <img src="/logo.jpg" alt="Profile Picture">
+      <!--
+      <span id="title-nav-socials">
+        
+       
+     </span>
+      -->
+    </nav>
+    <nav id="sub-nav">
+      
+      <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+    </nav>
+    <div id="search-form-wrap">
+      <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+        <input type="submit" value="" class="search-form-submit">
+        <input name=tn type=hidden value="bds">
+        <input name=cl type=hidden value="3">
+        <input name=ct type=hidden value="2097152">
+        <input type="hidden" name="si" value="SkyHive.github.io">
+      </form>
+    </div>
+  </div>
+  <div class="site-nav" style="display: none;">
+    <ul>
+      
+      
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+      
+    </ul>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Hexo搭配七牛存储图片等媒体资源" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/14/Hexo搭配七牛存储图片等媒体资源/" class="article-date">
+  <time datetime="2017-02-14T14:19:40.000Z" itemprop="datePublished">2017-02-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Blog/">Blog</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hexo搭配七牛存储图片等媒体资源
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。<br>七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT/DELETE 请求。如果想要注册可以<a href="https://portal.qiniu.com/signup?code=3lnfyn5xmh93m" target="_blank" rel="external">点击这里</a>，这样可以为我增加每月5GB的容量。<br><a id="more"></a><br>注册完成之后就可以进行创建空间了，注意我们添加的资源为<strong>对象存储</strong>，访问控制为<strong>公开空间</strong></p>
+<img src="http://old5ws7lp.bkt.clouddn.com/images/qiniu_create.png">
+<img src="http://old5ws7lp.bkt.clouddn.com/images/qiniu_set.png">
+<p>然后点击右上角进入<strong>密钥管理</strong>，复制当前使用的AK和SK，配置的时候会用得到<br>下面我们会用到一个叫做的<a href="https://github.com/gyk001/hexo-qiniu-sync" target="_blank" rel="external">hexo-qiniu-sync</a>的插件，首先在hexo主目录下安装：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> hexo-qiniu-<span class="keyword">sync</span> - -<span class="keyword">save</span></div></pre></td></tr></table></figure></p>
+<p>然后把配置信息添加到_config.yml中<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">plugins:</span></div><div class="line">  - hexo-qiniu-sync</div><div class="line"></div><div class="line"><span class="meta">#七牛云存储设置</span></div><div class="line"><span class="meta">##offline       是否离线. 离线状态将使用本地地址渲染</span></div><div class="line"><span class="meta">##sync          是否同步</span></div><div class="line"><span class="meta">##bucket        空间名称.</span></div><div class="line"><span class="meta">##access_key    上传密钥AccessKey</span></div><div class="line"><span class="meta">##secret_key    上传密钥SecretKey</span></div><div class="line"><span class="meta">##secret_file   秘钥文件路径，可以将上述两个属性配置到文件内，防止泄露，json格式。绝对路径相对路径均可</span></div><div class="line"><span class="meta">##dirPrefix     上传的资源子目录前缀.如设置，需与urlPrefix同步 </span></div><div class="line"><span class="meta">##urlPrefix     外链前缀.</span></div><div class="line"><span class="meta">##up_host      上传服务器路径,如选择华北区域的话配置为http:<span class="comment">//up-z1.qiniu.com</span></span></div><div class="line"><span class="meta">##local_dir     本地目录.</span></div><div class="line"><span class="meta">##update_exist  是否更新已经上传过的文件(仅文件大小不同或在上次上传后进行更新的才会重新上传)</span></div><div class="line"><span class="meta">##image/js/css  子参数folder为不同静态资源种类的目录名称，一般不需要改动</span></div><div class="line"><span class="meta">##image.extend  这是个特殊参数，用于生成缩略图或加水印等操作。具体请参考http:<span class="comment">//developer.qiniu.com/docs/v6/api/reference/fop/image/ </span></span></div><div class="line"><span class="meta">##              可使用基本图片处理、高级图片处理、图片水印处理这3个接口。例如 ?imageView2/2/w/500 即生成宽度最多500px的缩略图</span></div><div class="line"><span class="symbol">qiniu:</span></div><div class="line"><span class="symbol">  offline:</span> false</div><div class="line"><span class="symbol">  sync:</span> true</div><div class="line"><span class="symbol">  bucket:</span> bucket_name</div><div class="line"><span class="symbol">  secret_file:</span> sec/qn.json or C:</div><div class="line"><span class="symbol">  access_key:</span> AccessKey</div><div class="line"><span class="symbol">  secret_key:</span> SecretKey</div><div class="line"><span class="symbol">  dirPrefix:</span> static</div><div class="line"><span class="symbol">  urlPrefix:</span> http:<span class="comment">//bucket_name.qiniudn.com/static</span></div><div class="line"><span class="symbol">  up_host:</span> http:<span class="comment">//upload.qiniu.com</span></div><div class="line"><span class="symbol">  local_dir:</span> static</div><div class="line"><span class="symbol">  update_exist:</span> true</div><div class="line"><span class="symbol">  image:</span> </div><div class="line"><span class="symbol">    folder:</span> images</div><div class="line"><span class="symbol">    extend:</span> </div><div class="line"><span class="symbol">  js:</span></div><div class="line"><span class="symbol">    folder:</span> js</div><div class="line"><span class="symbol">  css:</span></div><div class="line"><span class="symbol">    folder:</span> css</div></pre></td></tr></table></figure></p>
+<p>其中各个参数在插件的<a href="https://github.com/gyk001/hexo-qiniu-sync/blob/master/README.md" target="_blank" rel="external">README文件</a>中都有详细的介绍，按照github上的教程一步一步来是很简单的。</p>
+<p>然后在hexo主目录下创建本地目录（该目录要和配置中local_dir参数保持一致），然后创建iamges、js、css子目录，这样基本的配置就完成了</p>
+<p>下面就可以在你的文章中试着插入图片了，比如你想引用在你/local_dir/images/下的图片1.png<br><figure class="highlight django"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">qnimg</span> 1.png %&#125;</span><span class="xml"></span></div></pre></td></tr></table></figure></p>
+<p>更高级的用法请参考github上的说明。</p>
+<p>下面进行同步<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">hexo qiniu s</span></div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://SkyHive.github.io/2017/02/14/Hexo搭配七牛存储图片等媒体资源/" data-id="ciz5ohmg30001axcptf8h7now" class="article-share-link">Share</a>
+      
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/02/14/解决Ubuntu系统设置打不开/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">解决Ubuntu系统设置打不开</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 SkyHive<br>
+      Theme <a href="https://github.com/henryhuang/oishi" target="_blank">Oishi</a>, Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <!--
+      <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    -->
+    
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.transform.js"></script>
+<script src="/js/menu.js"></script>
+
+<script src="/js/script.js"></script>
+<script src="/js/scrollUp.js"></script>
+
+  </div>
+</body>
+</html>
