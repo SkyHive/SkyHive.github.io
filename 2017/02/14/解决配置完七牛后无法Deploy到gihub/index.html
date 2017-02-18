@@ -6,18 +6,18 @@
   <title>解决配置完七牛后无法Deploy到gihub | SkyHive&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次hexo d都会出现1ERROR Deployer not found: git
-这样的报错，Google了半天都没有找到解决的办法，最后在找到了一条github上的一条issue，终于发现了解决办法：只要将配置文件_config.yml中plugins的那段给注释掉就OK了，即12#plugins:#- he">
+这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：只要将配置文件_config.yml中plugins的那段给注释掉就OK了，即12#plugins:#- hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决配置完七牛后无法Deploy到gihub">
 <meta property="og:url" content="http://SkyHive.github.io/2017/02/14/解决配置完七牛后无法Deploy到gihub/index.html">
 <meta property="og:site_name" content="SkyHive's Blog">
 <meta property="og:description" content="将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次hexo d都会出现1ERROR Deployer not found: git
-这样的报错，Google了半天都没有找到解决的办法，最后在找到了一条github上的一条issue，终于发现了解决办法：只要将配置文件_config.yml中plugins的那段给注释掉就OK了，即12#plugins:#- he">
-<meta property="og:updated_time" content="2017-02-14T15:41:18.853Z">
+这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：只要将配置文件_config.yml中plugins的那段给注释掉就OK了，即12#plugins:#- hexo">
+<meta property="og:updated_time" content="2017-02-18T08:41:47.199Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决配置完七牛后无法Deploy到gihub">
 <meta name="twitter:description" content="将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次hexo d都会出现1ERROR Deployer not found: git
-这样的报错，Google了半天都没有找到解决的办法，最后在找到了一条github上的一条issue，终于发现了解决办法：只要将配置文件_config.yml中plugins的那段给注释掉就OK了，即12#plugins:#- he">
+这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：只要将配置文件_config.yml中plugins的那段给注释掉就OK了，即12#plugins:#- hexo">
   
   
     <link rel="icon" href="/favicon.jpg">
@@ -131,14 +131,14 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次<code>hexo d</code>都会出现<br><figure class="highlight subunit"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ERROR </span>Deployer not found: git</div></pre></td></tr></table></figure></p>
-<p>这样的报错，Google了半天都没有找到解决的办法，最后在找到了一条github上的一条issue，终于发现了解决办法：<strong>只要将配置文件_config.yml中plugins的那段给注释掉</strong>就OK了，即<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#plugins:</span></div><div class="line"><span class="meta">#- hexo-qiniu-sync</span></div></pre></td></tr></table></figure></p>
+<p>这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：<strong>只要将配置文件_config.yml中plugins的那段给注释掉</strong>就OK了，即<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#plugins:</span></div><div class="line"><span class="meta">#- hexo-qiniu-sync</span></div></pre></td></tr></table></figure></p>
 <p>还是希望开发者能早点修改文档吧，不然还真的挺容易出事，不过说一句，我的Hexo是3.2.2的版本的，不知道2.x版本会不会出现类似的情况</p>
 
       
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://SkyHive.github.io/2017/02/14/解决配置完七牛后无法Deploy到gihub/" data-id="ciz5p4w5m000bzqcpqk1599oh" class="article-share-link">Share</a>
+        <a data-url="http://SkyHive.github.io/2017/02/14/解决配置完七牛后无法Deploy到gihub/" data-id="cizazwznj0004s5cps9tsy70a" class="article-share-link">Share</a>
       
 
       
