@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="SkyHive's Blog">
 <meta property="og:description" content="互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP/IP协议族（TCP/IP Protocol Suite，或TCP/IP Protocols），简称TCP/IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为该家族中最早通过的标准。由于在网络通讯协">
 <meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/三次握手.png">
-<meta property="og:updated_time" content="2017-04-04T04:40:07.639Z">
+<meta property="og:updated_time" content="2017-04-04T04:42:10.806Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于TCP">
 <meta name="twitter:description" content="互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP/IP协议族（TCP/IP Protocol Suite，或TCP/IP Protocols），简称TCP/IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为该家族中最早通过的标准。由于在网络通讯协">
@@ -130,9 +130,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP/IP协议族（TCP/IP Protocol Suite，或TCP/IP Protocols），简称TCP/IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为该家族中最早通过的标准。由于在网络通讯协议普遍采用分层的结构，当多个层次的协议共同工作时，类似计算机科学中的堆栈，因此又被称为TCP/IP协议栈（TCP/IP Protocol Stack）</p>
+<p>互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP/IP协议族（TCP/IP Protocol Suite，或TCP/IP Protocols），简称TCP/IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为该家族中最早通过的标准。由于在网络通讯协议普遍采用分层的结构，当多个层次的协议共同工作时，类似计算机科学中的堆栈，因此又被称为TCP/IP协议栈（TCP/IP Protocol Stack）<br><a id="more"></a><br>以上来自维基百科，我们知道TCP/IP协议族是基于 TCP 和 IP 这两个最初的协议之上的不同的通信协议的大的集合。其中包含了ARP、UDP、ICMP（互联网消息控制管理协议）等协议，它将软件的通信过程抽象化为四个抽象层（应用层、传输层、网络层和物理层），类似于简化的OSI七层。</p>
 </blockquote>
-<p>以上来自维基百科，我们知道TCP/IP协议族是基于 TCP 和 IP 这两个最初的协议之上的不同的通信协议的大的集合。其中包含了ARP、UDP、ICMP（互联网消息控制管理协议）等协议，它将软件的通信过程抽象化为四个抽象层（应用层、传输层、网络层和物理层），类似于简化的OSI七层。</p>
 <p>在数据传输方面，早期研发提出两种传输方式——面向连接的传输和非面向连接的传输，经过后来长期的发展，提出面向连接的ISO组织将非面向连接的传输纳入自己麾下，就是现在的UDP。</p>
 <h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><h4 id="TCP建立连接的过程——TCP的三次握手"><a href="#TCP建立连接的过程——TCP的三次握手" class="headerlink" title="TCP建立连接的过程——TCP的三次握手"></a>TCP建立连接的过程——TCP的三次握手</h4><p>首先，源向目的发送一个TCP同步请求（syn包）；目的收到后向源发一个TCP回应（offer包），这里面包含了syn+ack信息，此时处于半打开会话状态，存在巨大的安全隐患；源收到目的的回应后向目的发送一个TCP确认包（ack包），就此处于全打开会话状态，TCP连接建立完成。</p>
 <h4 id="TCP序列号和确认号"><a href="#TCP序列号和确认号" class="headerlink" title="TCP序列号和确认号"></a>TCP序列号和确认号</h4><p>TCP会话的每一端都包含一个32位（bit）的序列号，该序列号被用来跟踪该端发送的数据量。每一个包中都包含序列号，在接收端则通过确认号用来通知发送端数据成功接收（发送序列号是当前的发包情况，确认号是渴望的发包情况）。</p>
@@ -145,7 +144,7 @@
     </div>
     <footer class="article-footer">
       
-        <a data-url="http://SkyHive.github.io/2017/04/04/关于TCP/" data-id="cj1323rj10000zycppvt5ary0" class="article-share-link">Share</a>
+        <a data-url="http://SkyHive.github.io/2017/04/04/关于TCP/" data-id="cj1325x2q00063rcpan503yzn" class="article-share-link">Share</a>
       
 
       
