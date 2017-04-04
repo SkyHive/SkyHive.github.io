@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>关于TCP | SkyHive&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP/IP协议族（TCP/IP Protocol Suite，或TCP/IP Protocols），简称TCP/IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为该家族中最早通过的标准。由于在网络通讯协">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于TCP">
+<meta property="og:url" content="http://SkyHive.github.io/2017/04/04/关于TCP/index.html">
+<meta property="og:site_name" content="SkyHive's Blog">
+<meta property="og:description" content="互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP/IP协议族（TCP/IP Protocol Suite，或TCP/IP Protocols），简称TCP/IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为该家族中最早通过的标准。由于在网络通讯协">
+<meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/三次握手.png">
+<meta property="og:updated_time" content="2017-04-04T04:40:07.639Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于TCP">
+<meta name="twitter:description" content="互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP/IP协议族（TCP/IP Protocol Suite，或TCP/IP Protocols），简称TCP/IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为该家族中最早通过的标准。由于在网络通讯协">
+<meta name="twitter:image" content="http://old5ws7lp.bkt.clouddn.com/images/三次握手.png">
+  
+  
+    <link rel="icon" href="/favicon.jpg">
+  
+  <link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/scrollUp/image.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div class="logo">
+        <img src="/logo.jpg" alt="Profile Picture">
+      </div>
+      <div id="title">SkyHive's Blog</div>
+      
+       <ul class="my-socials">
+  
+ 
+</ul>
+    </div>
+  </div>
+  <div id="header-inner" class="">
+    <nav id="main-nav">
+      <a id="main-nav-toggle" class="nav-icon"></a>
+      <!--
+        
+          
+            <a class="main-nav-link" href="/">首页</a>
+          
+            <a class="main-nav-link" href="/archives">归档</a>
+          
+            <a class="main-nav-link" href="/about">关于</a>
+          
+        
+      -->
+    </nav>
+    <nav id="title-nav" style="display:none">
+      <a href="/">SkyHive&#39;s Blog</a>
+      <img src="/logo.jpg" alt="Profile Picture">
+      <!--
+      <span id="title-nav-socials">
+        
+       
+     </span>
+      -->
+    </nav>
+    <nav id="sub-nav">
+      
+      <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+    </nav>
+    <div id="search-form-wrap">
+      <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+        <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+        <input type="submit" value="" class="search-form-submit">
+        <input name=tn type=hidden value="bds">
+        <input name=cl type=hidden value="3">
+        <input name=ct type=hidden value="2097152">
+        <input type="hidden" name="si" value="SkyHive.github.io">
+      </form>
+    </div>
+  </div>
+  <div class="site-nav" style="display: none;">
+    <ul>
+      
+      
+        <li><a href="/">首页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/about">关于</a></li>
+      
+      
+    </ul>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-关于TCP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/04/关于TCP/" class="article-date">
+  <time datetime="2017-04-04T04:34:26.000Z" itemprop="datePublished">2017-04-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Network/">Network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      关于TCP
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP/IP协议族（TCP/IP Protocol Suite，或TCP/IP Protocols），简称TCP/IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为该家族中最早通过的标准。由于在网络通讯协议普遍采用分层的结构，当多个层次的协议共同工作时，类似计算机科学中的堆栈，因此又被称为TCP/IP协议栈（TCP/IP Protocol Stack）</p>
+</blockquote>
+<p>以上来自维基百科，我们知道TCP/IP协议族是基于 TCP 和 IP 这两个最初的协议之上的不同的通信协议的大的集合。其中包含了ARP、UDP、ICMP（互联网消息控制管理协议）等协议，它将软件的通信过程抽象化为四个抽象层（应用层、传输层、网络层和物理层），类似于简化的OSI七层。</p>
+<p>在数据传输方面，早期研发提出两种传输方式——面向连接的传输和非面向连接的传输，经过后来长期的发展，提出面向连接的ISO组织将非面向连接的传输纳入自己麾下，就是现在的UDP。</p>
+<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><h4 id="TCP建立连接的过程——TCP的三次握手"><a href="#TCP建立连接的过程——TCP的三次握手" class="headerlink" title="TCP建立连接的过程——TCP的三次握手"></a>TCP建立连接的过程——TCP的三次握手</h4><p>首先，源向目的发送一个TCP同步请求（syn包）；目的收到后向源发一个TCP回应（offer包），这里面包含了syn+ack信息，此时处于半打开会话状态，存在巨大的安全隐患；源收到目的的回应后向目的发送一个TCP确认包（ack包），就此处于全打开会话状态，TCP连接建立完成。</p>
+<h4 id="TCP序列号和确认号"><a href="#TCP序列号和确认号" class="headerlink" title="TCP序列号和确认号"></a>TCP序列号和确认号</h4><p>TCP会话的每一端都包含一个32位（bit）的序列号，该序列号被用来跟踪该端发送的数据量。每一个包中都包含序列号，在接收端则通过确认号用来通知发送端数据成功接收（发送序列号是当前的发包情况，确认号是渴望的发包情况）。</p>
+<p>例如在握手的时候，源向目的发送syn包，seq=x；目的会给源一个回应，seq=y，ack=x+1；源收到了之后给目的回一个确认包，ack=y+1。<br><img src="http://old5ws7lp.bkt.clouddn.com/images/三次握手.png"></p>
+<h4 id="TCP划窗"><a href="#TCP划窗" class="headerlink" title="TCP划窗"></a>TCP划窗</h4><p>TCP协议通过划窗机制来对流量进行控制管理，接收端通过发送确认号告诉发送端自己获包的情况，接收端通过三次发包后了解接收端的网络吞吐能力，然后稳定发包。</p>
+<h4 id="TCP重传"><a href="#TCP重传" class="headerlink" title="TCP重传"></a>TCP重传</h4><p>TCP包超时未响应后进行重传，一个包最多重传16次，无法处理后连接断开重连，三次失败后无法进行连接</p>
+<p><strong><em>以上均为自己极浅的理解，详细内容还请移步至Google</em></strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://SkyHive.github.io/2017/04/04/关于TCP/" data-id="cj1323rj10000zycppvt5ary0" class="article-share-link">Share</a>
+      
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/02/14/解决配置完七牛后无法Deploy到github/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">解决配置完七牛后无法Deploy到gihub</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 SkyHive<br>
+      Theme <a href="https://github.com/henryhuang/oishi" target="_blank">Oishi</a>, Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <!--
+      <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    -->
+    
+
+<!-- 百度分享 start -->
+
+<!-- 百度分享 end -->
+
+<script src="//cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+<script src="/js/jquery.scrollUp.min.js"></script>
+<script src="/js/jquery.transform.js"></script>
+<script src="/js/menu.js"></script>
+
+<script src="/js/script.js"></script>
+<script src="/js/scrollUp.js"></script>
+
+  </div>
+</body>
+</html>
