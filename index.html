@@ -264,6 +264,161 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://SkyHive.github.io/2017/04/12/Dict和Set/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SkyHive">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SkyHive's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/12/Dict和Set/" itemprop="url">
+                  Dict和Set
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-12T22:16:27+08:00">
+                2017-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="Dict"><a href="#Dict" class="headerlink" title="Dict"></a>Dict</h4><p>Python内置了字典Dict（全称Dictionary），使用键-值（key-value）存储，具有极快的查找速度。Dict的查找原理和查字典类似，key就相当于字典的索引，Python可以通过key计算出所对应的value存放的内存地址，直接取出，所以查找速度快。<br>Dict的初始化很简单，语法如下：<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; dict = &#123;key1' : <span class="type">value1</span>, <span class="symbol">'key2</span>' = value2, <span class="symbol">'key3</span>' = value3&#125;</div><div class="line">&gt;&gt;&gt; dict[<span class="symbol">'key2</span>']</div><div class="line">value2</div></pre></td></tr></table></figure></p>
+<p>一个key只能对应一个value，所以当我们对一个key多次赋值时会将前一个value覆盖掉。由于需要查找的key不存在时，dict会报错，为了避免key不存在的情况，Python提供了两种方法：</p>
+<ul>
+<li><p>通过<code>in</code>判断，如果key存在，就返回<code>True</code>，反之返回<code>False</code>：</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; `key` <span class="keyword">in</span> dict</div></pre></td></tr></table></figure>
+</li>
+<li><p>通过<code>get</code>判断，如果key不存在就返回None（<em>返回None的时候交互式命令行不显示结果</em>），也可以是自己指定返回的内容：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;</span>&gt; dict.get(<span class="string">'key'</span>)     <span class="comment">#返回None</span></div><div class="line"><span class="meta">&gt;&gt;</span>&gt; dict.get(<span class="string">'key'</span>,-<span class="number">1</span>)      <span class="comment">#返回自己指定的值`-1`</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>删除Dict可以使用<code>dict.pop(key)</code>方法，对应的value也会从dict中删除。<br>Dict内部的存放顺序和key的放入没有关系，Dict的查找和插入速度不会随着key的增加而变慢，需要占用大量的内存，是一种用空间来换取时间的方法。</p>
+<h4 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h4><p>Set和Dict类似，也是一组key的集合，但是不存储value。由于key不能重复，所以在set中没有重复的key。要创建一个set需要提供一个list作为输入的集合：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; s = set([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])</div></pre></td></tr></table></figure></p>
+<p>重复的元素会被set自动过滤，可以通过<code>add(key)</code>方法向set添加元素，通过<code>remove(key)</code>方法删除元素。我们可以将set看作数学意义上的集合，因此，两个set之间可以做数学意义上的交(&amp;)、并(|)集等运算</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://SkyHive.github.io/2017/04/07/Python基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1588,153 +1743,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://SkyHive.github.io/2017/01/15/Hexo的建站之旅/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="SkyHive">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SkyHive's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/15/Hexo的建站之旅/" itemprop="url">
-                  Hexo的建站之旅
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-15T20:25:39+08:00">
-                2017-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index">
-                    <span itemprop="name">Blog</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p> 这几天觉得wordpress作为博客实在是太臃肿了，而且访问的后台以及跟新都极其的慢，以至于想把博客迁到Hexo上去。<br>Hexo 是个简洁快速且高效的博客框架，是个台湾的学生写的，所以对中文还是挺友好的，我们用起来也很方便，而且Hexo仅依赖node，易于安装。<br>首先准备的工具仅需要node.js,git即可，在ubuntu上安装这两样工具也是极其简单：<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/15/Hexo的建站之旅/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1784,7 +1792,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
