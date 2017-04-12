@@ -87,16 +87,16 @@
 
 
 
-<meta name="description" content="DictPython内置了字典Dict（全称Dictionary），使用键-值（key-value）存储，具有极快的查找速度。Dict的查找原理和查字典类似，key就相当于字典的索引，Python可以通过key计算出所对应的value存放的内存地址，直接取出，所以查找速度快。Dict的初始化很简单，语法如下：123&amp;gt;&amp;gt;&amp;gt; dict = &amp;#123;key1&apos; : value1,">
+<meta name="description" content="DictPython内置了字典Dict（全称Dictionary），使用键-值（key-value）存储，具有极快的查找速度。Dict的查找原理和查字典类似，key就相当于字典的索引，Python可以通过key计算出所对应的value存放的内存地址，直接取出，所以查找速度快。Dict的初始化很简单，语法如下：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dict和Set">
 <meta property="og:url" content="http://SkyHive.github.io/2017/04/12/Dict和Set/index.html">
 <meta property="og:site_name" content="SkyHive's Blog">
-<meta property="og:description" content="DictPython内置了字典Dict（全称Dictionary），使用键-值（key-value）存储，具有极快的查找速度。Dict的查找原理和查字典类似，key就相当于字典的索引，Python可以通过key计算出所对应的value存放的内存地址，直接取出，所以查找速度快。Dict的初始化很简单，语法如下：123&amp;gt;&amp;gt;&amp;gt; dict = &amp;#123;key1&apos; : value1,">
-<meta property="og:updated_time" content="2017-04-12T14:18:22.533Z">
+<meta property="og:description" content="DictPython内置了字典Dict（全称Dictionary），使用键-值（key-value）存储，具有极快的查找速度。Dict的查找原理和查字典类似，key就相当于字典的索引，Python可以通过key计算出所对应的value存放的内存地址，直接取出，所以查找速度快。Dict的初始化很简单，语法如下：">
+<meta property="og:updated_time" content="2017-04-12T14:26:32.496Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dict和Set">
-<meta name="twitter:description" content="DictPython内置了字典Dict（全称Dictionary），使用键-值（key-value）存储，具有极快的查找速度。Dict的查找原理和查字典类似，key就相当于字典的索引，Python可以通过key计算出所对应的value存放的内存地址，直接取出，所以查找速度快。Dict的初始化很简单，语法如下：123&amp;gt;&amp;gt;&amp;gt; dict = &amp;#123;key1&apos; : value1,">
+<meta name="twitter:description" content="DictPython内置了字典Dict（全称Dictionary），使用键-值（key-value）存储，具有极快的查找速度。Dict的查找原理和查字典类似，key就相当于字典的索引，Python可以通过key计算出所对应的value存放的内存地址，直接取出，所以查找速度快。Dict的初始化很简单，语法如下：">
 
 
 
@@ -357,7 +357,9 @@
       
 
       
-        <h4 id="Dict"><a href="#Dict" class="headerlink" title="Dict"></a>Dict</h4><p>Python内置了字典Dict（全称Dictionary），使用键-值（key-value）存储，具有极快的查找速度。Dict的查找原理和查字典类似，key就相当于字典的索引，Python可以通过key计算出所对应的value存放的内存地址，直接取出，所以查找速度快。<br>Dict的初始化很简单，语法如下：<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; dict = &#123;key1' : <span class="type">value1</span>, <span class="symbol">'key2</span>' = value2, <span class="symbol">'key3</span>' = value3&#125;</div><div class="line">&gt;&gt;&gt; dict[<span class="symbol">'key2</span>']</div><div class="line">value2</div></pre></td></tr></table></figure></p>
+        <h4 id="Dict"><a href="#Dict" class="headerlink" title="Dict"></a>Dict</h4><p>Python内置了字典Dict（全称Dictionary），使用键-值（key-value）存储，具有极快的查找速度。Dict的查找原理和查字典类似，key就相当于字典的索引，Python可以通过key计算出所对应的value存放的内存地址，直接取出，所以查找速度快。<br>Dict的初始化很简单，语法如下：</p>
+<a id="more"></a>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; dict = &#123;key1' : <span class="type">value1</span>, <span class="symbol">'key2</span>' = value2, <span class="symbol">'key3</span>' = value3&#125;</div><div class="line">&gt;&gt;&gt; dict[<span class="symbol">'key2</span>']</div><div class="line">value2</div></pre></td></tr></table></figure>
 <p>一个key只能对应一个value，所以当我们对一个key多次赋值时会将前一个value覆盖掉。由于需要查找的key不存在时，dict会报错，为了避免key不存在的情况，Python提供了两种方法：</p>
 <ul>
 <li><p>通过<code>in</code>判断，如果key存在，就返回<code>True</code>，反之返回<code>False</code>：</p>
