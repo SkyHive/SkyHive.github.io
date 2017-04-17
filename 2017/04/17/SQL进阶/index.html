@@ -87,15 +87,24 @@
 
 
 
-<meta name="description" content="Just a Blog">
-<meta property="og:type" content="website">
-<meta property="og:title" content="SkyHive's Blog">
-<meta property="og:url" content="http://SkyHive.github.io/page/2/index.html">
+<meta name="description" content="我们都知道select的基本用法select &amp;lt;字段名&amp;gt; from &amp;lt;表名&amp;gt; [where &amp;lt;限制条件&amp;gt;]，然而select语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：
+Between、And、In、&amp;lt;=、&amp;gt;=、&amp;lt;、&amp;gt;等条件查询：通过select * from table where id bet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL进阶">
+<meta property="og:url" content="http://SkyHive.github.io/2017/04/17/SQL进阶/index.html">
 <meta property="og:site_name" content="SkyHive's Blog">
-<meta property="og:description" content="Just a Blog">
+<meta property="og:description" content="我们都知道select的基本用法select &amp;lt;字段名&amp;gt; from &amp;lt;表名&amp;gt; [where &amp;lt;限制条件&amp;gt;]，然而select语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：
+Between、And、In、&amp;lt;=、&amp;gt;=、&amp;lt;、&amp;gt;等条件查询：通过select * from table where id bet">
+<meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/user.png">
+<meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/between.png">
+<meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/between2.png">
+<meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/locate.png">
+<meta property="og:updated_time" content="2017-04-17T09:10:30.308Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SkyHive's Blog">
-<meta name="twitter:description" content="Just a Blog">
+<meta name="twitter:title" content="SQL进阶">
+<meta name="twitter:description" content="我们都知道select的基本用法select &amp;lt;字段名&amp;gt; from &amp;lt;表名&amp;gt; [where &amp;lt;限制条件&amp;gt;]，然而select语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：
+Between、And、In、&amp;lt;=、&amp;gt;=、&amp;lt;、&amp;gt;等条件查询：通过select * from table where id bet">
+<meta name="twitter:image" content="http://old5ws7lp.bkt.clouddn.com/images/user.png">
 
 
 
@@ -123,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://SkyHive.github.io/page/2/"/>
+  <link rel="canonical" href="http://SkyHive.github.io/2017/04/17/SQL进阶/"/>
 
 
 
 
 
-  <title> SkyHive's Blog </title>
+  <title> SQL进阶 | SkyHive's Blog </title>
 </head>
 
 
@@ -156,9 +165,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -251,9 +258,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -262,7 +269,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://SkyHive.github.io/2017/02/09/关于timestamp自动更新/">
+    <link itemprop="mainEntityOfPage" href="http://SkyHive.github.io/2017/04/17/SQL进阶/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="SkyHive">
@@ -283,10 +290,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/02/09/关于timestamp自动更新/" itemprop="url">
-                  关于timestamp自动更新
-                </a>
+                SQL进阶
               
             
           </h1>
@@ -301,8 +305,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-09T11:10:32+08:00">
-                2017-02-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-17T17:04:51+08:00">
+                2017-04-17
               </time>
             
 
@@ -359,28 +363,40 @@
       
 
       
+        <p>我们都知道select的基本用法<code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而<code>select</code>语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：<br><img src="http://old5ws7lp.bkt.clouddn.com/images/user.png"></p>
+<h4 id="Between、And、In、-lt-、-gt-、-lt-、-gt-等条件查询："><a href="#Between、And、In、-lt-、-gt-、-lt-、-gt-等条件查询：" class="headerlink" title="Between、And、In、&lt;=、&gt;=、&lt;、&gt;等条件查询："></a>Between、And、In、&lt;=、&gt;=、&lt;、&gt;等条件查询：</h4><p>通过<code>select * from table where id between 1 and 3</code>和<code>select * from table where id &gt;=1 and id &lt;= 3</code>的返回结果，我们可以发现<code>between and</code>和<code>&gt;= and &lt;=</code>是等同的。<br><img src="http://old5ws7lp.bkt.clouddn.com/images/between.png"><br><img src="http://old5ws7lp.bkt.clouddn.com/images/between2.png"><br>如果我们要查询的条件不是一个连续的数值，可以用<code>in</code>：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> <span class="keyword">id</span> <span class="keyword">in</span> (<span class="number">2</span>,<span class="number">4</span>)</div></pre></td></tr></table></figure></p>
+<h4 id="locate-函数：locate-substr-str"><a href="#locate-函数：locate-substr-str" class="headerlink" title="locate()函数：locate(substr,str)"></a>locate()函数：<code>locate(substr,str)</code></h4><p>这个函数返回<code>substr</code>在字符串<code>str</code>中的第一个出现的位置，如果不存在则值为0<br><img src="http://old5ws7lp.bkt.clouddn.com/images/locate.png"></p>
+<h4 id="Count-函数"><a href="#Count-函数" class="headerlink" title="Count()函数:"></a>Count()函数:</h4><ul>
+<li>count(字段名)：返回指定列的值的数目，但是字段值为<code>NULL</code>时不会被计算进去。<code>select count(字段名) from &lt;表名&gt;</code></li>
+<li>count(<em> )：返回表中的记录数，字段值为<code>NULL</code>时会被计算进去。`select count(</em>) from &lt;表名&gt;`</li>
+</ul>
+<h4 id="Distinct语句："><a href="#Distinct语句：" class="headerlink" title="Distinct语句："></a>Distinct语句：</h4><p>Distinct语句用于去除重复行，比如：<code>select distinct * from &lt;表名&gt;</code>。<br>其他的语句或函数都可以和<code>distinct</code>配合使用，比如：<code>count(distinct &lt;字段名&gt;)</code>可以去除重复行统计行数，但是<code>count(distinct *)</code>是<strong>不被允许</strong>的</p>
+<h4 id="Union语句："><a href="#Union语句：" class="headerlink" title="Union语句："></a>Union语句：</h4><p>Union语句可以将两个<code>select</code>语句的结果集组合成一个：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> <span class="keyword">id</span> &gt;= <span class="number">3</span>) <span class="keyword">union</span> (<span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span>)</div></pre></td></tr></table></figure></p>
+<p>当我们使用<code>union</code>语句的时候，默认去除了重复行，和<code>distinct</code>的效果一样，如果要显示所有的结果，则要使用<code>union all</code>语句。</p>
+<h4 id="Drder-by语句："><a href="#Drder-by语句：" class="headerlink" title="Drder by语句："></a>Drder by语句：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">order</span> <span class="keyword">by</span> &lt;字段名&gt; [<span class="keyword">asc</span>/<span class="keyword">desc</span>]</div></pre></td></tr></table></figure>
+<p>其中<code>asc</code>是默认的排序，为升序，<code>desc</code>为降序。<br>当然order by后面可以跟很多个字段，如：<code>select * from table order by info desc,id asc</code>,这个语句意为先按<code>info</code>字段降序，若<code>info</code>字段值相同的情况下，再按<code>id</code>字段升序。而且，<code>NULL</code>默认为值最小。</p>
+
+      
+    </div>
+
+    <div>
+      
         
-          <p>最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/09/关于timestamp自动更新/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
-      
-    </div>
-
-    <div>
       
     </div>
 
@@ -388,319 +404,38 @@
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://SkyHive.github.io/2017/01/15/Hexo的建站之旅/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="SkyHive">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SkyHive's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
         
-        
-          <h1 class="post-title" itemprop="name headline">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/04/12/Dict和Set/" rel="next" title="Dict和Set">
+                <i class="fa fa-chevron-left"></i> Dict和Set
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2017/01/15/Hexo的建站之旅/" itemprop="url">
-                  Hexo的建站之旅
-                </a>
-              
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-15T20:25:39+08:00">
-                2017-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index">
-                    <span itemprop="name">Blog</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p> 这几天觉得wordpress作为博客实在是太臃肿了，而且访问的后台以及跟新都极其的慢，以至于想把博客迁到Hexo上去。<br>Hexo 是个简洁快速且高效的博客框架，是个台湾的学生写的，所以对中文还是挺友好的，我们用起来也很方便，而且Hexo仅依赖node，易于安装。<br>首先准备的工具仅需要node.js,git即可，在ubuntu上安装这两样工具也是极其简单：<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/15/Hexo的建站之旅/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://SkyHive.github.io/2017/01/15/琐事——换回Apache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="SkyHive">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="SkyHive's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/15/琐事——换回Apache/" itemprop="url">
-                  琐事——换回Apache
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-15T20:03:30+08:00">
-                2017-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>由于之前在ubuntu上使用nginx总是会出现各种各样的问题，所以打算将自己机器上的nginx换成Apache，服务器上继续使用nginx，下面开始干活儿：<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/15/琐事——换回Apache/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
-
+  </div>
 
 
           </div>
@@ -708,6 +443,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -727,8 +466,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.jpg"
@@ -819,6 +567,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Between、And、In、-lt-、-gt-、-lt-、-gt-等条件查询："><span class="nav-number">1.</span> <span class="nav-text">Between、And、In、<=、>=、<、>等条件查询：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#locate-函数：locate-substr-str"><span class="nav-number">2.</span> <span class="nav-text">locate()函数：locate(substr,str)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Count-函数"><span class="nav-number">3.</span> <span class="nav-text">Count()函数:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Distinct语句："><span class="nav-number">4.</span> <span class="nav-text">Distinct语句：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Union语句："><span class="nav-number">5.</span> <span class="nav-text">Union语句：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Drder-by语句："><span class="nav-number">6.</span> <span class="nav-text">Drder by语句：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -926,6 +690,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
