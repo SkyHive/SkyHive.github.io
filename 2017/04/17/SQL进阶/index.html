@@ -87,23 +87,20 @@
 
 
 
-<meta name="description" content="我们都知道select的基本用法select &amp;lt;字段名&amp;gt; from &amp;lt;表名&amp;gt; [where &amp;lt;限制条件&amp;gt;]，然而select语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：
-Between、And、In、&amp;lt;=、&amp;gt;=、&amp;lt;、&amp;gt;等条件查询：通过select * from table where id bet">
+<meta name="description" content="我们都知道select的基本用法select &amp;lt;字段名&amp;gt; from &amp;lt;表名&amp;gt; [where &amp;lt;限制条件&amp;gt;]，然而select语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL进阶">
 <meta property="og:url" content="http://SkyHive.github.io/2017/04/17/SQL进阶/index.html">
 <meta property="og:site_name" content="SkyHive's Blog">
-<meta property="og:description" content="我们都知道select的基本用法select &amp;lt;字段名&amp;gt; from &amp;lt;表名&amp;gt; [where &amp;lt;限制条件&amp;gt;]，然而select语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：
-Between、And、In、&amp;lt;=、&amp;gt;=、&amp;lt;、&amp;gt;等条件查询：通过select * from table where id bet">
+<meta property="og:description" content="我们都知道select的基本用法select &amp;lt;字段名&amp;gt; from &amp;lt;表名&amp;gt; [where &amp;lt;限制条件&amp;gt;]，然而select语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：">
 <meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/user.png">
 <meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/between.png">
 <meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/between2.png">
 <meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/locate.png">
-<meta property="og:updated_time" content="2017-04-17T09:10:30.308Z">
+<meta property="og:updated_time" content="2017-04-17T09:11:47.675Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL进阶">
-<meta name="twitter:description" content="我们都知道select的基本用法select &amp;lt;字段名&amp;gt; from &amp;lt;表名&amp;gt; [where &amp;lt;限制条件&amp;gt;]，然而select语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：
-Between、And、In、&amp;lt;=、&amp;gt;=、&amp;lt;、&amp;gt;等条件查询：通过select * from table where id bet">
+<meta name="twitter:description" content="我们都知道select的基本用法select &amp;lt;字段名&amp;gt; from &amp;lt;表名&amp;gt; [where &amp;lt;限制条件&amp;gt;]，然而select语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：">
 <meta name="twitter:image" content="http://old5ws7lp.bkt.clouddn.com/images/user.png">
 
 
@@ -363,7 +360,8 @@ Between、And、In、&amp;lt;=、&amp;gt;=、&amp;lt;、&amp;gt;等条件查询�
       
 
       
-        <p>我们都知道select的基本用法<code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而<code>select</code>语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：<br><img src="http://old5ws7lp.bkt.clouddn.com/images/user.png"></p>
+        <p>我们都知道select的基本用法<code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而<code>select</code>语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：<br><a id="more"></a></p>
+<img src="http://old5ws7lp.bkt.clouddn.com/images/user.png">
 <h4 id="Between、And、In、-lt-、-gt-、-lt-、-gt-等条件查询："><a href="#Between、And、In、-lt-、-gt-、-lt-、-gt-等条件查询：" class="headerlink" title="Between、And、In、&lt;=、&gt;=、&lt;、&gt;等条件查询："></a>Between、And、In、&lt;=、&gt;=、&lt;、&gt;等条件查询：</h4><p>通过<code>select * from table where id between 1 and 3</code>和<code>select * from table where id &gt;=1 and id &lt;= 3</code>的返回结果，我们可以发现<code>between and</code>和<code>&gt;= and &lt;=</code>是等同的。<br><img src="http://old5ws7lp.bkt.clouddn.com/images/between.png"><br><img src="http://old5ws7lp.bkt.clouddn.com/images/between2.png"><br>如果我们要查询的条件不是一个连续的数值，可以用<code>in</code>：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> <span class="keyword">id</span> <span class="keyword">in</span> (<span class="number">2</span>,<span class="number">4</span>)</div></pre></td></tr></table></figure></p>
 <h4 id="locate-函数：locate-substr-str"><a href="#locate-函数：locate-substr-str" class="headerlink" title="locate()函数：locate(substr,str)"></a>locate()函数：<code>locate(substr,str)</code></h4><p>这个函数返回<code>substr</code>在字符串<code>str</code>中的第一个出现的位置，如果不存在则值为0<br><img src="http://old5ws7lp.bkt.clouddn.com/images/locate.png"></p>
 <h4 id="Count-函数"><a href="#Count-函数" class="headerlink" title="Count()函数:"></a>Count()函数:</h4><ul>

@@ -360,21 +360,14 @@
 
       
         
-          
-            <p>我们都知道select的基本用法<code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而<code>select</code>语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：<br><img src="http://old5ws7lp.bkt.clouddn.com/images/user.png"></p>
-<h4 id="Between、And、In、-lt-、-gt-、-lt-、-gt-等条件查询："><a href="#Between、And、In、-lt-、-gt-、-lt-、-gt-等条件查询：" class="headerlink" title="Between、And、In、&lt;=、&gt;=、&lt;、&gt;等条件查询："></a>Between、And、In、&lt;=、&gt;=、&lt;、&gt;等条件查询：</h4><p>通过<code>select * from table where id between 1 and 3</code>和<code>select * from table where id &gt;=1 and id &lt;= 3</code>的返回结果，我们可以发现<code>between and</code>和<code>&gt;= and &lt;=</code>是等同的。<br><img src="http://old5ws7lp.bkt.clouddn.com/images/between.png"><br><img src="http://old5ws7lp.bkt.clouddn.com/images/between2.png"><br>如果我们要查询的条件不是一个连续的数值，可以用<code>in</code>：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> <span class="keyword">id</span> <span class="keyword">in</span> (<span class="number">2</span>,<span class="number">4</span>)</div></pre></td></tr></table></figure></p>
-<h4 id="locate-函数：locate-substr-str"><a href="#locate-函数：locate-substr-str" class="headerlink" title="locate()函数：locate(substr,str)"></a>locate()函数：<code>locate(substr,str)</code></h4><p>这个函数返回<code>substr</code>在字符串<code>str</code>中的第一个出现的位置，如果不存在则值为0<br><img src="http://old5ws7lp.bkt.clouddn.com/images/locate.png"></p>
-<h4 id="Count-函数"><a href="#Count-函数" class="headerlink" title="Count()函数:"></a>Count()函数:</h4><ul>
-<li>count(字段名)：返回指定列的值的数目，但是字段值为<code>NULL</code>时不会被计算进去。<code>select count(字段名) from &lt;表名&gt;</code></li>
-<li>count(<em> )：返回表中的记录数，字段值为<code>NULL</code>时会被计算进去。`select count(</em>) from &lt;表名&gt;`</li>
-</ul>
-<h4 id="Distinct语句："><a href="#Distinct语句：" class="headerlink" title="Distinct语句："></a>Distinct语句：</h4><p>Distinct语句用于去除重复行，比如：<code>select distinct * from &lt;表名&gt;</code>。<br>其他的语句或函数都可以和<code>distinct</code>配合使用，比如：<code>count(distinct &lt;字段名&gt;)</code>可以去除重复行统计行数，但是<code>count(distinct *)</code>是<strong>不被允许</strong>的</p>
-<h4 id="Union语句："><a href="#Union语句：" class="headerlink" title="Union语句："></a>Union语句：</h4><p>Union语句可以将两个<code>select</code>语句的结果集组合成一个：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> <span class="keyword">id</span> &gt;= <span class="number">3</span>) <span class="keyword">union</span> (<span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span>)</div></pre></td></tr></table></figure></p>
-<p>当我们使用<code>union</code>语句的时候，默认去除了重复行，和<code>distinct</code>的效果一样，如果要显示所有的结果，则要使用<code>union all</code>语句。</p>
-<h4 id="Drder-by语句："><a href="#Drder-by语句：" class="headerlink" title="Drder by语句："></a>Drder by语句：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">order</span> <span class="keyword">by</span> &lt;字段名&gt; [<span class="keyword">asc</span>/<span class="keyword">desc</span>]</div></pre></td></tr></table></figure>
-<p>其中<code>asc</code>是默认的排序，为升序，<code>desc</code>为降序。<br>当然order by后面可以跟很多个字段，如：<code>select * from table order by info desc,id asc</code>,这个语句意为先按<code>info</code>字段降序，若<code>info</code>字段值相同的情况下，再按<code>id</code>字段升序。而且，<code>NULL</code>默认为值最小。</p>
-
-          
+          <p>我们都知道select的基本用法<code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而<code>select</code>语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/17/SQL进阶/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
