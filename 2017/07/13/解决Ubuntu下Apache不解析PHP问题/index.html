@@ -87,19 +87,22 @@
 
 
 
-<meta name="description" content="一个刚刚接触IT的进激大学生，喜欢电影、音乐、小说、历史还有刺客信条！会一点PHP，一点Linux，一点网络，爱折腾。羡慕编程大神，但无奈自己数学太差，算法如屎一般，只能作罢。平时无事喜欢关注IT界的新闻，Google依旧是信仰:)
-无聊的人可以关注我的微博(虽然我不怎么发微博)、Facebook(虽然我也不怎么发)、GitHub(虽然我还是个新手)、Google+">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://SkyHive.github.io/about/index.html">
+<meta name="description" content="这两天笔者遇到了一个很操蛋的问题——Apache无法解析PHP代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：
+
+修改apache的配置文件httpd.conf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决Ubuntu下Apache不解析PHP问题">
+<meta property="og:url" content="http://SkyHive.github.io/2017/07/13/解决Ubuntu下Apache不解析PHP问题/index.html">
 <meta property="og:site_name" content="SkyHive's Blog">
-<meta property="og:description" content="一个刚刚接触IT的进激大学生，喜欢电影、音乐、小说、历史还有刺客信条！会一点PHP，一点Linux，一点网络，爱折腾。羡慕编程大神，但无奈自己数学太差，算法如屎一般，只能作罢。平时无事喜欢关注IT界的新闻，Google依旧是信仰:)
-无聊的人可以关注我的微博(虽然我不怎么发微博)、Facebook(虽然我也不怎么发)、GitHub(虽然我还是个新手)、Google+">
-<meta property="og:updated_time" content="2017-01-15T07:31:09.474Z">
+<meta property="og:description" content="这两天笔者遇到了一个很操蛋的问题——Apache无法解析PHP代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：
+
+修改apache的配置文件httpd.conf">
+<meta property="og:updated_time" content="2017-07-13T12:02:13.924Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="一个刚刚接触IT的进激大学生，喜欢电影、音乐、小说、历史还有刺客信条！会一点PHP，一点Linux，一点网络，爱折腾。羡慕编程大神，但无奈自己数学太差，算法如屎一般，只能作罢。平时无事喜欢关注IT界的新闻，Google依旧是信仰:)
-无聊的人可以关注我的微博(虽然我不怎么发微博)、Facebook(虽然我也不怎么发)、GitHub(虽然我还是个新手)、Google+">
+<meta name="twitter:title" content="解决Ubuntu下Apache不解析PHP问题">
+<meta name="twitter:description" content="这两天笔者遇到了一个很操蛋的问题——Apache无法解析PHP代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：
+
+修改apache的配置文件httpd.conf">
 
 
 
@@ -127,19 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://SkyHive.github.io/about/"/>
+  <link rel="canonical" href="http://SkyHive.github.io/2017/07/13/解决Ubuntu下Apache不解析PHP问题/"/>
 
 
 
 
 
-  <title>
-  
-
-  
-    about | SkyHive's Blog
-  
-</title>
+  <title> 解决Ubuntu下Apache不解析PHP问题 | SkyHive's Blog </title>
 </head>
 
 
@@ -166,7 +163,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -261,20 +258,178 @@
             
 
   <div id="posts" class="posts-expand">
-  <header class="post-header">
+    
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
+  
 
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://SkyHive.github.io/2017/07/13/解决Ubuntu下Apache不解析PHP问题/">
 
-</header>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SkyHive">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SkyHive's Blog">
+    </span>
 
     
-    
-      <p>一个刚刚接触IT的进激大学生，喜欢电影、音乐、小说、历史还有刺客信条！会一点PHP，一点Linux，一点网络，爱折腾。羡慕编程大神，但无奈自己数学太差，算法如屎一般，只能作罢。平时无事喜欢关注IT界的新闻，Google依旧是信仰:)</p>
-<p>无聊的人可以关注我的<a href="http://weibo.com/1612736643/profile?rightmod=1&amp;wvr=6&amp;mod=personinfo&amp;is_all=1" target="_blank" rel="external">微博</a>(虽然我不怎么发微博)、<a href="https://www.facebook.com/profile.php?id=100011441371544" target="_blank" rel="external">Facebook</a>(虽然我也不怎么发)、<a href="https://github.com/SkyHive" target="_blank" rel="external">GitHub</a>(虽然我还是个新手)、<a href="https://plus.google.com/105057803926879243801" target="_blank" rel="external">Google+</a></p>
+      <header class="post-header">
 
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                解决Ubuntu下Apache不解析PHP问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T20:00:22+08:00">
+                2017-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
     
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这两天笔者遇到了一个很操蛋的问题——Apache无法解析PHP代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：</p>
+<blockquote>
+<p>修改apache的配置文件httpd.conf<br><a id="more"></a><br>在httpd.conf中找到：<br><code>AddType application/x-gzip .gz .tgz</code><br>在该行下面添加<br><code>AddType application/x-httpd-php .php</code></p>
+<p>再找继续找到：<br><code>DirectoryIndex index.html</code>，<br>把此行修改成<br><code>DirectoryIndex index.html index.htm index.php</code></p>
+<p>再找到：<br><code>#ServerName www.example.com:80</code><br>改成<br><code>ServerName localhost:80</code></p>
+</blockquote>
+<p>然而Ubuntu下的Apache并没有httpd.conf这个配置文件，而是通过一个apache2.conf来引用每个部分的配置文件，这样在一个配置包里找到那一句配置也并不简单，而且我还没有找到。。。</p>
+<p>不过皇天不负有心人，终于是找到了解决办法：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install libapache2-<span class="keyword">mod</span>-php</div></pre></td></tr></table></figure></p>
+<p>这一步安装了apache的扩展包，可以用于解析php，我觉得不管是7版本还是5版本都可以适用。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/25/Hexo的建站之旅/" rel="next" title="Hexo的建站之旅">
+                <i class="fa fa-chevron-left"></i> Hexo的建站之旅
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -505,6 +660,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
