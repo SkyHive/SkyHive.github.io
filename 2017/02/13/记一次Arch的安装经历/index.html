@@ -97,7 +97,7 @@
 <meta property="og:description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。
 那么下面打开虚拟机，进入安装界面：
 首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk1cfdisk        #使用cfdisk进行分区">
-<meta property="og:updated_time" content="2017-05-21T02:34:02.200Z">
+<meta property="og:updated_time" content="2017-07-14T08:43:52.029Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次Arch的安装经历">
 <meta name="twitter:description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。
@@ -372,7 +372,7 @@
 <p>接着修改软件镜像源<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd /etc/pacman.d        <span class="comment">#镜像源文件在这个目录下</span></div><div class="line"><span class="comment">#我们需要将China源放到文件头的位置，下面先将这段源提取到temp这个文件里</span></div><div class="line"><span class="keyword">grep</span> -A <span class="number">1</span> <span class="string">'##.*China'</span> mirrorlist|<span class="keyword">grep</span> -v <span class="string">'\-\-'</span> &gt; temp</div><div class="line"><span class="comment">#然后将mirrorlist的内容添加到temp的最后面</span></div><div class="line">cat mirrorlist &gt;&gt; temp</div><div class="line">mv temp mirrorlist         <span class="comment">#temp替换mirrorlist</span></div></pre></td></tr></table></figure></p>
 <p>然后刷新软件仓库列表就可以开始安装了<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pacman -Syy         <span class="meta">#刷新软件仓库列表</span></div><div class="line">pacstrap -i /mnt <span class="keyword">base</span> <span class="keyword">base</span>-devel        <span class="meta">#安装系统</span></div></pre></td></tr></table></figure></p>
 <p>接下来需要生成一个叫fstab的配置文件，在开机时候会由mount命令读取并挂载其中的分区。在安装完基本系统之后，就可以将fstab信息写入新安装的系统中了。<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">genfstab -U -p /mnt &gt;&gt; <span class="regexp">/mnt/etc</span><span class="regexp">/fstab</span></div><div class="line">nano /mnt<span class="regexp">/etc/fstab</span>         <span class="comment">#确认fstab文件真的生成了</span></div></pre></td></tr></table></figure></p>
-<p>下面我们就可以进入新系统进行配置了<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">arch-choot /mnt <span class="meta-keyword">/bin/</span>bash</div><div class="line">passwd          <span class="meta">#设置root密码</span></div><div class="line">echo 主机名 &gt; <span class="meta-keyword">/etc/</span>hostname         <span class="meta">#设置主机名</span></div></pre></td></tr></table></figure></p>
+<p>下面我们就可以进入新系统进行配置了<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">arch-chroot /mnt <span class="meta-keyword">/bin/</span>bash</div><div class="line">passwd          <span class="meta">#设置root密码</span></div><div class="line">echo 主机名 &gt; <span class="meta-keyword">/etc/</span>hostname         <span class="meta">#设置主机名</span></div></pre></td></tr></table></figure></p>
 <p>然后配置区域<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nano <span class="regexp">/etc/</span>locale.gen</div></pre></td></tr></table></figure></p>
 <p>将<code>en_US.UTF-8</code>、<code>zh_CN.UTF-8</code>、<code>zh_TW.UTF-8</code>的注释去掉，然后按Ctrl+x保存，退出，使用<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">locale-gen</span></div></pre></td></tr></table></figure></p>
 <p>生成区域，然后设置locale.conf文件<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo LANG=en_us.UTF-<span class="number">8</span> &gt; <span class="regexp">/etc/</span>locale.conf<span class="comment">#如果在终端下使用中会出现乱码，可以装fbterm来解决</span></div></pre></td></tr></table></figure></p>
@@ -427,8 +427,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/14/解决Ubuntu系统设置打不开/" rel="prev" title="解决Ubuntu系统设置打不开">
-                解决Ubuntu系统设置打不开 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/02/14/Hexo的建站之旅/" rel="prev" title="Hexo的建站之旅">
+                Hexo的建站之旅 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -492,7 +492,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -503,7 +503,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
