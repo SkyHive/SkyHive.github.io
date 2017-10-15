@@ -1,0 +1,796 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="队列队列是一种可以实现先进先出(first in first out,FIFO)的存储结构。与栈不一样的是，队列规定只在一端进行插入操作，在另一端进行删除操作。允许插入的一端叫做队尾(rear)，允许删除的一端叫做队首(front)。
+分类
+链式队列：用链表实现。
+静态队列：用数组实现。(为了解决假溢出现象，静态队列通常都必须是循环队列)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="队列">
+<meta property="og:url" content="http://SkyHive.github.io/2017/10/15/队列/index.html">
+<meta property="og:site_name" content="SkyHive's Blog">
+<meta property="og:description" content="队列队列是一种可以实现先进先出(first in first out,FIFO)的存储结构。与栈不一样的是，队列规定只在一端进行插入操作，在另一端进行删除操作。允许插入的一端叫做队尾(rear)，允许删除的一端叫做队首(front)。
+分类
+链式队列：用链表实现。
+静态队列：用数组实现。(为了解决假溢出现象，静态队列通常都必须是循环队列)">
+<meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/Queue.jpg">
+<meta property="og:updated_time" content="2017-10-15T03:02:05.444Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="队列">
+<meta name="twitter:description" content="队列队列是一种可以实现先进先出(first in first out,FIFO)的存储结构。与栈不一样的是，队列规定只在一端进行插入操作，在另一端进行删除操作。允许插入的一端叫做队尾(rear)，允许删除的一端叫做队首(front)。
+分类
+链式队列：用链表实现。
+静态队列：用数组实现。(为了解决假溢出现象，静态队列通常都必须是循环队列)">
+<meta name="twitter:image" content="http://old5ws7lp.bkt.clouddn.com/images/Queue.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://SkyHive.github.io/2017/10/15/队列/"/>
+
+
+
+
+
+  <title> 队列 | SkyHive's Blog </title>
+</head>
+
+
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">SkyHive's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://SkyHive.github.io/2017/10/15/队列/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="SkyHive">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SkyHive's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                队列
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-15T10:57:44+08:00">
+                2017-10-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">Algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><p>队列是一种可以实现<strong>先进先出</strong>(first in first out,FIFO)的存储结构。与栈不一样的是，队列规定只在一端进行插入操作，在另一端进行删除操作。允许插入的一端叫做队尾(rear)，允许删除的一端叫做队首(front)。</p>
+<h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><ul>
+<li>链式队列：用链表实现。</li>
+<li>静态队列：用数组实现。(<em>为了解决假溢出现象，静态队列通常都必须是循环队列</em>)</li>
+</ul>
+<a id="more"></a>
+<h4 id="循环队列"><a href="#循环队列" class="headerlink" title="循环队列"></a>循环队列</h4><img src="http://old5ws7lp.bkt.clouddn.com/images/Queue.jpg">
+<h5 id="参数：front、rear"><a href="#参数：front、rear" class="headerlink" title="参数：front、rear"></a>参数：front、rear</h5><ul>
+<li>rear所指的单元始终为空</li>
+<li>队列初始化：front和rear的值都是0。</li>
+<li>队列非空：front指向队列的第一个元素；rear指向队列的最后一个有效元素的下一个元素。</li>
+<li>队列空：front和rear值相等，但不一定是0。</li>
+</ul>
+<h5 id="算法解析"><a href="#算法解析" class="headerlink" title="算法解析"></a>算法解析</h5><p>1.入队：将值存入rear所代表的位置<code>r</code></p>
+<ul>
+<li>错误写法：<code>r=r+1</code></li>
+<li>正确写法：<code>r=(r+1)%数组长度</code></li>
+</ul>
+<p>2.出队：<br><code>f=(f+1)%数组长度</code></p>
+<p>3.判断循环队列是否为空</p>
+<p><code>rear = front</code></p>
+<p>4.判断循环队列是否已满</p>
+<ul>
+<li>多增加一个参数标志满或者空（一般不用此方式）</li>
+<li>少用一个元素：如果<code>(r+1)%数组长度==f</code>表示循环队列已满</li>
+</ul>
+<h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><p>1.队列数据建构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="built_in">queue</span> &#123;</div><div class="line">  	<span class="keyword">int</span> *p;</div><div class="line">  	<span class="keyword">int</span> front;</div><div class="line">  	<span class="keyword">int</span> rear;</div><div class="line">  	<span class="keyword">int</span> maxsize;</div><div class="line">&#125;Queue;</div></pre></td></tr></table></figure>
+<p>2.初始化队列</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">CreateQueue</span><span class="params">(Queue *Q,<span class="keyword">int</span> maxsize)</span></span>&#123;</div><div class="line">  	Q-&gt;p = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*maxsize);</div><div class="line">  	<span class="keyword">if</span>(!Q-&gt;p)&#123;</div><div class="line">  		<span class="built_in">printf</span>(<span class="string">"Memory allocation failure!"</span>);</div><div class="line">      	<span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">	&#125;</div><div class="line">  	Q-&gt;front = Q-&gt;rear;</div><div class="line">  	Q-&gt;maxize = maxsize;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3.判断循环队列是否为满</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">isFull</span><span class="params">(Queue *Q)</span></span>&#123;</div><div class="line">  	<span class="keyword">if</span> ((Q-&gt;rear+<span class="number">1</span>)%Q-&gt;maxsize == Q-&gt;front)</div><div class="line">      	<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">  	<span class="keyword">else</span></div><div class="line">      	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>4.判断循环队列是否为空</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">isEmpty</span><span class="params">(Queue *Q)</span></span>&#123;</div><div class="line">  	<span class="keyword">if</span>(Q-&gt;rear == Q-&gt;front)</div><div class="line">      	<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line"> 	<span class="keyword">else</span></div><div class="line">      	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>5.入队操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Enter</span><span class="params">(Queue *Q,<span class="keyword">int</span> val)</span></span>&#123;</div><div class="line">  	<span class="keyword">if</span> (isFull(Q))&#123;</div><div class="line">  		<span class="built_in">printf</span>(<span class="string">"The queue is full!"</span>);</div><div class="line">  		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">  	<span class="keyword">else</span>&#123;</div><div class="line">  		Q-&gt;p[Q-&gt;rear] = val;</div><div class="line">      	Q-&gt;rear = (Q-&gt;rear+<span class="number">1</span>)%Q-&gt;maxsize;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>6.出队操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Delete</span><span class="params">(Queue *Q,<span class="keyword">int</span> *val)</span></span>&#123;</div><div class="line">  	<span class="keyword">if</span>(isEmpty(Q))</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">  	<span class="keyword">else</span>&#123;</div><div class="line">  		*val = Q-&gt;p[Q-&gt;front];</div><div class="line">      	Q-&gt;front=(Q-&gt;front+<span class="number">1</span>)%Q-&gt;maxszie;</div><div class="line">      	<span class="built_in">printf</span>(<span class="string">"Get out of the queue successfully!"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>7.遍历操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Traverse</span><span class="params">(Queue *Q)</span></span>&#123;</div><div class="line">  	<span class="keyword">int</span> i = Q-&gt;front;</div><div class="line">  	<span class="built_in">printf</span>(<span class="string">"The items in queue are:\n"</span>);</div><div class="line">  	<span class="keyword">while</span>(i%Q-&gt;maxsize!=Q-&gt;rear)&#123;</div><div class="line">  		<span class="built_in">printf</span>(<span class="string">"%d"</span>,Q-&gt;p[i]);</div><div class="line">      	i=(i+<span class="number">1</span>)%Q-&gt;maxsize;</div><div class="line">	&#125;</div><div class="line">  	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="链式队列"><a href="#链式队列" class="headerlink" title="链式队列"></a>链式队列</h4><p>链式队列实现和链式栈相差不多，只是将删除操作放在了另外一端，有效的解决了顺序队列存储空间不足的缺陷。</p>
+<h5 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h5><p>1.队列节点构建</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> Node&#123;</div><div class="line">  	<span class="keyword">int</span> data;		<span class="comment">//数据域</span></div><div class="line">  	<span class="keyword">struct</span> Node *next;		<span class="comment">//指针域</span></div><div class="line">&#125;Node;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span>&#123;</div><div class="line">  	Node *front;</div><div class="line">  	Node *rear;</div><div class="line">&#125;Queue;</div></pre></td></tr></table></figure>
+<p>2.队列初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">InitQueue</span><span class="params">(Queue *Q)</span></span>&#123;</div><div class="line">  	Node *head = (Node*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</div><div class="line">  	<span class="keyword">if</span>(!head)&#123;</div><div class="line">  		<span class="built_in">printf</span>(<span class="string">"Memory allocation failed!\n"</span>);</div><div class="line">      	<span class="keyword">return</span> ;</div><div class="line">	&#125;</div><div class="line">  	head-&gt;next = <span class="literal">NULL</span>;</div><div class="line">  	Q-&gt;rear = Q-&gt;front = head;		<span class="comment">//front和rear都指向头指针</span></div><div class="line">  	<span class="built_in">printf</span>(<span class="string">"Init successfully!\n"</span>);</div><div class="line">  	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3.入队操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">Enter</span><span class="params">(Queue *Q,<span class="keyword">int</span> item)</span></span>&#123;</div><div class="line">  	Node *s = (Node*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</div><div class="line">  	<span class="keyword">if</span>(!s)&#123;</div><div class="line">  		<span class="built_in">printf</span>(<span class="string">"Memory allocation failed!\n"</span>);</div><div class="line">      	<span class="keyword">return</span> ;</div><div class="line">	&#125;</div><div class="line">  	s-&gt;next = <span class="literal">NULL</span>;</div><div class="line">  	s-&gt;data = item;</div><div class="line">  	Q-&gt;rear-&gt;next = s;</div><div class="line">  	Q-&gt;rear = s;</div><div class="line">  	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>4.出队操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Delete</span><span class="params">(Queue *Q,<span class="keyword">int</span> *item)</span></span>&#123;</div><div class="line">  	<span class="keyword">if</span>(Q-&gt;front == Q-&gt;rear)&#123;</div><div class="line">  		<span class="built_in">printf</span>(<span class="string">"The queue is empty!\n"</span>);</div><div class="line">      	<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">  	Node *p;</div><div class="line">  	p = Q-&gt;front-&gt;next;		<span class="comment">//先将要出栈的节点存在P中</span></div><div class="line">  	Q-&gt;front-&gt;next = p-&gt;next;		<span class="comment">//重新构造队头元素的后继</span></div><div class="line">  	*item = p-&gt;data;			<span class="comment">//保存出队的数据；</span></div><div class="line">  	<span class="keyword">if</span>(Q-&gt;rear == p)		<span class="comment">//判断删除的节点是否为队尾元素</span></div><div class="line">      	Q-&gt;rear = Q-&gt;front;</div><div class="line">  	<span class="built_in">free</span>(p);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>5.遍历元素</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Traverse</span><span class="params">(Queue *Q)</span></span>&#123;</div><div class="line">  	<span class="keyword">if</span>(Q-&gt;front == Q-&gt;rear)&#123;</div><div class="line">  		<span class="built_in">printf</span>(<span class="string">"The queue is empty!\n"</span>);</div><div class="line">	&#125;</div><div class="line">  	Node *p = Q-&gt;front-&gt;next;</div><div class="line">  	<span class="keyword">while</span>(p)&#123;</div><div class="line">  		<span class="built_in">printf</span>(<span class="string">"%d"</span>,p-&gt;data);</div><div class="line">      	p = p-&gt;next;</div><div class="line">	&#125;</div><div class="line">  	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/11/栈/" rel="next" title="栈">
+                <i class="fa fa-chevron-left"></i> 栈
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.jpg"
+               alt="SkyHive" />
+          <p class="site-author-name" itemprop="name">SkyHive</p>
+           
+              <p class="site-description motion-element" itemprop="description">Just a Blog</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/SkyHive" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1612736643/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://plus.google.com/105057803926879243801" target="_blank" title="Google+">
+                  
+                    <i class="fa fa-fw fa-goole_plus"></i>
+                  
+                  Google+
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/profile.php?id=100011441371544" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#队列"><span class="nav-number">1.</span> <span class="nav-text">队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分类"><span class="nav-number">1.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环队列"><span class="nav-number">1.2.</span> <span class="nav-text">循环队列</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#参数：front、rear"><span class="nav-number">1.2.1.</span> <span class="nav-text">参数：front、rear</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#算法解析"><span class="nav-number">1.2.2.</span> <span class="nav-text">算法解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现"><span class="nav-number">1.2.3.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链式队列"><span class="nav-number">1.3.</span> <span class="nav-text">链式队列</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SkyHive</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
