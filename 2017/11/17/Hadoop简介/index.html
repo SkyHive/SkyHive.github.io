@@ -95,7 +95,7 @@ HDFS文件系统HDFS（Hadoop Distributed File System）是一个高度容错的
 <meta property="og:site_name" content="SkyHive's Blog">
 <meta property="og:description" content="Hadoop 介绍Hadoop是Apache组织的一个分布式计算框架（java语言），其最核心的设计就是：HDFS 和MapReduce，HDFS实现存储，MapReduce实现原理分析处理。
 HDFS文件系统HDFS（Hadoop Distributed File System）是一个高度容错的系统，适合部署在廉价的机器上。HDFS能提供高吞吐量的数据访问，适合那些有着超大数据集的应用程序。">
-<meta property="og:updated_time" content="2017-11-22T09:36:36.668Z">
+<meta property="og:updated_time" content="2017-11-22T13:38:37.915Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop简介">
 <meta name="twitter:description" content="Hadoop 介绍Hadoop是Apache组织的一个分布式计算框架（java语言），其最核心的设计就是：HDFS 和MapReduce，HDFS实现存储，MapReduce实现原理分析处理。
@@ -367,15 +367,14 @@ HDFS文件系统HDFS（Hadoop Distributed File System）是一个高度容错的
 <li>廉价硬件</li>
 <li>备份，为防止某个主机失效读取不到该主机的块文件，它将同一个文件块副本分配到其他某几个主机上</li>
 </ul>
-<h5 id="Master-Slave架构"><a href="#Master-Slave架构" class="headerlink" title="Master / Slave架构"></a>Master / Slave架构</h5><p>一个HDFS集群是有一个Namenode和一定数目的Datanode组成。Namenode作为中心服务器负责管理文件系统的namespace和客户端对文件的访问，Datanode在集群中负责管理结点上他们附带的存储。在内部，一个文件其实分成一个或多个block，这些block存储在Datanode集合里。Namenode执行文件西戎的namespace操作，如打开、关闭、重命名等，同时决定 block到具体Datanode结点的映射。Datanode在Namenode的指挥下进行block的创建、删除和复制。</p>
+<h5 id="Master-Slave架构"><a href="#Master-Slave架构" class="headerlink" title="Master / Slave架构"></a>Master / Slave架构</h5><p>一个HDFS集群是有一个Namenode和一定数目的Datanode组成。Namenode作为中心服务器负责管理文件系统的namespace和客户端对文件的访问，Datanode在集群中负责管理结点上他们附带的存储。在内部，一个文件其实分成一个或多个block，这些block存储在Datanode集合里。Namenode执行文件系统的namespace操作，如打开、关闭、重命名等，同时决定 block到具体Datanode结点的映射。Datanode在Namenode的指挥下进行block的创建、删除和复制。</p>
 <h5 id="HDFS的一些关键元素"><a href="#HDFS的一些关键元素" class="headerlink" title="HDFS的一些关键元素"></a>HDFS的一些关键元素</h5><ul>
 <li>Block：将文件分块，通常为64M。</li>
 <li>NameNode：保存整个文件系统的目录信息、文件信息及分块信息，由唯一一台主机专门保存。（2.0版本后增加备份）</li>
 <li>DataNode：用于存储Block文件。</li>
 <li>NameNode全权管理数据块的复制，它周期性地从集群中的每个DataNode接受心跳信号和块状态报告（BlockReport）。结合艘到心跳信号以为这该DataNode工作正常，块状态报告包含了一个该DataNode上所有数据块的列表。</li>
 </ul>
-<h4 id="MapReduce文件系统"><a href="#MapReduce文件系统" class="headerlink" title="MapReduce文件系统"></a>MapReduce文件系统</h4><p>MapReduce是一种编程模型，用于大规模数据的并行运算。MapReduce分成两个部分：<strong>Map</strong>（映射）和<strong>Reduce</strong>（归纳）。</p>
-<p>当你向MapReduce框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map任务，然后分配到不同的节点上去执行，每一个Map任务处理输入数据中的一部分，当Map任务完成后，它会生成一些中间文件，这些中间文件将会作为Reduce任务的输入数据。Reduce任务的主要目标就是把前面若干个Map的输出汇总并输出。</p>
+<h4 id="MapReduce文件系统"><a href="#MapReduce文件系统" class="headerlink" title="MapReduce文件系统"></a>MapReduce文件系统</h4><p>MapReduce是一种编程模型，用于大规模数据的并行运算。MapReduce分成两个部分：<strong>Map</strong>（映射）和<strong>Reduce</strong>（归纳）。当你向MapReduce框架提交一个计算作业时，它会首先把计算作业拆分成若干个Map任务，然后分配到不同的节点上去执行，每一个Map任务处理输入数据中的一部分，当Map任务完成后，它会生成一些中间文件，这些中间文件将会作为Reduce任务的输入数据。Reduce任务的主要目标就是把前面若干个Map的输出汇总并输出。</p>
 
       
     </div>
