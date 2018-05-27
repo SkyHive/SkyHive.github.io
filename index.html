@@ -368,7 +368,7 @@
 <p>然后就是一顿正常的操作</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/04/20/关于Ubuntu循环登录界面/#espandi" rel="contents">
+            <a class="btn" href="/2018/04/20/关于Ubuntu循环登录界面/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -536,7 +536,7 @@
 <p>更换数据库的话在<code>settings.py</code>文件中<code>DATABASES</code>选项中进行更改<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/25/初探Django需要注意的事项/#espandi" rel="contents">
+            <a class="btn" href="/2018/03/25/初探Django需要注意的事项/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -703,7 +703,7 @@
           <p>最近在学校做一个云计算大赛，需要搭建一个hadoop的平台（一共四台服务器，这是一个怎样的hadoop啊），搭建的中途遇到一个小插曲。<br>由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ssh-keygen -t rsa</span></div></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/12/08/配置ssh免密登录遇到的坑/#espandi" rel="contents">
+            <a class="btn" href="/2017/12/08/配置ssh免密登录遇到的坑/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -871,7 +871,7 @@
 <h4 id="HDFS文件系统"><a href="#HDFS文件系统" class="headerlink" title="HDFS文件系统"></a>HDFS文件系统</h4><p><strong>HDFS</strong>（Hadoop Distributed File System）是一个高度容错的系统，适合部署在廉价的机器上。HDFS能提供高吞吐量的数据访问，适合那些有着超大数据集的应用程序。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/17/Hadoop简介/#espandi" rel="contents">
+            <a class="btn" href="/2017/11/17/Hadoop简介/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1042,7 +1042,7 @@
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/10/15/队列/#espandi" rel="contents">
+            <a class="btn" href="/2017/10/15/队列/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1212,7 +1212,7 @@
 <li>链式栈：链表实现
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/10/11/栈/#espandi" rel="contents">
+            <a class="btn" href="/2017/10/11/栈/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1381,7 +1381,7 @@
 <li>BandwagonHost(<a href="http://banwagong.cn/fangan.html">搬瓦工VPS</a>)：据观察搬瓦工这个VPS还是算计比较便宜的，年付20刀，平均下来每个月只有1.6刀，而且套餐很良心很良心,512MB的内存，10GB的SSD，1TB的流量是不是比国内很多主机都划算的很。<img src="http://old5ws7lp.bkt.clouddn.com/images/DO1.png">
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/08/11/搭建属于自己的Shadowsocks服务/#espandi" rel="contents">
+            <a class="btn" href="/2017/08/11/搭建属于自己的Shadowsocks服务/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1718,7 +1718,7 @@
 <p>修改apache的配置文件httpd.conf<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/07/13/解决Ubuntu下Apache不解析PHP问题/#espandi" rel="contents">
+            <a class="btn" href="/2017/07/13/解决Ubuntu下Apache不解析PHP问题/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1885,7 +1885,7 @@
           <p>笔者最近在自学Python的过程中想起曾经有人推荐过的一款学习编程的小游戏，叫做<a href="https://cn.codecombat.com">Codecombat</a>，通过玩游戏的方式学习编程语言的语法规则。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/21/一个学习Python的小游戏/#espandi" rel="contents">
+            <a class="btn" href="/2017/04/21/一个学习Python的小游戏/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2085,10 +2085,39 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4
+	<span>   |   </span>
+	<span id="showDays"></span>
+  </div>
 
 
 
+
+<script>
+  var seconds = 1000;
+  var minutes = seconds * 60;
+  var hours = minutes * 60;
+  var days = hours * 24;
+  var years = days * 365;
+  var birthDay = Date.UTC(2017,01,15,00,00,00); // 这里设置建站时间
+  setInterval(function() {
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    var now = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = now - birthDay;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+      document.getElementById('showDays').innerHTML="本站已运行 "+diffYears+" 年 "+diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }, 1000);
+</script>
 
         
 
@@ -2109,6 +2138,12 @@
       </div>
     
 
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
     
 
   </div>
@@ -2230,7 +2265,7 @@
   
   <script type="text/javascript">
     var GUEST = ['nick','mail','link'];
-    var guest = 'nick,mail,link';
+    var guest = 'nick,mail';
     guest = guest.split(',').filter(item=>{
       return GUEST.indexOf(item)>-1;
     });
@@ -2369,6 +2404,31 @@
   
 
   
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
   
 
   
