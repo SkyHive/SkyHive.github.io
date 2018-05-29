@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://SkyHive.github.io/"/>
-  <updated>2018-04-20T05:30:17.681Z</updated>
+  <updated>2018-05-29T05:17:07.534Z</updated>
   <id>http://SkyHive.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>解决Ubuntu下搜狗拼音候选词乱码</title>
+    <link href="http://SkyHive.github.io/2018/05/29/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8B%E6%90%9C%E7%8B%97%E6%8B%BC%E9%9F%B3%E5%80%99%E9%80%89%E8%AF%8D%E4%B9%B1%E7%A0%81/"/>
+    <id>http://SkyHive.github.io/2018/05/29/解决Ubuntu下搜狗拼音候选词乱码/</id>
+    <published>2018-05-29T05:15:26.000Z</published>
+    <updated>2018-05-29T05:17:07.534Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天Ubuntu系统下的搜狗拼音突然抽疯了，中文输入的时候候选词区域都是全是一串无意义的英文字母，不知道是不是因为对Linux系统的支持问题还是怎么回事，解决办法也很简单，就是删除搜狗的配置文件，重新登录就好了，只是需要重新设置原来的配置</p><p>&lt;–!more–&gt;</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd ~/.config</div><div class="line">rm -rf SogouPY* sogou*</div></pre></td></tr></table></figure><p>别忘了注销再登录哦</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天Ubuntu系统下的搜狗拼音突然抽疯了，中文输入的时候候选词区域都是全是一串无意义的英文字母，不知道是不是因为对Linux系统的支持问题还是怎么回事，解决办法也很简单，就是删除搜狗的配置文件，重新登录就好了，只是需要重新设置原来的配置&lt;/p&gt;
+&lt;p&gt;&amp;lt;–!more
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://SkyHive.github.io/categories/Linux/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>关于Ubuntu循环登录界面</title>
@@ -425,28 +449,6 @@
     </summary>
     
       <category term="Blog" scheme="http://SkyHive.github.io/categories/Blog/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>记一次Arch的安装经历</title>
-    <link href="http://SkyHive.github.io/2017/02/13/%E8%AE%B0%E4%B8%80%E6%AC%A1Arch%E7%9A%84%E5%AE%89%E8%A3%85%E7%BB%8F%E5%8E%86/"/>
-    <id>http://SkyHive.github.io/2017/02/13/记一次Arch的安装经历/</id>
-    <published>2017-02-13T09:57:58.000Z</published>
-    <updated>2017-07-14T08:43:52.030Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。</p><p>那么下面打开虚拟机，进入安装界面：</p><p>首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">cfdisk</span>        <span class="comment">#使用cfdisk进行分区</span></div></pre></td></tr></table></figure></p><a id="more"></a><p><em>选择第二个dos类型</em>，这是将sda设置成MBR类型的分区，之前在遇到这个选项的时候，我下意识的选了第一个GPT，然后还去google了一下，说GPT很好,就使用这个吧，结果后面分区的时候和教程不一样，装好系统后怎么也进不去。</p><p>接下来你可以把整个硬盘设置成一个根分区或者分成一个根分区和一个boot分区。<em>如果设置成一个根分区记得要把那个分区设置bootable；如果是一个根分区和一个boot分区记得要把boot分区设置bootable。</em></p><p>退出cfdisk后格式化新设置的分区<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">lsblk       <span class="comment">#查看存储设备的状态，sda1、sda2这样的就是我们刚刚分出来的</span></div><div class="line">mkfs.ext4 <span class="regexp">/dev/</span>sda1</div><div class="line">mkfs.ext4 <span class="regexp">/dev/</span>sda2         <span class="comment">#将根分区和boot分区格式化成ext4格式</span></div></pre></td></tr></table></figure></p><p>然后就可以进行挂载了<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mount <span class="regexp">/dev/</span>sda2 <span class="regexp">/mnt           #将根分区挂载到/m</span>nt</div><div class="line">mkdir <span class="regexp">/mnt/</span>boot         <span class="comment">#为boot分区创建挂载点</span></div><div class="line">mount <span class="regexp">/dev/</span>sda1 <span class="regexp">/mnt/</span>boot</div></pre></td></tr></table></figure></p><p>接着修改软件镜像源<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd /etc/pacman.d        <span class="comment">#镜像源文件在这个目录下</span></div><div class="line"><span class="comment">#我们需要将China源放到文件头的位置，下面先将这段源提取到temp这个文件里</span></div><div class="line"><span class="keyword">grep</span> -A <span class="number">1</span> <span class="string">'##.*China'</span> mirrorlist|<span class="keyword">grep</span> -v <span class="string">'\-\-'</span> &gt; temp</div><div class="line"><span class="comment">#然后将mirrorlist的内容添加到temp的最后面</span></div><div class="line">cat mirrorlist &gt;&gt; temp</div><div class="line">mv temp mirrorlist         <span class="comment">#temp替换mirrorlist</span></div></pre></td></tr></table></figure></p><p>然后刷新软件仓库列表就可以开始安装了<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pacman -Syy         <span class="meta">#刷新软件仓库列表</span></div><div class="line">pacstrap -i /mnt <span class="keyword">base</span> <span class="keyword">base</span>-devel        <span class="meta">#安装系统</span></div></pre></td></tr></table></figure></p><p>接下来需要生成一个叫fstab的配置文件，在开机时候会由mount命令读取并挂载其中的分区。在安装完基本系统之后，就可以将fstab信息写入新安装的系统中了。<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">genfstab -U -p /mnt &gt;&gt; <span class="regexp">/mnt/etc</span><span class="regexp">/fstab</span></div><div class="line">nano /mnt<span class="regexp">/etc/fstab</span>         <span class="comment">#确认fstab文件真的生成了</span></div></pre></td></tr></table></figure></p><p>下面我们就可以进入新系统进行配置了<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">arch-chroot /mnt <span class="meta-keyword">/bin/</span>bash</div><div class="line">passwd          <span class="meta">#设置root密码</span></div><div class="line">echo 主机名 &gt; <span class="meta-keyword">/etc/</span>hostname         <span class="meta">#设置主机名</span></div></pre></td></tr></table></figure></p><p>然后配置区域<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nano <span class="regexp">/etc/</span>locale.gen</div></pre></td></tr></table></figure></p><p>将<code>en_US.UTF-8</code>、<code>zh_CN.UTF-8</code>、<code>zh_TW.UTF-8</code>的注释去掉，然后按Ctrl+x保存，退出，使用<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">locale-gen</span></div></pre></td></tr></table></figure></p><p>生成区域，然后设置locale.conf文件<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo LANG=en_us.UTF-<span class="number">8</span> &gt; <span class="regexp">/etc/</span>locale.conf<span class="comment">#如果在终端下使用中会出现乱码，可以装fbterm来解决</span></div></pre></td></tr></table></figure></p><p>下面配置时区<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ln -sf <span class="regexp">/usr/</span>share<span class="regexp">/zoneinfo/</span>Asia<span class="regexp">/Shanghai /</span>etc<span class="regexp">/localtime</span></div></pre></td></tr></table></figure></p><p>安装引导工具Grub<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pacman -S grub</div><div class="line">grub-install --recheck <span class="meta-keyword">/dev/</span>sda1        <span class="meta">#将grub写入系统，没有提示错误说明写入成功</span></div><div class="line">grub-mkconfig -o <span class="meta-keyword">/boot/</span>grub/grub.cfg        <span class="meta">#生成配置文件</span></div></pre></td></tr></table></figure></p><p>配置一下网络<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl <span class="built_in">enable</span> dhcpcd.service</div></pre></td></tr></table></figure></p><p>到现在为止，系统基本上配置好了，现在退出新系统，卸载挂载的分区，然后重启虚拟机<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">exit</span></div><div class="line">umount -R /mnt</div><div class="line">reboot</div></pre></td></tr></table></figure></p><p>剩下来的安装图形化界面和美化的步骤可以自行google。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。&lt;/p&gt;
-&lt;p&gt;那么下面打开虚拟机，进入安装界面：&lt;/p&gt;
-&lt;p&gt;首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk&lt;br&gt;&lt;figure class=&quot;highlight nginx&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;cfdisk&lt;/span&gt;        &lt;span class=&quot;comment&quot;&gt;#使用cfdisk进行分区&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://SkyHive.github.io/categories/Linux/"/>
     
     
   </entry>
