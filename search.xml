@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[解决Ubuntu下搜狗拼音候选词乱码]]></title>
     <url>%2F2018%2F05%2F29%2F%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8B%E6%90%9C%E7%8B%97%E6%8B%BC%E9%9F%B3%E5%80%99%E9%80%89%E8%AF%8D%E4%B9%B1%E7%A0%81%2F</url>
-    <content type="text"><![CDATA[今天Ubuntu系统下的搜狗拼音突然抽疯了，中文输入的时候候选词区域都是全是一串无意义的英文字母，不知道是不是因为对Linux系统的支持问题还是怎么回事，解决办法也很简单，就是删除搜狗的配置文件，重新登录就好了，只是需要重新设置原来的配置 &lt;–!more–&gt; 12cd ~/.configrm -rf SogouPY* sogou* 别忘了注销再登录哦]]></content>
+    <content type="text"><![CDATA[今天Ubuntu系统下的搜狗拼音突然抽疯了，中文输入的时候候选词区域都是全是一串无意义的英文字母，不知道是不是因为对Linux系统的支持问题还是怎么回事，解决办法也很简单，就是删除搜狗的配置文件，重新登录就好了，只是需要重新设置原来的配置 12cd ~/.configrm -rf SogouPY* sogou* 别忘了注销再登录哦]]></content>
       <categories>
         <category>Linux</category>
       </categories>
