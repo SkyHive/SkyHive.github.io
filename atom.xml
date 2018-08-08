@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://SkyHive.github.io/"/>
-  <updated>2018-06-06T01:16:02.895Z</updated>
+  <updated>2018-08-08T14:10:42.580Z</updated>
   <id>http://SkyHive.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>修改sudoers文件导致sudo无法使用的解决办法</title>
+    <link href="http://SkyHive.github.io/2018/08/08/%E4%BF%AE%E6%94%B9sudoers%E6%96%87%E4%BB%B6%E5%AF%BC%E8%87%B4sudo%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+    <id>http://SkyHive.github.io/2018/08/08/修改sudoers文件导致sudo无法使用的解决办法/</id>
+    <published>2018-08-08T14:09:41.000Z</published>
+    <updated>2018-08-08T14:10:42.580Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前因为修改过<code>/etc/sudoers</code>文件，有个地方语法错误，导致修改完成之后<code>sudo</code>命令无法使用</p><p>网上搜过很多解决办法，大都是重启进入单用户模式，以Root用户的身份修改<code>sudoers</code>文件，解决原本的语法错误。但是这个方法的硬条件是需要重启进入单用户模式，但是有的时候我们是以<code>ssh</code>的方式登录到LInux机器上去的，所以相应的也会有不需要重启的操作就能解决这种问题，当然这种操作也有一个硬条件——Linux上已经安装了<code>Pkttyagent</code>和<code>pkexec</code>，我并不知道这两个软件是不是所有Llinux系统都预装，所以大家都自己拿捏一下。</p><p>那么进入正题</p><p>首先，我们需要开两个session连接到Linux机器上</p><p>第一步：在以第一个session上输入</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo $$</div></pre></td></tr></table></figure><p>得到你目前Bash的PID。</p><p>第二步：在第二个session上输入</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pkttyagent --process pid #这里的pid是上一步获取到的，直接复制过来就好了</div></pre></td></tr></table></figure><p>第三步：回到第一个session中，输入</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pkexec visudo</div></pre></td></tr></table></figure><p>第四步：回到第二个session，你会发现Bash提示你进行权限认证，输入密码后，再回到第一个session</p><p>第五步：回到第一个session后就是我们熟悉的visudo界面啦，下面的操作大家心里都有数了</p><p><strong>总结一下，没事不要乱改和sudo有关的任何东西，会出事，绝逼会出事</strong></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;之前因为修改过&lt;code&gt;/etc/sudoers&lt;/code&gt;文件，有个地方语法错误，导致修改完成之后&lt;code&gt;sudo&lt;/code&gt;命令无法使用&lt;/p&gt;
+&lt;p&gt;网上搜过很多解决办法，大都是重启进入单用户模式，以Root用户的身份修改&lt;code&gt;sudoers&lt;/cod
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://SkyHive.github.io/categories/Linux/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>SSD与内存条的故事</title>
@@ -426,29 +450,6 @@
     </summary>
     
       <category term="Blog" scheme="http://SkyHive.github.io/categories/Blog/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>解决Ubuntu系统设置打不开</title>
-    <link href="http://SkyHive.github.io/2017/02/14/%E8%A7%A3%E5%86%B3Ubuntu%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE%E6%89%93%E4%B8%8D%E5%BC%80/"/>
-    <id>http://SkyHive.github.io/2017/02/14/解决Ubuntu系统设置打不开/</id>
-    <published>2017-02-14T11:23:32.000Z</published>
-    <updated>2017-02-14T11:25:34.074Z</updated>
-    
-    <content type="html"><![CDATA[<p>今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install ubuntu-desktop         <span class="comment">#这个会把Ubuntu预装的软件office还有Amazon什么的装回来，装完自己再慢慢卸载吧</span></div></pre></td></tr></table></figure></p><p>或者他也提供了一次性的安装办法<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="built_in">get</span> install ibus-pinyin unity-control-<span class="built_in">center</span> unity-control-<span class="built_in">center</span>-signon webaccounts-extension-common xul-ext-webaccounts</div></pre></td></tr></table></figure></p><p>但是我眉头一皱，发现事情并不简单，我继续搜了下去，也有很多人遇到这种问题，发现还有更简单的办法<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="built_in">get</span> install gnome-control-<span class="built_in">center</span>           #如果系统设置打不开，请重新安装gnome-control-<span class="built_in">center</span></div><div class="line">sudo apt-<span class="built_in">get</span> install unity-control-<span class="built_in">center</span>           #如果设置里只有很少的几个图标请重新安装unity-control-<span class="built_in">center</span></div></pre></td></tr></table></figure></p><p>当然上面两个方法并没有尝试过，我也无从得知导致我系统设置打不开的原因是不是卸载了iBus</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上
-      
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://SkyHive.github.io/categories/Linux/"/>
     
     
   </entry>
