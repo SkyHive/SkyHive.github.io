@@ -81,19 +81,17 @@
 
 
 
-<meta name="description" content="之前因为修改过/etc/sudoers文件，有个地方语法错误，导致修改完成之后sudo命令无法使用
-网上搜过很多解决办法，大都是重启进入单用户模式，以Root用户的身份修改sudoers文件，解决原本的语法错误。但是这个方法的硬条件是需要重启进入单用户模式，但是有的时候我们是以ssh的方式登录到LInux机器上去的，所以相应的也会有不需要重启的操作就能解决这种问题，当然这种操作也有一个硬条件——L">
+<meta name="description" content="之前因为修改过/etc/sudoers文件，有个地方语法错误，导致修改完成之后sudo命令无法使用 网上搜过很多解决办法，大都是重启进入单用户模式，以Root用户的身份修改sudoers文件，解决原本的语法错误。但是这个方法的硬条件是需要重启进入单用户模式，但是有的时候我们是以ssh的方式登录到LInux机器上去的，所以相应的也会有不需要重启的操作就能解决这种问题，当然这种操作也有一个硬条件——L">
 <meta property="og:type" content="article">
 <meta property="og:title" content="修改sudoers文件导致sudo无法使用的解决办法">
 <meta property="og:url" content="http://SkyHive.github.io/2018/08/08/修改sudoers文件导致sudo无法使用的解决办法/index.html">
-<meta property="og:site_name" content="SkyHive's Blog">
-<meta property="og:description" content="之前因为修改过/etc/sudoers文件，有个地方语法错误，导致修改完成之后sudo命令无法使用
-网上搜过很多解决办法，大都是重启进入单用户模式，以Root用户的身份修改sudoers文件，解决原本的语法错误。但是这个方法的硬条件是需要重启进入单用户模式，但是有的时候我们是以ssh的方式登录到LInux机器上去的，所以相应的也会有不需要重启的操作就能解决这种问题，当然这种操作也有一个硬条件——L">
+<meta property="og:site_name" content="SkyHive&#39;s Blog">
+<meta property="og:description" content="之前因为修改过/etc/sudoers文件，有个地方语法错误，导致修改完成之后sudo命令无法使用 网上搜过很多解决办法，大都是重启进入单用户模式，以Root用户的身份修改sudoers文件，解决原本的语法错误。但是这个方法的硬条件是需要重启进入单用户模式，但是有的时候我们是以ssh的方式登录到LInux机器上去的，所以相应的也会有不需要重启的操作就能解决这种问题，当然这种操作也有一个硬条件——L">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-08-08T14:10:42.580Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="修改sudoers文件导致sudo无法使用的解决办法">
-<meta name="twitter:description" content="之前因为修改过/etc/sudoers文件，有个地方语法错误，导致修改完成之后sudo命令无法使用
-网上搜过很多解决办法，大都是重启进入单用户模式，以Root用户的身份修改sudoers文件，解决原本的语法错误。但是这个方法的硬条件是需要重启进入单用户模式，但是有的时候我们是以ssh的方式登录到LInux机器上去的，所以相应的也会有不需要重启的操作就能解决这种问题，当然这种操作也有一个硬条件——L">
+<meta name="twitter:description" content="之前因为修改过/etc/sudoers文件，有个地方语法错误，导致修改完成之后sudo命令无法使用 网上搜过很多解决办法，大都是重启进入单用户模式，以Root用户的身份修改sudoers文件，解决原本的语法错误。但是这个方法的硬条件是需要重启进入单用户模式，但是有的时候我们是以ssh的方式登录到LInux机器上去的，所以相应的也会有不需要重启的操作就能解决这种问题，当然这种操作也有一个硬条件——L">
 
 
 
@@ -371,12 +369,12 @@
 <p>那么进入正题</p>
 <p>首先，我们需要开两个session连接到Linux机器上</p>
 <p>第一步：在以第一个session上输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo $$</div></pre></td></tr></table></figure>
+<p></p><p class="code-caption" data-lang="shell" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $$</span><br></pre></td></tr></table></figure><p></p>
 <p>得到你目前Bash的PID。</p>
 <p>第二步：在第二个session上输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pkttyagent --process pid #这里的pid是上一步获取到的，直接复制过来就好了</div></pre></td></tr></table></figure>
+<p></p><p class="code-caption" data-lang="shell" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkttyagent --process pid #这里的pid是上一步获取到的，直接复制过来就好了</span><br></pre></td></tr></table></figure><p></p>
 <p>第三步：回到第一个session中，输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pkexec visudo</div></pre></td></tr></table></figure>
+<p></p><p class="code-caption" data-lang="shell" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkexec visudo</span><br></pre></td></tr></table></figure><p></p>
 <p>第四步：回到第二个session，你会发现Bash提示你进行权限认证，输入密码后，再回到第一个session</p>
 <p>第五步：回到第一个session后就是我们熟悉的visudo界面啦，下面的操作大家心里都有数了</p>
 <p><strong>总结一下，没事不要乱改和sudo有关的任何东西，会出事，绝逼会出事</strong></p>

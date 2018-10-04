@@ -81,16 +81,17 @@
 
 
 
-<meta name="description" content="今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法1sudo apt-get install ubuntu-desktop         #这个会把Ubuntu预装的软">
+<meta name="description" content="今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法 Copy Code1sudo apt-get install ubuntu-desktop         #这个会把">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决Ubuntu系统设置打不开">
 <meta property="og:url" content="http://SkyHive.github.io/2017/02/14/解决Ubuntu系统设置打不开/index.html">
-<meta property="og:site_name" content="SkyHive's Blog">
-<meta property="og:description" content="今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法1sudo apt-get install ubuntu-desktop         #这个会把Ubuntu预装的软">
+<meta property="og:site_name" content="SkyHive&#39;s Blog">
+<meta property="og:description" content="今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法 Copy Code1sudo apt-get install ubuntu-desktop         #这个会把">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-02-14T11:25:34.074Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决Ubuntu系统设置打不开">
-<meta name="twitter:description" content="今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法1sudo apt-get install ubuntu-desktop         #这个会把Ubuntu预装的软">
+<meta name="twitter:description" content="今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法 Copy Code1sudo apt-get install ubuntu-desktop         #这个会把">
 
 
 
@@ -363,9 +364,12 @@
       
 
       
-        <p>今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install ubuntu-desktop         <span class="comment">#这个会把Ubuntu预装的软件office还有Amazon什么的装回来，装完自己再慢慢卸载吧</span></div></pre></td></tr></table></figure></p>
-<p>或者他也提供了一次性的安装办法<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="built_in">get</span> install ibus-pinyin unity-control-<span class="built_in">center</span> unity-control-<span class="built_in">center</span>-signon webaccounts-extension-common xul-ext-webaccounts</div></pre></td></tr></table></figure></p>
-<p>但是我眉头一皱，发现事情并不简单，我继续搜了下去，也有很多人遇到这种问题，发现还有更简单的办法<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="built_in">get</span> install gnome-control-<span class="built_in">center</span>           #如果系统设置打不开，请重新安装gnome-control-<span class="built_in">center</span></div><div class="line">sudo apt-<span class="built_in">get</span> install unity-control-<span class="built_in">center</span>           #如果设置里只有很少的几个图标请重新安装unity-control-<span class="built_in">center</span></div></pre></td></tr></table></figure></p>
+        <p>今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install ubuntu-desktop         <span class="comment">#这个会把Ubuntu预装的软件office还有Amazon什么的装回来，装完自己再慢慢卸载吧</span></span><br></pre></td></tr></table></figure><p></p>
+<p>或者他也提供了一次性的安装办法</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install ibus-pinyin unity-control-<span class="built_in">center</span> unity-control-<span class="built_in">center</span>-signon webaccounts-extension-common xul-ext-webaccounts</span><br></pre></td></tr></table></figure><p></p>
+<p>但是我眉头一皱，发现事情并不简单，我继续搜了下去，也有很多人遇到这种问题，发现还有更简单的办法</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install gnome-control-<span class="built_in">center</span>           #如果系统设置打不开，请重新安装gnome-control-<span class="built_in">center</span></span><br><span class="line">sudo apt-<span class="built_in">get</span> install unity-control-<span class="built_in">center</span>           #如果设置里只有很少的几个图标请重新安装unity-control-<span class="built_in">center</span></span><br></pre></td></tr></table></figure><p></p>
 <p>当然上面两个方法并没有尝试过，我也无从得知导致我系统设置打不开的原因是不是卸载了iBus</p>
 
       

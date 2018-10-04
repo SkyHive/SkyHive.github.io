@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="最近在学校做一个云计算大赛，需要搭建一个hadoop的平台（一共四台服务器，这是一个怎样的hadoop啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行1ssh-keygen -t rsa">
+<meta name="description" content="最近在学校做一个云计算大赛，需要搭建一个hadoop的平台（一共四台服务器，这是一个怎样的hadoop啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行 Copy Code1ssh-keygen -t rsa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="配置ssh免密登录遇到的坑">
 <meta property="og:url" content="http://SkyHive.github.io/2017/12/08/配置ssh免密登录遇到的坑/index.html">
-<meta property="og:site_name" content="SkyHive's Blog">
-<meta property="og:description" content="最近在学校做一个云计算大赛，需要搭建一个hadoop的平台（一共四台服务器，这是一个怎样的hadoop啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行1ssh-keygen -t rsa">
+<meta property="og:site_name" content="SkyHive&#39;s Blog">
+<meta property="og:description" content="最近在学校做一个云计算大赛，需要搭建一个hadoop的平台（一共四台服务器，这是一个怎样的hadoop啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行 Copy Code1ssh-keygen -t rsa">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://old5ws7lp.bkt.clouddn.com/images/ssh.png">
 <meta property="og:updated_time" content="2017-12-08T03:14:20.525Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="配置ssh免密登录遇到的坑">
-<meta name="twitter:description" content="最近在学校做一个云计算大赛，需要搭建一个hadoop的平台（一共四台服务器，这是一个怎样的hadoop啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行1ssh-keygen -t rsa">
+<meta name="twitter:description" content="最近在学校做一个云计算大赛，需要搭建一个hadoop的平台（一共四台服务器，这是一个怎样的hadoop啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行 Copy Code1ssh-keygen -t rsa">
 <meta name="twitter:image" content="http://old5ws7lp.bkt.clouddn.com/images/ssh.png">
 
 
@@ -365,7 +366,8 @@
       
 
       
-        <p>最近在学校做一个云计算大赛，需要搭建一个hadoop的平台（一共四台服务器，这是一个怎样的hadoop啊），搭建的中途遇到一个小插曲。<br>由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ssh-keygen -t rsa</span></div></pre></td></tr></table></figure></p>
+        <p>最近在学校做一个云计算大赛，需要搭建一个hadoop的平台（一共四台服务器，这是一个怎样的hadoop啊），搭建的中途遇到一个小插曲。<br>由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ssh-keygen -t rsa</span></span><br></pre></td></tr></table></figure><p></p>
 <a id="more"></a>
 <p>然后一直回车，最后会在你主目录下生成一个<code>.ssh</code>目录，其中的<code>id_rsa</code>是你的密钥，<code>id_rsa.pub</code>是你要上传的公钥，<code>known_hosts</code>是你连接过的主机的信息<br><img src="http://old5ws7lp.bkt.clouddn.com/images/ssh.png"></p>
 <p>我们需要在<code>.ssh</code>目录下建立一个<code>authorized_keys</code>文件，将各个主机的公钥信息存储在该文件下，然后各个主机就可以通过ssh免密登录了，至于具体的原理，大家可以网上自行科普一下，无非是一些加密解密的过程。</p>

@@ -81,22 +81,17 @@
 
 
 
-<meta name="description" content="这两天笔者遇到了一个很操蛋的问题——Apache无法解析PHP代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：
-
-修改apache的配置文件httpd.conf">
+<meta name="description" content="这两天笔者遇到了一个很操蛋的问题——Apache无法解析PHP代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：  修改apache的配置文件httpd.conf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决Ubuntu下Apache不解析PHP问题">
 <meta property="og:url" content="http://SkyHive.github.io/2017/07/13/解决Ubuntu下Apache不解析PHP问题/index.html">
-<meta property="og:site_name" content="SkyHive's Blog">
-<meta property="og:description" content="这两天笔者遇到了一个很操蛋的问题——Apache无法解析PHP代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：
-
-修改apache的配置文件httpd.conf">
+<meta property="og:site_name" content="SkyHive&#39;s Blog">
+<meta property="og:description" content="这两天笔者遇到了一个很操蛋的问题——Apache无法解析PHP代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：  修改apache的配置文件httpd.conf">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-07-13T12:02:13.924Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决Ubuntu下Apache不解析PHP问题">
-<meta name="twitter:description" content="这两天笔者遇到了一个很操蛋的问题——Apache无法解析PHP代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：
-
-修改apache的配置文件httpd.conf">
+<meta name="twitter:description" content="这两天笔者遇到了一个很操蛋的问题——Apache无法解析PHP代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：  修改apache的配置文件httpd.conf">
 
 
 
@@ -376,7 +371,8 @@
 <p>再找到：<br><code>#ServerName www.example.com:80</code><br>改成<br><code>ServerName localhost:80</code></p>
 </blockquote>
 <p>然而Ubuntu下的Apache并没有httpd.conf这个配置文件，而是通过一个apache2.conf来引用每个部分的配置文件，这样在一个配置包里找到那一句配置也并不简单，而且我还没有找到。。。</p>
-<p>不过皇天不负有心人，终于是找到了解决办法：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install libapache2-<span class="keyword">mod</span>-php</div></pre></td></tr></table></figure></p>
+<p>不过皇天不负有心人，终于是找到了解决办法：</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install libapache2-<span class="keyword">mod</span>-php</span><br></pre></td></tr></table></figure><p></p>
 <p>这一步安装了apache的扩展包，可以用于解析php，我觉得不管是7版本还是5版本都可以适用。</p>
 
       

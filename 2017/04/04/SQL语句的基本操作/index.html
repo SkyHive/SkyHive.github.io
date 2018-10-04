@@ -81,28 +81,17 @@
 
 
 
-<meta name="description" content="数据库操作
-创建数据库： CREATE DATABASE &amp;lt;数据库名&amp;gt; [其他选项]
-使用数据库： USE &amp;lt;数据库名&amp;gt;
-修改数据库： ALTER DATABASE &amp;lt;数据库名&amp;gt;
-删除数据库： DROP DATABASE &amp;lt;数据库名&amp;gt;">
+<meta name="description" content="数据库操作 创建数据库： CREATE DATABASE &amp;lt;数据库名&amp;gt; [其他选项] 使用数据库： USE &amp;lt;数据库名&amp;gt; 修改数据库： ALTER DATABASE &amp;lt;数据库名&amp;gt; 删除数据库： DROP DATABASE &amp;lt;数据库名&amp;gt;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL语句的基本操作">
 <meta property="og:url" content="http://SkyHive.github.io/2017/04/04/SQL语句的基本操作/index.html">
-<meta property="og:site_name" content="SkyHive's Blog">
-<meta property="og:description" content="数据库操作
-创建数据库： CREATE DATABASE &amp;lt;数据库名&amp;gt; [其他选项]
-使用数据库： USE &amp;lt;数据库名&amp;gt;
-修改数据库： ALTER DATABASE &amp;lt;数据库名&amp;gt;
-删除数据库： DROP DATABASE &amp;lt;数据库名&amp;gt;">
+<meta property="og:site_name" content="SkyHive&#39;s Blog">
+<meta property="og:description" content="数据库操作 创建数据库： CREATE DATABASE &amp;lt;数据库名&amp;gt; [其他选项] 使用数据库： USE &amp;lt;数据库名&amp;gt; 修改数据库： ALTER DATABASE &amp;lt;数据库名&amp;gt; 删除数据库： DROP DATABASE &amp;lt;数据库名&amp;gt;">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-04-07T04:40:08.834Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL语句的基本操作">
-<meta name="twitter:description" content="数据库操作
-创建数据库： CREATE DATABASE &amp;lt;数据库名&amp;gt; [其他选项]
-使用数据库： USE &amp;lt;数据库名&amp;gt;
-修改数据库： ALTER DATABASE &amp;lt;数据库名&amp;gt;
-删除数据库： DROP DATABASE &amp;lt;数据库名&amp;gt;">
+<meta name="twitter:description" content="数据库操作 创建数据库： CREATE DATABASE &amp;lt;数据库名&amp;gt; [其他选项] 使用数据库： USE &amp;lt;数据库名&amp;gt; 修改数据库： ALTER DATABASE &amp;lt;数据库名&amp;gt; 删除数据库： DROP DATABASE &amp;lt;数据库名&amp;gt;">
 
 
 
@@ -383,11 +372,11 @@
 </ol>
 <a id="more"></a>
 <h3 id="数据表操作"><a href="#数据表操作" class="headerlink" title="数据表操作"></a>数据表操作</h3><ol>
-<li><p>创建表：</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE &lt;表名&gt;</div><div class="line">（</div><div class="line">     &lt;列名<span class="number">1</span>&gt;&lt;数据类型&gt;<span class="meta">[&lt;列级完整性约束&gt;]</span>,</div><div class="line">    <span class="meta">[&lt;列名n&gt;&lt;数据类型&gt;[&lt;列级完整性约束&gt;]</span>]</div><div class="line"> ）;</div><div class="line">例：</div><div class="line">    create table studets</div><div class="line">    (</div><div class="line">        id int not <span class="keyword">null</span> auto_increment primary key,</div><div class="line">        name varchar(<span class="number">8</span>) not <span class="keyword">null</span>,</div><div class="line">        sex varchar(<span class="number">5</span>) not <span class="keyword">null</span>,</div><div class="line">        score int(<span class="number">5</span>) not <span class="keyword">null</span></div><div class="line">    )</div></pre></td></tr></table></figure>
+<li><p>创建表：<br></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><p></p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE &lt;表名&gt;</span><br><span class="line">（</span><br><span class="line">     &lt;列名<span class="number">1</span>&gt;&lt;数据类型&gt;<span class="meta">[&lt;列级完整性约束&gt;]</span>,</span><br><span class="line">    <span class="meta">[&lt;列名n&gt;&lt;数据类型&gt;[&lt;列级完整性约束&gt;]</span>]</span><br><span class="line"> ）;</span><br><span class="line">例：</span><br><span class="line">    create table studets</span><br><span class="line">    (</span><br><span class="line">        id int not <span class="keyword">null</span> auto_increment primary key,</span><br><span class="line">        name varchar(<span class="number">8</span>) not <span class="keyword">null</span>,</span><br><span class="line">        sex varchar(<span class="number">5</span>) not <span class="keyword">null</span>,</span><br><span class="line">        score int(<span class="number">5</span>) not <span class="keyword">null</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>修改基本表</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">add</span> &lt;列名&gt; &lt;列数据类型&gt; [<span class="keyword">after</span> 插入位置];         <span class="comment">--增加列</span></div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">change</span> &lt;列名&gt; &lt;列新名&gt; &lt;新数据类型&gt;;              <span class="comment">--修改列</span></div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">drop</span> &lt;列名&gt;;                         <span class="comment">--删除列</span></div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">rename</span> &lt;新表名&gt;;                     <span class="comment">--重命名表</span></div><div class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> &lt;表名&gt;                                       <span class="comment">--删除表</span></div></pre></td></tr></table></figure>
+<li><p>修改基本表<br></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><p></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">add</span> &lt;列名&gt; &lt;列数据类型&gt; [<span class="keyword">after</span> 插入位置];         <span class="comment">--增加列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">change</span> &lt;列名&gt; &lt;列新名&gt; &lt;新数据类型&gt;;              <span class="comment">--修改列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">drop</span> &lt;列名&gt;;                         <span class="comment">--删除列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">rename</span> &lt;新表名&gt;;                     <span class="comment">--重命名表</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> &lt;表名&gt;                                       <span class="comment">--删除表</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>表的基本操作</p>
 </li>

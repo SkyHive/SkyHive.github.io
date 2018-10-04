@@ -83,12 +83,13 @@
 
 <meta name="description" content="Just a Blog">
 <meta property="og:type" content="website">
-<meta property="og:title" content="SkyHive's Blog">
+<meta property="og:title" content="SkyHive&#39;s Blog">
 <meta property="og:url" content="http://SkyHive.github.io/index.html">
-<meta property="og:site_name" content="SkyHive's Blog">
+<meta property="og:site_name" content="SkyHive&#39;s Blog">
 <meta property="og:description" content="Just a Blog">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SkyHive's Blog">
+<meta name="twitter:title" content="SkyHive&#39;s Blog">
 <meta name="twitter:description" content="Just a Blog">
 
 
@@ -539,12 +540,12 @@
 <p>那么进入正题</p>
 <p>首先，我们需要开两个session连接到Linux机器上</p>
 <p>第一步：在以第一个session上输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo $$</div></pre></td></tr></table></figure>
+<p></p><p class="code-caption" data-lang="shell" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $$</span><br></pre></td></tr></table></figure><p></p>
 <p>得到你目前Bash的PID。</p>
 <p>第二步：在第二个session上输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pkttyagent --process pid #这里的pid是上一步获取到的，直接复制过来就好了</div></pre></td></tr></table></figure>
+<p></p><p class="code-caption" data-lang="shell" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkttyagent --process pid #这里的pid是上一步获取到的，直接复制过来就好了</span><br></pre></td></tr></table></figure><p></p>
 <p>第三步：回到第一个session中，输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pkexec visudo</div></pre></td></tr></table></figure>
+<p></p><p class="code-caption" data-lang="shell" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkexec visudo</span><br></pre></td></tr></table></figure><p></p>
 <p>第四步：回到第二个session，你会发现Bash提示你进行权限认证，输入密码后，再回到第一个session</p>
 <p>第五步：回到第一个session后就是我们熟悉的visudo界面啦，下面的操作大家心里都有数了</p>
 <p><strong>总结一下，没事不要乱改和sudo有关的任何东西，会出事，绝逼会出事</strong></p>
@@ -878,7 +879,7 @@
         
           
             <p>今天Ubuntu系统下的搜狗拼音突然抽疯了，中文输入的时候候选词区域都是全是一串无意义的英文字母，不知道是不是因为对Linux系统的支持问题还是怎么回事，解决办法也很简单，就是删除搜狗的配置文件，重新登录就好了，只是需要重新设置原来的配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd ~/.config</div><div class="line">rm -rf SogouPY* sogou*</div></pre></td></tr></table></figure>
+<p></p><p class="code-caption" data-lang="shell" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.config</span><br><span class="line">rm -rf SogouPY* sogou*</span><br></pre></td></tr></table></figure><p></p>
 <p>别忘了注销再登录哦</p>
 
           
@@ -1377,7 +1378,8 @@
 
       
         
-          <p>最近在学校做一个云计算大赛，需要搭建一个hadoop的平台（一共四台服务器，这是一个怎样的hadoop啊），搭建的中途遇到一个小插曲。<br>由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ssh-keygen -t rsa</span></div></pre></td></tr></table></figure></p>
+          <p>最近在学校做一个云计算大赛，需要搭建一个hadoop的平台（一共四台服务器，这是一个怎样的hadoop啊），搭建的中途遇到一个小插曲。<br>由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ssh-keygen -t rsa</span></span><br></pre></td></tr></table></figure><p></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/12/08/配置ssh免密登录遇到的坑/#more" rel="contents">

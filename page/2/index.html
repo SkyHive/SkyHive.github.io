@@ -83,12 +83,13 @@
 
 <meta name="description" content="Just a Blog">
 <meta property="og:type" content="website">
-<meta property="og:title" content="SkyHive's Blog">
+<meta property="og:title" content="SkyHive&#39;s Blog">
 <meta property="og:url" content="http://SkyHive.github.io/page/2/index.html">
-<meta property="og:site_name" content="SkyHive's Blog">
+<meta property="og:site_name" content="SkyHive&#39;s Blog">
 <meta property="og:description" content="Just a Blog">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SkyHive's Blog">
+<meta name="twitter:title" content="SkyHive&#39;s Blog">
 <meta name="twitter:description" content="Just a Blog">
 
 
@@ -368,7 +369,7 @@
         
           <p>最近一直想自己搭一个Shadowsocks服务，并且利用服务器学习一些技术知识，但是国内的服务器实在是贵得很啊，像我这种苦逼大学生根本玩不起，无奈之下只好各种google百度，最后找到了一些国外的VPS资源</p>
 <ul>
-<li>BandwagonHost(<a href="http://banwagong.cn/fangan.html">搬瓦工VPS</a>)：据观察搬瓦工这个VPS还是算计比较便宜的，年付20刀，平均下来每个月只有1.6刀，而且套餐很良心很良心,512MB的内存，10GB的SSD，1TB的流量是不是比国内很多主机都划算的很。<img src="http://old5ws7lp.bkt.clouddn.com/images/DO1.png">
+<li>BandwagonHost(<a href="http://banwagong.cn/fangan.html" target="_blank" rel="noopener">搬瓦工VPS</a>)：据观察搬瓦工这个VPS还是算计比较便宜的，年付20刀，平均下来每个月只有1.6刀，而且套餐很良心很良心,512MB的内存，10GB的SSD，1TB的流量是不是比国内很多主机都划算的很。<img src="http://old5ws7lp.bkt.clouddn.com/images/DO1.png">
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/08/11/搭建属于自己的Shadowsocks服务/#more" rel="contents">
@@ -537,10 +538,13 @@
         
           
             <p>这两天在帮别人写一个注册登录功能的页面，用到了简单的TP框架，但是在我自己的Ubuntu环境下发现验证码出了问题——验证码图片显示不出来。</p>
-<p>我将图片单独拉出来，发现错误提示如下：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Call to <span class="literal">undefined</span> <span class="function"><span class="keyword">function</span> <span class="title">imagecreate</span><span class="params">()</span></span></div></pre></td></tr></table></figure></p>
-<p>百度一问就找到了答案，原来这是由于没有安装或者开启PHP的GD库导致的，既然这样我只需要安装一下GD库就解决了：<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="built_in">get</span> install php7.0-<span class="built_in">gd</span></div></pre></td></tr></table></figure></p>
+<p>我将图片单独拉出来，发现错误提示如下：</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Call to <span class="literal">undefined</span> <span class="function"><span class="keyword">function</span> <span class="title">imagecreate</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure><p></p>
+<p>百度一问就找到了答案，原来这是由于没有安装或者开启PHP的GD库导致的，既然这样我只需要安装一下GD库就解决了：</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install php7.0-<span class="built_in">gd</span></span><br></pre></td></tr></table></figure><p></p>
 <p>安装完毕后将Apache服务器重启，如果是Nginx的话，则可用可不用</p>
-<p>如果是Windows环境的话，打开PHP安装目录下的php.ini配置文件，找到：<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">;extension=php_gd2.dll</span></div></pre></td></tr></table></figure></p>
+<p>如果是Windows环境的话，打开PHP安装目录下的php.ini配置文件，找到：</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;<span class="attribute">extension</span>=php_gd2.dll</span><br></pre></td></tr></table></figure><p></p>
 <p>去掉注释，重启服务就解决了。</p>
 
           
@@ -872,7 +876,7 @@
 
       
         
-          <p>笔者最近在自学Python的过程中想起曾经有人推荐过的一款学习编程的小游戏，叫做<a href="https://cn.codecombat.com">Codecombat</a>，通过玩游戏的方式学习编程语言的语法规则。<br>
+          <p>笔者最近在自学Python的过程中想起曾经有人推荐过的一款学习编程的小游戏，叫做<a href="https://cn.codecombat.com" target="_blank" rel="noopener">Codecombat</a>，通过玩游戏的方式学习编程语言的语法规则。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/21/一个学习Python的小游戏/#more" rel="contents">
@@ -1374,7 +1378,8 @@
       
         
           <p><em>最近在自学Python，所以一边学也一边总结一些知识点</em></p>
-<h4 id="Python的输出"><a href="#Python的输出" class="headerlink" title="Python的输出"></a>Python的输出</h4><p>Python的输出和C语言类似，在<code>print()</code>函数里加上字符串（用单引号或者双引号，但是不能混用），例如：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;</span>&gt; print(<span class="string">'Hello world!'</span>)</div></pre></td></tr></table></figure></p>
+<h4 id="Python的输出"><a href="#Python的输出" class="headerlink" title="Python的输出"></a>Python的输出</h4><p>Python的输出和C语言类似，在<code>print()</code>函数里加上字符串（用单引号或者双引号，但是不能混用），例如：</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">print</span>(<span class="string">'Hello world!'</span>)</span></span><br></pre></td></tr></table></figure><p></p>
 <p><code>print()</code>函数也可以接受多个字符串，用逗号隔开即可。<code>print()</code>函数依次打印字符串，每遇到逗号就会输出一个空格。<br><code>print()</code>也可以打印整数或者计算结果，例如：<br>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1884,8 +1889,10 @@
       
         
           
-            <p>将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次<code>hexo d</code>都会出现<br><figure class="highlight subunit"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ERROR </span>Deployer not found: git</div></pre></td></tr></table></figure></p>
-<p>这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：<strong>只要将配置文件_config.yml中plugins的那段给注释掉</strong>就OK了，即<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#plugins:</span></div><div class="line"><span class="meta">#- hexo-qiniu-sync</span></div></pre></td></tr></table></figure></p>
+            <p>将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次<code>hexo d</code>都会出现</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ERROR </span>Deployer not found: git</span><br></pre></td></tr></table></figure><p></p>
+<p>这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：<strong>只要将配置文件_config.yml中plugins的那段给注释掉</strong>就OK了，即</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">plugins:</span></span><br><span class="line"><span class="meta">#</span><span class="bash">- hexo-qiniu-sync</span></span><br></pre></td></tr></table></figure><p></p>
 <p>还是希望开发者能早点修改文档吧，不然还真的挺容易出事，不过说一句，我的Hexo是3.2.2的版本的，不知道2.x版本会不会出现类似的情况</p>
 
           

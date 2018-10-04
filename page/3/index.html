@@ -83,12 +83,13 @@
 
 <meta name="description" content="Just a Blog">
 <meta property="og:type" content="website">
-<meta property="og:title" content="SkyHive's Blog">
+<meta property="og:title" content="SkyHive&#39;s Blog">
 <meta property="og:url" content="http://SkyHive.github.io/page/3/index.html">
-<meta property="og:site_name" content="SkyHive's Blog">
+<meta property="og:site_name" content="SkyHive&#39;s Blog">
 <meta property="og:description" content="Just a Blog">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SkyHive's Blog">
+<meta name="twitter:title" content="SkyHive&#39;s Blog">
 <meta name="twitter:description" content="Just a Blog">
 
 
@@ -366,7 +367,7 @@
 
       
         
-          <p>今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。<br>七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT/DELETE 请求。如果想要注册可以<a href="https://portal.qiniu.com/signup?code=3lnfyn5xmh93m">点击这里</a>，这样可以为我增加每月5GB的容量。<br>
+          <p>今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。<br>七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT/DELETE 请求。如果想要注册可以<a href="https://portal.qiniu.com/signup?code=3lnfyn5xmh93m" target="_blank" rel="noopener">点击这里</a>，这样可以为我增加每月5GB的容量。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/02/14/Hexo搭配七牛存储图片等媒体资源/#more" rel="contents">
@@ -534,9 +535,12 @@
       
         
           
-            <p>今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="keyword">get</span> install ubuntu-desktop         <span class="comment">#这个会把Ubuntu预装的软件office还有Amazon什么的装回来，装完自己再慢慢卸载吧</span></div></pre></td></tr></table></figure></p>
-<p>或者他也提供了一次性的安装办法<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="built_in">get</span> install ibus-pinyin unity-control-<span class="built_in">center</span> unity-control-<span class="built_in">center</span>-signon webaccounts-extension-common xul-ext-webaccounts</div></pre></td></tr></table></figure></p>
-<p>但是我眉头一皱，发现事情并不简单，我继续搜了下去，也有很多人遇到这种问题，发现还有更简单的办法<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="built_in">get</span> install gnome-control-<span class="built_in">center</span>           #如果系统设置打不开，请重新安装gnome-control-<span class="built_in">center</span></div><div class="line">sudo apt-<span class="built_in">get</span> install unity-control-<span class="built_in">center</span>           #如果设置里只有很少的几个图标请重新安装unity-control-<span class="built_in">center</span></div></pre></td></tr></table></figure></p>
+            <p>今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install ubuntu-desktop         <span class="comment">#这个会把Ubuntu预装的软件office还有Amazon什么的装回来，装完自己再慢慢卸载吧</span></span><br></pre></td></tr></table></figure><p></p>
+<p>或者他也提供了一次性的安装办法</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install ibus-pinyin unity-control-<span class="built_in">center</span> unity-control-<span class="built_in">center</span>-signon webaccounts-extension-common xul-ext-webaccounts</span><br></pre></td></tr></table></figure><p></p>
+<p>但是我眉头一皱，发现事情并不简单，我继续搜了下去，也有很多人遇到这种问题，发现还有更简单的办法</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install gnome-control-<span class="built_in">center</span>           #如果系统设置打不开，请重新安装gnome-control-<span class="built_in">center</span></span><br><span class="line">sudo apt-<span class="built_in">get</span> install unity-control-<span class="built_in">center</span>           #如果设置里只有很少的几个图标请重新安装unity-control-<span class="built_in">center</span></span><br></pre></td></tr></table></figure><p></p>
 <p>当然上面两个方法并没有尝试过，我也无从得知导致我系统设置打不开的原因是不是卸载了iBus</p>
 
           
@@ -868,7 +872,8 @@
         
           <p>最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。</p>
 <p>那么下面打开虚拟机，进入安装界面：</p>
-<p>首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">cfdisk</span>        <span class="comment">#使用cfdisk进行分区</span></div></pre></td></tr></table></figure></p>
+<p>首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk</p>
+<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">cfdisk</span>        <span class="comment">#使用cfdisk进行分区</span></span><br></pre></td></tr></table></figure><p></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/02/13/记一次Arch的安装经历/#more" rel="contents">
@@ -1036,7 +1041,7 @@
       
         
           <p>笔者前段时间安装了sqli-labs，就想把sqli-labs和lamp环境的搭建都写出来，其实这两个东西都很简单，感觉比我折腾hexo要简单的得多了（手动滑稽）。</p>
-<p>sqli 即 sql injection(sql注入)，sqli-labs是一个印度程序员写的用来学习sql注入的游戏教程，<a href="https://www.youtube.com/playlist?list=PLkiAz1NPnw8qEgzS7cgVMKavvOAdogsro">Youtube上有一套视频教程</a>(需要科学上网)，<a href="https://github.com/Audi-1/sqli-labs">github上也有开源的项目</a>。</p>
+<p>sqli 即 sql injection(sql注入)，sqli-labs是一个印度程序员写的用来学习sql注入的游戏教程，<a href="https://www.youtube.com/playlist?list=PLkiAz1NPnw8qEgzS7cgVMKavvOAdogsro" target="_blank" rel="noopener">Youtube上有一套视频教程</a>(需要科学上网)，<a href="https://github.com/Audi-1/sqli-labs" target="_blank" rel="noopener">github上也有开源的项目</a>。</p>
 <p>那么接下来就可以进行安装了：<br>
           <!--noindex-->
           <div class="post-button text-center">
