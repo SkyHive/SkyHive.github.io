@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://SkyHive.github.io/"/>
-  <updated>2018-08-08T14:10:42.580Z</updated>
+  <updated>2018-10-04T12:55:02.824Z</updated>
   <id>http://SkyHive.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>美版 LG V30 系统升级</title>
+    <link href="http://SkyHive.github.io/2018/10/04/%E7%BE%8E%E7%89%88V30%E7%B3%BB%E7%BB%9F%E5%8D%87%E7%BA%A7/"/>
+    <id>http://SkyHive.github.io/2018/10/04/美版V30系统升级/</id>
+    <published>2018-10-04T12:50:31.000Z</published>
+    <updated>2018-10-04T12:55:02.824Z</updated>
+    
+    <content type="html"><![CDATA[<p>​       关于国行版本的 Andorid 手机的系统升级，肯定是没有什么问题的，连了网升就完事儿了；但是非国行版本的呢？会有一点小问题<br>​<br>​      前两天刚入手了一款次次旗舰 LG V30，去年的旗舰835，4+64的配置今年已然跌倒了千元来搞基的价位，果断入手了。说是要搞基，但是作为一个老年人，实在是懒得折腾了，某鱼的老板说韩版卖断货了，近期只有一款美版的 H932 支持移动全频段，就入手了。</p><a id="more"></a>    <p>​        到手稍微检查了一下，一切正常，梯子挂上美滋滋，但是出现了一个奇怪的问题——系统更新下载不下来。当时的网络状态是挂了梯子的，但是由于 Google 在系统上做的一些安全机制，导致挂了梯子（即网络流量被监控）的机器的系统更新了的流量不从梯子上走，所以会一直卡在 System Update Downloading。<br>​<br>  解决的办法有三个：</p><ol><li>肉身翻墙</li><li>路由器翻墙</li><li><p>用一台翻墙的机器将网络共享给你的手机</p><p>前两个方法对于大多数人来说还是比较困难的，正常人一般都是直接挂梯子，路由器翻墙虽然很多人家里都有设置，但是如果是在公共网络环境下的话，只能使用第三种方法（刷机除外）。</p></li></ol><p>步骤很简单：</p><ul><li><p>一台机器挂上 SS/SSR （我这里是用电脑，手机我觉得也是可以的）</p></li><li><p>挂上梯子的这台机器的 SS/SSR 选项勾选 <code>允许来自局域网的连接</code></p><img src="http://old5ws7lp.bkt.clouddn.com/images/允许来自局域网的连接.png"></li><li><p>查看本机的局域网 IP ，并记住</p></li><li><p>手机连上和翻墙的机器同一个局域网，在 WiFi 的高级选项中，设置代理</p></li><li><p>代理设置为手动，代理主机为翻墙机器的局域网 IP，端口号为1080（上一步中有），保存即可</p><img src="http://old5ws7lp.bkt.clouddn.com/images/WiFi代理设置.png"></li></ul><p>至此，我们就已经成功地不在手机上挂梯子也能翻墙了（MDZZ），下面就能愉快的更新啦！</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;​       关于国行版本的 Andorid 手机的系统升级，肯定是没有什么问题的，连了网升就完事儿了；但是非国行版本的呢？会有一点小问题&lt;br&gt;​&lt;br&gt;​      前两天刚入手了一款次次旗舰 LG V30，去年的旗舰835，4+64的配置今年已然跌倒了千元来搞基的价位，果断入手了。说是要搞基，但是作为一个老年人，实在是懒得折腾了，某鱼的老板说韩版卖断货了，近期只有一款美版的 H932 支持移动全频段，就入手了。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Other" scheme="http://SkyHive.github.io/categories/Other/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>修改sudoers文件导致sudo无法使用的解决办法</title>
@@ -426,26 +446,6 @@
       
         &lt;p&gt;将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次&lt;code&gt;hexo d&lt;/code&gt;都会出现&lt;br&gt;&lt;figure class=&quot;highlight subunit&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;p
       
-    
-    </summary>
-    
-      <category term="Blog" scheme="http://SkyHive.github.io/categories/Blog/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo搭配七牛存储图片等媒体资源</title>
-    <link href="http://SkyHive.github.io/2017/02/14/Hexo%E6%90%AD%E9%85%8D%E4%B8%83%E7%89%9B%E5%AD%98%E5%82%A8%E5%9B%BE%E7%89%87%E7%AD%89%E5%AA%92%E4%BD%93%E8%B5%84%E6%BA%90/"/>
-    <id>http://SkyHive.github.io/2017/02/14/Hexo搭配七牛存储图片等媒体资源/</id>
-    <published>2017-02-14T14:19:40.000Z</published>
-    <updated>2017-02-14T15:07:59.170Z</updated>
-    
-    <content type="html"><![CDATA[<p>今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。<br>七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT/DELETE 请求。如果想要注册可以<a href="https://portal.qiniu.com/signup?code=3lnfyn5xmh93m" target="_blank" rel="external">点击这里</a>，这样可以为我增加每月5GB的容量。<br><a id="more"></a><br>注册完成之后就可以进行创建空间了，注意我们添加的资源为<strong>对象存储</strong>，访问控制为<strong>公开空间</strong></p><img src="http://old5ws7lp.bkt.clouddn.com/images/qiniu_create.png"><img src="http://old5ws7lp.bkt.clouddn.com/images/qiniu_set.png"><p>然后点击右上角进入<strong>密钥管理</strong>，复制当前使用的AK和SK，配置的时候会用得到<br>下面我们会用到一个叫做的<a href="https://github.com/gyk001/hexo-qiniu-sync" target="_blank" rel="external">hexo-qiniu-sync</a>的插件，首先在hexo主目录下安装：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> hexo-qiniu-<span class="keyword">sync</span> - -<span class="keyword">save</span></div></pre></td></tr></table></figure></p><p>然后把配置信息添加到_config.yml中<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">plugins:</span></div><div class="line">  - hexo-qiniu-sync</div><div class="line"></div><div class="line"><span class="meta">#七牛云存储设置</span></div><div class="line"><span class="meta">##offline       是否离线. 离线状态将使用本地地址渲染</span></div><div class="line"><span class="meta">##sync          是否同步</span></div><div class="line"><span class="meta">##bucket        空间名称.</span></div><div class="line"><span class="meta">##access_key    上传密钥AccessKey</span></div><div class="line"><span class="meta">##secret_key    上传密钥SecretKey</span></div><div class="line"><span class="meta">##secret_file   秘钥文件路径，可以将上述两个属性配置到文件内，防止泄露，json格式。绝对路径相对路径均可</span></div><div class="line"><span class="meta">##dirPrefix     上传的资源子目录前缀.如设置，需与urlPrefix同步 </span></div><div class="line"><span class="meta">##urlPrefix     外链前缀.</span></div><div class="line"><span class="meta">##up_host      上传服务器路径,如选择华北区域的话配置为http:<span class="comment">//up-z1.qiniu.com</span></span></div><div class="line"><span class="meta">##local_dir     本地目录.</span></div><div class="line"><span class="meta">##update_exist  是否更新已经上传过的文件(仅文件大小不同或在上次上传后进行更新的才会重新上传)</span></div><div class="line"><span class="meta">##image/js/css  子参数folder为不同静态资源种类的目录名称，一般不需要改动</span></div><div class="line"><span class="meta">##image.extend  这是个特殊参数，用于生成缩略图或加水印等操作。具体请参考http:<span class="comment">//developer.qiniu.com/docs/v6/api/reference/fop/image/ </span></span></div><div class="line"><span class="meta">##              可使用基本图片处理、高级图片处理、图片水印处理这3个接口。例如 ?imageView2/2/w/500 即生成宽度最多500px的缩略图</span></div><div class="line"><span class="symbol">qiniu:</span></div><div class="line"><span class="symbol">  offline:</span> false</div><div class="line"><span class="symbol">  sync:</span> true</div><div class="line"><span class="symbol">  bucket:</span> bucket_name</div><div class="line"><span class="symbol">  secret_file:</span> sec/qn.json or C:</div><div class="line"><span class="symbol">  access_key:</span> AccessKey</div><div class="line"><span class="symbol">  secret_key:</span> SecretKey</div><div class="line"><span class="symbol">  dirPrefix:</span> static</div><div class="line"><span class="symbol">  urlPrefix:</span> http:<span class="comment">//bucket_name.qiniudn.com/static</span></div><div class="line"><span class="symbol">  up_host:</span> http:<span class="comment">//upload.qiniu.com</span></div><div class="line"><span class="symbol">  local_dir:</span> static</div><div class="line"><span class="symbol">  update_exist:</span> true</div><div class="line"><span class="symbol">  image:</span> </div><div class="line"><span class="symbol">    folder:</span> images</div><div class="line"><span class="symbol">    extend:</span> </div><div class="line"><span class="symbol">  js:</span></div><div class="line"><span class="symbol">    folder:</span> js</div><div class="line"><span class="symbol">  css:</span></div><div class="line"><span class="symbol">    folder:</span> css</div></pre></td></tr></table></figure></p><p>其中各个参数在插件的<a href="https://github.com/gyk001/hexo-qiniu-sync/blob/master/README.md" target="_blank" rel="external">README文件</a>中都有详细的介绍，按照github上的教程一步一步来是很简单的。</p><p>然后在hexo主目录下创建本地目录（该目录要和配置中local_dir参数保持一致），然后创建iamges、js、css子目录，这样基本的配置就完成了</p><p>下面就可以在你的文章中试着插入图片了，比如你想引用在你/local_dir/images/下的图片1.png<br><figure class="highlight django"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name">qnimg</span> 1.png %&#125;</span><span class="xml"></span></div></pre></td></tr></table></figure></p><p>更高级的用法请参考github上的说明。</p><p>下面进行同步<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">hexo qiniu s</span></div></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。&lt;br&gt;七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT/DELETE 请求。如果想要注册可以&lt;a href=&quot;https://portal.qiniu.com/signup?code=3lnfyn5xmh93m&quot;&gt;点击这里&lt;/a&gt;，这样可以为我增加每月5GB的容量。&lt;br&gt;
     
     </summary>
     
