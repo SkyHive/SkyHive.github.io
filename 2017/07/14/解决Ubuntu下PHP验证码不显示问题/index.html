@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="这两天在帮别人写一个注册登录功能的页面，用到了简单的TP框架，但是在我自己的Ubuntu环境下发现验证码出了问题——验证码图片显示不出来。 我将图片单独拉出来，发现错误提示如下： Copy Code1Call to undefined function imagecreate() 百度一问就找到了答案，原来这是由于没有安装或者开启PHP的GD库导致的，既然这样我只需要安装一下GD库就解决了： Co">
+<meta name="description" content="这两天在帮别人写一个注册登录功能的页面，用到了简单的TP框架，但是在我自己的Ubuntu环境下发现验证码出了问题——验证码图片显示不出来。 我将图片单独拉出来，发现错误提示如下：1Call to undefined function imagecreate() 百度一问就找到了答案，原来这是由于没有安装或者开启PHP的GD库导致的，既然这样我只需要安装一下GD库就解决了：1sudo apt-get">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决Ubuntu下PHP验证码不显示问题">
 <meta property="og:url" content="http://SkyHive.github.io/2017/07/14/解决Ubuntu下PHP验证码不显示问题/index.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="这两天在帮别人写一个注册登录功能的页面，用到了简单的TP框架，但是在我自己的Ubuntu环境下发现验证码出了问题——验证码图片显示不出来。 我将图片单独拉出来，发现错误提示如下： Copy Code1Call to undefined function imagecreate() 百度一问就找到了答案，原来这是由于没有安装或者开启PHP的GD库导致的，既然这样我只需要安装一下GD库就解决了： Co">
+<meta property="og:description" content="这两天在帮别人写一个注册登录功能的页面，用到了简单的TP框架，但是在我自己的Ubuntu环境下发现验证码出了问题——验证码图片显示不出来。 我将图片单独拉出来，发现错误提示如下：1Call to undefined function imagecreate() 百度一问就找到了答案，原来这是由于没有安装或者开启PHP的GD库导致的，既然这样我只需要安装一下GD库就解决了：1sudo apt-get">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-07-14T08:42:02.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决Ubuntu下PHP验证码不显示问题">
-<meta name="twitter:description" content="这两天在帮别人写一个注册登录功能的页面，用到了简单的TP框架，但是在我自己的Ubuntu环境下发现验证码出了问题——验证码图片显示不出来。 我将图片单独拉出来，发现错误提示如下： Copy Code1Call to undefined function imagecreate() 百度一问就找到了答案，原来这是由于没有安装或者开启PHP的GD库导致的，既然这样我只需要安装一下GD库就解决了： Co">
+<meta name="twitter:description" content="这两天在帮别人写一个注册登录功能的页面，用到了简单的TP框架，但是在我自己的Ubuntu环境下发现验证码出了问题——验证码图片显示不出来。 我将图片单独拉出来，发现错误提示如下：1Call to undefined function imagecreate() 百度一问就找到了答案，原来这是由于没有安装或者开启PHP的GD库导致的，既然这样我只需要安装一下GD库就解决了：1sudo apt-get">
 
 
 
@@ -365,13 +365,10 @@
 
       
         <p>这两天在帮别人写一个注册登录功能的页面，用到了简单的TP框架，但是在我自己的Ubuntu环境下发现验证码出了问题——验证码图片显示不出来。</p>
-<p>我将图片单独拉出来，发现错误提示如下：</p>
-<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Call to <span class="literal">undefined</span> <span class="function"><span class="keyword">function</span> <span class="title">imagecreate</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure><p></p>
-<p>百度一问就找到了答案，原来这是由于没有安装或者开启PHP的GD库导致的，既然这样我只需要安装一下GD库就解决了：</p>
-<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install php7.0-<span class="built_in">gd</span></span><br></pre></td></tr></table></figure><p></p>
+<p>我将图片单独拉出来，发现错误提示如下：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Call to <span class="literal">undefined</span> <span class="function"><span class="keyword">function</span> <span class="title">imagecreate</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<p>百度一问就找到了答案，原来这是由于没有安装或者开启PHP的GD库导致的，既然这样我只需要安装一下GD库就解决了：<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install php7.0-<span class="built_in">gd</span></span><br></pre></td></tr></table></figure></p>
 <p>安装完毕后将Apache服务器重启，如果是Nginx的话，则可用可不用</p>
-<p>如果是Windows环境的话，打开PHP安装目录下的php.ini配置文件，找到：</p>
-<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;<span class="attribute">extension</span>=php_gd2.dll</span><br></pre></td></tr></table></figure><p></p>
+<p>如果是Windows环境的话，打开PHP安装目录下的php.ini配置文件，找到：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;<span class="attribute">extension</span>=php_gd2.dll</span><br></pre></td></tr></table></figure></p>
 <p>去掉注释，重启服务就解决了。</p>
 
       

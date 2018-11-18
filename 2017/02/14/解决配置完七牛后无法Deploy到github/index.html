@@ -81,17 +81,17 @@
 
 
 
-<meta name="description" content="将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次hexo d都会出现 Copy Code1ERROR Deployer not found: git 这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：只要将配置文件_config.yml中plugins的那段给注释掉就OK了，即 Copy Co">
+<meta name="description" content="将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次hexo d都会出现1ERROR Deployer not found: git 这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：只要将配置文件_config.yml中plugins的那段给注释掉就OK了，即12#plugins:#- hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决配置完七牛后无法Deploy到gihub">
 <meta property="og:url" content="http://SkyHive.github.io/2017/02/14/解决配置完七牛后无法Deploy到github/index.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次hexo d都会出现 Copy Code1ERROR Deployer not found: git 这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：只要将配置文件_config.yml中plugins的那段给注释掉就OK了，即 Copy Co">
+<meta property="og:description" content="将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次hexo d都会出现1ERROR Deployer not found: git 这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：只要将配置文件_config.yml中plugins的那段给注释掉就OK了，即12#plugins:#- hexo">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-02-18T08:41:47.199Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决配置完七牛后无法Deploy到gihub">
-<meta name="twitter:description" content="将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次hexo d都会出现 Copy Code1ERROR Deployer not found: git 这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：只要将配置文件_config.yml中plugins的那段给注释掉就OK了，即 Copy Co">
+<meta name="twitter:description" content="将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次hexo d都会出现1ERROR Deployer not found: git 这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：只要将配置文件_config.yml中plugins的那段给注释掉就OK了，即12#plugins:#- hexo">
 
 
 
@@ -364,10 +364,8 @@
       
 
       
-        <p>将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次<code>hexo d</code>都会出现</p>
-<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ERROR </span>Deployer not found: git</span><br></pre></td></tr></table></figure><p></p>
-<p>这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：<strong>只要将配置文件_config.yml中plugins的那段给注释掉</strong>就OK了，即</p>
-<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">plugins:</span></span><br><span class="line"><span class="meta">#</span><span class="bash">- hexo-qiniu-sync</span></span><br></pre></td></tr></table></figure><p></p>
+        <p>将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次<code>hexo d</code>都会出现<br><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ERROR </span>Deployer not found: git</span><br></pre></td></tr></table></figure></p>
+<p>这样的报错，Google了半天都没有找到解决的办法，最后在找到了github上的一条issue，终于发现了解决办法：<strong>只要将配置文件_config.yml中plugins的那段给注释掉</strong>就OK了，即<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">plugins:</span></span><br><span class="line"><span class="meta">#</span><span class="bash">- hexo-qiniu-sync</span></span><br></pre></td></tr></table></figure></p>
 <p>还是希望开发者能早点修改文档吧，不然还真的挺容易出事，不过说一句，我的Hexo是3.2.2的版本的，不知道2.x版本会不会出现类似的情况</p>
 
       

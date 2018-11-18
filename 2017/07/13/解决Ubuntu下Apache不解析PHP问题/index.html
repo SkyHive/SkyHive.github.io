@@ -371,8 +371,7 @@
 <p>再找到：<br><code>#ServerName www.example.com:80</code><br>改成<br><code>ServerName localhost:80</code></p>
 </blockquote>
 <p>然而Ubuntu下的Apache并没有httpd.conf这个配置文件，而是通过一个apache2.conf来引用每个部分的配置文件，这样在一个配置包里找到那一句配置也并不简单，而且我还没有找到。。。</p>
-<p>不过皇天不负有心人，终于是找到了解决办法：</p>
-<p></p><p class="code-caption" data-lang="" data-line_number="frontend" data-trim_indent="backend" data-label_position="outer" data-labels_left="Code" data-labels_right=":" data-labels_copy="Copy Code"><span class="code-caption-label"></span><a class="code-caption-copy">Copy Code</a></p><br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install libapache2-<span class="keyword">mod</span>-php</span><br></pre></td></tr></table></figure><p></p>
+<p>不过皇天不负有心人，终于是找到了解决办法：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install libapache2-<span class="keyword">mod</span>-php</span><br></pre></td></tr></table></figure></p>
 <p>这一步安装了apache的扩展包，可以用于解析php，我觉得不管是7版本还是5版本都可以适用。</p>
 
       
