@@ -80,7 +80,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
     fancybox: false,
     tabs: true,
     motion: ,
@@ -138,7 +138,8 @@
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
-
+    
+    <div class="top-scroll-bar"></div>
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
@@ -168,7 +169,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/%7C%7Chome" rel="section">
+          <a href="/%7C%7C%20home" rel="section">
             
             首页
           </a>
@@ -176,7 +177,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/%7C%7Cuser" rel="section">
+          <a href="/about%7C%7C%20user" rel="section">
             
             关于
           </a>
@@ -184,7 +185,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/%7C%7Cth" rel="section">
+          <a href="/categories%7C%7C%20th" rel="section">
             
             分类
           </a>
@@ -192,7 +193,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/%7C%7Carchive" rel="section">
+          <a href="/archives%7C%7C%20archive" rel="section">
             
             归档
           </a>
@@ -513,7 +514,7 @@
 
           
             <div class="site-state-item site-state-posts">
-              <a href="/archives/%7C%7Carchive">
+              <a href="/archives%7C%7C%20archive">
                 <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">日志</span>
               </a>
@@ -658,6 +659,8 @@
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
         
+          <span id="scrollpercent"><span>0</span>%</span>
+        
       </div>
     
 
@@ -712,6 +715,8 @@
   <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
 
   <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
+
+  <script type="text/javascript" src="/js/src/custom_reading.js?v=6.0.4"></script>
 
 
 
