@@ -87,14 +87,14 @@
 
 
 
-<meta name="description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。 那么下面打开虚拟机，进入安装界面： 首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk 1cfdisk        #使用cfdisk进行分区">
+<meta name="description" content="由于 XFS 文件系统不支持缩容，所以这里只讨论 Ext4 缩容的情况。 Ext4 文件系统调整的命令为 resize2fs，在使用这个命令前，我们需要将我们需要缩容的文件系统所在分区进行调整，由于 LVM 的调整相对简单，这里不做描述。 如果需要调整的分区非系统盘，则可以直接先卸载已挂载的文件系统，然后进行操作；若需要调整的分区在系统盘上，则需要进入 LiveCD 的 shell 环境进行操作。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记一次Arch的安装经历">
-<meta property="og:url" content="http://skyhive.github.io/2017/02/13/%E8%AE%B0%E4%B8%80%E6%AC%A1Arch%E7%9A%84%E5%AE%89%E8%A3%85%E7%BB%8F%E5%8E%86/index.html">
+<meta property="og:title" content="Ext4文件系统缩容">
+<meta property="og:url" content="http://skyhive.github.io/2019/10/31/Ext4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BC%A9%E5%AE%B9/index.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。 那么下面打开虚拟机，进入安装界面： 首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk 1cfdisk        #使用cfdisk进行分区">
-<meta property="article:published_time" content="2017-02-13T09:57:58.000Z">
-<meta property="article:modified_time" content="2020-03-27T17:03:59.488Z">
+<meta property="og:description" content="由于 XFS 文件系统不支持缩容，所以这里只讨论 Ext4 缩容的情况。 Ext4 文件系统调整的命令为 resize2fs，在使用这个命令前，我们需要将我们需要缩容的文件系统所在分区进行调整，由于 LVM 的调整相对简单，这里不做描述。 如果需要调整的分区非系统盘，则可以直接先卸载已挂载的文件系统，然后进行操作；若需要调整的分区在系统盘上，则需要进入 LiveCD 的 shell 环境进行操作。">
+<meta property="article:published_time" content="2019-10-31T08:51:48.000Z">
+<meta property="article:modified_time" content="2020-04-01T08:57:37.702Z">
 <meta property="article:author" content="SkyHive">
 <meta name="twitter:card" content="summary">
 
@@ -126,14 +126,14 @@
 
 
 
-  <link rel="canonical" href="http://skyhive.github.io/2017/02/13/记一次Arch的安装经历/"/>
+  <link rel="canonical" href="http://skyhive.github.io/2019/10/31/Ext4文件系统缩容/"/>
 
 
 
 
 
 
-  <title>记一次Arch的安装经历 | SkyHive's Blog</title>
+  <title>Ext4文件系统缩容 | SkyHive's Blog</title>
   
 
 
@@ -294,7 +294,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://skyhive.github.io/2017/02/13/%E8%AE%B0%E4%B8%80%E6%AC%A1Arch%E7%9A%84%E5%AE%89%E8%A3%85%E7%BB%8F%E5%8E%86/">
+    <link itemprop="mainEntityOfPage" href="http://skyhive.github.io/2019/10/31/Ext4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BC%A9%E5%AE%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="SkyHive">
@@ -311,7 +311,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">记一次Arch的安装经历</h1>
+          <h1 class="post-title" itemprop="name headline">Ext4文件系统缩容</h1>
         
 
         <div class="post-meta">
@@ -323,8 +323,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-13T17:57:58+08:00">
-                2017-02-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-31T16:51:48+08:00">
+                2019-10-31
               </time>
             
 
@@ -364,8 +364,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/02/13/%E8%AE%B0%E4%B8%80%E6%AC%A1Arch%E7%9A%84%E5%AE%89%E8%A3%85%E7%BB%8F%E5%8E%86/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/02/13/%E8%AE%B0%E4%B8%80%E6%AC%A1Arch%E7%9A%84%E5%AE%89%E8%A3%85%E7%BB%8F%E5%8E%86/" itemprop="commentCount"></span>
+                <a href="/2019/10/31/Ext4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BC%A9%E5%AE%B9/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/31/Ext4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BC%A9%E5%AE%B9/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -393,40 +393,10 @@
       
 
       
-        <p>最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。</p>
-<p>那么下面打开虚拟机，进入安装界面：</p>
-<p>首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">cfdisk</span>        <span class="comment">#使用cfdisk进行分区</span></span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<p><em>选择第二个dos类型</em>，这是将sda设置成MBR类型的分区，之前在遇到这个选项的时候，我下意识的选了第一个GPT，然后还去google了一下，说GPT很好,就使用这个吧，结果后面分区的时候和教程不一样，装好系统后怎么也进不去。</p>
-<p>接下来你可以把整个硬盘设置成一个根分区或者分成一个根分区和一个boot分区。<em>如果设置成一个根分区记得要把那个分区设置bootable；如果是一个根分区和一个boot分区记得要把boot分区设置bootable。</em></p>
-<p>退出cfdisk后格式化新设置的分区</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lsblk       <span class="comment">#查看存储设备的状态，sda1、sda2这样的就是我们刚刚分出来的</span></span><br><span class="line">mkfs.ext4 <span class="regexp">/dev/</span>sda1</span><br><span class="line">mkfs.ext4 <span class="regexp">/dev/</span>sda2         <span class="comment">#将根分区和boot分区格式化成ext4格式</span></span><br></pre></td></tr></table></figure>
-<p>然后就可以进行挂载了</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mount <span class="string">/dev/sda2</span> <span class="string">/mnt</span>           <span class="comment">#将根分区挂载到/mnt</span></span><br><span class="line">mkdir <span class="string">/mnt/boot</span>         <span class="comment">#为boot分区创建挂载点</span></span><br><span class="line">mount <span class="string">/dev/sda1</span> <span class="string">/mnt/boot</span></span><br></pre></td></tr></table></figure>
-<p>接着修改软件镜像源</p>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/pacman.d        <span class="comment">#镜像源文件在这个目录下</span></span><br><span class="line"><span class="comment">#我们需要将China源放到文件头的位置，下面先将这段源提取到temp这个文件里</span></span><br><span class="line"><span class="keyword">grep</span> -A <span class="number">1</span> <span class="string">'##.*China'</span> mirrorlist|<span class="keyword">grep</span> -v <span class="string">'\-\-'</span> &gt; temp</span><br><span class="line"><span class="comment">#然后将mirrorlist的内容添加到temp的最后面</span></span><br><span class="line">cat mirrorlist &gt;&gt; temp</span><br><span class="line">mv temp mirrorlist         <span class="comment">#temp替换mirrorlist</span></span><br></pre></td></tr></table></figure>
-<p>然后刷新软件仓库列表就可以开始安装了</p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pacman -Syy         <span class="meta">#刷新软件仓库列表</span></span><br><span class="line">pacstrap -i /mnt <span class="keyword">base</span> <span class="keyword">base</span>-devel        <span class="meta">#安装系统</span></span><br></pre></td></tr></table></figure>
-<p>接下来需要生成一个叫fstab的配置文件，在开机时候会由mount命令读取并挂载其中的分区。在安装完基本系统之后，就可以将fstab信息写入新安装的系统中了。</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">genfstab -U -p /mnt &gt;&gt; <span class="regexp">/mnt/etc</span><span class="regexp">/fstab</span></span><br><span class="line"><span class="regexp">nano /mnt</span><span class="regexp">/etc/fstab</span>         <span class="comment">#确认fstab文件真的生成了</span></span><br></pre></td></tr></table></figure>
-<p>下面我们就可以进入新系统进行配置了</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arch-chroot <span class="string">/mnt</span> <span class="string">/bin/bash</span></span><br><span class="line">passwd          <span class="comment">#设置root密码</span></span><br><span class="line"><span class="keyword">echo</span> 主机名 &gt; <span class="string">/etc/hostname</span>         <span class="comment">#设置主机名</span></span><br></pre></td></tr></table></figure>
-<p>然后配置区域</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano <span class="regexp">/etc/</span>locale.gen</span><br></pre></td></tr></table></figure>
-<p>将<code>en_US.UTF-8</code>、<code>zh_CN.UTF-8</code>、<code>zh_TW.UTF-8</code>的注释去掉，然后按Ctrl+x保存，退出，使用</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">locale-gen</span></span><br></pre></td></tr></table></figure>
-<p>生成区域，然后设置locale.conf文件</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> LANG=en_us.UTF-8 &gt; <span class="string">/etc/locale.conf</span><span class="comment">#如果在终端下使用中会出现乱码，可以装fbterm来解决</span></span><br></pre></td></tr></table></figure>
-<p>下面配置时区</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -sf <span class="regexp">/usr/</span>share<span class="regexp">/zoneinfo/</span>Asia<span class="regexp">/Shanghai /</span>etc<span class="regexp">/localtime</span></span><br></pre></td></tr></table></figure>
-<p>安装引导工具Grub</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pacman -S grub</span><br><span class="line">grub-install <span class="params">--recheck</span> <span class="string">/dev/sda1</span>        <span class="comment">#将grub写入系统，没有提示错误说明写入成功</span></span><br><span class="line">grub-mkconfig -o <span class="string">/boot/grub/grub.cfg</span>        <span class="comment">#生成配置文件</span></span><br></pre></td></tr></table></figure>
-<p>配置一下网络</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="builtin-name">enable</span> dhcpcd.service</span><br></pre></td></tr></table></figure>
-<p>到现在为止，系统基本上配置好了，现在退出新系统，卸载挂载的分区，然后重启虚拟机</p>
-<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">exit</span></span><br><span class="line">umount -R /mnt</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
-<p>剩下来的安装图形化界面和美化的步骤可以自行google。</p>
+        <p>由于 <code>XFS</code> 文件系统不支持缩容，所以这里只讨论 <code>Ext4</code> 缩容的情况。</p>
+<p><code>Ext4</code> 文件系统调整的命令为 <code>resize2fs</code>，在使用这个命令前，我们需要将我们需要缩容的文件系统所在分区进行调整，由于 <code>LVM</code> 的调整相对简单，这里不做描述。</p>
+<p>如果需要调整的分区非系统盘，则可以直接先卸载已挂载的文件系统，然后进行操作；若需要调整的分区在系统盘上，则需要进入 <code>LiveCD</code> 的 shell 环境进行操作。</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">sudo -i</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta">## 文件系统缩容</span></span><br><span class="line">e2fsck -f /dev/sda4</span><br><span class="line">resize2fs /dev/sda4 &lt;想要变成的大小&gt;（如 <span class="number">200</span>G）</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta">## 缩小分区</span></span><br><span class="line">fdisk /dev/sda</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 键入 p 查看当前分区信息，记下要缩小的分区的 start 值</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 键入 d 选择要删除的分区</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 键入 n 新建分区，确认 start 值为刚刚原分区记录下来的 start 值</span></span><br><span class="line"><span class="meta"># end 设置为 +&lt;你想要的大小&gt;（如 +200G）</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 键入 p 确认分区大小没有问题后，键入 w 保存退出</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 重新 resize 文件系统</span></span><br><span class="line">resize2fs /dev/sda4</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -480,8 +450,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/09/sqli-labs%E7%9A%84%E5%AE%89%E8%A3%85/" rel="next" title="sqli-labs的安装">
-                <i class="fa fa-chevron-left"></i> sqli-labs的安装
+              <a href="/2018/10/05/%E7%BE%8E%E7%89%88V30%E7%B3%BB%E7%BB%9F%E5%8D%87%E7%BA%A7/" rel="next" title="美版V30系统升级">
+                <i class="fa fa-chevron-left"></i> 美版V30系统升级
               </a>
             
           </div>
@@ -490,8 +460,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/14/Hexo%E7%9A%84%E5%BB%BA%E7%AB%99%E4%B9%8B%E6%97%85/" rel="prev" title="Hexo的建站之旅">
-                Hexo的建站之旅 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/04/01/DNS%E7%BC%93%E5%AD%98%E6%B8%85%E7%90%86/" rel="prev" title="DNS缓存清理">
+                DNS缓存清理 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
