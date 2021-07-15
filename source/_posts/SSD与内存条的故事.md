@@ -25,7 +25,7 @@ tags:
 
 首先内存并没有什么问题，正常开机后Bios提示我内存更换过，不鸟他继续进入系统。系统也是顺利的读取出了新的内存，并没有发生不兼容的情况。
 
-![CPU-Z 数据](http://blogpic.skyhive.tech/images/%E4%B8%AD%E9%97%B4%E4%B8%A4%E4%B8%AA%E5%B0%B1%E6%98%AF%E4%BB%8A%E5%A4%A9%E7%9A%84%E4%B8%BB%E8%A7%92%E5%95%A6.jpg)
+![CPU-Z 数据](http://blogpic.skyhive.tech/images/CPU_Z%E7%9A%84%E6%95%B0%E6%8D%AE.png)
 
 *其实之前我的内存就是一根金士顿和一根海力士的组合，所以这次还是海力士应该不会翻车*
 
