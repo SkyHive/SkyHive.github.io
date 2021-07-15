@@ -144,5 +144,5 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://github.com/SkyHive/SkyHive.github.io
+  repository: git@github.com:SkyHive/SkyHive.github.io.git
   branch: master
