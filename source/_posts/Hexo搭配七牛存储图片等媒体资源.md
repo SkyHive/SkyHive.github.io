@@ -9,9 +9,6 @@ tags:
 <!--more-->
 注册完成之后就可以进行创建空间了，注意我们添加的资源为**对象存储**，访问控制为**公开空间**
 
-{%  qnimg qiniu_create.png %}
-
-{%  qnimg qiniu_set.png  %}
 然后点击右上角进入**密钥管理**，复制当前使用的AK和SK，配置的时候会用得到
 下面我们会用到一个叫做的[hexo-qiniu-sync](https://github.com/gyk001/hexo-qiniu-sync)的插件，首先在hexo主目录下安装：
 ```
