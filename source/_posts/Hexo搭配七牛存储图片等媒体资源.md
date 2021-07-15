@@ -1,5 +1,5 @@
 ---
-title: Hexo搭配七牛存储图片等媒体资源
+title: Hexo 搭配七牛存储图片等媒体资源
 date: 2017-02-14 22:19:40
 categories: Blog
 tags:
@@ -8,6 +8,9 @@ tags:
 七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT/DELETE 请求。如果想要注册可以[点击这里](https://portal.qiniu.com/signup?code=3lnfyn5xmh93m)，这样可以为我增加每月5GB的容量。
 <!--more-->
 注册完成之后就可以进行创建空间了，注意我们添加的资源为**对象存储**，访问控制为**公开空间**
+
+![qiniu create](http://blogpic.skyhive.tech/images/qiniu_create.png)
+![qiniu set](http://blogpic.skyhive.tech/images/qiniu_set.png)
 
 然后点击右上角进入**密钥管理**，复制当前使用的AK和SK，配置的时候会用得到
 下面我们会用到一个叫做的[hexo-qiniu-sync](https://github.com/gyk001/hexo-qiniu-sync)的插件，首先在hexo主目录下安装：

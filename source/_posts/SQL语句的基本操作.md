@@ -1,5 +1,5 @@
 ---
-title: SQL语句的基本操作
+title: SQL 语句的基本操作
 date: 2017-04-04 12:44:13
 categories: Mysql
 tags:
@@ -42,5 +42,5 @@ DROP TABLE <表名>                                       --删除表
 * 更新数据：`update <表名> set 列名=新值 where 更新条件;`
 * 删除数据：`delete from <表名> where 删除条件;`
 * 查询数据：`select <列名> from <表名> [查询条件];`
-* 特定条件查询：where不仅支持“where列名=值”这种名等于值的查询形式，对一般的比较运算的运算符都是支持的，如=、<、>、！=等以及一些扩展运算符is[not] null、in、like等，还可以对查询条件使用or和and进行组合查询。
+* 特定条件查询：where 不仅支持 "where 列名=值" 这种名等于值的查询形式，对一般的比较运算的运算符都是支持的，如=、<、>、！= 等以及一些扩展运算符 is[not] null、in、like 等，还可以对查询条件使用 or 和 and 进行组合查询。
 

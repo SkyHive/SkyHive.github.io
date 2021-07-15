@@ -1,14 +1,17 @@
 ---
-title: SQL进阶
+title: SQL 进阶
 date: 2017-04-17 17:04:51
 categories: Mysql
 tags:
 ---
-我们都知道select的基本用法`select <字段名> from <表名> [where <限制条件>]`，然而`select`语句后面还可以跟很多限制条件。我们这次用user表来作为示范，下面是user表的结构：
+我们都知道 select 的基本用法`select <字段名> from <表名> [where <限制条件>]`，然而`select`语句后面还可以跟很多限制条件。我们这次用 user 表来作为示范，下面是 user 表的结构：
 <!--more-->
-<！图片丢失！>
+![user 表结构](http://blogpic.skyhive.tech/images/user.png)
 #### Between、And、In、<=、>=、<、>等条件查询：
 通过`select * from table where id between 1 and 3`和`select * from table where id >=1 and id <= 3 `的返回结果，我们可以发现`between and`和`>= and <=`是等同的。
+![between](http://blogpic.skyhive.tech/images/between.png)
+![between2](http://blogpic.skyhive.tech/images/between2.png)
+
 如果我们要查询的条件不是一个连续的数值，可以用`in`：
 ```
 select * from table where id in (2,4)
@@ -16,6 +19,7 @@ select * from table where id in (2,4)
 
 #### locate()函数：`locate(substr,str)`
 这个函数返回`substr`在字符串`str`中的第一个出现的位置，如果不存在则值为0
+![locate 函数](http://blogpic.skyhive.tech/images/locate.png)
 #### Count()函数:
 * count(字段名)：返回指定列的值的数目，但是字段值为`NULL`时不会被计算进去。`select count(字段名) from <表名>`
 * count(* )：返回表中的记录数，字段值为`NULL`时会被计算进去。`select count(*) from <表名>`
