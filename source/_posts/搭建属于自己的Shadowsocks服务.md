@@ -7,7 +7,6 @@ tags:
 最近一直想自己搭一个Shadowsocks服务，并且利用服务器学习一些技术知识，但是国内的服务器实在是贵得很啊，像我这种苦逼大学生根本玩不起，无奈之下只好各种google百度，最后找到了一些国外的VPS资源
 
 * BandwagonHost([搬瓦工VPS](http://banwagong.cn/fangan.html))：据观察搬瓦工这个VPS还是算计比较便宜的，年付20刀，平均下来每个月只有1.6刀，而且套餐很良心很良心,512MB的内存，10GB的SSD，1TB的流量是不是比国内很多主机都划算的很。
-  {% qnimg DO1.png %}
   <!--more-->
 * [Vultr](https://www.vultr.com/):同样也是SSD VPS,这个套餐看起来也还是很不错的，只不过每月两刀的套餐总是能被抢空。
 
