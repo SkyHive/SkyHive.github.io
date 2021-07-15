@@ -49,7 +49,7 @@ footer:
 
   # Icon between year and copyright info.
   icon: user
-
+  counter: true
   # If not defined, will be used `author` from Hexo main config.
   copyright:
   # -------------------------------------------------------------
@@ -554,12 +554,12 @@ busuanzi_count:
   enable: true
   # custom uv span for the whole site
   site_uv: true
-  site_uv_header: <i class="fa fa-user"></i>
-  site_uv_footer:
+  site_uv_header: 
+  site_uv_footer: <i class="fa fa-user"></i>
   # custom pv span for the whole site
   site_pv: true
-  site_pv_header: <i class="fa fa-eye"></i>
-  site_pv_footer:
+  site_pv_header:
+  site_pv_footer: <i class="fa fa-eye"></i>
   # custom pv span for one page only
   page_pv: true
   page_pv_header: <i class="fa fa-file-o"></i>
