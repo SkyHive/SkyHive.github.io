@@ -1,8 +1,10 @@
 ---
 title: 解决Ubuntu下PHP验证码不显示问题
 date: 2017-07-14 16:41:26
-categories: PHP
+categories: Infra
 tags:
+- PHP
+- Ubuntu
 ---
 这两天在帮别人写一个注册登录功能的页面，用到了简单的TP框架，但是在我自己的Ubuntu环境下发现验证码出了问题——验证码图片显示不出来。
 

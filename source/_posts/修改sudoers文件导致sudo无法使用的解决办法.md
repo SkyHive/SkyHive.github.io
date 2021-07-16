@@ -1,8 +1,9 @@
 ---
 title: 修改sudoers文件导致sudo无法使用的解决办法
 date: 2018-08-08 22:09:41
-categories: Linux
+categories: Infra
 tags:
+- Linux
 ---
 
 之前因为修改过`/etc/sudoers`文件，有个地方语法错误，导致修改完成之后`sudo`命令无法使用

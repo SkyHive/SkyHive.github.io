@@ -3,6 +3,7 @@ title: 解决配置完七牛后无法Deploy到gihub
 date: 2017-02-14 23:40:26
 categories: Blog
 tags:
+- OSS
 ---
 将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次`hexo d`都会出现
 ```

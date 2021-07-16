@@ -1,8 +1,9 @@
 ---
 title: 一个学习 Python 的小游戏
 date: 2017-04-21 21:44:57
-categories: Python
+categories: Code
 tags:
+- Python
 ---
 笔者最近在自学 Python 的过程中想起曾经有人推荐过的一款学习编程的小游戏，叫做 [Codecombat](https://cn.codecombat.com)，通过玩游戏的方式学习编程语言的语法规则。
 <!--more-->

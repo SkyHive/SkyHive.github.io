@@ -1,8 +1,9 @@
 ---
 title: Dell 7559 升级
 date: 2018-06-05 17:25:26
-categories: Other
+categories: Life
 tags:
+- Laptop
 ---
 
 昨天刚和杨老板达成了 PY 交易，今天货就到了，还真是快啊。淘宝链接我就不给了，大家自行搜索`内存之家`（原`配件之家`），粉丝数很少的那个就是了。

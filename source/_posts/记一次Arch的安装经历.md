@@ -1,8 +1,10 @@
 ---
 title: 记一次Arch的安装经历
 date: 2017-02-13 17:57:58
-categories: Linux
+categories: Infra
 tags:
+- Linux
+- Arch
 ---
 最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。
 

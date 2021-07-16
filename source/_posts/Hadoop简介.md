@@ -1,8 +1,9 @@
 ---
 title: Hadoop简介
 date: 2017-11-17 20:56:31
-categories: Linux
+categories: Infra
 tags:
+- Hadoop
 ---
 ### Hadoop 介绍	
 

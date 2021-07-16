@@ -1,8 +1,10 @@
 ---
 title: sqli-labs的安装
 date: 2017-02-09 13:24:18
-categories: Mysql
+categories: Infra
 tags:
+- MySQL
+- Security
 ---
 笔者前段时间安装了sqli-labs，就想把sqli-labs和lamp环境的搭建都写出来，其实这两个东西都很简单，感觉比我折腾hexo要简单的得多了（手动滑稽）。
 

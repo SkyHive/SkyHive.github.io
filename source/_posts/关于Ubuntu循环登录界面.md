@@ -1,8 +1,10 @@
 ---
-title: 关于Ubuntu循环登录界面
+title: 关于 Ubuntu 循环登录界面
 date: 2018-04-20 12:36:21
-categories: Linux
+categories: Infra
 tags:
+- Linux
+- Ubuntu
 ---
 其实事情的起因很奇怪，前两天一直想升级Ubuntu 18.04，不知道为什么17.10用着怪怪的，但是18.04又要到4月26号才发布，没有办法了只能Beta 2先用着试试了。
 

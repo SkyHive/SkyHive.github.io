@@ -1,8 +1,9 @@
 ---
 title: Ext4文件系统缩容
 date: 2019-10-31 12:32:00
-categories: Linux
+categories: Infra
 tags:
+- Filesystem
 ---
 由于 `XFS` 文件系统不支持缩容，所以这里只讨论 `Ext4` 缩容的情况。
 

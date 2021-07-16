@@ -1,10 +1,10 @@
 ---
 title: 琐事——换回Apache
 date: 2017-01-15 20:03:30
-categories: 
-- Linux
+categories: Infra
 tags:
-
+- Linux
+- Apache
 ---
 由于之前在ubuntu上使用nginx总是会出现各种各样的问题，所以打算将自己机器上的nginx换成Apache，服务器上继续使用nginx，下面开始干活儿：
 <!--more-->

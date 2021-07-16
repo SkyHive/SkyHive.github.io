@@ -1,8 +1,9 @@
 ---
 title: DNS 缓存清理
 date: 2020-04-01 12:34:22
-categories: Linux
+categories: Infra
 tags:
+- DNS
 ---
 ## Windows 下清理
 ```

@@ -46,21 +46,16 @@ highlight:
 # Category & Tag
 default_category: categorized
 category_map:
-    Python: Python
-
-    Mysql: Mysql
 	
     Blog: Blog
+
+    Code: Code
 	
-    PHP: PHP
-	
-    Linux: Linux
+    运维: Infra
 
     数据结构与算法: Algorithm
 	
-    网络: Network
-	
-    其他: Others
+    生活: Life
 
 tag_map:
 
@@ -69,7 +64,6 @@ tag_map:
    GitHub: https://github.com/SkyHive
    Weibo: http://weibo.com/1612736643/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1
    Facebook: https://www.facebook.com/profile.php?id=100011441371544
-   Google_plus: https://plus.google.com/105057803926879243801
    知乎: https://www.zhihu.com/people/yang-zhong-yi-57/activities
 
 # Search
