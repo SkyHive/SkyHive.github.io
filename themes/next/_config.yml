@@ -128,10 +128,10 @@ scheme: Muse
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
 social:
   GitHub: https://github.com/skyhive || github
-  E-Mail: mailto:1024188004@qq.com || envelope
-  Google: https://plus.google.com/105057803926879243801 || google
+  E-Mail: mailto:skyhive@163.com || envelope
+  #Google: https://plus.google.com/105057803926879243801 || google
   知乎: https://www.zhihu.com/people/yang-zhong-yi-57/activities || dot-circle-o
-  微博: http://weibo.com/1612736643/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1 || weibo
+  #微博: http://weibo.com/1612736643/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1 || weibo
   #Twitter: https://twitter.com/yourname || twitter
   Facebook: https://www.facebook.com/profile.php?id=100011441371544|| facebook
   #VK Group: https://vk.com/yourname || vk
@@ -385,7 +385,7 @@ valine:
   appkey: 8mR9LdXtvq3cWgsxBTObqNfa
   notify: true # mail notifier , https://github.com/xCss/Valine/wiki
   verify: false # Verification code
-  placeholder: Just say something... # comment box placeholder
+  placeholder: 说点啥吧 (●'◡'●) # comment box placeholder
   avatar: mm # gravatar style
   guest_info: nick,mail # custom comment header
   pageSize: 10 # pagination size
@@ -574,7 +574,7 @@ busuanzi_count:
 
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO
-baidu_push: false
+baidu_push: true
 
 # Google Calendar
 # Share your recent schedule to others via calendar page
@@ -606,7 +606,7 @@ algolia_search:
 # Local search
 # Dependencies: https://github.com/flashlab/hexo-generator-search
 local_search:
-  enable: false
+  enable: true
   # if auto, trigger search by changing input
   # if manual, trigger search by pressing enter key or search button
   trigger: auto
