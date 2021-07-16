@@ -1,7 +1,7 @@
 ---
 title: Dell 7559 升级
 date: 2018-06-05 17:25:26
-categories: Life
+categories: 生活
 tags:
 - Laptop
 ---
