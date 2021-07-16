@@ -139,6 +139,7 @@ social:
   #YouTube: https://youtube.com/yourname || youtube
   #Instagram: https://instagram.com/yourname || instagram
   #Skype: skype:yourname?call|chat || skype
+  RSS: /atom.xml || fas fa-rss
 
 social_icons:
   enable: true
@@ -234,7 +235,7 @@ post_wordcount:
   item_text: true
   wordcount: true
   min2read: true
-  totalcount: false
+  totalcount: true
   separated_meta: true
 
 # Wechat Subscriber

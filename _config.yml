@@ -5,14 +5,14 @@
 # Site
 title: SkyHive's Blog
 subtitle:
-description: Just a Blog
+description: 莫听穿林打叶声，何妨吟啸且徐行
 author: SkyHive
 language: zh-Hans
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://SkyHive.github.io
+url: http://skyhive.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -96,6 +96,11 @@ feed:
 type: atom
 path: atom.xml
 limit: 20
+content_limit: 140
+content_limit_delim: ' '
+order_by: -date
+autodiscovery: true
+template:
 #- hexo-qiniu-sync
 
 #qiniu:
