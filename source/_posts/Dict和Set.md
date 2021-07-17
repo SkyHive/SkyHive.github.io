@@ -1,5 +1,5 @@
 ---
-title: Dict和Set
+title: Dict 和 Set
 date: 2017-04-12 22:16:27
 categories: Code
 tags:
@@ -9,7 +9,6 @@ tags:
 Python内置了字典Dict（全称Dictionary），使用键-值（key-value）存储，具有极快的查找速度。Dict的查找原理和查字典类似，key就相当于字典的索引，Python可以通过key计算出所对应的value存放的内存地址，直接取出，所以查找速度快。
 Dict的初始化很简单，语法如下：
 
-<!--more-->
 ```
 >>> dict = {key1' : value1, 'key2' = value2, 'key3' = value3}
 >>> dict['key2']

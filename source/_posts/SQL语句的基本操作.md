@@ -11,8 +11,6 @@ tags:
 3. 修改数据库： `ALTER DATABASE <数据库名>`
 4. 删除数据库： `DROP DATABASE <数据库名>`
 
-<!--more-->
-
 ### 数据表操作
 1. 创建表：
 ```
