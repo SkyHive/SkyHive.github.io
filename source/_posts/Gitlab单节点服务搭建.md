@@ -1,6 +1,6 @@
 ---
 title: Gitlab单节点服务搭建
-date: 2020-07-25 12:25:01
+date: 2019-07-25 12:25:01
 categories: Infra
 tags:
 - GitLab

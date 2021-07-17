@@ -1,5 +1,5 @@
 ---
-title: Ext4文件系统缩容
+title: Ext4 文件系统缩容
 date: 2019-10-31 12:32:00
 categories: Infra
 tags:
