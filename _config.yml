@@ -59,13 +59,16 @@ category_map:
 
 tag_map:
 
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
 # Social links
- social:
-   GitHub: https://github.com/SkyHive
-   Weibo: http://weibo.com/1612736643/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1
-   Facebook: https://www.facebook.com/profile.php?id=100011441371544
-   知乎: https://www.zhihu.com/people/yang-zhong-yi-57/activities
-
+social:
+  GitHub: https://github.com/SkyHive
+  Weibo: http://weibo.com/1612736643/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1
+  Facebook: https://www.facebook.com/profile.php?id=100011441371544
+  知乎: https://www.zhihu.com/people/yang-zhong-yi-57/activities
 # Search
 search:
     path: search.xml
