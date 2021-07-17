@@ -1,13 +1,13 @@
 ---
-title: 初探Django需要注意的事项
+title: 初探 Django 需要注意的事项
 date: 2018-03-25 20:55:33
 categories: Code
 tags: 
 - Django
 ---
-#### 更改默认数据库为MySQL
+#### 更改默认数据库为 MySQL
 
-Django使用的默认数据库是SQLite3，如果习惯使用的是SQLite的用户就可以不必更换数据库。
+Django 使用的默认数据库是 SQLite3，如果习惯使用的是 SQLite 的用户就可以不必更换数据库。
 
 更换数据库的话在`settings.py`文件中`DATABASES`选项中进行更改
 <!--more-->
@@ -24,7 +24,7 @@ DATABASES = {
 }
 ```
 
-#### 设置Templates的路径
+#### 设置 Templates 的路径
 
 在`settings.py`文件中的`TEMPLATES`选项中进行设置
 

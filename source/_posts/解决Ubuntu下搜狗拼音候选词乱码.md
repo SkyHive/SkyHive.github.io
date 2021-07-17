@@ -1,5 +1,5 @@
 ---
-title: 解决Ubuntu下搜狗拼音候选词乱码
+title: 解决 Ubuntu 下搜狗拼音候选词乱码
 date: 2018-05-29 13:15:26
 categories: Infra
 tags:

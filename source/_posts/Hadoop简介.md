@@ -1,5 +1,5 @@
 ---
-title: Hadoop简介
+title: Hadoop 简介
 date: 2017-11-17 20:56:31
 categories: Infra
 tags:
@@ -7,7 +7,7 @@ tags:
 ---
 ### Hadoop 介绍	
 
-Hadoop是Apache组织的一个分布式计算框架（java语言），其最核心的设计就是：**HDFS** 和**MapReduce**，HDFS实现存储，MapReduce实现原理分析处理。
+Hadoop 是 Apache 组织的一个分布式计算框架（java语言），其最核心的设计就是：**HDFS** 和**MapReduce**，HDFS实现存储，MapReduce实现原理分析处理。
 
 #### HDFS文件系统
 

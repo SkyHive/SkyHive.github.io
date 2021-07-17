@@ -1,12 +1,12 @@
 ---
-title: 解决Ubuntu下Apache不解析PHP问题
+title: 解决 Ubuntu 下 Apache 不解析 PHP 问题
 date: 2017-07-13 20:00:22
 categories: Infra
 tags:
 - Linux
 - Apache
 ---
-这两天笔者遇到了一个很操蛋的问题——Apache无法解析PHP代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：
+这两天笔者遇到了一个很操蛋的问题——Apache 无法解析 PHP 代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：
 
 >修改apache的配置文件httpd.conf
 

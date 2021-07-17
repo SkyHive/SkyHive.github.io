@@ -1,12 +1,12 @@
 ---
-title: sqli-labs的安装
+title: SQLi-Labs的安装
 date: 2017-02-09 13:24:18
 categories: Infra
 tags:
 - MySQL
 - Security
 ---
-笔者前段时间安装了sqli-labs，就想把sqli-labs和lamp环境的搭建都写出来，其实这两个东西都很简单，感觉比我折腾hexo要简单的得多了（手动滑稽）。
+笔者前段时间安装了 sqli-labs，就想把 sqli-labs 和 lamp 环境的搭建都写出来，其实这两个东西都很简单，感觉比我折腾 hexo 要简单的得多了（手动滑稽）。
 
 sqli 即 sql injection(sql注入)，sqli-labs是一个印度程序员写的用来学习sql注入的游戏教程，[Youtube上有一套视频教程](https://www.youtube.com/playlist?list=PLkiAz1NPnw8qEgzS7cgVMKavvOAdogsro)(需要科学上网)，[github上也有开源的项目](https://github.com/Audi-1/sqli-labs)。
 
