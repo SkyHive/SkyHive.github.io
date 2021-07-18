@@ -386,7 +386,7 @@ valine:
   appkey: 8mR9LdXtvq3cWgsxBTObqNfa
   notify: true # mail notifier , https://github.com/xCss/Valine/wiki
   verify: false # Verification code
-  placeholder: 说点啥吧 (●'◡'●) # comment box placeholder
+  placeholder: 总要说点啥吧 😊 # comment box placeholder
   avatar: mm # gravatar style
   guest_info: nick,mail # custom comment header
   pageSize: 10 # pagination size
@@ -534,9 +534,9 @@ rating:
 # Show number of visitors to each article.
 # You can visit https://leancloud.cn get AppID and AppKey.
 leancloud_visitors:
-  enable: true
-  app_id: uGIeaY1Och3mBkg33OHA1cko-gzGzoHsz
-  app_key: Yjh6e5Ff36gRFs1wsVz4m8bT
+  enable: false
+#  app_id: uGIeaY1Och3mBkg33OHA1cko-gzGzoHsz
+#  app_key: Yjh6e5Ff36gRFs1wsVz4m8bT
 
 # Another tool to show number of visitors to each article.
 # visit https://console.firebase.google.com/u/0/ to get apiKey and projectId
