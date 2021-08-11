@@ -42,7 +42,7 @@
 	<span id="showDays"></span>
   </div>
 {% endif %}
-
+<a href="https://beian.miit.gov.cn/">苏ICP备20031524号</a>
 {% if theme.footer.custom_text %}
   <div class="footer-custom">{#
   #}{{ theme.footer.custom_text }}{#
