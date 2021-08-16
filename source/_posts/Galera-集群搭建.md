@@ -14,6 +14,8 @@ MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现,同 Percona �
 ```sql
 SHOW STATUS LIKE 'wsrep_local_state_comment';
 ```
+<!--more-->
+
 状态|说明
 :-:|:---------:
 Open | 节点启动成功，尝试连接到集群；如果失败则根据配置退出或者创建新集群
