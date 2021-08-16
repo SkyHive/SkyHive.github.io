@@ -8,7 +8,7 @@ tags:
 ---
 ### 安装操作系统
 UEFI 引导或者 Legacy BIOS 引导均可，冲就完事了
-
+<!--more-->
 ### 安装 KVM 及其依赖
 ```bash
 ## 先把源换了
@@ -24,7 +24,7 @@ yum install -y epel-release
 yum install ntp kvm virt-manager virt-top qemu-kvm qemu-kvm-tools libvirt git vim htop
 systemctl start libvirtd
 systemctl enable libvirtd
- 
+
 ## 配置 NTP
 vim /etc/ntp.conf
 --------
