@@ -6,8 +6,10 @@ tags:
 - Ubuntu
 ---
 ### 背景
-由于部分客户场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http://archive.ubuntu.com/ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！
-因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。
+由于部分客户场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http://archive.ubuntu.com/ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。
+由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的 apt 仓库，我们将需要的依赖包都下载好，使用 apt-fptarchive 来发布我们的仓库。
+
+<!--more-->
 
 ### 仓库制作
 ```bash
@@ -17,15 +19,8 @@ sudo -i
 rm -rf /var/cache/apt/archives/*.deb
  
 ## 下载依赖包
-cat << EOF > /tmp/get_deb.sh
-packages=(amd64-microcode crda freeipmi-common freeipmi-tools grub-common grub-gfxpayload-lists grub-pc-bin grub-pc grub2-common intel-microcode ipmitool iucode-tool iw libdbus-glib-1-2 libevdev2 libfreeipmi17 libimobiledevice6 libipmiconsole2 libipmidetect0 libmysqlclient21 libnl-3-200 libnl-genl-3-200 libnvpair1linux libplist3 libsensors-config libsensors5 libsnmp-base libsnmp35 libupower-glib3 libusbmuxd6 libuutil1linux libzfs2linux libzpool2linux linux-firmware linux-generic linux-headers-5.4.0-77-generic linux-headers-5.4.0-77 linux-headers-generic linux-image-5.4.0-77-generic linux-image-generic linux-modules-5.4.0-77-generic linux-modules-extra-5.4.0-77-generic lldpd mysql-common os-prober python3-bcrypt python3-paramiko python3-pyudev python3-yaml smartmontools thermald upower usbmuxd wireless-regdb zfsutils-linux)
- 
-for package in "${packages[@]}"; do
-  apt -d install $package -y
-done
-EOF
- 
-bash /tmp/get_deb.sh && rm /tmp/get_deb.sh
+apt -d install -y amd64-microcode crda freeipmi-common freeipmi-tools grub-common grub-gfxpayload-lists grub-pc-bin grub-pc grub2-common intel-microcode ipmitool iucode-tool iw libdbus-glib-1-2 libevdev2 libfreeipmi17 libimobiledevice6 libipmiconsole2 libipmidetect0 libmysqlclient21 libnl-3-200 libnl-genl-3-200 libnvpair1linux libplist3 libsensors-config libsensors5 libsnmp-base libsnmp35 libupower-glib3 libusbmuxd6 libuutil1linux libzfs2linux libzpool2linux linux-firmware linux-generic linux-headers-5.4.0-77-generic linux-headers-5.4.0-77 linux-headers-generic linux-image-5.4.0-77-generic linux-image-generic linux-modules-5.4.0-77-generic linux-modules-extra-5.4.0-77-generic lldpd mysql-common os-prober python3-bcrypt python3-paramiko python3-pyudev python3-yaml smartmontools thermald upower usbmuxd wireless-regdb zfsutils-linux
+
  
 ## 创建仓库目录
 mkdir /opt/repo/pool/main -p
