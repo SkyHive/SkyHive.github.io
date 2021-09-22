@@ -19,7 +19,7 @@ sudo -i
 rm -rf /var/cache/apt/archives/*.deb
  
 ## 下载依赖包
-apt -d install -y amd64-microcode crda freeipmi-common freeipmi-tools grub-common grub-gfxpayload-lists grub-pc-bin grub-pc grub2-common intel-microcode ipmitool iucode-tool iw libdbus-glib-1-2 libevdev2 libfreeipmi17 libimobiledevice6 libipmiconsole2 libipmidetect0 libmysqlclient21 libnl-3-200 libnl-genl-3-200 libnvpair1linux libplist3 libsensors-config libsensors5 libsnmp-base libsnmp35 libupower-glib3 libusbmuxd6 libuutil1linux libzfs2linux libzpool2linux linux-firmware linux-generic linux-headers-5.4.0-77-generic linux-headers-5.4.0-77 linux-headers-generic linux-image-5.4.0-77-generic linux-image-generic linux-modules-5.4.0-77-generic linux-modules-extra-5.4.0-77-generic lldpd mysql-common os-prober python3-bcrypt python3-paramiko python3-pyudev python3-yaml smartmontools thermald upower usbmuxd wireless-regdb zfsutils-linux
+apt -d reinstall -y amd64-microcode crda freeipmi-common freeipmi-tools grub-common grub-gfxpayload-lists grub-pc-bin grub-pc grub2-common intel-microcode ipmitool iucode-tool iw libdbus-glib-1-2 libevdev2 libfreeipmi17 libimobiledevice6 libipmiconsole2 libipmidetect0 libmysqlclient21 libnl-3-200 libnl-genl-3-200 libnvpair1linux libplist3 libsensors-config libsensors5 libsnmp-base libsnmp35 libupower-glib3 libusbmuxd6 libuutil1linux libzfs2linux libzpool2linux linux-firmware linux-generic linux-headers-5.4.0-77-generic linux-headers-5.4.0-77 linux-headers-generic linux-image-5.4.0-77-generic linux-image-generic linux-modules-5.4.0-77-generic linux-modules-extra-5.4.0-77-generic lldpd mysql-common os-prober python3-bcrypt python3-paramiko python3-pyudev python3-yaml smartmontools thermald upower usbmuxd wireless-regdb zfsutils-linux
 
  
 ## 创建仓库目录
@@ -85,7 +85,7 @@ gpg -a --export hyperx@hyperx.com > hyperx.pub  ## 导出公钥，后续需要�
 gpg -a --export-secret-keys hyperx@hyperx.com > hyperx.sec    ## 导出私钥
  
 mkdir -p dists/focal/main/binary-amd64
-apt-fptarchive  packges /opt/repo/pool/main/ > dists/focal/Packages
+apt-ftparchive  packages /opt/repo/pool/main/ > dists/focal/Packages
 cd dists/focal/
 gzip -c Packages > Packages.gz
 cp Packages* main/binary-amd64/
