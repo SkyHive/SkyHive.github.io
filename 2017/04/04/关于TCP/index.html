@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP&amp;#x2F;IP协议族（TCP&amp;#x2F;IP Protocol Suite，或TCP&amp;#x2F;IP Protocols），简称TCP&amp;#x2F;IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为">
+<meta name="keywords" content="Network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于 TCP">
+<meta property="og:url" content="http://skyhive.github.io/2017/04/04/关于TCP/index.html">
+<meta property="og:site_name" content="SkyHive&#39;s Blog">
+<meta property="og:description" content="互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP&amp;#x2F;IP协议族（TCP&amp;#x2F;IP Protocol Suite，或TCP&amp;#x2F;IP Protocols），简称TCP&amp;#x2F;IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blogpic.skyhive.tech/images/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
+<meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于 TCP">
+<meta name="twitter:description" content="互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP&amp;#x2F;IP协议族（TCP&amp;#x2F;IP Protocol Suite，或TCP&amp;#x2F;IP Protocols），简称TCP&amp;#x2F;IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为">
+<meta name="twitter:image" content="http://blogpic.skyhive.tech/images/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
+
+<link rel="canonical" href="http://skyhive.github.io/2017/04/04/关于TCP/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>关于 TCP | SkyHive's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="SkyHive's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">SkyHive's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://skyhive.github.io/2017/04/04/关于TCP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="SkyHive">
+      <meta itemprop="description" content="莫听穿林打叶声，何妨吟啸且徐行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SkyHive's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于 TCP
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-04-04 12:34:26" itemprop="dateCreated datePublished" datetime="2017-04-04T12:34:26+08:00">2017-04-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-30 16:39:16" itemprop="dateModified" datetime="2022-12-30T16:39:16+08:00">2022-12-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Infra/" itemprop="url" rel="index"><span itemprop="name">Infra</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/04/04/关于TCP/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/04/04/关于TCP/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP&#x2F;IP协议族（TCP&#x2F;IP Protocol Suite，或TCP&#x2F;IP Protocols），简称TCP&#x2F;IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为该家族中最早通过的标准。由于在网络通讯协议普遍采用分层的结构，当多个层次的协议共同工作时，类似计算机科学中的堆栈，因此又被称为TCP&#x2F;IP协议栈（TCP&#x2F;IP Protocol Stack）</p>
+</blockquote>
+<a id="more"></a>
+<p>以上来自维基百科，我们知道 TCP&#x2F;IP 协议族是基于 TCP 和 IP 这两个最初的协议之上的不同的通信协议的大的集合。其中包含了ARP、UDP、ICMP（互联网消息控制管理协议）等协议，它将软件的通信过程抽象化为四个抽象层（应用层、传输层、网络层和物理层），类似于简化的 OSI 七层。</p>
+<p>在数据传输方面，早期研发提出两种传输方式——面向连接的传输和非面向连接的传输，经过后来长期的发展，提出面向连接的ISO组织将非面向连接的传输纳入自己麾下，就是现在的 UDP。</p>
+<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><h4 id="TCP-建立连接的过程——-TCP-的三次握手"><a href="#TCP-建立连接的过程——-TCP-的三次握手" class="headerlink" title="TCP 建立连接的过程—— TCP 的三次握手"></a>TCP 建立连接的过程—— TCP 的三次握手</h4><p>首先，源向目的发送一个 TCP 同步请求（syn 包）；目的收到后向源发一个 TCP 回应（offer 包），这里面包含了 syn+ack 信息，此时处于半打开会话状态，存在巨大的安全隐患；源收到目的的回应后向目的发送一个 TCP 确认包（ack 包），就此处于全打开会话状态，TCP 连接建立完成。</p>
+<h4 id="TCP-序列号和确认号"><a href="#TCP-序列号和确认号" class="headerlink" title="TCP 序列号和确认号"></a>TCP 序列号和确认号</h4><p>TCP 会话的每一端都包含一个 32 位（bit）的序列号，该序列号被用来跟踪该端发送的数据量。每一个包中都包含序列号，在接收端则通过确认号用来通知发送端数据成功接收（发送序列号是当前的发包情况，确认号是渴望的发包情况）。</p>
+<p>例如在握手的时候，源向目的发送 syn 包，seq&#x3D;x；目的会给源一个回应，seq&#x3D;y，ack&#x3D;x+1；源收到了之后给目的回一个确认包，ack&#x3D;y+1。</p>
+<p><img src="http://blogpic.skyhive.tech/images/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="三次握手"></p>
+<h4 id="TCP-划窗"><a href="#TCP-划窗" class="headerlink" title="TCP 划窗"></a>TCP 划窗</h4><p>TCP 协议通过划窗机制来对流量进行控制管理，接收端通过发送确认号告诉发送端自己获包的情况，接收端通过三次发包后了解接收端的网络吞吐能力，然后稳定发包。</p>
+<h4 id="TCP-重传"><a href="#TCP-重传" class="headerlink" title="TCP 重传"></a>TCP 重传</h4><p>TCP 包超时未响应后进行重传，一个包最多重传 16 次，无法处理后连接断开重连，三次失败后无法进行连接</p>
+<p>***以上均为自己极浅的理解，详细内容还请移步至 Google ***</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>文章看都看了，施舍一下不过分吧~</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="SkyHive 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="SkyHive 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Network/" rel="tag"># Network</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/02/14/解决配置完七牛后无法Deploy到github/" rel="prev" title="解决配置完七牛后无法 Deploy 到 Github">
+      <i class="fa fa-chevron-left"></i> 解决配置完七牛后无法 Deploy 到 Github
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/04/04/SQL语句的基本操作/" rel="next" title="SQL 语句的基本操作">
+      SQL 语句的基本操作 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP"><span class="nav-number">1.</span> <span class="nav-text">TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-建立连接的过程——-TCP-的三次握手"><span class="nav-number">1.1.</span> <span class="nav-text">TCP 建立连接的过程—— TCP 的三次握手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-序列号和确认号"><span class="nav-number">1.2.</span> <span class="nav-text">TCP 序列号和确认号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-划窗"><span class="nav-number">1.3.</span> <span class="nav-text">TCP 划窗</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-重传"><span class="nav-number">1.4.</span> <span class="nav-text">TCP 重传</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SkyHive"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SkyHive</p>
+  <div class="site-description" itemprop="description">莫听穿林打叶声，何妨吟啸且徐行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/skyhive" title="GitHub → https://github.com/skyhive" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:skyhive35@gmail.com" title="E-Mail → mailto:skyhive35@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SkyHive</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'BXmBCniiQ8wXmVOlzIlgGTjG-9Nh9j0Va',
+      appKey     : '8mR9LdXtvq3cWgsxBTObqNfa',
+      placeholder: "总要说点啥吧 😊",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

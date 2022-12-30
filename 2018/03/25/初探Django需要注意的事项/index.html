@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="更改默认数据库为 MySQLDjango 使用的默认数据库是 SQLite3，如果习惯使用的是 SQLite 的用户就可以不必更换数据库。 更换数据库的话在settings.py文件中DATABASES选项中进行更改">
+<meta name="keywords" content="Django">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初探 Django 需要注意的事项">
+<meta property="og:url" content="http://skyhive.github.io/2018/03/25/初探Django需要注意的事项/index.html">
+<meta property="og:site_name" content="SkyHive&#39;s Blog">
+<meta property="og:description" content="更改默认数据库为 MySQLDjango 使用的默认数据库是 SQLite3，如果习惯使用的是 SQLite 的用户就可以不必更换数据库。 更换数据库的话在settings.py文件中DATABASES选项中进行更改">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初探 Django 需要注意的事项">
+<meta name="twitter:description" content="更改默认数据库为 MySQLDjango 使用的默认数据库是 SQLite3，如果习惯使用的是 SQLite 的用户就可以不必更换数据库。 更换数据库的话在settings.py文件中DATABASES选项中进行更改">
+
+<link rel="canonical" href="http://skyhive.github.io/2018/03/25/初探Django需要注意的事项/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>初探 Django 需要注意的事项 | SkyHive's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="SkyHive's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">SkyHive's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://skyhive.github.io/2018/03/25/初探Django需要注意的事项/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="SkyHive">
+      <meta itemprop="description" content="莫听穿林打叶声，何妨吟啸且徐行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SkyHive's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初探 Django 需要注意的事项
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-03-25 20:55:33" itemprop="dateCreated datePublished" datetime="2018-03-25T20:55:33+08:00">2018-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-30 16:39:16" itemprop="dateModified" datetime="2022-12-30T16:39:16+08:00">2022-12-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Code/" itemprop="url" rel="index"><span itemprop="name">Code</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/03/25/初探Django需要注意的事项/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/25/初探Django需要注意的事项/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="更改默认数据库为-MySQL"><a href="#更改默认数据库为-MySQL" class="headerlink" title="更改默认数据库为 MySQL"></a>更改默认数据库为 MySQL</h4><p>Django 使用的默认数据库是 SQLite3，如果习惯使用的是 SQLite 的用户就可以不必更换数据库。</p>
+<p>更换数据库的话在<code>settings.py</code>文件中<code>DATABASES</code>选项中进行更改</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">'default'</span>: &#123;</span><br><span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.mysql'</span>,</span><br><span class="line">        <span class="string">'NAME'</span>: <span class="string">'项目对应的数据库名称'</span>,</span><br><span class="line">        <span class="string">'USER'</span>: <span class="string">'登录mysql的帐户'</span>,</span><br><span class="line">        <span class="string">'PASSWORD'</span>: <span class="string">'登录mysql的密码'</span>,</span><br><span class="line">        <span class="string">'HOST'</span>: <span class="string">'127.0.0.1'</span>,	<span class="comment">#由于是在本地开发，所以是127.0.0.1</span></span><br><span class="line">        <span class="string">'PORT'</span>: <span class="string">'3306'</span>	<span class="comment">#这里mysql使用的是默认的3306端口</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="设置-Templates-的路径"><a href="#设置-Templates-的路径" class="headerlink" title="设置 Templates 的路径"></a>设置 Templates 的路径</h4><p>在<code>settings.py</code>文件中的<code>TEMPLATES</code>选项中进行设置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'DIRS'</span>: [os.path.join(BASE_DIR, <span class="string">'templates'</span>)]</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>BASE_DIR</code>是项目的绝对路径，设置过<code>Templates</code>路径之后<code>Django</code>会在改路径下的<code>templates</code>文件夹下搜索对应的<code>html</code>文件。</p>
+<h4 id="设置中文"><a href="#设置中文" class="headerlink" title="设置中文"></a>设置中文</h4><p><code>settings.py</code>最后有个选项为<code>LANGUAGE_CODE</code>，这个选项是设置<code>Django</code>语言的。<code>Django</code>为我们提供了很多自带的应用，如果习惯了看英文的话可以不用设置，直接使用默认的英语，如果英语看着膈应的话，可以设置为中文<code>zh-hans</code>或者<code>zh_Hans</code></p>
+<h4 id="添加创建的应用"><a href="#添加创建的应用" class="headerlink" title="添加创建的应用"></a>添加创建的应用</h4><p>当你新建应用之后要记得在<code>settings.py</code>中的<code>INSTALLED_APPS</code>选项中添加新建的应用——直接在最后一行添加新建的应用名就好了。</p>
+<h4 id="修改数据默认显示名称"><a href="#修改数据默认显示名称" class="headerlink" title="修改数据默认显示名称"></a>修改数据默认显示名称</h4><p>在创建的数据类下面添加一个方法，根据Python的版本进行选择</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python <span class="number">2.7</span> : __unicode__(self)</span><br><span class="line">python <span class="number">3</span> : __str__(self)</span><br><span class="line">然后在方法中返回self.var	<span class="comment">#var是类中数据中用来显示数据的变量</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Tamplates-过滤器"><a href="#Tamplates-过滤器" class="headerlink" title="Tamplates 过滤器"></a>Tamplates 过滤器</h4><p>这个过滤器其实可以说就是Linux下的管道符<code>|</code>，Linux玩的转的人对这个一定不会陌生，过滤器的基本形式就像这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;var | filter&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有些过滤器会跟有参数，过滤器的参数都是跟随冒号，例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;var | default:<span class="string">'0'</span>&#125;&#125;	<span class="comment">#为变量var设置默认值0</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>文章看都看了，施舍一下不过分吧~</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="SkyHive 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="SkyHive 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Django/" rel="tag"># Django</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/12/08/配置ssh免密登录遇到的坑/" rel="prev" title="配置 SSH 免密登录遇到的坑">
+      <i class="fa fa-chevron-left"></i> 配置 SSH 免密登录遇到的坑
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/04/20/关于Ubuntu循环登录界面/" rel="next" title="关于 Ubuntu 循环登录界面">
+      关于 Ubuntu 循环登录界面 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#更改默认数据库为-MySQL"><span class="nav-number">1.</span> <span class="nav-text">更改默认数据库为 MySQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置-Templates-的路径"><span class="nav-number">2.</span> <span class="nav-text">设置 Templates 的路径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置中文"><span class="nav-number">3.</span> <span class="nav-text">设置中文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加创建的应用"><span class="nav-number">4.</span> <span class="nav-text">添加创建的应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改数据默认显示名称"><span class="nav-number">5.</span> <span class="nav-text">修改数据默认显示名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tamplates-过滤器"><span class="nav-number">6.</span> <span class="nav-text">Tamplates 过滤器</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SkyHive"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SkyHive</p>
+  <div class="site-description" itemprop="description">莫听穿林打叶声，何妨吟啸且徐行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/skyhive" title="GitHub → https://github.com/skyhive" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:skyhive35@gmail.com" title="E-Mail → mailto:skyhive35@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SkyHive</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'BXmBCniiQ8wXmVOlzIlgGTjG-9Nh9j0Va',
+      appKey     : '8mR9LdXtvq3cWgsxBTObqNfa',
+      placeholder: "总要说点啥吧 😊",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
