@@ -20,22 +20,23 @@
     var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前段时间把家里的 NAS 做了一次改造，将用之前用了一年的架构推翻，换上了黑群晖。 故事还得从一年前说起。最初本着折腾的精神，采取了 Bcache+LVM 的方案，简单架构如下：">
-<meta name="keywords" content="NAS,黑群晖">
+  <meta name="description" content="前几日在家中遇到一件有趣的事情，与大家分享一下。 起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到">
+<meta name="keywords" content="虚拟化,ESXi,Network">
 <meta property="og:type" content="article">
-<meta property="og:title" content="黑群晖填坑">
-<meta property="og:url" content="https://skyhive.github.io/2021/11/undefined.html">
+<meta property="og:title" content="什么情况？访问不了虚拟机了？？">
+<meta property="og:url" content="https://skyhive.github.io/2021/10/访问不了虚拟机了.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="前段时间把家里的 NAS 做了一次改造，将用之前用了一年的架构推翻，换上了黑群晖。 故事还得从一年前说起。最初本着折腾的精神，采取了 Bcache+LVM 的方案，简单架构如下：">
+<meta property="og:description" content="前几日在家中遇到一件有趣的事情，与大家分享一下。 起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://blogpic.skyhive.tech/%E5%AD%98%E5%82%A8%E4%B8%80%E4%BB%A3%E7%9B%AE">
+<meta property="og:image" content="https://blogpic.skyhive.tech/%E5%8F%98%E6%9B%B4%E5%8F%B2.png">
+<meta property="og:image" content="https://blogpic.skyhive.tech/esxi.png">
 <meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="黑群晖填坑">
-<meta name="twitter:description" content="前段时间把家里的 NAS 做了一次改造，将用之前用了一年的架构推翻，换上了黑群晖。 故事还得从一年前说起。最初本着折腾的精神，采取了 Bcache+LVM 的方案，简单架构如下：">
-<meta name="twitter:image" content="https://blogpic.skyhive.tech/%E5%AD%98%E5%82%A8%E4%B8%80%E4%BB%A3%E7%9B%AE">
+<meta name="twitter:title" content="什么情况？访问不了虚拟机了？？">
+<meta name="twitter:description" content="前几日在家中遇到一件有趣的事情，与大家分享一下。 起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到">
+<meta name="twitter:image" content="https://blogpic.skyhive.tech/%E5%8F%98%E6%9B%B4%E5%8F%B2.png">
 
-<link rel="canonical" href="https://skyhive.github.io/2021/11/undefined.html">
+<link rel="canonical" href="https://skyhive.github.io/2021/10/访问不了虚拟机了.html">
 
 
 <script id="page-configurations">
@@ -48,7 +49,7 @@
   };
 </script>
 
-  <title>黑群晖填坑 | SkyHive's Blog</title>
+  <title>什么情况？访问不了虚拟机了？？ | SkyHive's Blog</title>
   
 
 
@@ -170,7 +171,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2021/11/undefined.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2021/10/访问不了虚拟机了.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -183,7 +184,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          黑群晖填坑
+          什么情况？访问不了虚拟机了？？
         </h1>
 
         <div class="post-meta">
@@ -193,7 +194,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-11-17 11:36:05" itemprop="dateCreated datePublished" datetime="2021-11-17T11:36:05+08:00">2021-11-17</time>
+              <time title="创建时间：2021-10-27 11:59:21" itemprop="dateCreated datePublished" datetime="2021-10-27T11:59:21+08:00">2021-10-27</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -213,7 +214,7 @@
             </span>
 
           
-            <span id="/2021/11/undefined.html" class="post-meta-item leancloud_visitors" data-flag-title="黑群晖填坑" title="阅读次数">
+            <span id="/2021/10/访问不了虚拟机了.html" class="post-meta-item leancloud_visitors" data-flag-title="什么情况？访问不了虚拟机了？？" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -235,8 +236,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/11/undefined.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/11/undefined.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/10/访问不了虚拟机了.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/访问不了虚拟机了.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -251,33 +252,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>前段时间把家里的 NAS 做了一次改造，将用之前用了一年的架构推翻，换上了黑群晖。</p>
-<p>故事还得从一年前说起。最初本着折腾的精神，采取了 Bcache+LVM 的方案，简单架构如下：<br><img src="https://blogpic.skyhive.tech/%E5%AD%98%E5%82%A8%E4%B8%80%E4%BB%A3%E7%9B%AE" alt="NAS 一代目"></p>
+        <p>前几日在家中遇到一件有趣的事情，与大家分享一下。</p>
+<p>起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到 ESXi。这时的我还很天真的以为是虚拟化和黑苹果之间的问题，Google 了一番未果还是换回了 Windows。</p>
 <a id="more"></a>
 
-<p>没有冗余没有备份，对于存储来说是很危险的。当时其实也是纠结了很久，手上有一块 RAID 卡，纠结了半天也没有上 RAID，原因是当时硬盘的配置是 6T*1+4T*3,如果上了 RAID 就意味着 6T 盘会浪费 2T 空间。</p>
-<p>既然如此，干脆一不做二不休，直接上 LVM，然后把重要的数据定时同步出来，正好还有两块 2T 盘，可以拿来做备份使用。结果最后因为太懒，以及 2T 盘没有多余的机器可以让我接入，导致备份的计划迟迟没有落地。</p>
-<p>后来考虑到 Bcache 这个东西比较不优雅，这个项目也多年没有人维护更新（主要是存储跑了一年一直没有冗余和备份，比较慌），最终还是考虑换成黑群晖。</p>
-<p>换成黑群晖后也多多少少遇到了些问题，这里先记录下来，算是填坑了</p>
-<h3 id="存储冗余问题"><a href="#存储冗余问题" class="headerlink" title="存储冗余问题"></a>存储冗余问题</h3><p>由于短时间内我还不会把 4T 盘都换成 6T，因此正常的 RAID 阵列还是不考虑了，决定使用 SHR（Synology Hybrid RAID）来实现硬盘的冗余。主要是 SHR 可以合理利用容量大小不一的硬盘，减少硬盘空间的浪费。目前我 6T*1+4T*3 的组合还是有浪费的空间，但是后面会新增两块 6T 盘就完美利用了。计划采购硬盘大小和数量前可以使用群晖的 <a href="https://www.synology.cn/zh-cn/support/RAID_calculator" target="_blank" rel="noopener">RAID 计算器</a> 先算一下可用容量以及是否浪费空间。</p>
-<p>然而并不是所有群晖的机型都开启了 SHR，对于没有开启 SHR 的机型，我们需要手动配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /etc.defaults/synoinfo.conf</span><br><span class="line"><span class="comment">## 注释 supportraidgroup="yes"</span></span><br><span class="line"><span class="comment">## 添加以下内容</span></span><br><span class="line">support_syno_hybrid_raid=<span class="string">"yes"</span></span><br><span class="line"><span class="comment">## 保存重启即可</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://blogpic.skyhive.tech/%E5%8F%98%E6%9B%B4%E5%8F%B2.png" alt="变更史"></p>
+<p>天真我以为这样就已经解决了问题，但结果是并没有什么卵用。同时我发现一直在使用的电脑访问 ESXi 也出现了问题，网络丢包严重，但是访问虚拟机却一点事情也没有。事已至此只能先简单抓包看一下，从硬件 A ping 向 ESXi（硬件 B）的同时，在 ESXi 上使用 tcpdump-uw 进行抓包（通过虚拟机作为跳板机连上 ESXi），结果是硬件 A 正常发送 ARP 请求，但是 ESXi 这里并没有收到 A 发送的请求。</p>
+<p>到这里我基本断定是 ARP 的问题，但是为啥 ESXi 收不到我发出来的 ARP 包，其他的硬件却都能收到，我不得而知。但是为了验证我的猜想，我决定先在 Windows 上静态绑定一下 ARP 记录。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先用 netsh 找到对应 interface 的 idx</span></span><br><span class="line">netsh i i show <span class="keyword">in</span>   # netsh<span class="built_in"> interface </span>ipv4 show interfaces</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绑定 IP-MAC</span></span><br><span class="line">netsh -c <span class="string">"i i"</span> <span class="builtin-name">add</span> ne &lt;idx&gt; &lt;IP&gt; &lt;MAC&gt;  # netsh -c <span class="string">"interfaces ipv4"</span> <span class="builtin-name">add</span> neighbors &lt;idx&gt; &lt;IP&gt; &lt;MAC&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以直接用 arp 命令进行临时绑定</span></span><br><span class="line">arp -s &lt;IP&gt; &lt;MAC&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="CPU-型号显示问题"><a href="#CPU-型号显示问题" class="headerlink" title="CPU 型号显示问题"></a>CPU 型号显示问题</h3><p>装完黑群晖后，显示的 CPU 型号为群晖的固定版本，有强迫症的话可以使用下面一键脚本进行修复（此处引自：<a href="https://wp.gxnas.com/9982.html" target="_blank" rel="noopener">关于群晖优化可以用的一键命令</a>）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -SLO https://wp.gxnas.com/wp-content/uploads/2019/08/ch_cpuinfo </span><br><span class="line">chmod 755 ch_cpuinfo</span><br><span class="line">./ch_cpuinfo</span><br></pre></td></tr></table></figure>
+<p>这里 ESXi 的 MAC 是从虚拟机 ARP 获得的，因为目前只有虚拟机访问 ESXi 比较正常。绑定完 MAC 地址后我又信誓旦旦进行验证，结果网络依然不通！！WTF？？到底发生甚么事了了？一开始以为 MAC 地址写错了，反复比对后确认了 MAC 地址并没有问题，那么为啥虚拟机用这个 MAC 地址可以 ping 通 ESXi，我用这个 MAC 就不行呢？</p>
+<p>后来我怀疑是交换机的问题，我众多设备不是都接在同一个交换机上的，实际上是两个串联的傻瓜交换机，客厅一个卧室一个，而 ESXi 在客厅，实验的两台电脑在卧室。但是这个不成熟的猜想瞬间就被我给否定了，毕竟客厅和卧室里其他的设备互联都没有问题。</p>
+<p>就在我一筹莫展把注意力集中到 Windows 的网络配置上时，我突然发现了一个神奇的事情 —— 硬件 B Windows 的 MAC 地址为啥和我 ESXi 一摸一样？？这真是见了鬼了，两个不同硬件为啥会有相同的 MAC 地址！难道是因为 ESXi 迁移的时候 MAC 地址并没有跟着硬件走？毕竟 ESXi 的管理地址是在 VMKernel 上的，这并不是一个物理接口。</p>
+<p>简单了搜了一下，在 VMware 的 KB 中确实有这样的记载 —— <a href="https://kb.vmware.com/s/article/1031111?lang=zh_CN" target="_blank" rel="noopener">更换网卡后或 vmkernel 的 MAC 地址重复时 vmk0 管理网络 MAC 地址不更新</a>。如果已经冲突了就只能删除原来的管理端口，重新创建，但是我这台 ESXi 只有一个网络接口，如果删了的话就只能连上显示器去配置了，所以为了省事就在 Web 界面先添加一个端口，再删除原来的即可。</p>
+<p>如果要配置静态的 IP 地址又不想接显示器的话，可以 SSH 到 ESXi 后进行如下操作</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">TERM</span>=xterm</span><br><span class="line">dcui</span><br></pre></td></tr></table></figure>
 
-<h3 id="网卡驱动问题"><a href="#网卡驱动问题" class="headerlink" title="网卡驱动问题"></a>网卡驱动问题</h3><p>群晖上线后用了一天就发现了奇怪的问题，通过 SMB 从群晖读取数据时就会断网，写入正常，为了定位问题，做了以下测试：</p>
-<ol>
-<li>使用 FIO 对群晖的存储进行 IO 测试 - 测试期间网络正常，且 IO 结果符合预期；</li>
-<li>使用 iperf 对群晖网络进行 IO 测试 - 测试期间网络正常，且 IO 结果符合预期；</li>
-<li>修改 SMB 版本和配置进行读写操作 - 读取时依然会断网，写入正常；</li>
-<li>禁用 SMB，使用 NFS 进行测试 - 读取时依然会断网，写入正常；</li>
-<li>在群晖本地进行文件拷贝 - 读取时正常，写入正常；</li>
-<li>上述测试时，群晖上另有一块 X520-DA2 加以佐证，全程光口网络正常，问题出在电口上</li>
-</ol>
-<p>Google 了一番，问题可能出在驱动上，我这板载的电口是 Realtek@ 8111E PCIE Gigabit LAN Controller，在论坛里找了一个大神编好的带 r8168 驱动的<a href="https://pan.skyhive.tech:8888/s/fnX6AexCKk3Pn5n" target="_blank" rel="noopener">包</a>，更换驱动后果然就原地复活了。</p>
-<h3 id="内存限制问题"><a href="#内存限制问题" class="headerlink" title="内存限制问题"></a>内存限制问题</h3><p>装完黑群晖后用 free 看到内存总共只有 2.5G，但是我物理上是 8G*2 的配置，Google 一番，需要修改 grub 配置解决</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mkdir /tmp/synoboot</span><br><span class="line"><span class="comment">## 这里一定要先进 dev 目录再挂载 synoboot1，否则会报错</span></span><br><span class="line"><span class="built_in">cd</span> /dev</span><br><span class="line">mount -t vfat /dev/synoboot1 /tmp/synoboot</span><br><span class="line">vim /tmp/synoboot/grub/grub.cfg</span><br><span class="line"><span class="comment">## 在 set common_args_3617 中加入 disable_mtrr_trim 配置</span></span><br><span class="line"><span class="comment">## 注意这里 3617 是因为我的黑群晖是 DS 3617xs，其他型号应该不一样</span></span><br><span class="line"><span class="built_in">set</span> common_args_3617=<span class="string">'disable_mtrr_trim syno_hdd_powerup_seq=0 HddHotplug=0 syno_hw_version=DS3617xs vender_format_version=2 console=ttyS0,115200n8 withefi elevator=elevator quiet syno_port_thaw=1'</span></span><br><span class="line"><span class="comment">## 重启后内存信息就正常了</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://blogpic.skyhive.tech/esxi.png" alt="ESXi 控制台"><br>绝对的懒人福音！！</p>
+<p>重建了管理端口后，没有了 MAC 地址冲突，硬件 A 的 Windows 又满血复活了，这件事情告诉我们，没事别特么的拆东墙补西墙！</p>
+
     </div>
 
     
@@ -306,8 +299,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/NAS/" rel="tag"># NAS</a>
-              <a href="/tags/黑群晖/" rel="tag"># 黑群晖</a>
+              <a href="/tags/虚拟化/" rel="tag"># 虚拟化</a>
+              <a href="/tags/ESXi/" rel="tag"># ESXi</a>
+              <a href="/tags/Network/" rel="tag"># Network</a>
           </div>
 
         
@@ -316,10 +310,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/10/undefined.html" rel="prev" title="什么情况？访问不了虚拟机了？？">
-      <i class="fa fa-chevron-left"></i> 什么情况？访问不了虚拟机了？？
+    <a href="/2021/8/创建本地-APT-仓库.html" rel="prev" title="创建本地 APT 仓库">
+      <i class="fa fa-chevron-left"></i> 创建本地 APT 仓库
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/黑群晖解除内存限制.html" rel="next" title="黑群晖填坑">
+      黑群晖填坑 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -379,7 +376,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储冗余问题"><span class="nav-number">1.</span> <span class="nav-text">存储冗余问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU-型号显示问题"><span class="nav-number">2.</span> <span class="nav-text">CPU 型号显示问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网卡驱动问题"><span class="nav-number">3.</span> <span class="nav-text">网卡驱动问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存限制问题"><span class="nav-number">4.</span> <span class="nav-text">内存限制问题</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

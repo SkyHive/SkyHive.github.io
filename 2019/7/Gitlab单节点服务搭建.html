@@ -20,22 +20,20 @@
     var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP&amp;#x2F;IP协议族（TCP&amp;#x2F;IP Protocol Suite，或TCP&amp;#x2F;IP Protocols），简称TCP&amp;#x2F;IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为">
-<meta name="keywords" content="Network">
+  <meta name="description" content="搭建准备根据官方提供的说法，小规模使用 GitLab 只用单机部署即可，4C8G 的配置足够小一百人使用 Git，由于本次也只是熟悉一下 GitLab 的搭建过程和各组件之间的关系，所以就使用低配的虚拟机进行搭建了。 虚拟机配置   CPU 内存 硬盘    4*vCPU 8GB 200GB">
+<meta name="keywords" content="GitLab">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于 TCP">
-<meta property="og:url" content="https://skyhive.github.io/2017/4/undefined.html">
+<meta property="og:title" content="Gitlab单节点服务搭建">
+<meta property="og:url" content="https://skyhive.github.io/2019/7/Gitlab单节点服务搭建.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP&amp;#x2F;IP协议族（TCP&amp;#x2F;IP Protocol Suite，或TCP&amp;#x2F;IP Protocols），简称TCP&amp;#x2F;IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为">
+<meta property="og:description" content="搭建准备根据官方提供的说法，小规模使用 GitLab 只用单机部署即可，4C8G 的配置足够小一百人使用 Git，由于本次也只是熟悉一下 GitLab 的搭建过程和各组件之间的关系，所以就使用低配的虚拟机进行搭建了。 虚拟机配置   CPU 内存 硬盘    4*vCPU 8GB 200GB">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blogpic.skyhive.tech/images/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
 <meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于 TCP">
-<meta name="twitter:description" content="互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP&amp;#x2F;IP协议族（TCP&amp;#x2F;IP Protocol Suite，或TCP&amp;#x2F;IP Protocols），简称TCP&amp;#x2F;IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为">
-<meta name="twitter:image" content="http://blogpic.skyhive.tech/images/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
+<meta name="twitter:title" content="Gitlab单节点服务搭建">
+<meta name="twitter:description" content="搭建准备根据官方提供的说法，小规模使用 GitLab 只用单机部署即可，4C8G 的配置足够小一百人使用 Git，由于本次也只是熟悉一下 GitLab 的搭建过程和各组件之间的关系，所以就使用低配的虚拟机进行搭建了。 虚拟机配置   CPU 内存 硬盘    4*vCPU 8GB 200GB">
 
-<link rel="canonical" href="https://skyhive.github.io/2017/4/undefined.html">
+<link rel="canonical" href="https://skyhive.github.io/2019/7/Gitlab单节点服务搭建.html">
 
 
 <script id="page-configurations">
@@ -48,7 +46,7 @@
   };
 </script>
 
-  <title>关于 TCP | SkyHive's Blog</title>
+  <title>Gitlab单节点服务搭建 | SkyHive's Blog</title>
   
 
 
@@ -170,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2017/4/undefined.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2019/7/Gitlab单节点服务搭建.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -183,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          关于 TCP
+          Gitlab单节点服务搭建
         </h1>
 
         <div class="post-meta">
@@ -193,7 +191,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-04-04 12:34:26" itemprop="dateCreated datePublished" datetime="2017-04-04T12:34:26+08:00">2017-04-04</time>
+              <time title="创建时间：2019-07-25 12:25:01" itemprop="dateCreated datePublished" datetime="2019-07-25T12:25:01+08:00">2019-07-25</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -213,7 +211,7 @@
             </span>
 
           
-            <span id="/2017/4/undefined.html" class="post-meta-item leancloud_visitors" data-flag-title="关于 TCP" title="阅读次数">
+            <span id="/2019/7/Gitlab单节点服务搭建.html" class="post-meta-item leancloud_visitors" data-flag-title="Gitlab单节点服务搭建" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -235,8 +233,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2017/4/undefined.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/4/undefined.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2019/7/Gitlab单节点服务搭建.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/7/Gitlab单节点服务搭建.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -251,19 +249,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <blockquote>
-<p>互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP&#x2F;IP协议族（TCP&#x2F;IP Protocol Suite，或TCP&#x2F;IP Protocols），简称TCP&#x2F;IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为该家族中最早通过的标准。由于在网络通讯协议普遍采用分层的结构，当多个层次的协议共同工作时，类似计算机科学中的堆栈，因此又被称为TCP&#x2F;IP协议栈（TCP&#x2F;IP Protocol Stack）</p>
-</blockquote>
+        <h2 id="搭建准备"><a href="#搭建准备" class="headerlink" title="搭建准备"></a>搭建准备</h2><p>根据官方提供的说法，小规模使用 GitLab 只用单机部署即可，4C8G 的配置足够小一百人使用 Git，由于本次也只是熟悉一下 GitLab 的搭建过程和各组件之间的关系，所以就使用低配的虚拟机进行搭建了。</p>
+<h3 id="虚拟机配置"><a href="#虚拟机配置" class="headerlink" title="虚拟机配置"></a>虚拟机配置</h3><table>
+<thead>
+<tr>
+<th>CPU</th>
+<th>内存</th>
+<th>硬盘</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4*vCPU</td>
+<td>8GB</td>
+<td>200GB</td>
+</tr>
+</tbody></table>
 <a id="more"></a>
-<p>以上来自维基百科，我们知道 TCP&#x2F;IP 协议族是基于 TCP 和 IP 这两个最初的协议之上的不同的通信协议的大的集合。其中包含了ARP、UDP、ICMP（互联网消息控制管理协议）等协议，它将软件的通信过程抽象化为四个抽象层（应用层、传输层、网络层和物理层），类似于简化的 OSI 七层。</p>
-<p>在数据传输方面，早期研发提出两种传输方式——面向连接的传输和非面向连接的传输，经过后来长期的发展，提出面向连接的ISO组织将非面向连接的传输纳入自己麾下，就是现在的 UDP。</p>
-<h3 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h3><h4 id="TCP-建立连接的过程——-TCP-的三次握手"><a href="#TCP-建立连接的过程——-TCP-的三次握手" class="headerlink" title="TCP 建立连接的过程—— TCP 的三次握手"></a>TCP 建立连接的过程—— TCP 的三次握手</h4><p>首先，源向目的发送一个 TCP 同步请求（syn 包）；目的收到后向源发一个 TCP 回应（offer 包），这里面包含了 syn+ack 信息，此时处于半打开会话状态，存在巨大的安全隐患；源收到目的的回应后向目的发送一个 TCP 确认包（ack 包），就此处于全打开会话状态，TCP 连接建立完成。</p>
-<h4 id="TCP-序列号和确认号"><a href="#TCP-序列号和确认号" class="headerlink" title="TCP 序列号和确认号"></a>TCP 序列号和确认号</h4><p>TCP 会话的每一端都包含一个 32 位（bit）的序列号，该序列号被用来跟踪该端发送的数据量。每一个包中都包含序列号，在接收端则通过确认号用来通知发送端数据成功接收（发送序列号是当前的发包情况，确认号是渴望的发包情况）。</p>
-<p>例如在握手的时候，源向目的发送 syn 包，seq&#x3D;x；目的会给源一个回应，seq&#x3D;y，ack&#x3D;x+1；源收到了之后给目的回一个确认包，ack&#x3D;y+1。</p>
-<p><img src="http://blogpic.skyhive.tech/images/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" alt="三次握手"></p>
-<h4 id="TCP-划窗"><a href="#TCP-划窗" class="headerlink" title="TCP 划窗"></a>TCP 划窗</h4><p>TCP 协议通过划窗机制来对流量进行控制管理，接收端通过发送确认号告诉发送端自己获包的情况，接收端通过三次发包后了解接收端的网络吞吐能力，然后稳定发包。</p>
-<h4 id="TCP-重传"><a href="#TCP-重传" class="headerlink" title="TCP 重传"></a>TCP 重传</h4><p>TCP 包超时未响应后进行重传，一个包最多重传 16 次，无法处理后连接断开重连，三次失败后无法进行连接</p>
-<p>***以上均为自己极浅的理解，详细内容还请移步至 Google ***</p>
+<h2 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h2><h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt <span class="keyword">update</span></span><br><span class="line">sudo apt <span class="keyword">install</span> curl openssh-<span class="keyword">server</span> ca-certificates postfix</span><br></pre></td></tr></table></figure>
+
+<h3 id="搭建服务"><a href="#搭建服务" class="headerlink" title="搭建服务"></a>搭建服务</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">wget --content-disposition http<span class="variable">s:</span>//packages.gitlab.<span class="keyword">com</span>/gitlab/gitlab-<span class="keyword">ce</span>/packages/ubuntu/xenial/gitlab-ce_12.<span class="number">0.1</span>-<span class="keyword">ce</span>.<span class="number">0</span>_amd64.<span class="keyword">deb</span>/download.<span class="keyword">deb</span>		## 下载官方 <span class="keyword">deb</span> 包</span><br><span class="line">sudo dpkg -i gitlab-ce_12.<span class="number">0.1</span>-<span class="keyword">ce</span>.<span class="number">0</span>_amd64.<span class="keyword">deb</span></span><br><span class="line"></span><br><span class="line">## 卸载原有 nginx</span><br><span class="line">sudo apt purge nginx-common nginx-full</span><br><span class="line"></span><br><span class="line">## 修改域名配置</span><br><span class="line">sudo <span class="keyword">vim</span> /etc/gitlab/gitlab.rb</span><br><span class="line"></span><br><span class="line">external_url=<span class="string">'your domain_name'</span></span><br><span class="line"></span><br><span class="line">## 配置生效</span><br><span class="line">sudo gitlab-ctl reconfigure</span><br></pre></td></tr></table></figure>
+
+<h3 id="汉化"><a href="#汉化" class="headerlink" title="汉化"></a>汉化</h3><p>汉化的步骤实际上没有太大比较，GitLab 的汉化一直做的比较“晦涩难懂”，不如直接英语界面来的舒服。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 去 https://gitlab.com/xhang/gitlab 找到对应版本的分支</span></span><br><span class="line">wget https:<span class="regexp">//gi</span>tlab.com<span class="regexp">/xhang/gi</span>tlab<span class="regexp">/-/</span>archive<span class="regexp">/v12.0.1/gi</span>tlab-v12.<span class="number">0.1</span>.tar.gz</span><br><span class="line">tar -zxvf gitlab-v12.<span class="number">0.1</span>.tar.gz <span class="comment">## 解压</span></span><br><span class="line"></span><br><span class="line">sudo gitlab-ctl stop <span class="comment">## gitlab 停止服务</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 备份 gitlab-rails 目录，该目录下主要是web应用部分，也是当前项目仓库的起始版本，也是汉化包要覆盖的目录。</span></span><br><span class="line">sudo tar zcvf <span class="regexp">/opt/gi</span>tlab<span class="regexp">/embedded/</span>service<span class="regexp">/gitlab-rails-bak.tar.gz /</span>opt<span class="regexp">/gitlab/</span>embedded<span class="regexp">/service/gi</span>tlab-rails </span><br><span class="line"><span class="comment">## 汉化包覆盖</span></span><br><span class="line">sudo cp -rf ~<span class="regexp">/gitlab-v12.0.1/</span>* <span class="regexp">/opt/gi</span>tlab<span class="regexp">/embedded/</span>service<span class="regexp">/gitlab-rails/</span></span><br><span class="line"></span><br><span class="line">sudo gitlab-ctl start 	<span class="comment">## GitLab 启动服务</span></span><br><span class="line"></span><br><span class="line">sudo gitlab-ctl reconfigure <span class="comment">## 重新配置</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="基操"><a href="#基操" class="headerlink" title="基操"></a>基操</h3><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">## 查看 GitLab 状态</span><br><span class="line">sudo gitlab-ctl status</span><br><span class="line"></span><br><span class="line">## 查看 GitLab 版本</span><br><span class="line">cat /opt/gitlab/embedded/service/gitlab-rails/VERSION</span><br><span class="line"></span><br><span class="line">## GitLab 停止服务</span><br><span class="line">sudo gitlab-ctl stop</span><br><span class="line"></span><br><span class="line">## GitLab 启动服务</span><br><span class="line">sudo gitlab-ctl start</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -293,7 +303,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Network/" rel="tag"># Network</a>
+              <a href="/tags/GitLab/" rel="tag"># GitLab</a>
           </div>
 
         
@@ -302,12 +312,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2017/2/undefined.html" rel="prev" title="解决配置完七牛后无法 Deploy 到 Github">
-      <i class="fa fa-chevron-left"></i> 解决配置完七牛后无法 Deploy 到 Github
+    <a href="/2018/10/美版V30系统升级.html" rel="prev" title="美版 V30 系统升级">
+      <i class="fa fa-chevron-left"></i> 美版 V30 系统升级
     </a></div>
       <div class="post-nav-item">
-    <a href="/2017/4/undefined.html" rel="next" title="SQL 语句的基本操作">
-      SQL 语句的基本操作 <i class="fa fa-chevron-right"></i>
+    <a href="/2019/10/Ext4文件系统缩容.html" rel="next" title="Ext4 文件系统缩容">
+      Ext4 文件系统缩容 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -368,7 +378,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP"><span class="nav-number">1.</span> <span class="nav-text">TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-建立连接的过程——-TCP-的三次握手"><span class="nav-number">1.1.</span> <span class="nav-text">TCP 建立连接的过程—— TCP 的三次握手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-序列号和确认号"><span class="nav-number">1.2.</span> <span class="nav-text">TCP 序列号和确认号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-划窗"><span class="nav-number">1.3.</span> <span class="nav-text">TCP 划窗</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP-重传"><span class="nav-number">1.4.</span> <span class="nav-text">TCP 重传</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建准备"><span class="nav-number">1.</span> <span class="nav-text">搭建准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟机配置"><span class="nav-number">1.1.</span> <span class="nav-text">虚拟机配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建过程"><span class="nav-number">2.</span> <span class="nav-text">搭建过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装依赖"><span class="nav-number">2.1.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建服务"><span class="nav-number">2.2.</span> <span class="nav-text">搭建服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#汉化"><span class="nav-number">2.3.</span> <span class="nav-text">汉化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基操"><span class="nav-number">2.4.</span> <span class="nav-text">基操</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

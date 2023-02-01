@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="搭建准备根据官方提供的说法，小规模使用 GitLab 只用单机部署即可，4C8G 的配置足够小一百人使用 Git，由于本次也只是熟悉一下 GitLab 的搭建过程和各组件之间的关系，所以就使用低配的虚拟机进行搭建了。 虚拟机配置   CPU 内存 硬盘    4*vCPU 8GB 200GB">
-<meta name="keywords" content="GitLab">
+  <meta name="description" content="数据库操作 创建数据库： CREATE DATABASE &amp;lt;数据库名&amp;gt; [其他选项] 使用数据库： USE &amp;lt;数据库名&amp;gt; 修改数据库： ALTER DATABASE &amp;lt;数据库名&amp;gt; 删除数据库： DROP DATABASE &amp;lt;数据库名&amp;gt;  数据表操作 创建表： 12345678910111213CREATE TABLE &amp;lt;表名&amp;gt;（">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Gitlab单节点服务搭建">
-<meta property="og:url" content="https://skyhive.github.io/2019/7/undefined.html">
+<meta property="og:title" content="SQL 语句的基本操作">
+<meta property="og:url" content="https://skyhive.github.io/2017/4/SQL语句的基本操作.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="搭建准备根据官方提供的说法，小规模使用 GitLab 只用单机部署即可，4C8G 的配置足够小一百人使用 Git，由于本次也只是熟悉一下 GitLab 的搭建过程和各组件之间的关系，所以就使用低配的虚拟机进行搭建了。 虚拟机配置   CPU 内存 硬盘    4*vCPU 8GB 200GB">
+<meta property="og:description" content="数据库操作 创建数据库： CREATE DATABASE &amp;lt;数据库名&amp;gt; [其他选项] 使用数据库： USE &amp;lt;数据库名&amp;gt; 修改数据库： ALTER DATABASE &amp;lt;数据库名&amp;gt; 删除数据库： DROP DATABASE &amp;lt;数据库名&amp;gt;  数据表操作 创建表： 12345678910111213CREATE TABLE &amp;lt;表名&amp;gt;（">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gitlab单节点服务搭建">
-<meta name="twitter:description" content="搭建准备根据官方提供的说法，小规模使用 GitLab 只用单机部署即可，4C8G 的配置足够小一百人使用 Git，由于本次也只是熟悉一下 GitLab 的搭建过程和各组件之间的关系，所以就使用低配的虚拟机进行搭建了。 虚拟机配置   CPU 内存 硬盘    4*vCPU 8GB 200GB">
+<meta name="twitter:title" content="SQL 语句的基本操作">
+<meta name="twitter:description" content="数据库操作 创建数据库： CREATE DATABASE &amp;lt;数据库名&amp;gt; [其他选项] 使用数据库： USE &amp;lt;数据库名&amp;gt; 修改数据库： ALTER DATABASE &amp;lt;数据库名&amp;gt; 删除数据库： DROP DATABASE &amp;lt;数据库名&amp;gt;  数据表操作 创建表： 12345678910111213CREATE TABLE &amp;lt;表名&amp;gt;（">
 
-<link rel="canonical" href="https://skyhive.github.io/2019/7/undefined.html">
+<link rel="canonical" href="https://skyhive.github.io/2017/4/SQL语句的基本操作.html">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>Gitlab单节点服务搭建 | SkyHive's Blog</title>
+  <title>SQL 语句的基本操作 | SkyHive's Blog</title>
   
 
 
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2019/7/undefined.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2017/4/SQL语句的基本操作.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -181,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Gitlab单节点服务搭建
+          SQL 语句的基本操作
         </h1>
 
         <div class="post-meta">
@@ -191,7 +191,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-07-25 12:25:01" itemprop="dateCreated datePublished" datetime="2019-07-25T12:25:01+08:00">2019-07-25</time>
+              <time title="创建时间：2017-04-04 12:44:13" itemprop="dateCreated datePublished" datetime="2017-04-04T12:44:13+08:00">2017-04-04</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -211,7 +211,7 @@
             </span>
 
           
-            <span id="/2019/7/undefined.html" class="post-meta-item leancloud_visitors" data-flag-title="Gitlab单节点服务搭建" title="阅读次数">
+            <span id="/2017/4/SQL语句的基本操作.html" class="post-meta-item leancloud_visitors" data-flag-title="SQL 语句的基本操作" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -233,8 +233,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2019/7/undefined.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/7/undefined.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2017/4/SQL语句的基本操作.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/4/SQL语句的基本操作.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -249,31 +249,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="搭建准备"><a href="#搭建准备" class="headerlink" title="搭建准备"></a>搭建准备</h2><p>根据官方提供的说法，小规模使用 GitLab 只用单机部署即可，4C8G 的配置足够小一百人使用 Git，由于本次也只是熟悉一下 GitLab 的搭建过程和各组件之间的关系，所以就使用低配的虚拟机进行搭建了。</p>
-<h3 id="虚拟机配置"><a href="#虚拟机配置" class="headerlink" title="虚拟机配置"></a>虚拟机配置</h3><table>
-<thead>
-<tr>
-<th>CPU</th>
-<th>内存</th>
-<th>硬盘</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>4*vCPU</td>
-<td>8GB</td>
-<td>200GB</td>
-</tr>
-</tbody></table>
-<a id="more"></a>
-<h2 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h2><h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt <span class="keyword">update</span></span><br><span class="line">sudo apt <span class="keyword">install</span> curl openssh-<span class="keyword">server</span> ca-certificates postfix</span><br></pre></td></tr></table></figure>
-
-<h3 id="搭建服务"><a href="#搭建服务" class="headerlink" title="搭建服务"></a>搭建服务</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">wget --content-disposition http<span class="variable">s:</span>//packages.gitlab.<span class="keyword">com</span>/gitlab/gitlab-<span class="keyword">ce</span>/packages/ubuntu/xenial/gitlab-ce_12.<span class="number">0.1</span>-<span class="keyword">ce</span>.<span class="number">0</span>_amd64.<span class="keyword">deb</span>/download.<span class="keyword">deb</span>		## 下载官方 <span class="keyword">deb</span> 包</span><br><span class="line">sudo dpkg -i gitlab-ce_12.<span class="number">0.1</span>-<span class="keyword">ce</span>.<span class="number">0</span>_amd64.<span class="keyword">deb</span></span><br><span class="line"></span><br><span class="line">## 卸载原有 nginx</span><br><span class="line">sudo apt purge nginx-common nginx-full</span><br><span class="line"></span><br><span class="line">## 修改域名配置</span><br><span class="line">sudo <span class="keyword">vim</span> /etc/gitlab/gitlab.rb</span><br><span class="line"></span><br><span class="line">external_url=<span class="string">'your domain_name'</span></span><br><span class="line"></span><br><span class="line">## 配置生效</span><br><span class="line">sudo gitlab-ctl reconfigure</span><br></pre></td></tr></table></figure>
-
-<h3 id="汉化"><a href="#汉化" class="headerlink" title="汉化"></a>汉化</h3><p>汉化的步骤实际上没有太大比较，GitLab 的汉化一直做的比较“晦涩难懂”，不如直接英语界面来的舒服。</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 去 https://gitlab.com/xhang/gitlab 找到对应版本的分支</span></span><br><span class="line">wget https:<span class="regexp">//gi</span>tlab.com<span class="regexp">/xhang/gi</span>tlab<span class="regexp">/-/</span>archive<span class="regexp">/v12.0.1/gi</span>tlab-v12.<span class="number">0.1</span>.tar.gz</span><br><span class="line">tar -zxvf gitlab-v12.<span class="number">0.1</span>.tar.gz <span class="comment">## 解压</span></span><br><span class="line"></span><br><span class="line">sudo gitlab-ctl stop <span class="comment">## gitlab 停止服务</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 备份 gitlab-rails 目录，该目录下主要是web应用部分，也是当前项目仓库的起始版本，也是汉化包要覆盖的目录。</span></span><br><span class="line">sudo tar zcvf <span class="regexp">/opt/gi</span>tlab<span class="regexp">/embedded/</span>service<span class="regexp">/gitlab-rails-bak.tar.gz /</span>opt<span class="regexp">/gitlab/</span>embedded<span class="regexp">/service/gi</span>tlab-rails </span><br><span class="line"><span class="comment">## 汉化包覆盖</span></span><br><span class="line">sudo cp -rf ~<span class="regexp">/gitlab-v12.0.1/</span>* <span class="regexp">/opt/gi</span>tlab<span class="regexp">/embedded/</span>service<span class="regexp">/gitlab-rails/</span></span><br><span class="line"></span><br><span class="line">sudo gitlab-ctl start 	<span class="comment">## GitLab 启动服务</span></span><br><span class="line"></span><br><span class="line">sudo gitlab-ctl reconfigure <span class="comment">## 重新配置</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="基操"><a href="#基操" class="headerlink" title="基操"></a>基操</h3><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">## 查看 GitLab 状态</span><br><span class="line">sudo gitlab-ctl status</span><br><span class="line"></span><br><span class="line">## 查看 GitLab 版本</span><br><span class="line">cat /opt/gitlab/embedded/service/gitlab-rails/VERSION</span><br><span class="line"></span><br><span class="line">## GitLab 停止服务</span><br><span class="line">sudo gitlab-ctl stop</span><br><span class="line"></span><br><span class="line">## GitLab 启动服务</span><br><span class="line">sudo gitlab-ctl start</span><br></pre></td></tr></table></figure>
-
+        <h3 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h3><ol>
+<li>创建数据库： <code>CREATE DATABASE &lt;数据库名&gt; [其他选项]</code></li>
+<li>使用数据库： <code>USE &lt;数据库名&gt;</code></li>
+<li>修改数据库： <code>ALTER DATABASE &lt;数据库名&gt;</code></li>
+<li>删除数据库： <code>DROP DATABASE &lt;数据库名&gt;</code></li>
+</ol>
+<h3 id="数据表操作"><a href="#数据表操作" class="headerlink" title="数据表操作"></a>数据表操作</h3><ol>
+<li><p>创建表：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE &lt;表名&gt;</span><br><span class="line">（</span><br><span class="line">     &lt;列名<span class="number">1</span>&gt;&lt;数据类型&gt;<span class="meta">[&lt;列级完整性约束&gt;]</span>,</span><br><span class="line">    <span class="meta">[&lt;列名n&gt;&lt;数据类型&gt;[&lt;列级完整性约束&gt;]</span>]</span><br><span class="line"> ）;</span><br><span class="line">例：</span><br><span class="line">    create table studets</span><br><span class="line">    (</span><br><span class="line">        id int not <span class="keyword">null</span> auto_increment primary key,</span><br><span class="line">        name varchar(<span class="number">8</span>) not <span class="keyword">null</span>,</span><br><span class="line">        sex varchar(<span class="number">5</span>) not <span class="keyword">null</span>,</span><br><span class="line">        score int(<span class="number">5</span>) not <span class="keyword">null</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改基本表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">add</span> &lt;列名&gt; &lt;列数据类型&gt; [<span class="keyword">after</span> 插入位置];         <span class="comment">--增加列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">change</span> &lt;列名&gt; &lt;列新名&gt; &lt;新数据类型&gt;;              <span class="comment">--修改列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">drop</span> &lt;列名&gt;;                         <span class="comment">--删除列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">rename</span> &lt;新表名&gt;;                     <span class="comment">--重命名表</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> &lt;表名&gt;                                       <span class="comment">--删除表</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>表的基本操作</p>
+</li>
+</ol>
+<ul>
+<li>插入数据：<code>insert [into] &lt;表名&gt; [(列名1,列名2,列名3……)] values (值1,值2,值3……);</code></li>
+<li>更新数据：<code>update &lt;表名&gt; set 列名=新值 where 更新条件;</code></li>
+<li>删除数据：<code>delete from &lt;表名&gt; where 删除条件;</code></li>
+<li>查询数据：<code>select &lt;列名&gt; from &lt;表名&gt; [查询条件];</code></li>
+<li>特定条件查询：where 不仅支持 “where 列名&#x3D;值” 这种名等于值的查询形式，对一般的比较运算的运算符都是支持的，如&#x3D;、&lt;、&gt;、！&#x3D; 等以及一些扩展运算符 is[not] null、in、like 等，还可以对查询条件使用 or 和 and 进行组合查询。</li>
+</ul>
 
     </div>
 
@@ -303,7 +301,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/GitLab/" rel="tag"># GitLab</a>
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
           </div>
 
         
@@ -312,12 +310,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/10/undefined.html" rel="prev" title="美版 V30 系统升级">
-      <i class="fa fa-chevron-left"></i> 美版 V30 系统升级
+    <a href="/2017/4/关于TCP.html" rel="prev" title="关于 TCP">
+      <i class="fa fa-chevron-left"></i> 关于 TCP
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/10/undefined.html" rel="next" title="Ext4 文件系统缩容">
-      Ext4 文件系统缩容 <i class="fa fa-chevron-right"></i>
+    <a href="/2017/4/Python基础.html" rel="next" title="Python基础">
+      Python基础 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -378,7 +376,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建准备"><span class="nav-number">1.</span> <span class="nav-text">搭建准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟机配置"><span class="nav-number">1.1.</span> <span class="nav-text">虚拟机配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建过程"><span class="nav-number">2.</span> <span class="nav-text">搭建过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装依赖"><span class="nav-number">2.1.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建服务"><span class="nav-number">2.2.</span> <span class="nav-text">搭建服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#汉化"><span class="nav-number">2.3.</span> <span class="nav-text">汉化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基操"><span class="nav-number">2.4.</span> <span class="nav-text">基操</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库操作"><span class="nav-number">1.</span> <span class="nav-text">数据库操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据表操作"><span class="nav-number">2.</span> <span class="nav-text">数据表操作</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

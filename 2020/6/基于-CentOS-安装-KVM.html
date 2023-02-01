@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1、UEFI 引导问题支持 KVM 虚拟机使用 UEFI 引导需要安装 OVMF 组件，参考基于 CentOS 安装 KVM。目前通过 virt-v2v 导入的 ova 且使用 UEFI 启动的虚拟机（from vSphere）再 define domain 的时候会有报错，报错如下： 12error: Failed to define domain from /tmp/v2vlibvirt20e">
+  <meta name="description" content="安装操作系统UEFI 引导或者 Legacy BIOS 引导均可，冲就完事了">
 <meta name="keywords" content="虚拟化,KVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KVM 填坑">
-<meta property="og:url" content="https://skyhive.github.io/2020/9/undefined.html">
+<meta property="og:title" content="基于 CentOS 安装 KVM">
+<meta property="og:url" content="https://skyhive.github.io/2020/6/基于-CentOS-安装-KVM.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="1、UEFI 引导问题支持 KVM 虚拟机使用 UEFI 引导需要安装 OVMF 组件，参考基于 CentOS 安装 KVM。目前通过 virt-v2v 导入的 ova 且使用 UEFI 启动的虚拟机（from vSphere）再 define domain 的时候会有报错，报错如下： 12error: Failed to define domain from /tmp/v2vlibvirt20e">
+<meta property="og:description" content="安装操作系统UEFI 引导或者 Legacy BIOS 引导均可，冲就完事了">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KVM 填坑">
-<meta name="twitter:description" content="1、UEFI 引导问题支持 KVM 虚拟机使用 UEFI 引导需要安装 OVMF 组件，参考基于 CentOS 安装 KVM。目前通过 virt-v2v 导入的 ova 且使用 UEFI 启动的虚拟机（from vSphere）再 define domain 的时候会有报错，报错如下： 12error: Failed to define domain from /tmp/v2vlibvirt20e">
+<meta name="twitter:title" content="基于 CentOS 安装 KVM">
+<meta name="twitter:description" content="安装操作系统UEFI 引导或者 Legacy BIOS 引导均可，冲就完事了">
 
-<link rel="canonical" href="https://skyhive.github.io/2020/9/undefined.html">
+<link rel="canonical" href="https://skyhive.github.io/2020/6/基于-CentOS-安装-KVM.html">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>KVM 填坑 | SkyHive's Blog</title>
+  <title>基于 CentOS 安装 KVM | SkyHive's Blog</title>
   
 
 
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2020/9/undefined.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2020/6/基于-CentOS-安装-KVM.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -181,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          KVM 填坑
+          基于 CentOS 安装 KVM
         </h1>
 
         <div class="post-meta">
@@ -191,7 +191,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-09-06 17:35:31" itemprop="dateCreated datePublished" datetime="2020-09-06T17:35:31+08:00">2020-09-06</time>
+              <time title="创建时间：2020-06-10 17:40:03" itemprop="dateCreated datePublished" datetime="2020-06-10T17:40:03+08:00">2020-06-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -211,7 +211,7 @@
             </span>
 
           
-            <span id="/2020/9/undefined.html" class="post-meta-item leancloud_visitors" data-flag-title="KVM 填坑" title="阅读次数">
+            <span id="/2020/6/基于-CentOS-安装-KVM.html" class="post-meta-item leancloud_visitors" data-flag-title="基于 CentOS 安装 KVM" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -233,8 +233,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/9/undefined.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/9/undefined.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/6/基于-CentOS-安装-KVM.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/6/基于-CentOS-安装-KVM.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -249,25 +249,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="1、UEFI-引导问题"><a href="#1、UEFI-引导问题" class="headerlink" title="1、UEFI 引导问题"></a>1、UEFI 引导问题</h3><p>支持 KVM 虚拟机使用 UEFI 引导需要安装 OVMF 组件，参考<a href="https://blog.skyhive.tech/2020/06/10/%E5%9F%BA%E4%BA%8E-CentOS-%E5%AE%89%E8%A3%85-KVM/" target="_blank" rel="noopener">基于 CentOS 安装 KVM</a>。<br>目前通过 virt-v2v 导入的 ova 且使用 UEFI 启动的虚拟机（from vSphere）再 define domain 的时候会有报错，报错如下：</p>
-<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">error: </span>Failed to define domain from /tmp/v2vlibvirt20e61b.xml</span><br><span class="line"><span class="keyword">error: </span>unsupported configuration: smm is not available with this QEMU binary</span><br></pre></td></tr></table></figure>
+        <h3 id="安装操作系统"><a href="#安装操作系统" class="headerlink" title="安装操作系统"></a>安装操作系统</h3><p>UEFI 引导或者 Legacy BIOS 引导均可，冲就完事了</p>
+<a id="more"></a>
+<h3 id="安装-KVM-及其依赖"><a href="#安装-KVM-及其依赖" class="headerlink" title="安装 KVM 及其依赖"></a>安装 KVM 及其依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 先把源换了</span></span><br><span class="line">yum install -y wget</span><br><span class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line">yum makecache</span><br><span class="line"></span><br><span class="line"><span class="comment">## 安装 epel 源</span></span><br><span class="line">yum install -y epel-release</span><br><span class="line"></span><br><span class="line"><span class="comment">## 安装 KVM 以及依赖服务</span></span><br><span class="line">yum install ntp kvm virt-manager virt-top qemu-kvm qemu-kvm-tools libvirt git vim htop</span><br><span class="line">systemctl start libvirtd</span><br><span class="line">systemctl <span class="built_in">enable</span> libvirtd</span><br><span class="line"></span><br><span class="line"><span class="comment">## 配置 NTP</span></span><br><span class="line">vim /etc/ntp.conf</span><br><span class="line">--------</span><br><span class="line">server ntp.aliyun.com iburst  <span class="comment"># 新增</span></span><br><span class="line">--------</span><br><span class="line"></span><br><span class="line">systemctl start ntpd</span><br><span class="line">systemctl <span class="built_in">enable</span> ntpd</span><br><span class="line">ntpq -p  <span class="comment"># 检查同步状态</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 关闭 firewalled selinux</span></span><br><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line">setenforce 0</span><br><span class="line">vim /etc/sysconfig/selinux</span><br><span class="line">-------</span><br><span class="line">SELINUX=disabled  <span class="comment">#修改</span></span><br><span class="line">-------</span><br><span class="line"></span><br><span class="line"><span class="comment">## 修改 grub 引导配置</span></span><br><span class="line">vim /etc/default/grub</span><br><span class="line">-------</span><br><span class="line">GRUB_CMDLINE_LINUX=<span class="string">"crashkernel=auto spectre_v2=retpoline rd.lvm.lv=centos/root rd.lvm.lv=centos/swap intel_iommu=on rhgb quiet"</span>  <span class="comment"># 开启 intel iommu</span></span><br><span class="line">-------</span><br><span class="line">grub2-mkconfig -o /boot/grub2/grub.cfg</span><br></pre></td></tr></table></figure>
 
-<p>以上报错是 OVMF 的问题，参考：<a href="https://access.redhat.com/discussions/3175901" target="_blank" rel="noopener">https://access.redhat.com/discussions/3175901</a></p>
-<p>具体是因为因为 “OVMF_CODE.secboot.fd” 固件在当前的 qemu-kvm 中不受支持，RedHat Discussion 上有两种解决方案：</p>
-<ol>
-<li><p>重构 OVMF RPM 包，参考： <a href="https://access.redhat.com/discussions/3175901" target="_blank" rel="noopener">https://access.redhat.com/discussions/3175901</a></p>
-<blockquote>
-<p> Removing “-D SMM_REQUIRE”, rebuild the rpm, browse inside the rpm and then copy OVMF_CODE.secboot.fd to &#x2F;usr&#x2F;share&#x2F;OVMF&#x2F;OVMF_CODE.fd makes it work but I don’t know whether this will reduce security.</p>
-</blockquote>
-</li>
-<li><p>升级 qemu-kvm 版本至 2.6 以上的 qemu-kvm-rhev 版本</p>
-<blockquote>
-<p>‘With this update, the “OVMF_CODE.secboot.fd” firmware binary file includes the Secure Boot feature. This binary can be used with pc-q35-rhel7.3.0 and later Q35 machine types only […]’<br>Those machine types are unavailable when using the 1.5.3-based “qemu-kvm” package of base RHEL. They are available only when using the 2.6.0-based “qemu-kvm-rhev” package, which is not part of base RHEL.</p>
-</blockquote>
-</li>
-</ol>
-<p>未完待续……</p>
+<h3 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h3><p>因为环境需要将两个数据口创建 bond4 来使用，以下需要先创建 bond，再将 bond 加入网桥</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 安装依赖并禁用 NetworkManager</span></span><br><span class="line">yum install -y bridge-utils</span><br><span class="line">systemctl stop NetworkManager</span><br><span class="line">systemctl <span class="built_in">disable</span> NetworkManager</span><br><span class="line"></span><br><span class="line"><span class="comment">## eno1 配置文件修改</span></span><br><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-eno1</span><br><span class="line">----------</span><br><span class="line">DEVICE=<span class="string">"eno1"</span></span><br><span class="line">TYPE=Ethernet</span><br><span class="line">PROXY_METHOD=none</span><br><span class="line">BROWSER_ONLY=no</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=eno1</span><br><span class="line">ONBOOT=yes</span><br><span class="line">MASTER=bond1</span><br><span class="line">SLAVE=yes</span><br><span class="line">----------</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">## eno2 配置文件修改</span></span><br><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-eno2</span><br><span class="line">----------</span><br><span class="line">DEVICE=<span class="string">"eno2"</span></span><br><span class="line">TYPE=Ethernet</span><br><span class="line">PROXY_METHOD=none</span><br><span class="line">BROWSER_ONLY=no</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">DEFROUTE=yes</span><br><span class="line">IPV4_FAILURE_FATAL=no</span><br><span class="line">IPV6INIT=yes</span><br><span class="line">IPV6_AUTOCONF=yes</span><br><span class="line">IPV6_DEFROUTE=yes</span><br><span class="line">IPV6_FAILURE_FATAL=no</span><br><span class="line">IPV6_ADDR_GEN_MODE=stable-privacy</span><br><span class="line">NAME=eno2</span><br><span class="line">ONBOOT=yes</span><br><span class="line">MASTER=bond1</span><br><span class="line">SLAVE=yes</span><br><span class="line">----------</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">## bond1 配置添加</span></span><br><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-bond1</span><br><span class="line">----------</span><br><span class="line">TYPE=Bond</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">ONBOOT=yes</span><br><span class="line">USERCTL=no</span><br><span class="line">DEVICE=bond1</span><br><span class="line">NAME=bond1</span><br><span class="line">BONDING_MASTER=yes</span><br><span class="line">BONDING_OPTS=<span class="string">"miimon=100 xmit_hash_policy=layer3+4 mode=4 lacp_rate=1"</span></span><br><span class="line">BRIDGE=br1</span><br><span class="line">----------</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">## br1 配置添加</span></span><br><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-br1</span><br><span class="line">----------</span><br><span class="line">TYPE=Bridge</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">IPADDR=<span class="variable">$ip</span></span><br><span class="line">NETMASK=<span class="variable">$netmask</span></span><br><span class="line">GATEWAY=<span class="variable">$gateway</span></span><br><span class="line">PEEDNS=yes</span><br><span class="line">NAME=br1</span><br><span class="line">DEVICE=br1</span><br><span class="line">ONBOOT=yes</span><br><span class="line">DNS1=x.x.x.x</span><br><span class="line">DNS2=x.x.x.x</span><br><span class="line">----------</span><br><span class="line"> </span><br><span class="line"><span class="comment">## 删除默认网桥</span></span><br><span class="line">modprobe bonding</span><br><span class="line">virsh net-destory default</span><br></pre></td></tr></table></figure>
 
+<h3 id="设置虚拟机支持从-UEFI-启动"><a href="#设置虚拟机支持从-UEFI-启动" class="headerlink" title="设置虚拟机支持从 UEFI 启动"></a>设置虚拟机支持从 UEFI 启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 安装依赖</span></span><br><span class="line">wget http://www.kraxel.org/repos/firmware.repo -O /etc/yum.repos.d/firmware.repo</span><br><span class="line">yum makecache</span><br><span class="line">yum install -y edk2.git-ovmf-x64 OVMF</span><br><span class="line"> </span><br><span class="line"><span class="comment">## 配置 libvirtd</span></span><br><span class="line">vim /etc/libvirt/qemu.conf  <span class="comment"># 新增</span></span><br><span class="line">--------</span><br><span class="line">nvram = [<span class="string">"/usr/share/edk2.git/ovmf-x64/OVMF_CODE-pure-efi.fd:/usr/share/edk2.git/ovmf-x64/OVMF_VARS-pure-efi.fd"</span>]</span><br><span class="line">--------</span><br><span class="line">systemctl restart libvirtd</span><br><span class="line"> </span><br><span class="line"><span class="comment">## 后面创建虚拟机的时候可以在 firmware 中选择 uefi 了</span></span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -306,12 +295,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/6/undefined.html" rel="prev" title="ESXi 快照机制">
-      <i class="fa fa-chevron-left"></i> ESXi 快照机制
+    <a href="/2020/5/Gitlab-EE-版本破解.html" rel="prev" title="Gitlab EE 版本破解">
+      <i class="fa fa-chevron-left"></i> Gitlab EE 版本破解
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/10/undefined.html" rel="next" title="雾都游记">
-      雾都游记 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/6/ESXi-快照机制.html" rel="next" title="ESXi 快照机制">
+      ESXi 快照机制 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -372,7 +361,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、UEFI-引导问题"><span class="nav-number">1.</span> <span class="nav-text">1、UEFI 引导问题</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装操作系统"><span class="nav-number">1.</span> <span class="nav-text">安装操作系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-KVM-及其依赖"><span class="nav-number">2.</span> <span class="nav-text">安装 KVM 及其依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络配置"><span class="nav-number">3.</span> <span class="nav-text">网络配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置虚拟机支持从-UEFI-启动"><span class="nav-number">4.</span> <span class="nav-text">设置虚拟机支持从 UEFI 启动</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

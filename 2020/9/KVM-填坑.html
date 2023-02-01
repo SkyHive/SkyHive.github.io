@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。">
-<meta name="keywords" content="MySQL">
+  <meta name="description" content="1、UEFI 引导问题支持 KVM 虚拟机使用 UEFI 引导需要安装 OVMF 组件，参考基于 CentOS 安装 KVM。目前通过 virt-v2v 导入的 ova 且使用 UEFI 启动的虚拟机（from vSphere）再 define domain 的时候会有报错，报错如下： 12error: Failed to define domain from /tmp/v2vlibvirt20e">
+<meta name="keywords" content="虚拟化,KVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于 timestamp 自动更新">
-<meta property="og:url" content="https://skyhive.github.io/2017/2/undefined.html">
+<meta property="og:title" content="KVM 填坑">
+<meta property="og:url" content="https://skyhive.github.io/2020/9/KVM-填坑.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。">
+<meta property="og:description" content="1、UEFI 引导问题支持 KVM 虚拟机使用 UEFI 引导需要安装 OVMF 组件，参考基于 CentOS 安装 KVM。目前通过 virt-v2v 导入的 ova 且使用 UEFI 启动的虚拟机（from vSphere）再 define domain 的时候会有报错，报错如下： 12error: Failed to define domain from /tmp/v2vlibvirt20e">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于 timestamp 自动更新">
-<meta name="twitter:description" content="最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。">
+<meta name="twitter:title" content="KVM 填坑">
+<meta name="twitter:description" content="1、UEFI 引导问题支持 KVM 虚拟机使用 UEFI 引导需要安装 OVMF 组件，参考基于 CentOS 安装 KVM。目前通过 virt-v2v 导入的 ova 且使用 UEFI 启动的虚拟机（from vSphere）再 define domain 的时候会有报错，报错如下： 12error: Failed to define domain from /tmp/v2vlibvirt20e">
 
-<link rel="canonical" href="https://skyhive.github.io/2017/2/undefined.html">
+<link rel="canonical" href="https://skyhive.github.io/2020/9/KVM-填坑.html">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>关于 timestamp 自动更新 | SkyHive's Blog</title>
+  <title>KVM 填坑 | SkyHive's Blog</title>
   
 
 
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2017/2/undefined.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2020/9/KVM-填坑.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -181,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          关于 timestamp 自动更新
+          KVM 填坑
         </h1>
 
         <div class="post-meta">
@@ -191,7 +191,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-02-09 11:10:32" itemprop="dateCreated datePublished" datetime="2017-02-09T11:10:32+08:00">2017-02-09</time>
+              <time title="创建时间：2020-09-06 17:35:31" itemprop="dateCreated datePublished" datetime="2020-09-06T17:35:31+08:00">2020-09-06</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -211,7 +211,7 @@
             </span>
 
           
-            <span id="/2017/2/undefined.html" class="post-meta-item leancloud_visitors" data-flag-title="关于 timestamp 自动更新" title="阅读次数">
+            <span id="/2020/9/KVM-填坑.html" class="post-meta-item leancloud_visitors" data-flag-title="KVM 填坑" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -233,8 +233,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2017/2/undefined.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/2/undefined.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/9/KVM-填坑.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/9/KVM-填坑.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -249,24 +249,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。</p>
-<a id="more"></a>
+        <h3 id="1、UEFI-引导问题"><a href="#1、UEFI-引导问题" class="headerlink" title="1、UEFI 引导问题"></a>1、UEFI 引导问题</h3><p>支持 KVM 虚拟机使用 UEFI 引导需要安装 OVMF 组件，参考<a href="https://blog.skyhive.tech/2020/06/10/%E5%9F%BA%E4%BA%8E-CentOS-%E5%AE%89%E8%A3%85-KVM/" target="_blank" rel="noopener">基于 CentOS 安装 KVM</a>。<br>目前通过 virt-v2v 导入的 ova 且使用 UEFI 启动的虚拟机（from vSphere）再 define domain 的时候会有报错，报错如下：</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">error: </span>Failed to define domain from /tmp/v2vlibvirt20e61b.xml</span><br><span class="line"><span class="keyword">error: </span>unsupported configuration: smm is not available with this QEMU binary</span><br></pre></td></tr></table></figure>
 
-<p>Mysql中常用到的除了timestamp之外还有datetime，我们先来比较一下这两个的区别：</p>
+<p>以上报错是 OVMF 的问题，参考：<a href="https://access.redhat.com/discussions/3175901" target="_blank" rel="noopener">https://access.redhat.com/discussions/3175901</a></p>
+<p>具体是因为因为 “OVMF_CODE.secboot.fd” 固件在当前的 qemu-kvm 中不受支持，RedHat Discussion 上有两种解决方案：</p>
 <ol>
-<li>timestamp占用的存储空间为4个字节，所以它能表示的时间范围为1970.1.1 08:00:01~2038.01.19 11:14:07，这个范围比较小，容易出现超出的情况。</li>
-<li>datetime占用的存储空间为8个字节，所以它能表示的时间范围为1000.01.01 00:00:00~9999.12.31 23:59:59,这个时间范围完全够用了。</li>
+<li><p>重构 OVMF RPM 包，参考： <a href="https://access.redhat.com/discussions/3175901" target="_blank" rel="noopener">https://access.redhat.com/discussions/3175901</a></p>
+<blockquote>
+<p> Removing “-D SMM_REQUIRE”, rebuild the rpm, browse inside the rpm and then copy OVMF_CODE.secboot.fd to &#x2F;usr&#x2F;share&#x2F;OVMF&#x2F;OVMF_CODE.fd makes it work but I don’t know whether this will reduce security.</p>
+</blockquote>
+</li>
+<li><p>升级 qemu-kvm 版本至 2.6 以上的 qemu-kvm-rhev 版本</p>
+<blockquote>
+<p>‘With this update, the “OVMF_CODE.secboot.fd” firmware binary file includes the Secure Boot feature. This binary can be used with pc-q35-rhel7.3.0 and later Q35 machine types only […]’<br>Those machine types are unavailable when using the 1.5.3-based “qemu-kvm” package of base RHEL. They are available only when using the 2.6.0-based “qemu-kvm-rhev” package, which is not part of base RHEL.</p>
+</blockquote>
+</li>
 </ol>
-<p>其实timestamp这个时间范围目前也是够用的，而且我也只是来学习的，所以我就选择了这个数据类型。然而后来我发现我在修改表中数据的时候时间并没有自动更新，这就比较奇怪了，我当时的sql代码是这样的：</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date timestamp <span class="keyword">not</span> <span class="literal">null</span><span class="built_in"> default </span>current_timestamp;</span><br></pre></td></tr></table></figure>
-
-<p>后来一顿google发现了问题所在，如果这个数据属性没有加上default current_timestamp的话，就会默认创建数据时获取当前时间且数据更新时更新时间，然而加上了default current_timestamp则必须要再加上on update current_timestamp才能自动更新时间。<br>总结如下：</p>
-<ul>
-<li>如果该列属性default current_timestamp 和 on update语句都有，则初始值为当前时间并自动更新</li>
-<li>如果该列属性default current_timestamp 和 on update语句都没有，则默认初始值为当前时间并自动更新</li>
-<li>如果该列属性只有default current_timestamp，那么初始值当前时间且时间不会自动更新</li>
-<li>如果该列属性只有on update语句，则初始值为0，会自动更新时间</li>
-</ul>
+<p>未完待续……</p>
 
     </div>
 
@@ -296,7 +296,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+              <a href="/tags/虚拟化/" rel="tag"># 虚拟化</a>
+              <a href="/tags/KVM/" rel="tag"># KVM</a>
           </div>
 
         
@@ -304,10 +305,13 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2017/2/undefined.html" rel="next" title="SQLi-Labs的安装">
-      SQLi-Labs的安装 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/6/ESXi-快照机制.html" rel="prev" title="ESXi 快照机制">
+      <i class="fa fa-chevron-left"></i> ESXi 快照机制
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/雾都游记.html" rel="next" title="雾都游记">
+      雾都游记 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -368,6 +372,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、UEFI-引导问题"><span class="nav-number">1.</span> <span class="nav-text">1、UEFI 引导问题</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

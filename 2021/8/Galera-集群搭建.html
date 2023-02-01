@@ -20,23 +20,20 @@
     var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="关于国行版本的 Andorid 手机的系统升级，肯定是没有什么问题的，连了网升就完事儿了；但是非国行版本的呢？会有一点小问题。 前两天刚入手了一款次次旗舰 LG V30，去年的旗舰835，4+64的配置今年已然跌倒了千元来搞基的价位，果断入手了。说是要搞基，但是作为一个老年人，实在是懒得折腾了，某鱼的老板说韩版卖断货了，近期只有一款美版的 H932 支持移动全频段，就入手了。 到手稍微检查了一下，">
-<meta name="keywords" content="Network,Android">
+  <meta name="description" content="Galera 简介Galera Cluster 是基于 MySQL&amp;#x2F;Innodb 二次开发而成的一个支持“多主同步”的数据库主从集群。具备多主、同步复制、高可用等特点。 MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现,同 Percona 的 PXC 数据库集群,目前只支持运行在 Linux 系统上。从 MariaDB 10.1 版开">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="美版 V30 系统升级">
-<meta property="og:url" content="https://skyhive.github.io/2018/10/undefined.html">
+<meta property="og:title" content="Galera 集群搭建">
+<meta property="og:url" content="https://skyhive.github.io/2021/8/Galera-集群搭建.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="关于国行版本的 Andorid 手机的系统升级，肯定是没有什么问题的，连了网升就完事儿了；但是非国行版本的呢？会有一点小问题。 前两天刚入手了一款次次旗舰 LG V30，去年的旗舰835，4+64的配置今年已然跌倒了千元来搞基的价位，果断入手了。说是要搞基，但是作为一个老年人，实在是懒得折腾了，某鱼的老板说韩版卖断货了，近期只有一款美版的 H932 支持移动全频段，就入手了。 到手稍微检查了一下，">
+<meta property="og:description" content="Galera 简介Galera Cluster 是基于 MySQL&amp;#x2F;Innodb 二次开发而成的一个支持“多主同步”的数据库主从集群。具备多主、同步复制、高可用等特点。 MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现,同 Percona 的 PXC 数据库集群,目前只支持运行在 Linux 系统上。从 MariaDB 10.1 版开">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blogpic.skyhive.tech/images/%E5%85%81%E8%AE%B8%E6%9D%A5%E8%87%AA%E5%B1%80%E5%9F%9F%E7%BD%91%E7%9A%84%E8%BF%9E%E6%8E%A5.png">
-<meta property="og:image" content="http://blogpic.skyhive.tech/images/WiFi%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE.png">
 <meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="美版 V30 系统升级">
-<meta name="twitter:description" content="关于国行版本的 Andorid 手机的系统升级，肯定是没有什么问题的，连了网升就完事儿了；但是非国行版本的呢？会有一点小问题。 前两天刚入手了一款次次旗舰 LG V30，去年的旗舰835，4+64的配置今年已然跌倒了千元来搞基的价位，果断入手了。说是要搞基，但是作为一个老年人，实在是懒得折腾了，某鱼的老板说韩版卖断货了，近期只有一款美版的 H932 支持移动全频段，就入手了。 到手稍微检查了一下，">
-<meta name="twitter:image" content="http://blogpic.skyhive.tech/images/%E5%85%81%E8%AE%B8%E6%9D%A5%E8%87%AA%E5%B1%80%E5%9F%9F%E7%BD%91%E7%9A%84%E8%BF%9E%E6%8E%A5.png">
+<meta name="twitter:title" content="Galera 集群搭建">
+<meta name="twitter:description" content="Galera 简介Galera Cluster 是基于 MySQL&amp;#x2F;Innodb 二次开发而成的一个支持“多主同步”的数据库主从集群。具备多主、同步复制、高可用等特点。 MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现,同 Percona 的 PXC 数据库集群,目前只支持运行在 Linux 系统上。从 MariaDB 10.1 版开">
 
-<link rel="canonical" href="https://skyhive.github.io/2018/10/undefined.html">
+<link rel="canonical" href="https://skyhive.github.io/2021/8/Galera-集群搭建.html">
 
 
 <script id="page-configurations">
@@ -49,7 +46,7 @@
   };
 </script>
 
-  <title>美版 V30 系统升级 | SkyHive's Blog</title>
+  <title>Galera 集群搭建 | SkyHive's Blog</title>
   
 
 
@@ -171,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2018/10/undefined.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2021/8/Galera-集群搭建.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -184,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          美版 V30 系统升级
+          Galera 集群搭建
         </h1>
 
         <div class="post-meta">
@@ -194,7 +191,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2018-10-05 12:52:41" itemprop="dateCreated datePublished" datetime="2018-10-05T12:52:41+08:00">2018-10-05</time>
+              <time title="创建时间：2021-08-16 16:22:19" itemprop="dateCreated datePublished" datetime="2021-08-16T16:22:19+08:00">2021-08-16</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -209,12 +206,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/生活/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
+                  <a href="/categories/Infra/" itemprop="url" rel="index"><span itemprop="name">Infra</span></a>
                 </span>
             </span>
 
           
-            <span id="/2018/10/undefined.html" class="post-meta-item leancloud_visitors" data-flag-title="美版 V30 系统升级" title="阅读次数">
+            <span id="/2021/8/Galera-集群搭建.html" class="post-meta-item leancloud_visitors" data-flag-title="Galera 集群搭建" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -236,8 +233,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2018/10/undefined.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/10/undefined.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/8/Galera-集群搭建.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/8/Galera-集群搭建.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -252,31 +249,80 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>关于国行版本的 Andorid 手机的系统升级，肯定是没有什么问题的，连了网升就完事儿了；但是非国行版本的呢？会有一点小问题。</p>
-<p>前两天刚入手了一款次次旗舰 LG V30，去年的旗舰835，4+64的配置今年已然跌倒了千元来搞基的价位，果断入手了。说是要搞基，但是作为一个老年人，实在是懒得折腾了，某鱼的老板说韩版卖断货了，近期只有一款美版的 H932 支持移动全频段，就入手了。</p>
-<p>到手稍微检查了一下，一切正常，梯子挂上美滋滋，但是出现了一个奇怪的问题——系统更新下载不下来。当时的网络状态是挂了梯子的，但是由于 Google 在系统上做的一些安全机制，导致挂了梯子（即网络流量被监控）的机器的系统更新了的流量不从梯子上走，所以会一直卡在 System Update Downloading。</p>
-<p>解决的办法有三个：</p>
+        <h3 id="Galera-简介"><a href="#Galera-简介" class="headerlink" title="Galera 简介"></a>Galera 简介</h3><p>Galera Cluster 是基于 MySQL&#x2F;Innodb 二次开发而成的一个支持“多主同步”的数据库主从集群。具备多主、同步复制、高可用等特点。</p>
+<p>MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现,同 Percona 的 PXC 数据库集群,目前只支持运行在 Linux 系统上。从 MariaDB 10.1 版开始，MariaDB Server 和 MariaDB Galera Server 安装包已经合并，安装 MariaDB 时，Galera 相关依赖安装包会自动安装，像内置的插件或存储引擎一样，通过简单配置即可启用。</p>
+<h3 id="Galera-集群状态"><a href="#Galera-集群状态" class="headerlink" title="Galera 集群状态"></a>Galera 集群状态</h3><p>查看集群状态</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">STATUS</span> <span class="keyword">LIKE</span> <span class="string">'wsrep_local_state_comment'</span>;</span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
 
-<ol>
-<li><p>肉身翻墙</p>
+<table>
+<thead>
+<tr>
+<th align="center">状态</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Open</td>
+<td align="center">节点启动成功，尝试连接到集群；如果失败则根据配置退出或者创建新集群</td>
+</tr>
+<tr>
+<td align="center">Primary</td>
+<td align="center">节点已处于集群中，在新节点加入时，选取 donor 进行数据同步时会产生的状态</td>
+</tr>
+<tr>
+<td align="center">Joiner</td>
+<td align="center">节点处于等待接收&#x2F;接收同步文件的状态</td>
+</tr>
+<tr>
+<td align="center">Joined</td>
+<td align="center">节点完成数据同步，但有部分数据没跟上，在尝试保持和集群进度一致的过程状态。<br>例如某个节点故障后，重新加入集群，在追赶集群进度时的状态</td>
+</tr>
+<tr>
+<td align="center">Synced</td>
+<td align="center">节点正常提供服务的状态，表示已经同步完成并和集群进度保持一致</td>
+</tr>
+<tr>
+<td align="center">Donor</td>
+<td align="center">节点处于为新节点提供全量数据同步时的状态。此时该节点对客户端不提供服务</td>
+</tr>
+</tbody></table>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
+<li><p>Primary Component：在网络发生故障时，由于网络连接原因，集群可能被分成好几个小集群，但只能有一个集群可以继续进行数据修改，集群的这部分称为 Primary Component</p>
 </li>
-<li><p>路由器翻墙</p>
+<li><p>GTID：Global Transaction ID，由 UUID 和 sequence number 偏移量组成。wsrep api 中定义的集群内部全局事务 id，一个顺序 ID，用于记录集群中发生状态改变的唯一标识以及队列中的偏移量</p>
 </li>
-<li><p>用一台翻墙的机器将网络共享给你的手机</p>
+<li><p>SST：State Snapshot Transfer（状态快照迁移），集群中数据共享节点通过从一个节点到另外一个节点迁移完整的数据拷贝（全量拷贝）。当一个新的节点加入到集群中，新的节点从集群中已有节点同步数据，开始进行状态快照迁移，可以在 Galera 集群中选择两种不同的状态转移方法</p>
+<p> 3.1 逻辑数据转移：采用 mysqldump 命令，在转移之前，需要数据接收方服务器完全启动，并准备好接受数据的连接准备。这是一个阻塞式方法，数据共享节点 Donor 在状态转移节点处于只读状态，在数据共享节点 Donor 上适用 FLUSH TABLES WITH READ LOCK 命令，mysqldump 是速度最慢的 SST 方法，在负载比较的数据库集群上可能是个问题。</p>
+<p> 3.2 物理数据转移：该方法采用 rsync、rsync_wan、xtrabackup 或其他方法从服务器之间直接拷贝数据，数据接受服务器在拷贝完数据后启动服务器。该方法较 mysqldump 速度较快，但存在一定的限制，只能在服务器启动时采用，数据接受服务器需要同数据共享服务器 Donor 配置相同（例如，服务器间 innodb_file_per_table 配置必须完全一致）。</p>
+</li>
+<li><p>IST：Incremental State Transfer（增量状态迁移），集群一个节点通过识别新加入节点缺失的事务操作，将该操作发送，而并不像SST那样的全量数据拷贝。该方法只在特定条件下可用：</p>
+<p> 4.1 新加入节点的状态 UUID 与集群组中节点一致；</p>
+<p> 4.2 新加入节点所缺失的写数据集 write-sets 可以在 Donor 的写数据集 write-sets 存在。</p>
 </li>
 </ol>
-<p>  前两个方法对于大多数人来说还是比较困难的，正常人一般都是直接挂梯子，路由器翻墙虽然很多人家里都有设置，但是如果是在公共网络环境下的话，只能使用第三种方法（刷机除外）。</p>
-<p>步骤很简单：</p>
-<ul>
-<li>一台机器挂上 SS&#x2F;SSR （我这里是用电脑，手机我觉得也是可以的）</li>
-<li>挂上梯子的这台机器的 SS&#x2F;SSR 选项勾选 <code>允许来自局域网的连接</code><br><img src="http://blogpic.skyhive.tech/images/%E5%85%81%E8%AE%B8%E6%9D%A5%E8%87%AA%E5%B1%80%E5%9F%9F%E7%BD%91%E7%9A%84%E8%BF%9E%E6%8E%A5.png" alt="允许来自局域网的连接.png"></li>
-<li>查看本机的局域网 IP ，并记住</li>
-<li>手机连上和翻墙的机器同一个局域网，在 WiFi 的高级选项中，设置代理</li>
-<li>代理设置为手动，代理主机为翻墙机器的局域网 IP，端口号为1080（上一步中有），保存即可<br><img src="http://blogpic.skyhive.tech/images/WiFi%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE.png" alt="WiFi 代理设置"></li>
-</ul>
-<p>至此，我们就已经成功地不在手机上挂梯子也能翻墙了（MDZZ），下面就能愉快的更新啦！</p>
-
+<h3 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h3><h4 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h4><table>
+<thead>
+<tr>
+<th align="center">hostname</th>
+<th align="center">IP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">db01</td>
+<td align="center">192.168.2.10</td>
+</tr>
+<tr>
+<td align="center">db02</td>
+<td align="center">192.168.2.11</td>
+</tr>
+<tr>
+<td align="center">db03</td>
+<td align="center">192.168.2.12</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 安装依赖</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y mariadb-server-10.3</span><br><span class="line"> </span><br><span class="line"><span class="comment">## 配置集群</span></span><br><span class="line"><span class="comment">### 在第一台主机操作</span></span><br><span class="line">systemctl stop mysql</span><br><span class="line">vim /etc/mysql/mariadb.conf.d/50-server.cnf</span><br><span class="line"><span class="comment"># 在 [mysqld] 下添加 skip-name-resolve</span></span><br><span class="line"><span class="comment"># 在文件末尾添加如下内容</span></span><br><span class="line">[galera]</span><br><span class="line">wsrep_on=ON</span><br><span class="line">wsrep_provider=/usr/lib/galera/libgalera_smm.so</span><br><span class="line">wsrep_cluster_address=<span class="string">"gcomm://"</span></span><br><span class="line">binlog_format=row</span><br><span class="line">default_storage_engine=InnoDB</span><br><span class="line">innodb_autoinc_lock_mode=2</span><br><span class="line"><span class="built_in">bind</span>-address=0.0.0.0</span><br><span class="line"><span class="comment"># any cluster name</span></span><br><span class="line">wsrep_cluster_name=<span class="string">"MariaDB_Cluster"</span></span><br><span class="line"><span class="comment"># own IP address</span></span><br><span class="line">wsrep_node_address=<span class="string">"192.168.2.10"</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 完成后保存退出</span></span><br><span class="line">galera_new_cluster</span><br><span class="line"> </span><br><span class="line">mysql -uroot -p</span><br><span class="line">  </span><br><span class="line">CREATE USER <span class="string">'root'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'Iamadm1n!!'</span>;</span><br><span class="line">GRANT ALL ON *.* TO <span class="string">'root'</span>@<span class="string">'%'</span>;</span><br><span class="line">update mysql.user <span class="built_in">set</span>  Grant_priv=<span class="string">'Y'</span> <span class="built_in">where</span> user=<span class="string">'root'</span> and host=<span class="string">'%'</span>;</span><br><span class="line">flush privileges;</span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 在其他两台主机操作</span></span><br><span class="line">systemctl stop mysql</span><br><span class="line">vim /etc/mysql/mariadb.conf.d/50-server.cnf</span><br><span class="line"><span class="comment"># 在 [mysqld] 下添加 skip-name-resolve</span></span><br><span class="line"><span class="comment"># 在文件末尾添加如下内容</span></span><br><span class="line">[galera]</span><br><span class="line">wsrep_on=ON</span><br><span class="line">wsrep_provider=/usr/lib/galera/libgalera_smm.so</span><br><span class="line">wsrep_cluster_address=<span class="string">"gcomm://192.168.2.10,192.168.2.11,192.168.2.12"</span></span><br><span class="line">binlog_format=row</span><br><span class="line">default_storage_engine=InnoDB</span><br><span class="line">innodb_autoinc_lock_mode=2</span><br><span class="line"><span class="built_in">bind</span>-address=0.0.0.0</span><br><span class="line"><span class="comment"># any cluster name</span></span><br><span class="line">wsrep_cluster_name=<span class="string">"MariaDB_Cluster"</span></span><br><span class="line"><span class="comment"># own IP address</span></span><br><span class="line">wsrep_node_address=<span class="string">"192.168.2.11"</span>   <span class="comment">## 注意：这里填写当前节点的 IP，另外一个节点填 192.168.2.12</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">### 完成后保存退出</span></span><br><span class="line"><span class="comment">## 重启 MySQL 服务</span></span><br><span class="line">systemctl start mysql</span><br><span class="line">systemctl <span class="built_in">enable</span> mysql</span><br><span class="line"> </span><br><span class="line"><span class="comment">## 检查集群状态</span></span><br><span class="line">mysql -uroot -p</span><br><span class="line">show status like <span class="string">'wsrep_cluster%'</span>;</span><br><span class="line"><span class="comment">## 需观察 'wsrep_cluster_size' 是否正常（正常为节点数量），以及 'wsrep_cluster_status' 是否为 Primary</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">## 如果集群状态正常，则去修改第一个节点的 /etc/mysql/mariadb.conf.d/50-server.cnf 文件</span></span><br><span class="line"><span class="comment">## 将 wsrep_cluster_address 配置修改和其他两个节点一致即可</span></span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -305,8 +351,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Network/" rel="tag"># Network</a>
-              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
           </div>
 
         
@@ -315,12 +360,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/8/undefined.html" rel="prev" title="修改sudoers文件导致sudo无法使用的解决办法">
-      <i class="fa fa-chevron-left"></i> 修改sudoers文件导致sudo无法使用的解决办法
+    <a href="/2020/10/雾都游记.html" rel="prev" title="雾都游记">
+      <i class="fa fa-chevron-left"></i> 雾都游记
     </a></div>
       <div class="post-nav-item">
-    <a href="/2019/7/undefined.html" rel="next" title="Gitlab单节点服务搭建">
-      Gitlab单节点服务搭建 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/8/创建本地-APT-仓库.html" rel="next" title="创建本地 APT 仓库">
+      创建本地 APT 仓库 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -381,6 +426,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Galera-简介"><span class="nav-number">1.</span> <span class="nav-text">Galera 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Galera-集群状态"><span class="nav-number">2.</span> <span class="nav-text">Galera 集群状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">3.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建过程"><span class="nav-number">4.</span> <span class="nav-text">搭建过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#环境信息"><span class="nav-number">4.1.</span> <span class="nav-text">环境信息</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

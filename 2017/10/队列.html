@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.proxy.ustclug.org/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="队列队列是一种可以实现先进先出(first in first out,FIFO)的存储结构。与栈不一样的是，队列规定只在一端进行插入操作，在另一端进行删除操作。允许插入的一端叫做队尾(rear)，允许删除的一端叫做队首(front)。 分类 链式队列：用链表实现。 静态队列：用数组实现。(为了解决假溢出现象，静态队列通常都必须是循环队列)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="队列">
+<meta property="og:url" content="https://skyhive.github.io/2017/10/队列.html">
+<meta property="og:site_name" content="SkyHive&#39;s Blog">
+<meta property="og:description" content="队列队列是一种可以实现先进先出(first in first out,FIFO)的存储结构。与栈不一样的是，队列规定只在一端进行插入操作，在另一端进行删除操作。允许插入的一端叫做队尾(rear)，允许删除的一端叫做队首(front)。 分类 链式队列：用链表实现。 静态队列：用数组实现。(为了解决假溢出现象，静态队列通常都必须是循环队列)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blogpic.skyhive.tech/images/Queue.jpg">
+<meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="队列">
+<meta name="twitter:description" content="队列队列是一种可以实现先进先出(first in first out,FIFO)的存储结构。与栈不一样的是，队列规定只在一端进行插入操作，在另一端进行删除操作。允许插入的一端叫做队尾(rear)，允许删除的一端叫做队首(front)。 分类 链式队列：用链表实现。 静态队列：用数组实现。(为了解决假溢出现象，静态队列通常都必须是循环队列)">
+<meta name="twitter:image" content="http://blogpic.skyhive.tech/images/Queue.jpg">
+
+<link rel="canonical" href="https://skyhive.github.io/2017/10/队列.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>队列 | SkyHive's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="SkyHive's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">SkyHive's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2017/10/队列.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="SkyHive">
+      <meta itemprop="description" content="莫听穿林打叶声，何妨吟啸且徐行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SkyHive's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          队列
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-10-15 10:57:44" itemprop="dateCreated datePublished" datetime="2017-10-15T10:57:44+08:00">2017-10-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-30 16:39:16" itemprop="dateModified" datetime="2022-12-30T16:39:16+08:00">2022-12-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/10/队列.html" class="post-meta-item leancloud_visitors" data-flag-title="队列" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/10/队列.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/10/队列.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><p>队列是一种可以实现<strong>先进先出</strong>(first in first out,FIFO)的存储结构。与栈不一样的是，队列规定只在一端进行插入操作，在另一端进行删除操作。允许插入的一端叫做队尾(rear)，允许删除的一端叫做队首(front)。</p>
+<h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><ul>
+<li>链式队列：用链表实现。</li>
+<li>静态队列：用数组实现。(<em>为了解决假溢出现象，静态队列通常都必须是循环队列</em>)</li>
+</ul>
+<a id="more"></a>
+
+<h4 id="循环队列"><a href="#循环队列" class="headerlink" title="循环队列"></a>循环队列</h4><p><img src="http://blogpic.skyhive.tech/images/Queue.jpg" alt="循环队列"></p>
+<h5 id="参数：front、rear"><a href="#参数：front、rear" class="headerlink" title="参数：front、rear"></a>参数：front、rear</h5><ul>
+<li>rear所指的单元始终为空</li>
+<li>队列初始化：front和rear的值都是0。</li>
+<li>队列非空：front指向队列的第一个元素；rear指向队列的最后一个有效元素的下一个元素。</li>
+<li>队列空：front和rear值相等，但不一定是0。</li>
+</ul>
+<h5 id="算法解析"><a href="#算法解析" class="headerlink" title="算法解析"></a>算法解析</h5><p>1.入队：将值存入rear所代表的位置<code>r</code></p>
+<ul>
+<li>错误写法：<code>r=r+1</code></li>
+<li>正确写法：<code>r=(r+1)%数组长度</code></li>
+</ul>
+<p>2.出队：<br><code>f=(f+1)%数组长度</code></p>
+<p>3.判断循环队列是否为空</p>
+<p><code>rear = front</code></p>
+<p>4.判断循环队列是否已满</p>
+<ul>
+<li>多增加一个参数标志满或者空（一般不用此方式）</li>
+<li>少用一个元素：如果<code>(r+1)%数组长度==f</code>表示循环队列已满</li>
+</ul>
+<h5 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h5><p>1.队列数据建构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">queue</span> &#123;</span></span><br><span class="line">  	<span class="keyword">int</span> *p;</span><br><span class="line">  	<span class="keyword">int</span> front;</span><br><span class="line">  	<span class="keyword">int</span> rear;</span><br><span class="line">  	<span class="keyword">int</span> maxsize;</span><br><span class="line">&#125;Queue;</span><br></pre></td></tr></table></figure>
+
+<p>2.初始化队列</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CreateQueue</span><span class="params">(Queue *Q,<span class="keyword">int</span> maxsize)</span></span>&#123;</span><br><span class="line">  	Q-&gt;p = (<span class="keyword">int</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*maxsize);</span><br><span class="line">  	<span class="keyword">if</span>(!Q-&gt;p)&#123;</span><br><span class="line">  		<span class="built_in">printf</span>(<span class="string">"Memory allocation failure!"</span>);</span><br><span class="line">      	<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">  	Q-&gt;front = Q-&gt;rear;</span><br><span class="line">  	Q-&gt;maxize = maxsize;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.判断循环队列是否为满</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isFull</span><span class="params">(Queue *Q)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> ((Q-&gt;rear+<span class="number">1</span>)%Q-&gt;maxsize == Q-&gt;front)</span><br><span class="line">      	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  	<span class="keyword">else</span></span><br><span class="line">      	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4.判断循环队列是否为空</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isEmpty</span><span class="params">(Queue *Q)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span>(Q-&gt;rear == Q-&gt;front)</span><br><span class="line">      	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"> 	<span class="keyword">else</span></span><br><span class="line">      	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5.入队操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Enter</span><span class="params">(Queue *Q,<span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> (isFull(Q))&#123;</span><br><span class="line">  		<span class="built_in">printf</span>(<span class="string">"The queue is full!"</span>);</span><br><span class="line">  		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">  	<span class="keyword">else</span>&#123;</span><br><span class="line">  		Q-&gt;p[Q-&gt;rear] = val;</span><br><span class="line">      	Q-&gt;rear = (Q-&gt;rear+<span class="number">1</span>)%Q-&gt;maxsize;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>6.出队操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Delete</span><span class="params">(Queue *Q,<span class="keyword">int</span> *val)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span>(isEmpty(Q))</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  	<span class="keyword">else</span>&#123;</span><br><span class="line">  		*val = Q-&gt;p[Q-&gt;front];</span><br><span class="line">      	Q-&gt;front=(Q-&gt;front+<span class="number">1</span>)%Q-&gt;maxszie;</span><br><span class="line">      	<span class="built_in">printf</span>(<span class="string">"Get out of the queue successfully!"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>7.遍历操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Traverse</span><span class="params">(Queue *Q)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">int</span> i = Q-&gt;front;</span><br><span class="line">  	<span class="built_in">printf</span>(<span class="string">"The items in queue are:\n"</span>);</span><br><span class="line">  	<span class="keyword">while</span>(i%Q-&gt;maxsize!=Q-&gt;rear)&#123;</span><br><span class="line">  		<span class="built_in">printf</span>(<span class="string">"%d"</span>,Q-&gt;p[i]);</span><br><span class="line">      	i=(i+<span class="number">1</span>)%Q-&gt;maxsize;</span><br><span class="line">	&#125;</span><br><span class="line">  	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="链式队列"><a href="#链式队列" class="headerlink" title="链式队列"></a>链式队列</h4><p>链式队列实现和链式栈相差不多，只是将删除操作放在了另外一端，有效的解决了顺序队列存储空间不足的缺陷。</p>
+<h5 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h5><p>1.队列节点构建</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></span><br><span class="line">  	<span class="keyword">int</span> data;		<span class="comment">//数据域</span></span><br><span class="line">  	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">next</span>;</span>		<span class="comment">//指针域</span></span><br><span class="line">&#125;Node;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">  	Node *front;</span><br><span class="line">  	Node *rear;</span><br><span class="line">&#125;Queue;</span><br></pre></td></tr></table></figure>
+
+<p>2.队列初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">InitQueue</span><span class="params">(Queue *Q)</span></span>&#123;</span><br><span class="line">  	Node *head = (Node*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">  	<span class="keyword">if</span>(!head)&#123;</span><br><span class="line">  		<span class="built_in">printf</span>(<span class="string">"Memory allocation failed!\n"</span>);</span><br><span class="line">      	<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">  	head-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">  	Q-&gt;rear = Q-&gt;front = head;		<span class="comment">//front和rear都指向头指针</span></span><br><span class="line">  	<span class="built_in">printf</span>(<span class="string">"Init successfully!\n"</span>);</span><br><span class="line">  	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.入队操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Enter</span><span class="params">(Queue *Q,<span class="keyword">int</span> item)</span></span>&#123;</span><br><span class="line">  	Node *s = (Node*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">  	<span class="keyword">if</span>(!s)&#123;</span><br><span class="line">  		<span class="built_in">printf</span>(<span class="string">"Memory allocation failed!\n"</span>);</span><br><span class="line">      	<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">  	s-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">  	s-&gt;data = item;</span><br><span class="line">  	Q-&gt;rear-&gt;next = s;</span><br><span class="line">  	Q-&gt;rear = s;</span><br><span class="line">  	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4.出队操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Delete</span><span class="params">(Queue *Q,<span class="keyword">int</span> *item)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span>(Q-&gt;front == Q-&gt;rear)&#123;</span><br><span class="line">  		<span class="built_in">printf</span>(<span class="string">"The queue is empty!\n"</span>);</span><br><span class="line">      	<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">  	Node *p;</span><br><span class="line">  	p = Q-&gt;front-&gt;next;		<span class="comment">//先将要出栈的节点存在P中</span></span><br><span class="line">  	Q-&gt;front-&gt;next = p-&gt;next;		<span class="comment">//重新构造队头元素的后继</span></span><br><span class="line">  	*item = p-&gt;data;			<span class="comment">//保存出队的数据；</span></span><br><span class="line">  	<span class="keyword">if</span>(Q-&gt;rear == p)		<span class="comment">//判断删除的节点是否为队尾元素</span></span><br><span class="line">      	Q-&gt;rear = Q-&gt;front;</span><br><span class="line">  	<span class="built_in">free</span>(p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5.遍历元素</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Traverse</span><span class="params">(Queue *Q)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span>(Q-&gt;front == Q-&gt;rear)&#123;</span><br><span class="line">  		<span class="built_in">printf</span>(<span class="string">"The queue is empty!\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">  	Node *p = Q-&gt;front-&gt;next;</span><br><span class="line">  	<span class="keyword">while</span>(p)&#123;</span><br><span class="line">  		<span class="built_in">printf</span>(<span class="string">"%d"</span>,p-&gt;data);</span><br><span class="line">      	p = p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">  	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>文章看都看了，施舍一下不过分吧~</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="SkyHive 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="SkyHive 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/10/栈.html" rel="prev" title="栈">
+      <i class="fa fa-chevron-left"></i> 栈
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/11/Hadoop简介.html" rel="next" title="Hadoop 简介">
+      Hadoop 简介 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#队列"><span class="nav-number">1.</span> <span class="nav-text">队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分类"><span class="nav-number">1.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环队列"><span class="nav-number">1.2.</span> <span class="nav-text">循环队列</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#参数：front、rear"><span class="nav-number">1.2.1.</span> <span class="nav-text">参数：front、rear</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#算法解析"><span class="nav-number">1.2.2.</span> <span class="nav-text">算法解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现"><span class="nav-number">1.2.3.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链式队列"><span class="nav-number">1.3.</span> <span class="nav-text">链式队列</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#代码实现-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SkyHive"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">SkyHive</p>
+  <div class="site-description" itemprop="description">莫听穿林打叶声，何妨吟啸且徐行</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/skyhive" title="GitHub → https://github.com/skyhive" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:skyhive35@gmail.com" title="E-Mail → mailto:skyhive35@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SkyHive</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"BXmBCniiQ8wXmVOlzIlgGTjG-9Nh9j0Va","app_key":"8mR9LdXtvq3cWgsxBTObqNfa","security":true};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'BXmBCniiQ8wXmVOlzIlgGTjG-9Nh9j0Va',
+      appKey     : '8mR9LdXtvq3cWgsxBTObqNfa',
+      placeholder: "总要说点啥吧 😊",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

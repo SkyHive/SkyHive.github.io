@@ -20,20 +20,23 @@
     var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="更改默认数据库为 MySQLDjango 使用的默认数据库是 SQLite3，如果习惯使用的是 SQLite 的用户就可以不必更换数据库。 更换数据库的话在settings.py文件中DATABASES选项中进行更改">
-<meta name="keywords" content="Django">
+  <meta name="description" content="今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT&amp;#x2F;DELETE 请求。如果想要注册可以点击这里，这样可以为我增加每月5GB的容量。">
+<meta name="keywords" content="OSS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="初探 Django 需要注意的事项">
-<meta property="og:url" content="https://skyhive.github.io/2018/3/undefined.html">
+<meta property="og:title" content="Hexo 搭配七牛存储图片等媒体资源">
+<meta property="og:url" content="https://skyhive.github.io/2017/2/Hexo搭配七牛存储图片等媒体资源.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="更改默认数据库为 MySQLDjango 使用的默认数据库是 SQLite3，如果习惯使用的是 SQLite 的用户就可以不必更换数据库。 更换数据库的话在settings.py文件中DATABASES选项中进行更改">
+<meta property="og:description" content="今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT&amp;#x2F;DELETE 请求。如果想要注册可以点击这里，这样可以为我增加每月5GB的容量。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blogpic.skyhive.tech/images/qiniu_create.png">
+<meta property="og:image" content="http://blogpic.skyhive.tech/images/qiniu_set.png">
 <meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="初探 Django 需要注意的事项">
-<meta name="twitter:description" content="更改默认数据库为 MySQLDjango 使用的默认数据库是 SQLite3，如果习惯使用的是 SQLite 的用户就可以不必更换数据库。 更换数据库的话在settings.py文件中DATABASES选项中进行更改">
+<meta name="twitter:title" content="Hexo 搭配七牛存储图片等媒体资源">
+<meta name="twitter:description" content="今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT&amp;#x2F;DELETE 请求。如果想要注册可以点击这里，这样可以为我增加每月5GB的容量。">
+<meta name="twitter:image" content="http://blogpic.skyhive.tech/images/qiniu_create.png">
 
-<link rel="canonical" href="https://skyhive.github.io/2018/3/undefined.html">
+<link rel="canonical" href="https://skyhive.github.io/2017/2/Hexo搭配七牛存储图片等媒体资源.html">
 
 
 <script id="page-configurations">
@@ -46,7 +49,7 @@
   };
 </script>
 
-  <title>初探 Django 需要注意的事项 | SkyHive's Blog</title>
+  <title>Hexo 搭配七牛存储图片等媒体资源 | SkyHive's Blog</title>
   
 
 
@@ -168,7 +171,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2018/3/undefined.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2017/2/Hexo搭配七牛存储图片等媒体资源.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -181,7 +184,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          初探 Django 需要注意的事项
+          Hexo 搭配七牛存储图片等媒体资源
         </h1>
 
         <div class="post-meta">
@@ -191,7 +194,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2018-03-25 20:55:33" itemprop="dateCreated datePublished" datetime="2018-03-25T20:55:33+08:00">2018-03-25</time>
+              <time title="创建时间：2017-02-14 22:19:40" itemprop="dateCreated datePublished" datetime="2017-02-14T22:19:40+08:00">2017-02-14</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -206,12 +209,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Code/" itemprop="url" rel="index"><span itemprop="name">Code</span></a>
+                  <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
                 </span>
             </span>
 
           
-            <span id="/2018/3/undefined.html" class="post-meta-item leancloud_visitors" data-flag-title="初探 Django 需要注意的事项" title="阅读次数">
+            <span id="/2017/2/Hexo搭配七牛存储图片等媒体资源.html" class="post-meta-item leancloud_visitors" data-flag-title="Hexo 搭配七牛存储图片等媒体资源" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -233,8 +236,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2018/3/undefined.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/3/undefined.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2017/2/Hexo搭配七牛存储图片等媒体资源.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/2/Hexo搭配七牛存储图片等媒体资源.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -249,25 +252,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="更改默认数据库为-MySQL"><a href="#更改默认数据库为-MySQL" class="headerlink" title="更改默认数据库为 MySQL"></a>更改默认数据库为 MySQL</h4><p>Django 使用的默认数据库是 SQLite3，如果习惯使用的是 SQLite 的用户就可以不必更换数据库。</p>
-<p>更换数据库的话在<code>settings.py</code>文件中<code>DATABASES</code>选项中进行更改</p>
+        <p>今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。<br>七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT&#x2F;DELETE 请求。如果想要注册可以<a href="https://portal.qiniu.com/signup?code=3lnfyn5xmh93m" target="_blank" rel="noopener">点击这里</a>，这样可以为我增加每月5GB的容量。</p>
 <a id="more"></a>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">'default'</span>: &#123;</span><br><span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.mysql'</span>,</span><br><span class="line">        <span class="string">'NAME'</span>: <span class="string">'项目对应的数据库名称'</span>,</span><br><span class="line">        <span class="string">'USER'</span>: <span class="string">'登录mysql的帐户'</span>,</span><br><span class="line">        <span class="string">'PASSWORD'</span>: <span class="string">'登录mysql的密码'</span>,</span><br><span class="line">        <span class="string">'HOST'</span>: <span class="string">'127.0.0.1'</span>,	<span class="comment">#由于是在本地开发，所以是127.0.0.1</span></span><br><span class="line">        <span class="string">'PORT'</span>: <span class="string">'3306'</span>	<span class="comment">#这里mysql使用的是默认的3306端口</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注册完成之后就可以进行创建空间了，注意我们添加的资源为<strong>对象存储</strong>，访问控制为<strong>公开空间</strong></p>
+<p><img src="http://blogpic.skyhive.tech/images/qiniu_create.png" alt="qiniu create"><br><img src="http://blogpic.skyhive.tech/images/qiniu_set.png" alt="qiniu set"></p>
+<p>然后点击右上角进入<strong>密钥管理</strong>，复制当前使用的AK和SK，配置的时候会用得到<br>下面我们会用到一个叫做的<a href="https://github.com/gyk001/hexo-qiniu-sync" target="_blank" rel="noopener">hexo-qiniu-sync</a>的插件，首先在hexo主目录下安装：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> hexo-qiniu-<span class="keyword">sync</span> - -<span class="keyword">save</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="设置-Templates-的路径"><a href="#设置-Templates-的路径" class="headerlink" title="设置 Templates 的路径"></a>设置 Templates 的路径</h4><p>在<code>settings.py</code>文件中的<code>TEMPLATES</code>选项中进行设置</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'DIRS'</span>: [os.path.join(BASE_DIR, <span class="string">'templates'</span>)]</span><br></pre></td></tr></table></figure>
+<p>然后把配置信息添加到_config.yml中</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">plugins:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hexo-qiniu-sync</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#七牛云存储设置</span></span><br><span class="line"><span class="comment">##offline       是否离线. 离线状态将使用本地地址渲染</span></span><br><span class="line"><span class="comment">##sync          是否同步</span></span><br><span class="line"><span class="comment">##bucket        空间名称.</span></span><br><span class="line"><span class="comment">##access_key    上传密钥AccessKey</span></span><br><span class="line"><span class="comment">##secret_key    上传密钥SecretKey</span></span><br><span class="line"><span class="comment">##secret_file   秘钥文件路径，可以将上述两个属性配置到文件内，防止泄露，json格式。绝对路径相对路径均可</span></span><br><span class="line"><span class="comment">##dirPrefix     上传的资源子目录前缀.如设置，需与urlPrefix同步 </span></span><br><span class="line"><span class="comment">##urlPrefix     外链前缀.</span></span><br><span class="line"><span class="comment">##up_host      上传服务器路径,如选择华北区域的话配置为http://up-z1.qiniu.com</span></span><br><span class="line"><span class="comment">##local_dir     本地目录.</span></span><br><span class="line"><span class="comment">##update_exist  是否更新已经上传过的文件(仅文件大小不同或在上次上传后进行更新的才会重新上传)</span></span><br><span class="line"><span class="comment">##image/js/css  子参数folder为不同静态资源种类的目录名称，一般不需要改动</span></span><br><span class="line"><span class="comment">##image.extend  这是个特殊参数，用于生成缩略图或加水印等操作。具体请参考http://developer.qiniu.com/docs/v6/api/reference/fop/image/ </span></span><br><span class="line"><span class="comment">##              可使用基本图片处理、高级图片处理、图片水印处理这3个接口。例如 ?imageView2/2/w/500 即生成宽度最多500px的缩略图</span></span><br><span class="line"><span class="attr">qiniu:</span></span><br><span class="line">  <span class="attr">offline:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">sync:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">bucket:</span> <span class="string">bucket_name</span></span><br><span class="line">  <span class="attr">secret_file: sec/qn.json or C:</span></span><br><span class="line">  <span class="attr">access_key:</span> <span class="string">AccessKey</span></span><br><span class="line">  <span class="attr">secret_key:</span> <span class="string">SecretKey</span></span><br><span class="line">  <span class="attr">dirPrefix:</span> <span class="string">static</span></span><br><span class="line">  <span class="attr">urlPrefix:</span> <span class="string">http://bucket_name.qiniudn.com/static</span></span><br><span class="line">  <span class="attr">up_host:</span> <span class="string">http://upload.qiniu.com</span></span><br><span class="line">  <span class="attr">local_dir:</span> <span class="string">static</span></span><br><span class="line">  <span class="attr">update_exist:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">image:</span> </span><br><span class="line">    <span class="attr">folder:</span> <span class="string">images</span></span><br><span class="line">    <span class="attr">extend:</span> </span><br><span class="line">  <span class="attr">js:</span></span><br><span class="line">    <span class="attr">folder:</span> <span class="string">js</span></span><br><span class="line">  <span class="attr">css:</span></span><br><span class="line">    <span class="attr">folder:</span> <span class="string">css</span></span><br></pre></td></tr></table></figure>
 
-<p>其中<code>BASE_DIR</code>是项目的绝对路径，设置过<code>Templates</code>路径之后<code>Django</code>会在改路径下的<code>templates</code>文件夹下搜索对应的<code>html</code>文件。</p>
-<h4 id="设置中文"><a href="#设置中文" class="headerlink" title="设置中文"></a>设置中文</h4><p><code>settings.py</code>最后有个选项为<code>LANGUAGE_CODE</code>，这个选项是设置<code>Django</code>语言的。<code>Django</code>为我们提供了很多自带的应用，如果习惯了看英文的话可以不用设置，直接使用默认的英语，如果英语看着膈应的话，可以设置为中文<code>zh-hans</code>或者<code>zh_Hans</code></p>
-<h4 id="添加创建的应用"><a href="#添加创建的应用" class="headerlink" title="添加创建的应用"></a>添加创建的应用</h4><p>当你新建应用之后要记得在<code>settings.py</code>中的<code>INSTALLED_APPS</code>选项中添加新建的应用——直接在最后一行添加新建的应用名就好了。</p>
-<h4 id="修改数据默认显示名称"><a href="#修改数据默认显示名称" class="headerlink" title="修改数据默认显示名称"></a>修改数据默认显示名称</h4><p>在创建的数据类下面添加一个方法，根据Python的版本进行选择</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python <span class="number">2.7</span> : __unicode__(self)</span><br><span class="line">python <span class="number">3</span> : __str__(self)</span><br><span class="line">然后在方法中返回self.var	<span class="comment">#var是类中数据中用来显示数据的变量</span></span><br></pre></td></tr></table></figure>
+<p>其中各个参数在插件的<a href="https://github.com/gyk001/hexo-qiniu-sync/blob/master/README.md" target="_blank" rel="noopener">README文件</a>中都有详细的介绍，按照github上的教程一步一步来是很简单的。</p>
+<p>然后在hexo主目录下创建本地目录（该目录要和配置中local_dir参数保持一致），然后创建iamges、js、css子目录，这样基本的配置就完成了</p>
+<p>下面就可以在你的文章中试着插入图片了，比如你想引用在你&#x2F;local_dir&#x2F;images&#x2F;下的图片1.png</p>
+<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="template-tag">&#123;% <span class="name">qnimg</span> 1.png %&#125;</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="Tamplates-过滤器"><a href="#Tamplates-过滤器" class="headerlink" title="Tamplates 过滤器"></a>Tamplates 过滤器</h4><p>这个过滤器其实可以说就是Linux下的管道符<code>|</code>，Linux玩的转的人对这个一定不会陌生，过滤器的基本形式就像这样</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;var | filter&#125;&#125;</span><br></pre></td></tr></table></figure>
-
-<p>有些过滤器会跟有参数，过滤器的参数都是跟随冒号，例如</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;var | default:<span class="string">'0'</span>&#125;&#125;	<span class="comment">#为变量var设置默认值0</span></span><br></pre></td></tr></table></figure>
+<p>更高级的用法请参考github上的说明。</p>
+<p>下面进行同步</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">hexo qiniu s</span></span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -298,7 +300,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Django/" rel="tag"># Django</a>
+              <a href="/tags/OSS/" rel="tag"># OSS</a>
           </div>
 
         
@@ -307,12 +309,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2017/12/undefined.html" rel="prev" title="配置 SSH 免密登录遇到的坑">
-      <i class="fa fa-chevron-left"></i> 配置 SSH 免密登录遇到的坑
+    <a href="/2017/2/解决Ubuntu系统设置打不开.html" rel="prev" title="解决Ubuntu系统设置打不开">
+      <i class="fa fa-chevron-left"></i> 解决Ubuntu系统设置打不开
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/4/undefined.html" rel="next" title="关于 Ubuntu 循环登录界面">
-      关于 Ubuntu 循环登录界面 <i class="fa fa-chevron-right"></i>
+    <a href="/2017/2/解决配置完七牛后无法Deploy到github.html" rel="next" title="解决配置完七牛后无法 Deploy 到 Github">
+      解决配置完七牛后无法 Deploy 到 Github <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -373,7 +375,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#更改默认数据库为-MySQL"><span class="nav-number">1.</span> <span class="nav-text">更改默认数据库为 MySQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置-Templates-的路径"><span class="nav-number">2.</span> <span class="nav-text">设置 Templates 的路径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置中文"><span class="nav-number">3.</span> <span class="nav-text">设置中文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加创建的应用"><span class="nav-number">4.</span> <span class="nav-text">添加创建的应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改数据默认显示名称"><span class="nav-number">5.</span> <span class="nav-text">修改数据默认显示名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tamplates-过滤器"><span class="nav-number">6.</span> <span class="nav-text">Tamplates 过滤器</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

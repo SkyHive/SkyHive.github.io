@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行 1ssh-keygen -t rsa  然后一直回车，最后会在你主目录下生成一个.ssh目录，其中的id_rsa是你的密钥，id_rsa.pub是你要上传的公钥，kn">
-<meta name="keywords" content="Linux">
+  <meta name="description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。 那么下面打开虚拟机，进入安装界面： 首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk 1cfdisk        #使用cfdisk进行分区">
+<meta name="keywords" content="Linux,Arch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="配置 SSH 免密登录遇到的坑">
-<meta property="og:url" content="https://skyhive.github.io/2017/12/undefined.html">
+<meta property="og:title" content="记一次Arch的安装经历">
+<meta property="og:url" content="https://skyhive.github.io/2017/2/记一次Arch的安装经历.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行 1ssh-keygen -t rsa  然后一直回车，最后会在你主目录下生成一个.ssh目录，其中的id_rsa是你的密钥，id_rsa.pub是你要上传的公钥，kn">
+<meta property="og:description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。 那么下面打开虚拟机，进入安装界面： 首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk 1cfdisk        #使用cfdisk进行分区">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="配置 SSH 免密登录遇到的坑">
-<meta name="twitter:description" content="最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行 1ssh-keygen -t rsa  然后一直回车，最后会在你主目录下生成一个.ssh目录，其中的id_rsa是你的密钥，id_rsa.pub是你要上传的公钥，kn">
+<meta name="twitter:title" content="记一次Arch的安装经历">
+<meta name="twitter:description" content="最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。 那么下面打开虚拟机，进入安装界面： 首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk 1cfdisk        #使用cfdisk进行分区">
 
-<link rel="canonical" href="https://skyhive.github.io/2017/12/undefined.html">
+<link rel="canonical" href="https://skyhive.github.io/2017/2/记一次Arch的安装经历.html">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>配置 SSH 免密登录遇到的坑 | SkyHive's Blog</title>
+  <title>记一次Arch的安装经历 | SkyHive's Blog</title>
   
 
 
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2017/12/undefined.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2017/2/记一次Arch的安装经历.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -181,7 +181,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          配置 SSH 免密登录遇到的坑
+          记一次Arch的安装经历
         </h1>
 
         <div class="post-meta">
@@ -191,7 +191,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-12-08 11:12:43" itemprop="dateCreated datePublished" datetime="2017-12-08T11:12:43+08:00">2017-12-08</time>
+              <time title="创建时间：2017-02-13 17:57:58" itemprop="dateCreated datePublished" datetime="2017-02-13T17:57:58+08:00">2017-02-13</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -211,7 +211,7 @@
             </span>
 
           
-            <span id="/2017/12/undefined.html" class="post-meta-item leancloud_visitors" data-flag-title="配置 SSH 免密登录遇到的坑" title="阅读次数">
+            <span id="/2017/2/记一次Arch的安装经历.html" class="post-meta-item leancloud_visitors" data-flag-title="记一次Arch的安装经历" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -233,8 +233,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2017/12/undefined.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/12/undefined.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2017/2/记一次Arch的安装经历.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/2/记一次Arch的安装经历.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -249,12 +249,54 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。<br>由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ssh-keygen -t rsa</span></span><br></pre></td></tr></table></figure>
+        <p>最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。</p>
+<p>那么下面打开虚拟机，进入安装界面：</p>
+<p>首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">cfdisk</span>        <span class="comment">#使用cfdisk进行分区</span></span><br></pre></td></tr></table></figure>
 
-<p>然后一直回车，最后会在你主目录下生成一个<code>.ssh</code>目录，其中的<code>id_rsa</code>是你的密钥，<code>id_rsa.pub</code>是你要上传的公钥，<code>known_hosts</code>是你连接过的主机的信息</p>
-<p>我们需要在<code>.ssh</code>目录下建立一个<code>authorized_keys</code>文件，将各个主机的公钥信息存储在该文件下，然后各个主机就可以通过ssh免密登录了，至于具体的原理，大家可以网上自行科普一下，无非是一些加密解密的过程。</p>
-<p>然而就在我以为万无一失的时候，造化弄人，我不管怎么搞都需要输密码，试过改ssh的配置文件也无法解决，最后google到一个解决方法，说是目录的和文件的权限问题，<code>.ssh</code>目录的权限必须得是<strong>700</strong>，而文件<code>authorized_keys</code>的权限必须是<strong>644</strong>，而我当时是664,这才导致无法进行免密登录，这里大家需要注意一下权限的问题，即使权限放大了也是不行的！</p>
+<a id="more"></a>
+<p><em>选择第二个dos类型</em>，这是将sda设置成MBR类型的分区，之前在遇到这个选项的时候，我下意识的选了第一个GPT，然后还去google了一下，说GPT很好,就使用这个吧，结果后面分区的时候和教程不一样，装好系统后怎么也进不去。</p>
+<p>接下来你可以把整个硬盘设置成一个根分区或者分成一个根分区和一个boot分区。<em>如果设置成一个根分区记得要把那个分区设置bootable；如果是一个根分区和一个boot分区记得要把boot分区设置bootable。</em></p>
+<p>退出cfdisk后格式化新设置的分区</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lsblk       <span class="comment">#查看存储设备的状态，sda1、sda2这样的就是我们刚刚分出来的</span></span><br><span class="line">mkfs.ext4 <span class="regexp">/dev/</span>sda1</span><br><span class="line">mkfs.ext4 <span class="regexp">/dev/</span>sda2         <span class="comment">#将根分区和boot分区格式化成ext4格式</span></span><br></pre></td></tr></table></figure>
+
+<p>然后就可以进行挂载了</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mount <span class="string">/dev/sda2</span> <span class="string">/mnt</span>           <span class="comment">#将根分区挂载到/mnt</span></span><br><span class="line">mkdir <span class="string">/mnt/boot</span>         <span class="comment">#为boot分区创建挂载点</span></span><br><span class="line">mount <span class="string">/dev/sda1</span> <span class="string">/mnt/boot</span></span><br></pre></td></tr></table></figure>
+
+<p>接着修改软件镜像源</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/pacman.d        <span class="comment">#镜像源文件在这个目录下</span></span><br><span class="line"><span class="comment">#我们需要将China源放到文件头的位置，下面先将这段源提取到temp这个文件里</span></span><br><span class="line"><span class="keyword">grep</span> -A <span class="number">1</span> <span class="string">'##.*China'</span> mirrorlist|<span class="keyword">grep</span> -v <span class="string">'\-\-'</span> &gt; temp</span><br><span class="line"><span class="comment">#然后将mirrorlist的内容添加到temp的最后面</span></span><br><span class="line">cat mirrorlist &gt;&gt; temp</span><br><span class="line">mv temp mirrorlist         <span class="comment">#temp替换mirrorlist</span></span><br></pre></td></tr></table></figure>
+
+<p>然后刷新软件仓库列表就可以开始安装了</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pacman -Syy         <span class="meta">#刷新软件仓库列表</span></span><br><span class="line">pacstrap -i /mnt <span class="keyword">base</span> <span class="keyword">base</span>-devel        <span class="meta">#安装系统</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来需要生成一个叫fstab的配置文件，在开机时候会由mount命令读取并挂载其中的分区。在安装完基本系统之后，就可以将fstab信息写入新安装的系统中了。</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">genfstab -U -p /mnt &gt;&gt; <span class="regexp">/mnt/etc</span><span class="regexp">/fstab</span></span><br><span class="line"><span class="regexp">nano /mnt</span><span class="regexp">/etc/fstab</span>         <span class="comment">#确认fstab文件真的生成了</span></span><br></pre></td></tr></table></figure>
+
+<p>下面我们就可以进入新系统进行配置了</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arch-chroot <span class="string">/mnt</span> <span class="string">/bin/bash</span></span><br><span class="line">passwd          <span class="comment">#设置root密码</span></span><br><span class="line"><span class="keyword">echo</span> 主机名 &gt; <span class="string">/etc/hostname</span>         <span class="comment">#设置主机名</span></span><br></pre></td></tr></table></figure>
+
+<p>然后配置区域</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano <span class="regexp">/etc/</span>locale.gen</span><br></pre></td></tr></table></figure>
+
+<p>将<code>en_US.UTF-8</code>、<code>zh_CN.UTF-8</code>、<code>zh_TW.UTF-8</code>的注释去掉，然后按Ctrl+x保存，退出，使用</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">locale-gen</span></span><br></pre></td></tr></table></figure>
+
+<p>生成区域，然后设置locale.conf文件</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> LANG=en_us.UTF-8 &gt; <span class="string">/etc/locale.conf</span><span class="comment">#如果在终端下使用中会出现乱码，可以装fbterm来解决</span></span><br></pre></td></tr></table></figure>
+
+<p>下面配置时区</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -sf <span class="regexp">/usr/</span>share<span class="regexp">/zoneinfo/</span>Asia<span class="regexp">/Shanghai /</span>etc<span class="regexp">/localtime</span></span><br></pre></td></tr></table></figure>
+
+<p>安装引导工具Grub</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pacman -S grub</span><br><span class="line">grub-install <span class="params">--recheck</span> <span class="string">/dev/sda1</span>        <span class="comment">#将grub写入系统，没有提示错误说明写入成功</span></span><br><span class="line">grub-mkconfig -o <span class="string">/boot/grub/grub.cfg</span>        <span class="comment">#生成配置文件</span></span><br></pre></td></tr></table></figure>
+
+<p>配置一下网络</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="builtin-name">enable</span> dhcpcd.service</span><br></pre></td></tr></table></figure>
+
+<p>到现在为止，系统基本上配置好了，现在退出新系统，卸载挂载的分区，然后重启虚拟机</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">exit</span></span><br><span class="line">umount -R /mnt</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<p>剩下来的安装图形化界面和美化的步骤可以自行google。</p>
 
     </div>
 
@@ -285,6 +327,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Arch/" rel="tag"># Arch</a>
           </div>
 
         
@@ -293,12 +336,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2017/11/undefined.html" rel="prev" title="Hadoop 简介">
-      <i class="fa fa-chevron-left"></i> Hadoop 简介
+    <a href="/2017/2/sqli-labs的安装.html" rel="prev" title="SQLi-Labs的安装">
+      <i class="fa fa-chevron-left"></i> SQLi-Labs的安装
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/3/undefined.html" rel="next" title="初探 Django 需要注意的事项">
-      初探 Django 需要注意的事项 <i class="fa fa-chevron-right"></i>
+    <a href="/2017/2/Hexo的建站之旅.html" rel="next" title="Hexo的建站之旅">
+      Hexo的建站之旅 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
