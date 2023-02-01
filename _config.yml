@@ -12,9 +12,9 @@ timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://skyhive.github.io
+url: https://skyhive.github.io
 root: /
-permalink: :year/:month/:day/:title/
+permalink: :year/:i_month/:hash.html
 permalink_defaults:
 
 # Directory
@@ -46,16 +46,11 @@ highlight:
 # Category & Tag
 default_category: categorized
 category_map:
-	
-    Blog: Blog
-
-    Code: Code
-	
-    运维: Infra
-
-    数据结构与算法: Algorithm
-	
-    生活: 生活
+  Blog: Blog
+  Code: Code
+  运维: Infra
+  数据结构与算法: Algorithm
+  生活: 生活
 
 tag_map:
 
@@ -148,3 +143,8 @@ deploy:
   type: git
   repository: git@github.com:SkyHive/SkyHive.github.io.git
   branch: master
+
+index_generator:
+  path: ''
+  per_page: 15
+  order_by: -date
