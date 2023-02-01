@@ -1165,10 +1165,508 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://skyhive.github.io/2019/10/31/Ext4文件系统缩容/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="SkyHive">
+      <meta itemprop="description" content="莫听穿林打叶声，何妨吟啸且徐行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SkyHive's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/31/Ext4文件系统缩容/" class="post-title-link" itemprop="url">Ext4 文件系统缩容</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-31 12:32:00" itemprop="dateCreated datePublished" datetime="2019-10-31T12:32:00+08:00">2019-10-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-30 16:39:16" itemprop="dateModified" datetime="2022-12-30T16:39:16+08:00">2022-12-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Infra/" itemprop="url" rel="index"><span itemprop="name">Infra</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/10/31/Ext4文件系统缩容/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/10/31/Ext4文件系统缩容/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>由于 <code>XFS</code> 文件系统不支持缩容，所以这里只讨论 <code>Ext4</code> 缩容的情况。</p>
+<p><code>Ext4</code> 文件系统调整的命令为 <code>resize2fs</code>，在使用这个命令前，我们需要将我们需要缩容的文件系统所在分区进行调整，由于 <code>LVM</code> 的调整相对简单，这里不做描述。</p>
+<p>如果需要调整的分区非系统盘，则可以直接先卸载已挂载的文件系统，然后进行操作；若需要调整的分区在系统盘上，则需要进入 <code>LiveCD</code> 的 <code>shell</code> 环境进行操作。</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">sudo -i</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta">## 文件系统缩容</span></span><br><span class="line">e2fsck -f /dev/sda4</span><br><span class="line">resize2fs /dev/sda4 &lt;想要变成的大小&gt;（如 <span class="number">200</span>G）</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta">## 缩小分区</span></span><br><span class="line">fdisk /dev/sda</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 键入 p 查看当前分区信息，记下要缩小的分区的 start 值</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 键入 d 选择要删除的分区</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 键入 n 新建分区，确认 start 值为刚刚原分区记录下来的 start 值</span></span><br><span class="line"><span class="meta"># end 设置为 +&lt;你想要的大小&gt;（如 +200G）</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 键入 p 确认分区大小没有问题后，键入 w 保存退出</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 重新 resize 文件系统</span></span><br><span class="line">resize2fs /dev/sda4</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://skyhive.github.io/2019/07/25/Gitlab单节点服务搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="SkyHive">
+      <meta itemprop="description" content="莫听穿林打叶声，何妨吟啸且徐行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SkyHive's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/07/25/Gitlab单节点服务搭建/" class="post-title-link" itemprop="url">Gitlab单节点服务搭建</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-25 12:25:01" itemprop="dateCreated datePublished" datetime="2019-07-25T12:25:01+08:00">2019-07-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-30 16:39:16" itemprop="dateModified" datetime="2022-12-30T16:39:16+08:00">2022-12-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Infra/" itemprop="url" rel="index"><span itemprop="name">Infra</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/07/25/Gitlab单节点服务搭建/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/07/25/Gitlab单节点服务搭建/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="搭建准备"><a href="#搭建准备" class="headerlink" title="搭建准备"></a>搭建准备</h2><p>根据官方提供的说法，小规模使用 GitLab 只用单机部署即可，4C8G 的配置足够小一百人使用 Git，由于本次也只是熟悉一下 GitLab 的搭建过程和各组件之间的关系，所以就使用低配的虚拟机进行搭建了。</p>
+<h3 id="虚拟机配置"><a href="#虚拟机配置" class="headerlink" title="虚拟机配置"></a>虚拟机配置</h3><table>
+<thead>
+<tr>
+<th>CPU</th>
+<th>内存</th>
+<th>硬盘</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4*vCPU</td>
+<td>8GB</td>
+<td>200GB</td>
+</tr>
+</tbody></table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/25/Gitlab单节点服务搭建/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://skyhive.github.io/2018/10/05/美版V30系统升级/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="SkyHive">
+      <meta itemprop="description" content="莫听穿林打叶声，何妨吟啸且徐行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SkyHive's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/10/05/美版V30系统升级/" class="post-title-link" itemprop="url">美版 V30 系统升级</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-10-05 12:52:41" itemprop="dateCreated datePublished" datetime="2018-10-05T12:52:41+08:00">2018-10-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-30 16:39:16" itemprop="dateModified" datetime="2022-12-30T16:39:16+08:00">2022-12-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/生活/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/10/05/美版V30系统升级/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/10/05/美版V30系统升级/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>关于国行版本的 Andorid 手机的系统升级，肯定是没有什么问题的，连了网升就完事儿了；但是非国行版本的呢？会有一点小问题。</p>
+<p>前两天刚入手了一款次次旗舰 LG V30，去年的旗舰835，4+64的配置今年已然跌倒了千元来搞基的价位，果断入手了。说是要搞基，但是作为一个老年人，实在是懒得折腾了，某鱼的老板说韩版卖断货了，近期只有一款美版的 H932 支持移动全频段，就入手了。</p>
+<p>到手稍微检查了一下，一切正常，梯子挂上美滋滋，但是出现了一个奇怪的问题——系统更新下载不下来。当时的网络状态是挂了梯子的，但是由于 Google 在系统上做的一些安全机制，导致挂了梯子（即网络流量被监控）的机器的系统更新了的流量不从梯子上走，所以会一直卡在 System Update Downloading。</p>
+<p>解决的办法有三个：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/10/05/美版V30系统升级/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://skyhive.github.io/2018/08/08/修改sudoers文件导致sudo无法使用的解决办法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="SkyHive">
+      <meta itemprop="description" content="莫听穿林打叶声，何妨吟啸且徐行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SkyHive's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/08/08/修改sudoers文件导致sudo无法使用的解决办法/" class="post-title-link" itemprop="url">修改sudoers文件导致sudo无法使用的解决办法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-08-08 22:09:41" itemprop="dateCreated datePublished" datetime="2018-08-08T22:09:41+08:00">2018-08-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-30 16:39:16" itemprop="dateModified" datetime="2022-12-30T16:39:16+08:00">2022-12-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Infra/" itemprop="url" rel="index"><span itemprop="name">Infra</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/08/08/修改sudoers文件导致sudo无法使用的解决办法/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/08/08/修改sudoers文件导致sudo无法使用的解决办法/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>之前因为修改过<code>/etc/sudoers</code>文件，有个地方语法错误，导致修改完成之后<code>sudo</code>命令无法使用</p>
+<p>网上搜过很多解决办法，大都是重启进入单用户模式，以Root用户的身份修改<code>sudoers</code>文件，解决原本的语法错误。但是这个方法的硬条件是需要重启进入单用户模式，但是有的时候我们是以<code>ssh</code>的方式登录到LInux机器上去的，所以相应的也会有不需要重启的操作就能解决这种问题，当然这种操作也有一个硬条件——Linux上已经安装了<code>Pkttyagent</code>和<code>pkexec</code>，我并不知道这两个软件是不是所有Llinux系统都预装，所以大家都自己拿捏一下。</p>
+<p>那么进入正题</p>
+<p>首先，我们需要开两个session连接到Linux机器上</p>
+<p>第一步：在以第一个session上输入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $$</span><br></pre></td></tr></table></figure>
+
+<p>得到你目前Bash的PID。</p>
+<p>第二步：在第二个session上输入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkttyagent --process pid #这里的pid是上一步获取到的，直接复制过来就好了</span><br></pre></td></tr></table></figure>
+
+<p>第三步：回到第一个session中，输入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkexec visudo</span><br></pre></td></tr></table></figure>
+
+<p>第四步：回到第二个session，你会发现Bash提示你进行权限认证，输入密码后，再回到第一个session</p>
+<p>第五步：回到第一个session后就是我们熟悉的visudo界面啦，下面的操作大家心里都有数了</p>
+<p><strong>总结一下，没事不要乱改和sudo有关的任何东西，会出事，绝逼会出事</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://skyhive.github.io/2018/06/05/SSD与内存条的故事/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="SkyHive">
+      <meta itemprop="description" content="莫听穿林打叶声，何妨吟啸且徐行">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SkyHive's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/05/SSD与内存条的故事/" class="post-title-link" itemprop="url">Dell 7559 升级</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-05 17:25:26" itemprop="dateCreated datePublished" datetime="2018-06-05T17:25:26+08:00">2018-06-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-30 16:39:16" itemprop="dateModified" datetime="2022-12-30T16:39:16+08:00">2022-12-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/生活/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/06/05/SSD与内存条的故事/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/06/05/SSD与内存条的故事/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>昨天刚和杨老板达成了 PY 交易，今天货就到了，还真是快啊。淘宝链接我就不给了，大家自行搜索<code>内存之家</code>（原<code>配件之家</code>），粉丝数很少的那个就是了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/05/SSD与内存条的故事/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
