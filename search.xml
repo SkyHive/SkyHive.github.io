@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Dict 和 Set</title>
-    <url>/2017/04/12/Dict%E5%92%8CSet/</url>
+    <url>/2017/4/undefined.html</url>
     <content><![CDATA[<h4 id="Dict"><a href="#Dict" class="headerlink" title="Dict"></a>Dict</h4><p>Python内置了字典Dict（全称Dictionary），使用键-值（key-value）存储，具有极快的查找速度。Dict的查找原理和查字典类似，key就相当于字典的索引，Python可以通过key计算出所对应的value存放的内存地址，直接取出，所以查找速度快。<br>Dict的初始化很简单，语法如下：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; dict = &#123;key1<span class="string">' : value1, '</span>key2<span class="string">' = value2, '</span>key3<span class="string">' = value3&#125;</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; dict[<span class="string">'key2'</span>]</span></span><br><span class="line">value2</span><br></pre></td></tr></table></figure>
 
@@ -29,7 +29,7 @@
   </entry>
   <entry>
     <title>Ext4 文件系统缩容</title>
-    <url>/2019/10/31/Ext4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BC%A9%E5%AE%B9/</url>
+    <url>/2019/10/undefined.html</url>
     <content><![CDATA[<p>由于 <code>XFS</code> 文件系统不支持缩容，所以这里只讨论 <code>Ext4</code> 缩容的情况。</p>
 <p><code>Ext4</code> 文件系统调整的命令为 <code>resize2fs</code>，在使用这个命令前，我们需要将我们需要缩容的文件系统所在分区进行调整，由于 <code>LVM</code> 的调整相对简单，这里不做描述。</p>
 <p>如果需要调整的分区非系统盘，则可以直接先卸载已挂载的文件系统，然后进行操作；若需要调整的分区在系统盘上，则需要进入 <code>LiveCD</code> 的 <code>shell</code> 环境进行操作。</p>
@@ -45,7 +45,7 @@
   </entry>
   <entry>
     <title>ESXi 快照机制</title>
-    <url>/2020/06/17/ESXi-%E5%BF%AB%E7%85%A7%E6%9C%BA%E5%88%B6/</url>
+    <url>/2020/6/undefined.html</url>
     <content><![CDATA[<blockquote>
 <p><a href="https://kb.vmware.com/s/article/1015180" target="_blank" rel="noopener">Understanding VM Sanpshots in ESXi</a><br><br><a href="https://kknews.cc/code/y5pnlkj.html" target="_blank" rel="noopener">VMware vSphere 6.7 虚拟机快照原理及 Veeam Backup 备份</a><br><br><a href="https://docs.vmware.com/cn/VMware-vSphere/6.5/com.vmware.vsphere.virtualsan.doc/GUID-1D6AD25A-459A-43D6-8FF5-52475499D6A2.html" target="_blank" rel="noopener">vSAN 中的闪存缓存设备设计注意事项</a></p>
 </blockquote>
@@ -83,7 +83,7 @@
   </entry>
   <entry>
     <title>DNS 缓存清理</title>
-    <url>/2020/04/01/DNS%E7%BC%93%E5%AD%98%E6%B8%85%E7%90%86/</url>
+    <url>/2020/4/undefined.html</url>
     <content><![CDATA[<h2 id="Windows-下清理"><a href="#Windows-下清理" class="headerlink" title="Windows 下清理"></a>Windows 下清理</h2><figure class="highlight dos"><table><tr><td class="code"><pre><span class="line"># 管理员身份运行 <span class="built_in">cmd</span></span><br><span class="line"> </span><br><span class="line"><span class="built_in">ipconfig</span> /flushdns</span><br></pre></td></tr></table></figure>
 
 <a id="more"></a>
@@ -128,7 +128,7 @@
   </entry>
   <entry>
     <title>Gitlab单节点服务搭建</title>
-    <url>/2019/07/25/Gitlab%E5%8D%95%E8%8A%82%E7%82%B9%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/</url>
+    <url>/2019/7/undefined.html</url>
     <content><![CDATA[<h2 id="搭建准备"><a href="#搭建准备" class="headerlink" title="搭建准备"></a>搭建准备</h2><p>根据官方提供的说法，小规模使用 GitLab 只用单机部署即可，4C8G 的配置足够小一百人使用 Git，由于本次也只是熟悉一下 GitLab 的搭建过程和各组件之间的关系，所以就使用低配的虚拟机进行搭建了。</p>
 <h3 id="虚拟机配置"><a href="#虚拟机配置" class="headerlink" title="虚拟机配置"></a>虚拟机配置</h3><table>
 <thead>
@@ -164,7 +164,7 @@
   </entry>
   <entry>
     <title>Galera 集群搭建</title>
-    <url>/2021/08/16/Galera-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</url>
+    <url>/2021/8/undefined.html</url>
     <content><![CDATA[<h3 id="Galera-简介"><a href="#Galera-简介" class="headerlink" title="Galera 简介"></a>Galera 简介</h3><p>Galera Cluster 是基于 MySQL&#x2F;Innodb 二次开发而成的一个支持“多主同步”的数据库主从集群。具备多主、同步复制、高可用等特点。</p>
 <p>MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现,同 Percona 的 PXC 数据库集群,目前只支持运行在 Linux 系统上。从 MariaDB 10.1 版开始，MariaDB Server 和 MariaDB Galera Server 安装包已经合并，安装 MariaDB 时，Galera 相关依赖安装包会自动安装，像内置的插件或存储引擎一样，通过简单配置即可启用。</p>
 <h3 id="Galera-集群状态"><a href="#Galera-集群状态" class="headerlink" title="Galera 集群状态"></a>Galera 集群状态</h3><p>查看集群状态</p>
@@ -248,7 +248,7 @@
   </entry>
   <entry>
     <title>Hadoop 简介</title>
-    <url>/2017/11/17/Hadoop%E7%AE%80%E4%BB%8B/</url>
+    <url>/2017/11/undefined.html</url>
     <content><![CDATA[<h3 id="Hadoop-介绍"><a href="#Hadoop-介绍" class="headerlink" title="Hadoop 介绍"></a>Hadoop 介绍</h3><p>Hadoop 是 Apache 组织的一个分布式计算框架（java语言），其最核心的设计就是：<strong>HDFS</strong> 和<strong>MapReduce</strong>，HDFS实现存储，MapReduce实现原理分析处理。</p>
 <h4 id="HDFS文件系统"><a href="#HDFS文件系统" class="headerlink" title="HDFS文件系统"></a>HDFS文件系统</h4><p><strong>HDFS</strong>（Hadoop Distributed File System）是一个高度容错的系统，适合部署在廉价的机器上。HDFS能提供高吞吐量的数据访问，适合那些有着超大数据集的应用程序。</p>
 <a id="more"></a>
@@ -277,7 +277,7 @@
   </entry>
   <entry>
     <title>Gitlab EE 版本破解</title>
-    <url>/2020/05/24/Gitlab-EE-%E7%89%88%E6%9C%AC%E7%A0%B4%E8%A7%A3/</url>
+    <url>/2020/5/undefined.html</url>
     <content><![CDATA[<h3 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h3><ul>
 <li>Ubuntu 16.04</li>
 <li>Ruby 环境（Version ≥2.5）</li>
@@ -304,7 +304,7 @@
   </entry>
   <entry>
     <title>KVM 填坑</title>
-    <url>/2020/09/06/KVM-%E5%A1%AB%E5%9D%91/</url>
+    <url>/2020/9/undefined.html</url>
     <content><![CDATA[<h3 id="1、UEFI-引导问题"><a href="#1、UEFI-引导问题" class="headerlink" title="1、UEFI 引导问题"></a>1、UEFI 引导问题</h3><p>支持 KVM 虚拟机使用 UEFI 引导需要安装 OVMF 组件，参考<a href="https://blog.skyhive.tech/2020/06/10/%E5%9F%BA%E4%BA%8E-CentOS-%E5%AE%89%E8%A3%85-KVM/" target="_blank" rel="noopener">基于 CentOS 安装 KVM</a>。<br>目前通过 virt-v2v 导入的 ova 且使用 UEFI 启动的虚拟机（from vSphere）再 define domain 的时候会有报错，报错如下：</p>
 <figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line"><span class="keyword">error: </span>Failed to define domain from /tmp/v2vlibvirt20e61b.xml</span><br><span class="line"><span class="keyword">error: </span>unsupported configuration: smm is not available with this QEMU binary</span><br></pre></td></tr></table></figure>
 
@@ -334,7 +334,7 @@
   </entry>
   <entry>
     <title>Hexo 搭配七牛存储图片等媒体资源</title>
-    <url>/2017/02/14/Hexo%E6%90%AD%E9%85%8D%E4%B8%83%E7%89%9B%E5%AD%98%E5%82%A8%E5%9B%BE%E7%89%87%E7%AD%89%E5%AA%92%E4%BD%93%E8%B5%84%E6%BA%90/</url>
+    <url>/2017/2/undefined.html</url>
     <content><![CDATA[<p>今天把博客的图片存储搞了一下，利用的七牛存储，相对来说还是比较简单，但是为了测试成功与否就只好写这篇博客了。<br>七牛 是一个云存储服务商，注册并实名认证之后后，你将免费享有 10GB 存储空间，每月 10GB 下载流量、100 万次 GET 请求、 10 万次 PUT&#x2F;DELETE 请求。如果想要注册可以<a href="https://portal.qiniu.com/signup?code=3lnfyn5xmh93m" target="_blank" rel="noopener">点击这里</a>，这样可以为我增加每月5GB的容量。</p>
 <a id="more"></a>
 <p>注册完成之后就可以进行创建空间了，注意我们添加的资源为<strong>对象存储</strong>，访问控制为<strong>公开空间</strong></p>
@@ -364,7 +364,7 @@
   </entry>
   <entry>
     <title>Hexo的建站之旅</title>
-    <url>/2017/02/14/Hexo%E7%9A%84%E5%BB%BA%E7%AB%99%E4%B9%8B%E6%97%85/</url>
+    <url>/2017/2/undefined.html</url>
     <content><![CDATA[<p> 这几天觉得wordpress作为博客实在是太臃肿了，而且访问的后台以及更新都极其的慢，以至于想把博客迁到Hexo上去。<br>Hexo 是个简洁快速且高效的博客框架，是个台湾的学生写的，所以对中文还是挺友好的，我们用起来也很方便，而且Hexo仅依赖node，易于安装。<br>首先准备的工具仅需要node.js,git即可，在ubuntu上安装这两样工具也是极其简单：</p>
 <a id="more"></a>
 <figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> install nodejs</span><br><span class="line">sudo apt-<span class="builtin-name">get</span> install npm	</span><br><span class="line">sudo apt-<span class="builtin-name">get</span> install nodejs-legacy 			#由于ubuntu仓库中本来就有一个node，所以在ubuntu下nodejs命令不是node而是nodejs，但是安装nodejs-legacy后就可以解决这个问题了，具体为什么我也不知道</span><br><span class="line">sudo apt-<span class="builtin-name">get</span> install git</span><br></pre></td></tr></table></figure>
@@ -410,7 +410,7 @@
   </entry>
   <entry>
     <title>Python基础</title>
-    <url>/2017/04/07/Python%E5%9F%BA%E7%A1%80/</url>
+    <url>/2017/4/undefined.html</url>
     <content><![CDATA[<p><em>最近在自学Python，所以一边学也一边总结一些知识点</em></p>
 <h4 id="Python的输出"><a href="#Python的输出" class="headerlink" title="Python的输出"></a>Python的输出</h4><p>Python的输出和C语言类似，在<code>print()</code>函数里加上字符串（用单引号或者双引号，但是不能混用），例如：</p>
 <figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;</span>&gt; print(<span class="string">'Hello world!'</span>)</span><br></pre></td></tr></table></figure>
@@ -489,7 +489,7 @@
   </entry>
   <entry>
     <title>SQL 语句的基本操作</title>
-    <url>/2017/04/04/SQL%E8%AF%AD%E5%8F%A5%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
+    <url>/2017/4/undefined.html</url>
     <content><![CDATA[<h3 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h3><ol>
 <li>创建数据库： <code>CREATE DATABASE &lt;数据库名&gt; [其他选项]</code></li>
 <li>使用数据库： <code>USE &lt;数据库名&gt;</code></li>
@@ -523,7 +523,7 @@
   </entry>
   <entry>
     <title>SQL 进阶</title>
-    <url>/2017/04/17/SQL%E8%BF%9B%E9%98%B6/</url>
+    <url>/2017/4/undefined.html</url>
     <content><![CDATA[<p>我们都知道 select 的基本用法<code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而<code>select</code>语句后面还可以跟很多限制条件。我们这次用 user 表来作为示范，下面是 user 表的结构：</p>
 <a id="more"></a>
 <p><img src="http://blogpic.skyhive.tech/images/user.png" alt="user 表结构"></p>
@@ -554,7 +554,7 @@
   </entry>
   <entry>
     <title>Dell 7559 升级</title>
-    <url>/2018/06/05/SSD%E4%B8%8E%E5%86%85%E5%AD%98%E6%9D%A1%E7%9A%84%E6%95%85%E4%BA%8B/</url>
+    <url>/2018/6/undefined.html</url>
     <content><![CDATA[<p>昨天刚和杨老板达成了 PY 交易，今天货就到了，还真是快啊。淘宝链接我就不给了，大家自行搜索<code>内存之家</code>（原<code>配件之家</code>），粉丝数很少的那个就是了。</p>
 <a id="more"></a>
 
@@ -589,7 +589,7 @@
   </entry>
   <entry>
     <title>关于 TCP</title>
-    <url>/2017/04/04/%E5%85%B3%E4%BA%8ETCP/</url>
+    <url>/2017/4/undefined.html</url>
     <content><![CDATA[<blockquote>
 <p>互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP&#x2F;IP协议族（TCP&#x2F;IP Protocol Suite，或TCP&#x2F;IP Protocols），简称TCP&#x2F;IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为该家族中最早通过的标准。由于在网络通讯协议普遍采用分层的结构，当多个层次的协议共同工作时，类似计算机科学中的堆栈，因此又被称为TCP&#x2F;IP协议栈（TCP&#x2F;IP Protocol Stack）</p>
 </blockquote>
@@ -613,7 +613,7 @@
   </entry>
   <entry>
     <title>SQLi-Labs的安装</title>
-    <url>/2017/02/09/sqli-labs%E7%9A%84%E5%AE%89%E8%A3%85/</url>
+    <url>/2017/2/undefined.html</url>
     <content><![CDATA[<p>笔者前段时间安装了 sqli-labs，就想把 sqli-labs 和 lamp 环境的搭建都写出来，其实这两个东西都很简单，感觉比我折腾 hexo 要简单的得多了（手动滑稽）。</p>
 <p>sqli 即 sql injection(sql注入)，sqli-labs是一个印度程序员写的用来学习sql注入的游戏教程，<a href="https://www.youtube.com/playlist?list=PLkiAz1NPnw8qEgzS7cgVMKavvOAdogsro" target="_blank" rel="noopener">Youtube上有一套视频教程</a>(需要科学上网)，<a href="https://github.com/Audi-1/sqli-labs" target="_blank" rel="noopener">github上也有开源的项目</a>。</p>
 <p>那么接下来就可以进行安装了：</p>
@@ -656,7 +656,7 @@
   </entry>
   <entry>
     <title>一个学习 Python 的小游戏</title>
-    <url>/2017/04/21/%E4%B8%80%E4%B8%AA%E5%AD%A6%E4%B9%A0Python%E7%9A%84%E5%B0%8F%E6%B8%B8%E6%88%8F/</url>
+    <url>/2017/4/undefined.html</url>
     <content><![CDATA[<p>笔者最近在自学 Python 的过程中想起曾经有人推荐过的一款学习编程的小游戏，叫做 <a href="https://cn.codecombat.com/" target="_blank" rel="noopener">Codecombat</a>，通过玩游戏的方式学习编程语言的语法规则。</p>
 <a id="more"></a>
 <p><img src="http://blogpic.skyhive.tech/images/codecombat.png" alt="codecombat"><br>游戏有很多关卡，每个关卡都会有之前没有学过的语法，学习的难度是逐渐上升的，用游戏的方式将学习者带入比起看起枯燥的书本文字效果要好的多。</p>
@@ -671,7 +671,7 @@
   </entry>
   <entry>
     <title>修改sudoers文件导致sudo无法使用的解决办法</title>
-    <url>/2018/08/08/%E4%BF%AE%E6%94%B9sudoers%E6%96%87%E4%BB%B6%E5%AF%BC%E8%87%B4sudo%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <url>/2018/8/undefined.html</url>
     <content><![CDATA[<p>之前因为修改过<code>/etc/sudoers</code>文件，有个地方语法错误，导致修改完成之后<code>sudo</code>命令无法使用</p>
 <p>网上搜过很多解决办法，大都是重启进入单用户模式，以Root用户的身份修改<code>sudoers</code>文件，解决原本的语法错误。但是这个方法的硬条件是需要重启进入单用户模式，但是有的时候我们是以<code>ssh</code>的方式登录到LInux机器上去的，所以相应的也会有不需要重启的操作就能解决这种问题，当然这种操作也有一个硬条件——Linux上已经安装了<code>Pkttyagent</code>和<code>pkexec</code>，我并不知道这两个软件是不是所有Llinux系统都预装，所以大家都自己拿捏一下。</p>
 <p>那么进入正题</p>
@@ -699,7 +699,7 @@
   </entry>
   <entry>
     <title>关于 timestamp 自动更新</title>
-    <url>/2017/02/09/%E5%85%B3%E4%BA%8Etimestamp%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0/</url>
+    <url>/2017/2/undefined.html</url>
     <content><![CDATA[<p>最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。</p>
 <a id="more"></a>
 
@@ -728,7 +728,7 @@
   </entry>
   <entry>
     <title>初探 Django 需要注意的事项</title>
-    <url>/2018/03/25/%E5%88%9D%E6%8E%A2Django%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E9%A1%B9/</url>
+    <url>/2018/3/undefined.html</url>
     <content><![CDATA[<h4 id="更改默认数据库为-MySQL"><a href="#更改默认数据库为-MySQL" class="headerlink" title="更改默认数据库为 MySQL"></a>更改默认数据库为 MySQL</h4><p>Django 使用的默认数据库是 SQLite3，如果习惯使用的是 SQLite 的用户就可以不必更换数据库。</p>
 <p>更换数据库的话在<code>settings.py</code>文件中<code>DATABASES</code>选项中进行更改</p>
 <a id="more"></a>
@@ -759,7 +759,7 @@
   </entry>
   <entry>
     <title>搭建属于自己的 Shadowsocks 服务</title>
-    <url>/2017/08/11/%E6%90%AD%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84Shadowsocks%E6%9C%8D%E5%8A%A1/</url>
+    <url>/2017/8/undefined.html</url>
     <content><![CDATA[<p>最近一直想自己搭一个 Shadowsocks 服务，并且利用服务器学习一些技术知识，但是国内的服务器实在是贵得很啊，像我这种苦逼大学生根本玩不起，无奈之下只好各种 Google 百度，最后找到了一些国外的 VPS 资源</p>
 <ul>
 <li>BandwagonHost(<a href="http://banwagong.cn/fangan.html" target="_blank" rel="noopener">搬瓦工VPS</a>)：据观察搬瓦工这个 VPS 还是算计比较便宜的，年付 $20 ，平均下来每个月只有 $1.6，而且套餐很良心很良心,512MB 的内存，10GB 的 SSD，1TB 的流量是不是比国内很多主机都划算的很。<br><img src="http://blogpic.skyhive.tech/images/DO1.png" alt="DO1">  <a id="more"></a></li>
@@ -816,7 +816,7 @@
   </entry>
   <entry>
     <title>关于 Ubuntu 循环登录界面</title>
-    <url>/2018/04/20/%E5%85%B3%E4%BA%8EUbuntu%E5%BE%AA%E7%8E%AF%E7%99%BB%E5%BD%95%E7%95%8C%E9%9D%A2/</url>
+    <url>/2018/4/undefined.html</url>
     <content><![CDATA[<p>其实事情的起因很奇怪，前两天一直想升级Ubuntu 18.04，不知道为什么17.10用着怪怪的，但是18.04又要到4月26号才发布，没有办法了只能Beta 2先用着试试了。</p>
 <p>然后就是一顿正常的操作</p>
 <a id="more"></a>
@@ -859,7 +859,7 @@
   </entry>
   <entry>
     <title>创建本地 APT 仓库</title>
-    <url>/2021/08/23/%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0-APT-%E4%BB%93%E5%BA%93/</url>
+    <url>/2021/8/undefined.html</url>
     <content><![CDATA[<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>由于部分客户场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 <a href="http://archive.ubuntu.com/ubuntu" target="_blank" rel="noopener">http://archive.ubuntu.com/ubuntu</a> 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。<br>由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的 apt 仓库，我们将需要的依赖包都下载好，使用 apt-fptarchive 来发布我们的仓库。</p>
 <a id="more"></a>
 
@@ -881,7 +881,7 @@
   </entry>
   <entry>
     <title>解决 Ubuntu 下 Apache 不解析 PHP 问题</title>
-    <url>/2017/07/13/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8BApache%E4%B8%8D%E8%A7%A3%E6%9E%90PHP%E9%97%AE%E9%A2%98/</url>
+    <url>/2017/7/undefined.html</url>
     <content><![CDATA[<p>这两天笔者遇到了一个很操蛋的问题——Apache 无法解析 PHP 代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是php5的版本，而我却是7的版本，我就先顺便把5版本的解决方法贴出来：</p>
 <blockquote>
 <p>修改apache的配置文件httpd.conf</p>
@@ -911,7 +911,7 @@
   </entry>
   <entry>
     <title>栈</title>
-    <url>/2017/10/11/%E6%A0%88/</url>
+    <url>/2017/10/undefined.html</url>
     <content><![CDATA[<p>栈是一种<strong>先进后出</strong>的线性数据结构，规定只允许在一端进行插入和删除元素的操作。其中进栈操作又叫做压栈（Push），出栈操作又叫做弹出（Pop）。允许进行操作的一端叫做栈顶（top），另一端叫做栈底（base）。</p>
 <h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><ul>
 <li>顺序栈：数组实现</li>
@@ -964,7 +964,7 @@
   </entry>
   <entry>
     <title>基于 CentOS 安装 KVM</title>
-    <url>/2020/06/10/%E5%9F%BA%E4%BA%8E-CentOS-%E5%AE%89%E8%A3%85-KVM/</url>
+    <url>/2020/6/undefined.html</url>
     <content><![CDATA[<h3 id="安装操作系统"><a href="#安装操作系统" class="headerlink" title="安装操作系统"></a>安装操作系统</h3><p>UEFI 引导或者 Legacy BIOS 引导均可，冲就完事了</p>
 <a id="more"></a>
 <h3 id="安装-KVM-及其依赖"><a href="#安装-KVM-及其依赖" class="headerlink" title="安装 KVM 及其依赖"></a>安装 KVM 及其依赖</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 先把源换了</span></span><br><span class="line">yum install -y wget</span><br><span class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line">yum makecache</span><br><span class="line"></span><br><span class="line"><span class="comment">## 安装 epel 源</span></span><br><span class="line">yum install -y epel-release</span><br><span class="line"></span><br><span class="line"><span class="comment">## 安装 KVM 以及依赖服务</span></span><br><span class="line">yum install ntp kvm virt-manager virt-top qemu-kvm qemu-kvm-tools libvirt git vim htop</span><br><span class="line">systemctl start libvirtd</span><br><span class="line">systemctl <span class="built_in">enable</span> libvirtd</span><br><span class="line"></span><br><span class="line"><span class="comment">## 配置 NTP</span></span><br><span class="line">vim /etc/ntp.conf</span><br><span class="line">--------</span><br><span class="line">server ntp.aliyun.com iburst  <span class="comment"># 新增</span></span><br><span class="line">--------</span><br><span class="line"></span><br><span class="line">systemctl start ntpd</span><br><span class="line">systemctl <span class="built_in">enable</span> ntpd</span><br><span class="line">ntpq -p  <span class="comment"># 检查同步状态</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 关闭 firewalled selinux</span></span><br><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line">setenforce 0</span><br><span class="line">vim /etc/sysconfig/selinux</span><br><span class="line">-------</span><br><span class="line">SELINUX=disabled  <span class="comment">#修改</span></span><br><span class="line">-------</span><br><span class="line"></span><br><span class="line"><span class="comment">## 修改 grub 引导配置</span></span><br><span class="line">vim /etc/default/grub</span><br><span class="line">-------</span><br><span class="line">GRUB_CMDLINE_LINUX=<span class="string">"crashkernel=auto spectre_v2=retpoline rd.lvm.lv=centos/root rd.lvm.lv=centos/swap intel_iommu=on rhgb quiet"</span>  <span class="comment"># 开启 intel iommu</span></span><br><span class="line">-------</span><br><span class="line">grub2-mkconfig -o /boot/grub2/grub.cfg</span><br></pre></td></tr></table></figure>
@@ -983,7 +983,7 @@
   </entry>
   <entry>
     <title>美版 V30 系统升级</title>
-    <url>/2018/10/05/%E7%BE%8E%E7%89%88V30%E7%B3%BB%E7%BB%9F%E5%8D%87%E7%BA%A7/</url>
+    <url>/2018/10/undefined.html</url>
     <content><![CDATA[<p>关于国行版本的 Andorid 手机的系统升级，肯定是没有什么问题的，连了网升就完事儿了；但是非国行版本的呢？会有一点小问题。</p>
 <p>前两天刚入手了一款次次旗舰 LG V30，去年的旗舰835，4+64的配置今年已然跌倒了千元来搞基的价位，果断入手了。说是要搞基，但是作为一个老年人，实在是懒得折腾了，某鱼的老板说韩版卖断货了，近期只有一款美版的 H932 支持移动全频段，就入手了。</p>
 <p>到手稍微检查了一下，一切正常，梯子挂上美滋滋，但是出现了一个奇怪的问题——系统更新下载不下来。当时的网络状态是挂了梯子的，但是由于 Google 在系统上做的一些安全机制，导致挂了梯子（即网络流量被监控）的机器的系统更新了的流量不从梯子上走，所以会一直卡在 System Update Downloading。</p>
@@ -1019,7 +1019,7 @@
   </entry>
   <entry>
     <title>解决 Ubuntu 下搜狗拼音候选词乱码</title>
-    <url>/2018/05/29/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8B%E6%90%9C%E7%8B%97%E6%8B%BC%E9%9F%B3%E5%80%99%E9%80%89%E8%AF%8D%E4%B9%B1%E7%A0%81/</url>
+    <url>/2018/5/undefined.html</url>
     <content><![CDATA[<p>今天Ubuntu系统下的搜狗拼音突然抽疯了，中文输入的时候候选词区域都是全是一串无意义的英文字母，不知道是不是因为对Linux系统的支持问题还是怎么回事，解决办法也很简单，就是删除搜狗的配置文件，重新登录就好了，只是需要重新设置原来的配置</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~/.config</span><br><span class="line">rm -rf SogouPY* sogou*</span><br></pre></td></tr></table></figure>
 
@@ -1035,7 +1035,7 @@
   </entry>
   <entry>
     <title>解决 Ubuntu 下 PHP 验证码不显示问题</title>
-    <url>/2017/07/14/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8BPHP%E9%AA%8C%E8%AF%81%E7%A0%81%E4%B8%8D%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98/</url>
+    <url>/2017/7/undefined.html</url>
     <content><![CDATA[<p>这两天在帮别人写一个注册登录功能的页面，用到了简单的 TP 框架，但是在我自己的 Ubuntu 环境下发现验证码出了问题——验证码图片显示不出来。</p>
 <p>我将图片单独拉出来，发现错误提示如下：</p>
 <figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">Call to <span class="literal">undefined</span> <span class="function"><span class="keyword">function</span> <span class="title">imagecreate</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
@@ -1059,7 +1059,7 @@
   </entry>
   <entry>
     <title>什么情况？访问不了虚拟机了？？</title>
-    <url>/2021/10/27/%E8%AE%BF%E9%97%AE%E4%B8%8D%E4%BA%86%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BA%86/</url>
+    <url>/2021/10/undefined.html</url>
     <content><![CDATA[<p>前几日在家中遇到一件有趣的事情，与大家分享一下。</p>
 <p>起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到 ESXi。这时的我还很天真的以为是虚拟化和黑苹果之间的问题，Google 了一番未果还是换回了 Windows。</p>
 <a id="more"></a>
@@ -1090,7 +1090,7 @@
   </entry>
   <entry>
     <title>解决配置完七牛后无法 Deploy 到 Github</title>
-    <url>/2017/02/14/%E8%A7%A3%E5%86%B3%E9%85%8D%E7%BD%AE%E5%AE%8C%E4%B8%83%E7%89%9B%E5%90%8E%E6%97%A0%E6%B3%95Deploy%E5%88%B0github/</url>
+    <url>/2017/2/undefined.html</url>
     <content><![CDATA[<p>将七牛的插件配置好后我写了上一篇博客试一试效果，结果发现怎么也没部署到github，每次<code>hexo d</code>都会出现</p>
 <figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ERROR </span>Deployer not found: git</span><br></pre></td></tr></table></figure>
 
@@ -1108,7 +1108,7 @@
   </entry>
   <entry>
     <title>配置 SSH 免密登录遇到的坑</title>
-    <url>/2017/12/08/%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/</url>
+    <url>/2017/12/undefined.html</url>
     <content><![CDATA[<p>最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。<br>由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行</p>
 <figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ssh-keygen -t rsa</span></span><br></pre></td></tr></table></figure>
 
@@ -1125,7 +1125,7 @@
   </entry>
   <entry>
     <title>黑群晖填坑</title>
-    <url>/2021/11/17/%E9%BB%91%E7%BE%A4%E6%99%96%E8%A7%A3%E9%99%A4%E5%86%85%E5%AD%98%E9%99%90%E5%88%B6/</url>
+    <url>/2021/11/undefined.html</url>
     <content><![CDATA[<p>前段时间把家里的 NAS 做了一次改造，将用之前用了一年的架构推翻，换上了黑群晖。</p>
 <p>故事还得从一年前说起。最初本着折腾的精神，采取了 Bcache+LVM 的方案，简单架构如下：<br><img src="https://blogpic.skyhive.tech/%E5%AD%98%E5%82%A8%E4%B8%80%E4%BB%A3%E7%9B%AE" alt="NAS 一代目"></p>
 <a id="more"></a>
@@ -1163,7 +1163,7 @@
   </entry>
   <entry>
     <title>解决Ubuntu系统设置打不开</title>
-    <url>/2017/02/14/%E8%A7%A3%E5%86%B3Ubuntu%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE%E6%89%93%E4%B8%8D%E5%BC%80/</url>
+    <url>/2017/2/undefined.html</url>
     <content><![CDATA[<p>今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法</p>
 <figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install ubuntu-desktop         <span class="comment">#这个会把Ubuntu预装的软件office还有Amazon什么的装回来，装完自己再慢慢卸载吧</span></span><br></pre></td></tr></table></figure>
 
@@ -1185,7 +1185,7 @@
   </entry>
   <entry>
     <title>队列</title>
-    <url>/2017/10/15/%E9%98%9F%E5%88%97/</url>
+    <url>/2017/10/undefined.html</url>
     <content><![CDATA[<h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><p>队列是一种可以实现<strong>先进先出</strong>(first in first out,FIFO)的存储结构。与栈不一样的是，队列规定只在一端进行插入操作，在另一端进行删除操作。允许插入的一端叫做队尾(rear)，允许删除的一端叫做队首(front)。</p>
 <h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><ul>
 <li>链式队列：用链表实现。</li>
@@ -1259,7 +1259,7 @@
   </entry>
   <entry>
     <title>记一次Arch的安装经历</title>
-    <url>/2017/02/13/%E8%AE%B0%E4%B8%80%E6%AC%A1Arch%E7%9A%84%E5%AE%89%E8%A3%85%E7%BB%8F%E5%8E%86/</url>
+    <url>/2017/2/undefined.html</url>
     <content><![CDATA[<p>最近由于听信了别人的“谗言”，心血来潮想试一试Arch，所以便准备在虚拟机上装一个Arch来看看效果，也算是一次艰难的装系统之路了吧。</p>
 <p>那么下面打开虚拟机，进入安装界面：</p>
 <p>首先是分区，Arch给我们提供了一个很好的分区交互工具cfdisk</p>
@@ -1319,7 +1319,7 @@
   </entry>
   <entry>
     <title>雾都游记</title>
-    <url>/2020/10/22/%E9%9B%BE%E9%83%BD%E6%B8%B8%E8%AE%B0/</url>
+    <url>/2020/10/undefined.html</url>
     <content><![CDATA[<h3 id="第一天"><a href="#第一天" class="headerlink" title="第一天"></a>第一天</h3><p>18:30 落地，取得托运行李后，自<strong>江北机场T3航站楼</strong>乘坐地铁<strong>十号线（鲤鱼池方向）</strong>至红<strong>土地换</strong>乘地铁<strong>六号线（茶园方向）</strong>至<strong>小什字下车（8 号口）</strong>，马路对面就是宾馆！！</p>
 <blockquote>
 <ul>

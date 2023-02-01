@@ -3,11 +3,11 @@
   <title>SkyHive&#39;s Blog</title>
   
   
-  <link href="http://skyhive.github.io/atom.xml" rel="self"/>
+  <link href="https://skyhive.github.io/atom.xml" rel="self"/>
   
-  <link href="http://skyhive.github.io/"/>
+  <link href="https://skyhive.github.io/"/>
   <updated>2022-12-30T08:39:16.143Z</updated>
-  <id>http://skyhive.github.io/</id>
+  <id>https://skyhive.github.io/</id>
   
   <author>
     <name>SkyHive</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>黑群晖填坑</title>
-    <link href="http://skyhive.github.io/2021/11/17/%E9%BB%91%E7%BE%A4%E6%99%96%E8%A7%A3%E9%99%A4%E5%86%85%E5%AD%98%E9%99%90%E5%88%B6/"/>
-    <id>http://skyhive.github.io/2021/11/17/%E9%BB%91%E7%BE%A4%E6%99%96%E8%A7%A3%E9%99%A4%E5%86%85%E5%AD%98%E9%99%90%E5%88%B6/</id>
+    <link href="https://skyhive.github.io/2021/11/undefined.html"/>
+    <id>https://skyhive.github.io/2021/11/undefined.html</id>
     <published>2021-11-17T03:36:05.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -31,19 +31,19 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="NAS" scheme="http://skyhive.github.io/tags/NAS/"/>
+    <category term="NAS" scheme="https://skyhive.github.io/tags/NAS/"/>
     
-    <category term="黑群晖" scheme="http://skyhive.github.io/tags/黑群晖/"/>
+    <category term="黑群晖" scheme="https://skyhive.github.io/tags/黑群晖/"/>
     
   </entry>
   
   <entry>
     <title>什么情况？访问不了虚拟机了？？</title>
-    <link href="http://skyhive.github.io/2021/10/27/%E8%AE%BF%E9%97%AE%E4%B8%8D%E4%BA%86%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BA%86/"/>
-    <id>http://skyhive.github.io/2021/10/27/%E8%AE%BF%E9%97%AE%E4%B8%8D%E4%BA%86%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BA%86/</id>
+    <link href="https://skyhive.github.io/2021/10/undefined.html"/>
+    <id>https://skyhive.github.io/2021/10/undefined.html</id>
     <published>2021-10-27T03:59:21.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -55,21 +55,21 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="虚拟化" scheme="http://skyhive.github.io/tags/虚拟化/"/>
+    <category term="虚拟化" scheme="https://skyhive.github.io/tags/虚拟化/"/>
     
-    <category term="ESXi" scheme="http://skyhive.github.io/tags/ESXi/"/>
+    <category term="ESXi" scheme="https://skyhive.github.io/tags/ESXi/"/>
     
-    <category term="Network" scheme="http://skyhive.github.io/tags/Network/"/>
+    <category term="Network" scheme="https://skyhive.github.io/tags/Network/"/>
     
   </entry>
   
   <entry>
     <title>创建本地 APT 仓库</title>
-    <link href="http://skyhive.github.io/2021/08/23/%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0-APT-%E4%BB%93%E5%BA%93/"/>
-    <id>http://skyhive.github.io/2021/08/23/%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0-APT-%E4%BB%93%E5%BA%93/</id>
+    <link href="https://skyhive.github.io/2021/8/undefined.html"/>
+    <id>https://skyhive.github.io/2021/8/undefined.html</id>
     <published>2021-08-23T09:21:11.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -80,17 +80,17 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="Ubuntu" scheme="http://skyhive.github.io/tags/Ubuntu/"/>
+    <category term="Ubuntu" scheme="https://skyhive.github.io/tags/Ubuntu/"/>
     
   </entry>
   
   <entry>
     <title>Galera 集群搭建</title>
-    <link href="http://skyhive.github.io/2021/08/16/Galera-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/"/>
-    <id>http://skyhive.github.io/2021/08/16/Galera-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</id>
+    <link href="https://skyhive.github.io/2021/8/undefined.html"/>
+    <id>https://skyhive.github.io/2021/8/undefined.html</id>
     <published>2021-08-16T08:22:19.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -104,17 +104,17 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="MySQL" scheme="http://skyhive.github.io/tags/MySQL/"/>
+    <category term="MySQL" scheme="https://skyhive.github.io/tags/MySQL/"/>
     
   </entry>
   
   <entry>
     <title>雾都游记</title>
-    <link href="http://skyhive.github.io/2020/10/22/%E9%9B%BE%E9%83%BD%E6%B8%B8%E8%AE%B0/"/>
-    <id>http://skyhive.github.io/2020/10/22/%E9%9B%BE%E9%83%BD%E6%B8%B8%E8%AE%B0/</id>
+    <link href="https://skyhive.github.io/2020/10/undefined.html"/>
+    <id>https://skyhive.github.io/2020/10/undefined.html</id>
     <published>2020-10-22T07:07:20.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -142,17 +142,17 @@
     
     
     
-    <category term="生活" scheme="http://skyhive.github.io/categories/生活/"/>
+    <category term="生活" scheme="https://skyhive.github.io/categories/生活/"/>
     
     
-    <category term="旅游" scheme="http://skyhive.github.io/tags/旅游/"/>
+    <category term="旅游" scheme="https://skyhive.github.io/tags/旅游/"/>
     
   </entry>
   
   <entry>
     <title>KVM 填坑</title>
-    <link href="http://skyhive.github.io/2020/09/06/KVM-%E5%A1%AB%E5%9D%91/"/>
-    <id>http://skyhive.github.io/2020/09/06/KVM-%E5%A1%AB%E5%9D%91/</id>
+    <link href="https://skyhive.github.io/2020/9/undefined.html"/>
+    <id>https://skyhive.github.io/2020/9/undefined.html</id>
     <published>2020-09-06T09:35:31.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -166,19 +166,19 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="虚拟化" scheme="http://skyhive.github.io/tags/虚拟化/"/>
+    <category term="虚拟化" scheme="https://skyhive.github.io/tags/虚拟化/"/>
     
-    <category term="KVM" scheme="http://skyhive.github.io/tags/KVM/"/>
+    <category term="KVM" scheme="https://skyhive.github.io/tags/KVM/"/>
     
   </entry>
   
   <entry>
     <title>ESXi 快照机制</title>
-    <link href="http://skyhive.github.io/2020/06/17/ESXi-%E5%BF%AB%E7%85%A7%E6%9C%BA%E5%88%B6/"/>
-    <id>http://skyhive.github.io/2020/06/17/ESXi-%E5%BF%AB%E7%85%A7%E6%9C%BA%E5%88%B6/</id>
+    <link href="https://skyhive.github.io/2020/6/undefined.html"/>
+    <id>https://skyhive.github.io/2020/6/undefined.html</id>
     <published>2020-06-17T15:47:50.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -193,19 +193,19 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="虚拟化" scheme="http://skyhive.github.io/tags/虚拟化/"/>
+    <category term="虚拟化" scheme="https://skyhive.github.io/tags/虚拟化/"/>
     
-    <category term="ESXi" scheme="http://skyhive.github.io/tags/ESXi/"/>
+    <category term="ESXi" scheme="https://skyhive.github.io/tags/ESXi/"/>
     
   </entry>
   
   <entry>
     <title>基于 CentOS 安装 KVM</title>
-    <link href="http://skyhive.github.io/2020/06/10/%E5%9F%BA%E4%BA%8E-CentOS-%E5%AE%89%E8%A3%85-KVM/"/>
-    <id>http://skyhive.github.io/2020/06/10/%E5%9F%BA%E4%BA%8E-CentOS-%E5%AE%89%E8%A3%85-KVM/</id>
+    <link href="https://skyhive.github.io/2020/6/undefined.html"/>
+    <id>https://skyhive.github.io/2020/6/undefined.html</id>
     <published>2020-06-10T09:40:03.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -216,19 +216,19 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="虚拟化" scheme="http://skyhive.github.io/tags/虚拟化/"/>
+    <category term="虚拟化" scheme="https://skyhive.github.io/tags/虚拟化/"/>
     
-    <category term="KVM" scheme="http://skyhive.github.io/tags/KVM/"/>
+    <category term="KVM" scheme="https://skyhive.github.io/tags/KVM/"/>
     
   </entry>
   
   <entry>
     <title>Gitlab EE 版本破解</title>
-    <link href="http://skyhive.github.io/2020/05/24/Gitlab-EE-%E7%89%88%E6%9C%AC%E7%A0%B4%E8%A7%A3/"/>
-    <id>http://skyhive.github.io/2020/05/24/Gitlab-EE-%E7%89%88%E6%9C%AC%E7%A0%B4%E8%A7%A3/</id>
+    <link href="https://skyhive.github.io/2020/5/undefined.html"/>
+    <id>https://skyhive.github.io/2020/5/undefined.html</id>
     <published>2020-05-24T15:24:01.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -243,17 +243,17 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="GitLab" scheme="http://skyhive.github.io/tags/GitLab/"/>
+    <category term="GitLab" scheme="https://skyhive.github.io/tags/GitLab/"/>
     
   </entry>
   
   <entry>
     <title>DNS 缓存清理</title>
-    <link href="http://skyhive.github.io/2020/04/01/DNS%E7%BC%93%E5%AD%98%E6%B8%85%E7%90%86/"/>
-    <id>http://skyhive.github.io/2020/04/01/DNS%E7%BC%93%E5%AD%98%E6%B8%85%E7%90%86/</id>
+    <link href="https://skyhive.github.io/2020/4/undefined.html"/>
+    <id>https://skyhive.github.io/2020/4/undefined.html</id>
     <published>2020-04-01T04:34:22.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -264,17 +264,17 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="DNS" scheme="http://skyhive.github.io/tags/DNS/"/>
+    <category term="DNS" scheme="https://skyhive.github.io/tags/DNS/"/>
     
   </entry>
   
   <entry>
     <title>Ext4 文件系统缩容</title>
-    <link href="http://skyhive.github.io/2019/10/31/Ext4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BC%A9%E5%AE%B9/"/>
-    <id>http://skyhive.github.io/2019/10/31/Ext4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BC%A9%E5%AE%B9/</id>
+    <link href="https://skyhive.github.io/2019/10/undefined.html"/>
+    <id>https://skyhive.github.io/2019/10/undefined.html</id>
     <published>2019-10-31T04:32:00.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -289,17 +289,17 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="Filesystem" scheme="http://skyhive.github.io/tags/Filesystem/"/>
+    <category term="Filesystem" scheme="https://skyhive.github.io/tags/Filesystem/"/>
     
   </entry>
   
   <entry>
     <title>Gitlab单节点服务搭建</title>
-    <link href="http://skyhive.github.io/2019/07/25/Gitlab%E5%8D%95%E8%8A%82%E7%82%B9%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/"/>
-    <id>http://skyhive.github.io/2019/07/25/Gitlab%E5%8D%95%E8%8A%82%E7%82%B9%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA/</id>
+    <link href="https://skyhive.github.io/2019/7/undefined.html"/>
+    <id>https://skyhive.github.io/2019/7/undefined.html</id>
     <published>2019-07-25T04:25:01.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -324,17 +324,17 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="GitLab" scheme="http://skyhive.github.io/tags/GitLab/"/>
+    <category term="GitLab" scheme="https://skyhive.github.io/tags/GitLab/"/>
     
   </entry>
   
   <entry>
     <title>美版 V30 系统升级</title>
-    <link href="http://skyhive.github.io/2018/10/05/%E7%BE%8E%E7%89%88V30%E7%B3%BB%E7%BB%9F%E5%8D%87%E7%BA%A7/"/>
-    <id>http://skyhive.github.io/2018/10/05/%E7%BE%8E%E7%89%88V30%E7%B3%BB%E7%BB%9F%E5%8D%87%E7%BA%A7/</id>
+    <link href="https://skyhive.github.io/2018/10/undefined.html"/>
+    <id>https://skyhive.github.io/2018/10/undefined.html</id>
     <published>2018-10-05T04:52:41.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -348,19 +348,19 @@
     
     
     
-    <category term="生活" scheme="http://skyhive.github.io/categories/生活/"/>
+    <category term="生活" scheme="https://skyhive.github.io/categories/生活/"/>
     
     
-    <category term="Network" scheme="http://skyhive.github.io/tags/Network/"/>
+    <category term="Network" scheme="https://skyhive.github.io/tags/Network/"/>
     
-    <category term="Android" scheme="http://skyhive.github.io/tags/Android/"/>
+    <category term="Android" scheme="https://skyhive.github.io/tags/Android/"/>
     
   </entry>
   
   <entry>
     <title>修改sudoers文件导致sudo无法使用的解决办法</title>
-    <link href="http://skyhive.github.io/2018/08/08/%E4%BF%AE%E6%94%B9sudoers%E6%96%87%E4%BB%B6%E5%AF%BC%E8%87%B4sudo%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
-    <id>http://skyhive.github.io/2018/08/08/%E4%BF%AE%E6%94%B9sudoers%E6%96%87%E4%BB%B6%E5%AF%BC%E8%87%B4sudo%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</id>
+    <link href="https://skyhive.github.io/2018/8/undefined.html"/>
+    <id>https://skyhive.github.io/2018/8/undefined.html</id>
     <published>2018-08-08T14:09:41.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -375,17 +375,17 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="Linux" scheme="http://skyhive.github.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://skyhive.github.io/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>Dell 7559 升级</title>
-    <link href="http://skyhive.github.io/2018/06/05/SSD%E4%B8%8E%E5%86%85%E5%AD%98%E6%9D%A1%E7%9A%84%E6%95%85%E4%BA%8B/"/>
-    <id>http://skyhive.github.io/2018/06/05/SSD%E4%B8%8E%E5%86%85%E5%AD%98%E6%9D%A1%E7%9A%84%E6%95%85%E4%BA%8B/</id>
+    <link href="https://skyhive.github.io/2018/6/undefined.html"/>
+    <id>https://skyhive.github.io/2018/6/undefined.html</id>
     <published>2018-06-05T09:25:26.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -396,17 +396,17 @@
     
     
     
-    <category term="生活" scheme="http://skyhive.github.io/categories/生活/"/>
+    <category term="生活" scheme="https://skyhive.github.io/categories/生活/"/>
     
     
-    <category term="Laptop" scheme="http://skyhive.github.io/tags/Laptop/"/>
+    <category term="Laptop" scheme="https://skyhive.github.io/tags/Laptop/"/>
     
   </entry>
   
   <entry>
     <title>解决 Ubuntu 下搜狗拼音候选词乱码</title>
-    <link href="http://skyhive.github.io/2018/05/29/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8B%E6%90%9C%E7%8B%97%E6%8B%BC%E9%9F%B3%E5%80%99%E9%80%89%E8%AF%8D%E4%B9%B1%E7%A0%81/"/>
-    <id>http://skyhive.github.io/2018/05/29/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8B%E6%90%9C%E7%8B%97%E6%8B%BC%E9%9F%B3%E5%80%99%E9%80%89%E8%AF%8D%E4%B9%B1%E7%A0%81/</id>
+    <link href="https://skyhive.github.io/2018/5/undefined.html"/>
+    <id>https://skyhive.github.io/2018/5/undefined.html</id>
     <published>2018-05-29T05:15:26.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -421,19 +421,19 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="Linux" scheme="http://skyhive.github.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://skyhive.github.io/tags/Linux/"/>
     
-    <category term="Ubuntu" scheme="http://skyhive.github.io/tags/Ubuntu/"/>
+    <category term="Ubuntu" scheme="https://skyhive.github.io/tags/Ubuntu/"/>
     
   </entry>
   
   <entry>
     <title>关于 Ubuntu 循环登录界面</title>
-    <link href="http://skyhive.github.io/2018/04/20/%E5%85%B3%E4%BA%8EUbuntu%E5%BE%AA%E7%8E%AF%E7%99%BB%E5%BD%95%E7%95%8C%E9%9D%A2/"/>
-    <id>http://skyhive.github.io/2018/04/20/%E5%85%B3%E4%BA%8EUbuntu%E5%BE%AA%E7%8E%AF%E7%99%BB%E5%BD%95%E7%95%8C%E9%9D%A2/</id>
+    <link href="https://skyhive.github.io/2018/4/undefined.html"/>
+    <id>https://skyhive.github.io/2018/4/undefined.html</id>
     <published>2018-04-20T04:36:21.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -445,19 +445,19 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="Linux" scheme="http://skyhive.github.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://skyhive.github.io/tags/Linux/"/>
     
-    <category term="Ubuntu" scheme="http://skyhive.github.io/tags/Ubuntu/"/>
+    <category term="Ubuntu" scheme="https://skyhive.github.io/tags/Ubuntu/"/>
     
   </entry>
   
   <entry>
     <title>初探 Django 需要注意的事项</title>
-    <link href="http://skyhive.github.io/2018/03/25/%E5%88%9D%E6%8E%A2Django%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E9%A1%B9/"/>
-    <id>http://skyhive.github.io/2018/03/25/%E5%88%9D%E6%8E%A2Django%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%BA%8B%E9%A1%B9/</id>
+    <link href="https://skyhive.github.io/2018/3/undefined.html"/>
+    <id>https://skyhive.github.io/2018/3/undefined.html</id>
     <published>2018-03-25T12:55:33.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -469,17 +469,17 @@
     
     
     
-    <category term="Code" scheme="http://skyhive.github.io/categories/Code/"/>
+    <category term="Code" scheme="https://skyhive.github.io/categories/Code/"/>
     
     
-    <category term="Django" scheme="http://skyhive.github.io/tags/Django/"/>
+    <category term="Django" scheme="https://skyhive.github.io/tags/Django/"/>
     
   </entry>
   
   <entry>
     <title>配置 SSH 免密登录遇到的坑</title>
-    <link href="http://skyhive.github.io/2017/12/08/%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/"/>
-    <id>http://skyhive.github.io/2017/12/08/%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/</id>
+    <link href="https://skyhive.github.io/2017/12/undefined.html"/>
+    <id>https://skyhive.github.io/2017/12/undefined.html</id>
     <published>2017-12-08T03:12:43.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -494,17 +494,17 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="Linux" scheme="http://skyhive.github.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://skyhive.github.io/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>Hadoop 简介</title>
-    <link href="http://skyhive.github.io/2017/11/17/Hadoop%E7%AE%80%E4%BB%8B/"/>
-    <id>http://skyhive.github.io/2017/11/17/Hadoop%E7%AE%80%E4%BB%8B/</id>
+    <link href="https://skyhive.github.io/2017/11/undefined.html"/>
+    <id>https://skyhive.github.io/2017/11/undefined.html</id>
     <published>2017-11-17T12:56:31.000Z</published>
     <updated>2022-12-30T08:39:16.143Z</updated>
     
@@ -516,10 +516,10 @@
     
     
     
-    <category term="Infra" scheme="http://skyhive.github.io/categories/Infra/"/>
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="Hadoop" scheme="http://skyhive.github.io/tags/Hadoop/"/>
+    <category term="Hadoop" scheme="https://skyhive.github.io/tags/Hadoop/"/>
     
   </entry>
   
