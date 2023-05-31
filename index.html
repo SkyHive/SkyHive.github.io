@@ -402,7 +402,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-30 16:39:16" itemprop="dateModified" datetime="2022-12-30T16:39:16+08:00">2022-12-30</time>
+                <time title="修改时间：2023-05-31 18:54:48" itemprop="dateModified" datetime="2023-05-31T18:54:48+08:00">2023-05-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -446,7 +446,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>由于部分客户场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 <a href="http://archive.ubuntu.com/ubuntu" target="_blank" rel="noopener">http://archive.ubuntu.com/ubuntu</a> 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。<br>由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的 apt 仓库，我们将需要的依赖包都下载好，使用 apt-fptarchive 来发布我们的仓库。</p>
+          <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>由于部分限制级场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 <a href="http://archive.ubuntu.com/ubuntu" target="_blank" rel="noopener">http://archive.ubuntu.com/ubuntu</a> 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。<br>由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的 apt 仓库，我们将需要的依赖包都下载好，使用 apt-fptarchive 来发布我们的仓库。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/8/创建本地-APT-仓库.html#more" rel="contents">
