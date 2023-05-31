@@ -11,7 +11,6 @@ language: zh-CN
 timezone: Asia/Shanghai
 
 
-
 index_generator:
   path: ''
   per_page: 15
@@ -151,8 +150,3 @@ deploy:
   type: git
   repository: git@github.com:SkyHive/SkyHive.github.io.git
   branch: master
-
-index_generator:
-  path: ''
-  per_page: 15
-  order_by: -date
