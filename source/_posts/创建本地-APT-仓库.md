@@ -6,7 +6,7 @@ tags:
 - Ubuntu
 ---
 ### 背景
-由于部分客户场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http://archive.ubuntu.com/ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。
+由于部分限制级场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http://archive.ubuntu.com/ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。
 由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的 apt 仓库，我们将需要的依赖包都下载好，使用 apt-fptarchive 来发布我们的仓库。
 
 <!--more-->
@@ -28,7 +28,7 @@ mv /var/cache/apt/archives/*.deb /opt/repo/pool/main/
  
 ## 开始创建
 ### 生成公钥和私钥
-root@hyperx:~# gpg --full-generate-key
+root@maas:~# gpg --full-generate-key
 gpg (GnuPG) 2.2.19; Copyright (C) 2019 Free Software Foundation, Inc.
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
@@ -55,11 +55,11 @@ Is this correct? (y/N) y
  
 GnuPG needs to construct a user ID to identify your key.
  
-Real name: hyperx 
-Email address: hyper@hyperx.com
+Real name: maas 
+Email address: maas@maas.com
 Comment:
 You selected this USER-ID:
-    "hyper@hyperx.com"
+    "maas@maas.com"
  
 Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o
 We need to generate a lot of random bytes. It is a good idea to perform
@@ -73,16 +73,16 @@ generator a better chance to gain enough entropy.
 ### 最后填上 Real name 和 Email address
 ### 完成后会要求设置私钥密码，后续导出私钥或者用私钥进行签名都会用到该密码！
 ### 可以使用 gpg -k 来查看当前的 gpg key 信息
-root@hyperx:~# gpg -k
+root@maas:~# gpg -k
 /root/.gnupg/pubring.kbx
 ------------------------
 pub   rsa1024 2021-08-19 [SC]
       D923B3893E0AB27C3690696CFC3E8D5996EBB76F
-uid           [ultimate] hyperx <hyperx@hyperx.com>
+uid           [ultimate] maas <maas@maas.com>
  
 cd /opt/repo/
-gpg -a --export hyperx@hyperx.com > hyperx.pub  ## 导出公钥，后续需要将内容复制到 MAAS 上
-gpg -a --export-secret-keys hyperx@hyperx.com > hyperx.sec    ## 导出私钥
+gpg -a --export maas@maas.com > maas.pub  ## 导出公钥，后续需要将内容复制到 MAAS 上
+gpg -a --export-secret-keys maas@maas.com > maas.sec    ## 导出私钥
  
 mkdir -p dists/focal/main/binary-amd64
 apt-ftparchive  packages /opt/repo/pool/main/ > dists/focal/Packages
@@ -114,4 +114,4 @@ mv /opt/repo ./
 如果客户环境连不到外网，那么我们在部署之前需要修改一下 maas 的配置
 1. 登录至 maas web 控制界面
 2. 定位置至 Settings → Package repos
-3. 修改 Ubuntu archive URL 为 http://maas_ip/repo/；并将之前导出的 hyperx.pub 内容粘贴至  Ubuntu archive  Key 中，保存
+3. 修改 Ubuntu archive URL 为 http://maas_ip/repo/；并将之前导出的 maas.pub 内容粘贴至  Ubuntu archive  Key 中，保存

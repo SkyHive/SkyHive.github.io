@@ -89,4 +89,4 @@ exit
 umount -R /mnt
 reboot
 ```
-剩下来的安装图形化界面和美化的步骤可以自行google。
+剩下来的安装图形化界面和美化的步骤可以自行 Google。
