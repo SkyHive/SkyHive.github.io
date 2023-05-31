@@ -10,11 +10,19 @@ author: SkyHive
 language: zh-CN
 timezone: Asia/Shanghai
 
+
+
+index_generator:
+  path: ''
+  per_page: 15
+  order_by: -date
+  pagination_dir: page
+
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://skyhive.github.io
 root: /
-permalink: :year/:i_month/:hash.html
+permalink: :year/:i_month/:title.html
 permalink_defaults:
 
 # Directory
