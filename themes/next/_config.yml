@@ -411,7 +411,7 @@ font:
   enable: true
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  host: https://fonts.proxy.ustclug.org
+  host: https://fonts.loli.net
 
   # Font options:
   # `external: true` will load this font family from `host` above.
@@ -421,13 +421,13 @@ font:
   # Global font settings used for all elements inside <body>.
   global:
     external: true
-    family: Monda
-    size: 14
+    family: "EB Garamond, 'Noto Serif SC'"
+    size: 1
 
   # Font settings for site title (.site-title).
   title:
     external: true
-    family: Roboto Slab
+    family: Cinzel Decorative
     size:
 
   # Font settings for headlines (<h1> to <h6>).
@@ -444,7 +444,7 @@ font:
   # Font settings for <code> and code blocks.
   codes:
     external: true
-    family: 
+    family: JetBrains Mono
 
 
 # ---------------------------------------------------------------
