@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 7.0.0-rc1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.proxy.ustclug.org/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=EB Garamond, 'Noto Serif SC':300,300italic,400,400italic,700,700italic|Cinzel Decorative:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|JetBrains Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
@@ -21,22 +21,24 @@
   </script>
 
   <meta name="description" content="前几日在家中遇到一件有趣的事情，与大家分享一下。 起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到">
-<meta name="keywords" content="虚拟化,ESXi,Network">
 <meta property="og:type" content="article">
 <meta property="og:title" content="什么情况？访问不了虚拟机了？？">
-<meta property="og:url" content="https://skyhive.github.io/2021/10/访问不了虚拟机了.html">
+<meta property="og:url" content="https://skyhive.github.io/2021/10/%E8%AE%BF%E9%97%AE%E4%B8%8D%E4%BA%86%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BA%86.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
 <meta property="og:description" content="前几日在家中遇到一件有趣的事情，与大家分享一下。 起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blogpic.skyhive.tech/%E5%8F%98%E6%9B%B4%E5%8F%B2.png">
 <meta property="og:image" content="https://blogpic.skyhive.tech/esxi.png">
-<meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
+<meta property="article:published_time" content="2021-10-27T03:59:21.000Z">
+<meta property="article:modified_time" content="2022-12-30T08:39:16.143Z">
+<meta property="article:author" content="SkyHive">
+<meta property="article:tag" content="虚拟化">
+<meta property="article:tag" content="ESXi">
+<meta property="article:tag" content="Network">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="什么情况？访问不了虚拟机了？？">
-<meta name="twitter:description" content="前几日在家中遇到一件有趣的事情，与大家分享一下。 起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到">
 <meta name="twitter:image" content="https://blogpic.skyhive.tech/%E5%8F%98%E6%9B%B4%E5%8F%B2.png">
 
-<link rel="canonical" href="https://skyhive.github.io/2021/10/访问不了虚拟机了.html">
+<link rel="canonical" href="https://skyhive.github.io/2021/10/%E8%AE%BF%E9%97%AE%E4%B8%8D%E4%BA%86%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BA%86.html">
 
 
 <script id="page-configurations">
@@ -171,7 +173,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2021/10/访问不了虚拟机了.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2021/10/%E8%AE%BF%E9%97%AE%E4%B8%8D%E4%BA%86%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BA%86.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -214,7 +216,7 @@
             </span>
 
           
-            <span id="/2021/10/访问不了虚拟机了.html" class="post-meta-item leancloud_visitors" data-flag-title="什么情况？访问不了虚拟机了？？" title="阅读次数">
+            <span id="/2021/10/%E8%AE%BF%E9%97%AE%E4%B8%8D%E4%BA%86%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BA%86.html" class="post-meta-item leancloud_visitors" data-flag-title="什么情况？访问不了虚拟机了？？" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -236,8 +238,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/10/访问不了虚拟机了.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/访问不了虚拟机了.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/10/%E8%AE%BF%E9%97%AE%E4%B8%8D%E4%BA%86%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BA%86.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/%E8%AE%BF%E9%97%AE%E4%B8%8D%E4%BA%86%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BA%86.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -299,7 +301,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/虚拟化/" rel="tag"># 虚拟化</a>
+              <a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" rel="tag"># 虚拟化</a>
               <a href="/tags/ESXi/" rel="tag"># ESXi</a>
               <a href="/tags/Network/" rel="tag"># Network</a>
           </div>
@@ -310,11 +312,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/8/创建本地-APT-仓库.html" rel="prev" title="创建本地 APT 仓库">
+    <a href="/2021/8/%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0-APT-%E4%BB%93%E5%BA%93.html" rel="prev" title="创建本地 APT 仓库">
       <i class="fa fa-chevron-left"></i> 创建本地 APT 仓库
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/11/黑群晖解除内存限制.html" rel="next" title="黑群晖填坑">
+    <a href="/2021/11/%E9%BB%91%E7%BE%A4%E6%99%96%E8%A7%A3%E9%99%A4%E5%86%85%E5%AD%98%E9%99%90%E5%88%B6.html" rel="next" title="黑群晖填坑">
       黑群晖填坑 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -411,7 +413,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/skyhive" title="GitHub → https://github.com/skyhive" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/skyhive" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;skyhive" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
         <a href="mailto:skyhive35@gmail.com" title="E-Mail → mailto:skyhive35@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
@@ -445,7 +447,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">SkyHive</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -571,9 +573,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

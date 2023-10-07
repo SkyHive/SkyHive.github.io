@@ -36,7 +36,7 @@
     
     <category term="NAS" scheme="https://skyhive.github.io/tags/NAS/"/>
     
-    <category term="黑群晖" scheme="https://skyhive.github.io/tags/黑群晖/"/>
+    <category term="黑群晖" scheme="https://skyhive.github.io/tags/%E9%BB%91%E7%BE%A4%E6%99%96/"/>
     
   </entry>
   
@@ -58,7 +58,7 @@
     <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="虚拟化" scheme="https://skyhive.github.io/tags/虚拟化/"/>
+    <category term="虚拟化" scheme="https://skyhive.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
     
     <category term="ESXi" scheme="https://skyhive.github.io/tags/ESXi/"/>
     
@@ -142,10 +142,10 @@
     
     
     
-    <category term="生活" scheme="https://skyhive.github.io/categories/生活/"/>
+    <category term="生活" scheme="https://skyhive.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-    <category term="旅游" scheme="https://skyhive.github.io/tags/旅游/"/>
+    <category term="旅游" scheme="https://skyhive.github.io/tags/%E6%97%85%E6%B8%B8/"/>
     
   </entry>
   
@@ -169,7 +169,7 @@
     <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="虚拟化" scheme="https://skyhive.github.io/tags/虚拟化/"/>
+    <category term="虚拟化" scheme="https://skyhive.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
     
     <category term="KVM" scheme="https://skyhive.github.io/tags/KVM/"/>
     
@@ -196,7 +196,7 @@
     <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="虚拟化" scheme="https://skyhive.github.io/tags/虚拟化/"/>
+    <category term="虚拟化" scheme="https://skyhive.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
     
     <category term="ESXi" scheme="https://skyhive.github.io/tags/ESXi/"/>
     
@@ -219,7 +219,7 @@
     <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
     
     
-    <category term="虚拟化" scheme="https://skyhive.github.io/tags/虚拟化/"/>
+    <category term="虚拟化" scheme="https://skyhive.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
     
     <category term="KVM" scheme="https://skyhive.github.io/tags/KVM/"/>
     
@@ -348,7 +348,7 @@
     
     
     
-    <category term="生活" scheme="https://skyhive.github.io/categories/生活/"/>
+    <category term="生活" scheme="https://skyhive.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
     <category term="Network" scheme="https://skyhive.github.io/tags/Network/"/>
@@ -396,7 +396,7 @@
     
     
     
-    <category term="生活" scheme="https://skyhive.github.io/categories/生活/"/>
+    <category term="生活" scheme="https://skyhive.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
     <category term="Laptop" scheme="https://skyhive.github.io/tags/Laptop/"/>

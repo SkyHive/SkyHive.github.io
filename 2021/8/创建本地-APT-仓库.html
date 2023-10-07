@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 7.0.0-rc1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.proxy.ustclug.org/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=EB Garamond, 'Noto Serif SC':300,300italic,400,400italic,700,700italic|Cinzel Decorative:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|JetBrains Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="背景由于部分限制级场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http://archive.ubuntu.com/ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的">
-<meta name="keywords" content="Ubuntu">
+  <meta name="description" content="背景由于部分限制级场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http:&#x2F;&#x2F;archive.ubuntu.com&#x2F;ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="创建本地 APT 仓库">
-<meta property="og:url" content="https://skyhive.github.io/2021/8/创建本地-APT-仓库.html">
+<meta property="og:url" content="https://skyhive.github.io/2021/8/%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0-APT-%E4%BB%93%E5%BA%93.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="背景由于部分限制级场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http://archive.ubuntu.com/ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2023-05-31T10:54:48.384Z">
+<meta property="og:description" content="背景由于部分限制级场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http:&#x2F;&#x2F;archive.ubuntu.com&#x2F;ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-23T09:21:11.000Z">
+<meta property="article:modified_time" content="2023-05-31T10:54:48.384Z">
+<meta property="article:author" content="SkyHive">
+<meta property="article:tag" content="Ubuntu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="创建本地 APT 仓库">
-<meta name="twitter:description" content="背景由于部分限制级场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http://archive.ubuntu.com/ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的">
 
-<link rel="canonical" href="https://skyhive.github.io/2021/8/创建本地-APT-仓库.html">
+<link rel="canonical" href="https://skyhive.github.io/2021/8/%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0-APT-%E4%BB%93%E5%BA%93.html">
 
 
 <script id="page-configurations">
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2021/8/创建本地-APT-仓库.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2021/8/%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0-APT-%E4%BB%93%E5%BA%93.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -211,7 +211,7 @@
             </span>
 
           
-            <span id="/2021/8/创建本地-APT-仓库.html" class="post-meta-item leancloud_visitors" data-flag-title="创建本地 APT 仓库" title="阅读次数">
+            <span id="/2021/8/%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0-APT-%E4%BB%93%E5%BA%93.html" class="post-meta-item leancloud_visitors" data-flag-title="创建本地 APT 仓库" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -233,8 +233,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/8/创建本地-APT-仓库.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/8/创建本地-APT-仓库.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/8/%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0-APT-%E4%BB%93%E5%BA%93.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/8/%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0-APT-%E4%BB%93%E5%BA%93.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -298,11 +298,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/8/Galera-集群搭建.html" rel="prev" title="Galera 集群搭建">
+    <a href="/2021/8/Galera-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA.html" rel="prev" title="Galera 集群搭建">
       <i class="fa fa-chevron-left"></i> Galera 集群搭建
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/10/访问不了虚拟机了.html" rel="next" title="什么情况？访问不了虚拟机了？？">
+    <a href="/2021/10/%E8%AE%BF%E9%97%AE%E4%B8%8D%E4%BA%86%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BA%86.html" rel="next" title="什么情况？访问不了虚拟机了？？">
       什么情况？访问不了虚拟机了？？ <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -364,7 +364,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#仓库制作"><span class="nav-number">2.</span> <span class="nav-text">仓库制作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改-MAAS-Package-repos-配置"><span class="nav-number">3.</span> <span class="nav-text">修改 MAAS Package repos 配置</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%93%E5%BA%93%E5%88%B6%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">仓库制作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-MAAS-Package-repos-%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">修改 MAAS Package repos 配置</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -400,7 +400,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/skyhive" title="GitHub → https://github.com/skyhive" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/skyhive" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;skyhive" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
         <a href="mailto:skyhive35@gmail.com" title="E-Mail → mailto:skyhive35@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
@@ -434,7 +434,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">SkyHive</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -560,9 +560,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

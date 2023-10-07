@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 7.0.0-rc1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.proxy.ustclug.org/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=EB Garamond, 'Noto Serif SC':300,300italic,400,400italic,700,700italic|Cinzel Decorative:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|JetBrains Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
@@ -21,19 +21,20 @@
   </script>
 
   <meta name="description" content="这两天在帮别人写一个注册登录功能的页面，用到了简单的 TP 框架，但是在我自己的 Ubuntu 环境下发现验证码出了问题——验证码图片显示不出来。 我将图片单独拉出来，发现错误提示如下： 1Call to undefined function imagecreate()  百度一问就找到了答案，原来这是由于没有安装或者开启 PHP 的 GD 库导致的，既然这样我只需要安装一下 GD 库就解决了：">
-<meta name="keywords" content="Ubuntu,PHP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决 Ubuntu 下 PHP 验证码不显示问题">
-<meta property="og:url" content="https://skyhive.github.io/2017/7/解决Ubuntu下PHP验证码不显示问题.html">
+<meta property="og:url" content="https://skyhive.github.io/2017/7/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8BPHP%E9%AA%8C%E8%AF%81%E7%A0%81%E4%B8%8D%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
 <meta property="og:description" content="这两天在帮别人写一个注册登录功能的页面，用到了简单的 TP 框架，但是在我自己的 Ubuntu 环境下发现验证码出了问题——验证码图片显示不出来。 我将图片单独拉出来，发现错误提示如下： 1Call to undefined function imagecreate()  百度一问就找到了答案，原来这是由于没有安装或者开启 PHP 的 GD 库导致的，既然这样我只需要安装一下 GD 库就解决了：">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-07-14T08:41:26.000Z">
+<meta property="article:modified_time" content="2022-12-30T08:39:16.143Z">
+<meta property="article:author" content="SkyHive">
+<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="PHP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="解决 Ubuntu 下 PHP 验证码不显示问题">
-<meta name="twitter:description" content="这两天在帮别人写一个注册登录功能的页面，用到了简单的 TP 框架，但是在我自己的 Ubuntu 环境下发现验证码出了问题——验证码图片显示不出来。 我将图片单独拉出来，发现错误提示如下： 1Call to undefined function imagecreate()  百度一问就找到了答案，原来这是由于没有安装或者开启 PHP 的 GD 库导致的，既然这样我只需要安装一下 GD 库就解决了：">
 
-<link rel="canonical" href="https://skyhive.github.io/2017/7/解决Ubuntu下PHP验证码不显示问题.html">
+<link rel="canonical" href="https://skyhive.github.io/2017/7/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8BPHP%E9%AA%8C%E8%AF%81%E7%A0%81%E4%B8%8D%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98.html">
 
 
 <script id="page-configurations">
@@ -168,7 +169,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2017/7/解决Ubuntu下PHP验证码不显示问题.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2017/7/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8BPHP%E9%AA%8C%E8%AF%81%E7%A0%81%E4%B8%8D%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -211,7 +212,7 @@
             </span>
 
           
-            <span id="/2017/7/解决Ubuntu下PHP验证码不显示问题.html" class="post-meta-item leancloud_visitors" data-flag-title="解决 Ubuntu 下 PHP 验证码不显示问题" title="阅读次数">
+            <span id="/2017/7/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8BPHP%E9%AA%8C%E8%AF%81%E7%A0%81%E4%B8%8D%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98.html" class="post-meta-item leancloud_visitors" data-flag-title="解决 Ubuntu 下 PHP 验证码不显示问题" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -233,8 +234,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2017/7/解决Ubuntu下PHP验证码不显示问题.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/7/解决Ubuntu下PHP验证码不显示问题.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2017/7/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8BPHP%E9%AA%8C%E8%AF%81%E7%A0%81%E4%B8%8D%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/7/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8BPHP%E9%AA%8C%E8%AF%81%E7%A0%81%E4%B8%8D%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -300,11 +301,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2017/7/解决Ubuntu下Apache不解析PHP问题.html" rel="prev" title="解决 Ubuntu 下 Apache 不解析 PHP 问题">
+    <a href="/2017/7/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8BApache%E4%B8%8D%E8%A7%A3%E6%9E%90PHP%E9%97%AE%E9%A2%98.html" rel="prev" title="解决 Ubuntu 下 Apache 不解析 PHP 问题">
       <i class="fa fa-chevron-left"></i> 解决 Ubuntu 下 Apache 不解析 PHP 问题
     </a></div>
       <div class="post-nav-item">
-    <a href="/2017/8/搭建属于自己的Shadowsocks服务.html" rel="next" title="搭建属于自己的 Shadowsocks 服务">
+    <a href="/2017/8/%E6%90%AD%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84Shadowsocks%E6%9C%8D%E5%8A%A1.html" rel="next" title="搭建属于自己的 Shadowsocks 服务">
       搭建属于自己的 Shadowsocks 服务 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -401,7 +402,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/skyhive" title="GitHub → https://github.com/skyhive" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/skyhive" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;skyhive" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
         <a href="mailto:skyhive35@gmail.com" title="E-Mail → mailto:skyhive35@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
@@ -435,7 +436,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">SkyHive</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -561,9 +562,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
+<meta name="generator" content="Hexo 7.0.0-rc1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="https://fonts.proxy.ustclug.org/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=EB Garamond, 'Noto Serif SC':300,300italic,400,400italic,700,700italic|Cinzel Decorative:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|JetBrains Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
@@ -21,19 +21,19 @@
   </script>
 
   <meta name="description" content="最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。">
-<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于 timestamp 自动更新">
-<meta property="og:url" content="https://skyhive.github.io/2017/2/关于timestamp自动更新.html">
+<meta property="og:url" content="https://skyhive.github.io/2017/2/%E5%85%B3%E4%BA%8Etimestamp%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
 <meta property="og:description" content="最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-12-30T08:39:16.143Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-02-09T03:10:32.000Z">
+<meta property="article:modified_time" content="2022-12-30T08:39:16.143Z">
+<meta property="article:author" content="SkyHive">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于 timestamp 自动更新">
-<meta name="twitter:description" content="最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。">
 
-<link rel="canonical" href="https://skyhive.github.io/2017/2/关于timestamp自动更新.html">
+<link rel="canonical" href="https://skyhive.github.io/2017/2/%E5%85%B3%E4%BA%8Etimestamp%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0.html">
 
 
 <script id="page-configurations">
@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2017/2/关于timestamp自动更新.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2017/2/%E5%85%B3%E4%BA%8Etimestamp%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -211,7 +211,7 @@
             </span>
 
           
-            <span id="/2017/2/关于timestamp自动更新.html" class="post-meta-item leancloud_visitors" data-flag-title="关于 timestamp 自动更新" title="阅读次数">
+            <span id="/2017/2/%E5%85%B3%E4%BA%8Etimestamp%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0.html" class="post-meta-item leancloud_visitors" data-flag-title="关于 timestamp 自动更新" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -233,8 +233,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2017/2/关于timestamp自动更新.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/2/关于timestamp自动更新.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2017/2/%E5%85%B3%E4%BA%8Etimestamp%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/2/%E5%85%B3%E4%BA%8Etimestamp%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -306,7 +306,7 @@
     <div class="post-nav">
       <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2017/2/sqli-labs的安装.html" rel="next" title="SQLi-Labs的安装">
+    <a href="/2017/2/sqli-labs%E7%9A%84%E5%AE%89%E8%A3%85.html" rel="next" title="SQLi-Labs的安装">
       SQLi-Labs的安装 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -403,7 +403,7 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/skyhive" title="GitHub → https://github.com/skyhive" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/skyhive" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;skyhive" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
         <a href="mailto:skyhive35@gmail.com" title="E-Mail → mailto:skyhive35@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
@@ -437,7 +437,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">SkyHive</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -563,9 +563,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/muse.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
