@@ -4,21 +4,21 @@ date: 2017-02-14 17:54:35
 categories: Blog
 tags: 
 ---
- 这几天觉得wordpress作为博客实在是太臃肿了，而且访问的后台以及更新都极其的慢，以至于想把博客迁到Hexo上去。
+这几天觉得wordpress作为博客实在是太臃肿了，而且访问的后台以及更新都极其的慢，以至于想把博客迁到Hexo上去。
 Hexo 是个简洁快速且高效的博客框架，是个台湾的学生写的，所以对中文还是挺友好的，我们用起来也很方便，而且Hexo仅依赖node，易于安装。
 首先准备的工具仅需要node.js,git即可，在ubuntu上安装这两样工具也是极其简单：
 <!--more-->
 ```
 sudo apt-get install nodejs
 sudo apt-get install npm	
-sudo apt-get install nodejs-legacy 			#由于ubuntu仓库中本来就有一个node，所以在ubuntu下nodejs命令不是node而是nodejs，但是安装nodejs-legacy后就可以解决这个问题了，具体为什么我也不知道
+sudo apt-get install nodejs-legacy 			#由于 ubuntu 仓库中本来就有一个 node，所以在 ubuntu 下 nodejs 命令不是 node 而是 nodejs，但是安装 nodejs-legacy 后就可以解决这个问题了，具体为什么我也不知道
 sudo apt-get install git
 ```
 下面开始安装Hexo:
 ```
 sudo npm install -g hexo-cli
 ```
-安装完成后就可以部署博客了，根据Hexo官网上的步骤：
+安装完成后就可以部署博客了，根据 Hexo 官网上的步骤：
 ```
 hexo init <floder>
 cd <floder>
@@ -26,9 +26,9 @@ sudo nmp install		#安装依赖包
 ```
 下面可以安装一些插件，大家可以根据不同的需要安装，网上都有教程，我就不赘述了，但是有一个插件是需要安装的：
 ```
-npm install hexo-deployer-git --save 			#这是一个可以自动部署到github上的插件
+npm install hexo-deployer-git --save 			#这是一个可以自动部署到 github 上的插件
 ```
-接下来的配置可以参考官网上给出的配置详解，自己根据需要去手动配置，至于主题可以在Hexo提供的[网站](https://hexo.io/themes/)选择，然后从github上clone到themes下。配置完成后可以执行一下命令：
+接下来的配置可以参考官网上给出的配置详解，自己根据需要去手动配置，至于主题可以在 Hexo 提供的[网站](https://hexo.io/themes/)选择，然后从 github 上 clone 到 themes 下。配置完成后可以执行一下命令：
 ```
 hexo clean
 hexo generate 			#这个命令用于部署网页的静态文件，每次修改后都应该首先执行这条命令
