@@ -266,7 +266,7 @@ reward_settings:
   comment: 文章看都看了，施舍一下不过分吧~
 
 reward:
-  wechatpay: /images/weichatpay.jpg
+  wechatpay: /images/wechatpay.jpg
   alipay: /images/alipay.jpg
   #paypal: /images/paypal.png
   #bitcoin: /images/bitcoin.png
