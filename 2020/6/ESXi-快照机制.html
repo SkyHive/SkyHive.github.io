@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 7.0.0-rc1">
+<meta name="generator" content="Hexo 7.0.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="Understanding VM Sanpshots in ESXiVMware vSphere 6.7 虚拟机快照原理及 Veeam Backup 备份vSAN 中的闪存缓存设备设计注意事项  初时虚拟磁盘文件ESXi 虚拟机的存储文件主要为 .vmx、.vmsd、.vmdk 等文件，其中对于 .vmdk 文件：  xx.vmdk：该文件保存的是磁盘的元数据，包括 xx-flat.vmdk 和">
@@ -239,7 +239,21 @@
     </a>
   </span>
   
-  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>465</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
 
         </div>
       </header>
@@ -251,7 +265,7 @@
 
       
         <blockquote>
-<p><a href="https://kb.vmware.com/s/article/1015180" target="_blank" rel="noopener">Understanding VM Sanpshots in ESXi</a><br><br><a href="https://kknews.cc/code/y5pnlkj.html" target="_blank" rel="noopener">VMware vSphere 6.7 虚拟机快照原理及 Veeam Backup 备份</a><br><br><a href="https://docs.vmware.com/cn/VMware-vSphere/6.5/com.vmware.vsphere.virtualsan.doc/GUID-1D6AD25A-459A-43D6-8FF5-52475499D6A2.html" target="_blank" rel="noopener">vSAN 中的闪存缓存设备设计注意事项</a></p>
+<p><a href="https://kb.vmware.com/s/article/1015180">Understanding VM Sanpshots in ESXi</a></br><br><a href="https://kknews.cc/code/y5pnlkj.html">VMware vSphere 6.7 虚拟机快照原理及 Veeam Backup 备份</a></br><br><a href="https://docs.vmware.com/cn/VMware-vSphere/6.5/com.vmware.vsphere.virtualsan.doc/GUID-1D6AD25A-459A-43D6-8FF5-52475499D6A2.html">vSAN 中的闪存缓存设备设计注意事项</a></p>
 </blockquote>
 <h3 id="初时虚拟磁盘文件"><a href="#初时虚拟磁盘文件" class="headerlink" title="初时虚拟磁盘文件"></a>初时虚拟磁盘文件</h3><p>ESXi 虚拟机的存储文件主要为 .vmx、.vmsd、.vmdk 等文件，其中对于 .vmdk 文件：</p>
 <ul>
@@ -450,6 +464,16 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">SkyHive</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">26k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:34</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>

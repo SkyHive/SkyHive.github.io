@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 7.0.0-rc1">
+<meta name="generator" content="Hexo 7.0.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,15 +17,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行 1ssh-keygen -t rsa  然后一直回车，最后会在你主目录下生成一个.ssh目录，其中的id_rsa是你的密钥，id_rsa.pub是你要上传的公钥，kn">
+  <meta name="description" content="最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行 1ssh-keygen -t rsa 然后一直回车，最后会在你主目录下生成一个.ssh目录，其中的id_rsa是你的密钥，id_rsa.pub是你要上传的公钥，kno">
 <meta property="og:type" content="article">
 <meta property="og:title" content="配置 SSH 免密登录遇到的坑">
 <meta property="og:url" content="https://skyhive.github.io/2017/12/%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行 1ssh-keygen -t rsa  然后一直回车，最后会在你主目录下生成一个.ssh目录，其中的id_rsa是你的密钥，id_rsa.pub是你要上传的公钥，kn">
+<meta property="og:description" content="最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行 1ssh-keygen -t rsa 然后一直回车，最后会在你主目录下生成一个.ssh目录，其中的id_rsa是你的密钥，id_rsa.pub是你要上传的公钥，kno">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-12-08T03:12:43.000Z">
 <meta property="article:modified_time" content="2022-12-30T08:39:16.143Z">
@@ -238,7 +238,21 @@
     </a>
   </span>
   
-  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>365</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
 
         </div>
       </header>
@@ -251,7 +265,6 @@
       
         <p>最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。<br>由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ssh-keygen -t rsa</span></span><br></pre></td></tr></table></figure>
-
 <p>然后一直回车，最后会在你主目录下生成一个<code>.ssh</code>目录，其中的<code>id_rsa</code>是你的密钥，<code>id_rsa.pub</code>是你要上传的公钥，<code>known_hosts</code>是你连接过的主机的信息</p>
 <p>我们需要在<code>.ssh</code>目录下建立一个<code>authorized_keys</code>文件，将各个主机的公钥信息存储在该文件下，然后各个主机就可以通过ssh免密登录了，至于具体的原理，大家可以网上自行科普一下，无非是一些加密解密的过程。</p>
 <p>然而就在我以为万无一失的时候，造化弄人，我不管怎么搞都需要输密码，试过改ssh的配置文件也无法解决，最后google到一个解决方法，说是目录的和文件的权限问题，<code>.ssh</code>目录的权限必须得是<strong>700</strong>，而文件<code>authorized_keys</code>的权限必须是<strong>644</strong>，而我当时是664,这才导致无法进行免密登录，这里大家需要注意一下权限的问题，即使权限放大了也是不行的！</p>
@@ -427,6 +440,16 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">SkyHive</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">26k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:34</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>

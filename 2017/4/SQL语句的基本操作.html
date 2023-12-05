@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 7.0.0-rc1">
+<meta name="generator" content="Hexo 7.0.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,15 +17,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="数据库操作 创建数据库： CREATE DATABASE &lt;数据库名&gt; [其他选项] 使用数据库： USE &lt;数据库名&gt; 修改数据库： ALTER DATABASE &lt;数据库名&gt; 删除数据库： DROP DATABASE &lt;数据库名&gt;  数据表操作 创建表： 12345678910111213CREATE TABLE &lt;表名&gt;（">
+  <meta name="description" content="数据库操作 创建数据库： CREATE DATABASE &lt;数据库名&gt; [其他选项] 使用数据库： USE &lt;数据库名&gt; 修改数据库： ALTER DATABASE &lt;数据库名&gt; 删除数据库： DROP DATABASE &lt;数据库名&gt;  数据表操作 创建表：12345678910111213CREATE TABLE &lt;表名&gt;（     &amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL 语句的基本操作">
 <meta property="og:url" content="https://skyhive.github.io/2017/4/SQL%E8%AF%AD%E5%8F%A5%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="数据库操作 创建数据库： CREATE DATABASE &lt;数据库名&gt; [其他选项] 使用数据库： USE &lt;数据库名&gt; 修改数据库： ALTER DATABASE &lt;数据库名&gt; 删除数据库： DROP DATABASE &lt;数据库名&gt;  数据表操作 创建表： 12345678910111213CREATE TABLE &lt;表名&gt;（">
+<meta property="og:description" content="数据库操作 创建数据库： CREATE DATABASE &lt;数据库名&gt; [其他选项] 使用数据库： USE &lt;数据库名&gt; 修改数据库： ALTER DATABASE &lt;数据库名&gt; 删除数据库： DROP DATABASE &lt;数据库名&gt;  数据表操作 创建表：12345678910111213CREATE TABLE &lt;表名&gt;（     &amp;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-04-04T04:44:13.000Z">
 <meta property="article:modified_time" content="2022-12-30T08:39:16.143Z">
@@ -238,7 +238,21 @@
     </a>
   </span>
   
-  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>350</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
 
         </div>
       </header>
@@ -256,14 +270,9 @@
 <li>删除数据库： <code>DROP DATABASE &lt;数据库名&gt;</code></li>
 </ol>
 <h3 id="数据表操作"><a href="#数据表操作" class="headerlink" title="数据表操作"></a>数据表操作</h3><ol>
-<li><p>创建表：</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE &lt;表名&gt;</span><br><span class="line">（</span><br><span class="line">     &lt;列名<span class="number">1</span>&gt;&lt;数据类型&gt;<span class="meta">[&lt;列级完整性约束&gt;]</span>,</span><br><span class="line">    <span class="meta">[&lt;列名n&gt;&lt;数据类型&gt;[&lt;列级完整性约束&gt;]</span>]</span><br><span class="line"> ）;</span><br><span class="line">例：</span><br><span class="line">    create table studets</span><br><span class="line">    (</span><br><span class="line">        id int not <span class="keyword">null</span> auto_increment primary key,</span><br><span class="line">        name varchar(<span class="number">8</span>) not <span class="keyword">null</span>,</span><br><span class="line">        sex varchar(<span class="number">5</span>) not <span class="keyword">null</span>,</span><br><span class="line">        score int(<span class="number">5</span>) not <span class="keyword">null</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改基本表</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">add</span> &lt;列名&gt; &lt;列数据类型&gt; [<span class="keyword">after</span> 插入位置];         <span class="comment">--增加列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">change</span> &lt;列名&gt; &lt;列新名&gt; &lt;新数据类型&gt;;              <span class="comment">--修改列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">drop</span> &lt;列名&gt;;                         <span class="comment">--删除列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">rename</span> &lt;新表名&gt;;                     <span class="comment">--重命名表</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> &lt;表名&gt;                                       <span class="comment">--删除表</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>表的基本操作</p>
-</li>
+<li>创建表：<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> &lt;表名&gt;</span><br><span class="line">（</span><br><span class="line">     &lt;列名<span class="number">1</span>&gt;&lt;数据类型&gt;[&lt;列级完整性约束&gt;],</span><br><span class="line">    [&lt;列名n&gt;&lt;数据类型&gt;[&lt;列级完整性约束&gt;]]</span><br><span class="line"> ）;</span><br><span class="line">例：</span><br><span class="line">    <span class="keyword">create</span> <span class="keyword">table</span> studets</span><br><span class="line">    (</span><br><span class="line">        id <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span> auto_increment <span class="keyword">primary key</span>,</span><br><span class="line">        <span class="type">name</span> <span class="type">varchar</span>(<span class="number">8</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">        sex <span class="type">varchar</span>(<span class="number">5</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">        score <span class="type">int</span>(<span class="number">5</span>) <span class="keyword">not</span> <span class="keyword">null</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure></li>
+<li>修改基本表<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">add</span> &lt;列名&gt; &lt;列数据类型&gt; [<span class="keyword">after</span> 插入位置];         <span class="comment">--增加列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; change &lt;列名&gt; &lt;列新名&gt; &lt;新数据类型&gt;;              <span class="comment">--修改列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">drop</span> &lt;列名&gt;;                         <span class="comment">--删除列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">rename</span> &lt;新表名&gt;;                     <span class="comment">--重命名表</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> &lt;表名&gt;                                       <span class="comment">--删除表</span></span><br></pre></td></tr></table></figure></li>
+<li>表的基本操作</li>
 </ol>
 <ul>
 <li>插入数据：<code>insert [into] &lt;表名&gt; [(列名1,列名2,列名3……)] values (值1,值2,值3……);</code></li>
@@ -445,6 +454,16 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">SkyHive</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">26k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:34</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>

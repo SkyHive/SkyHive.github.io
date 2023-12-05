@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 7.0.0-rc1">
+<meta name="generator" content="Hexo 7.0.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="由于 XFS 文件系统不支持缩容，所以这里只讨论 Ext4 缩容的情况。 Ext4 文件系统调整的命令为 resize2fs，在使用这个命令前，我们需要将我们需要缩容的文件系统所在分区进行调整，由于 LVM 的调整相对简单，这里不做描述。 如果需要调整的分区非系统盘，则可以直接先卸载已挂载的文件系统，然后进行操作；若需要调整的分区在系统盘上，则需要进入 LiveCD 的 shell 环境进行操作。">
@@ -238,7 +238,21 @@
     </a>
   </span>
   
-  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>278</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
 
         </div>
       </header>
@@ -252,8 +266,7 @@
         <p>由于 <code>XFS</code> 文件系统不支持缩容，所以这里只讨论 <code>Ext4</code> 缩容的情况。</p>
 <p><code>Ext4</code> 文件系统调整的命令为 <code>resize2fs</code>，在使用这个命令前，我们需要将我们需要缩容的文件系统所在分区进行调整，由于 <code>LVM</code> 的调整相对简单，这里不做描述。</p>
 <p>如果需要调整的分区非系统盘，则可以直接先卸载已挂载的文件系统，然后进行操作；若需要调整的分区在系统盘上，则需要进入 <code>LiveCD</code> 的 <code>shell</code> 环境进行操作。</p>
-<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">sudo -i</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta">## 文件系统缩容</span></span><br><span class="line">e2fsck -f /dev/sda4</span><br><span class="line">resize2fs /dev/sda4 &lt;想要变成的大小&gt;（如 <span class="number">200</span>G）</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta">## 缩小分区</span></span><br><span class="line">fdisk /dev/sda</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 键入 p 查看当前分区信息，记下要缩小的分区的 start 值</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 键入 d 选择要删除的分区</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 键入 n 新建分区，确认 start 值为刚刚原分区记录下来的 start 值</span></span><br><span class="line"><span class="meta"># end 设置为 +&lt;你想要的大小&gt;（如 +200G）</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 键入 p 确认分区大小没有问题后，键入 w 保存退出</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta"># 重新 resize 文件系统</span></span><br><span class="line">resize2fs /dev/sda4</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">sudo -i</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">## 文件系统缩容</span></span><br><span class="line">e2fsck -f <span class="regexp">/dev/</span>sda4</span><br><span class="line">resize2fs <span class="regexp">/dev/</span>sda4 &lt;想要变成的大小&gt;（如 <span class="number">200</span>G）</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">## 缩小分区</span></span><br><span class="line">fdisk <span class="regexp">/dev/</span>sda</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 键入 p 查看当前分区信息，记下要缩小的分区的 start 值</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 键入 d 选择要删除的分区</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 键入 n 新建分区，确认 start 值为刚刚原分区记录下来的 start 值</span></span><br><span class="line"><span class="comment"># end 设置为 +&lt;你想要的大小&gt;（如 +200G）</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 键入 p 确认分区大小没有问题后，键入 w 保存退出</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 重新 resize 文件系统</span></span><br><span class="line">resize2fs <span class="regexp">/dev/</span>sda4</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -426,6 +439,16 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">SkyHive</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">26k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:34</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
