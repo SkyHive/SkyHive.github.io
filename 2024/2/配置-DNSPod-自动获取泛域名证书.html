@@ -21,21 +21,20 @@
     var CONFIG = {"hostname":"skyhive.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法 1sudo apt-get install ubuntu-desktop         #这个会把Ubuntu预装的">
+  <meta name="description" content="最近升级了下家里的 LB，通过 gitlab 将 LB 的配置做了版本管理，并且通过 docker-compose 实现 LB 的快速部署。但是家里的网络做了内外网的区分，为了实现内网 https 访问，我需要在内网的 LB 上配置一套 SSL 证书（公网的部分直接在 CDN 上配置了 let&#39;s encrypt 的免费证书，一年一换） 为了避免麻烦，对于内网的 https 证书希望做到以">
 <meta property="og:type" content="article">
-<meta property="og:title" content="解决Ubuntu系统设置打不开">
-<meta property="og:url" content="https://skyhive.github.io/2017/2/%E8%A7%A3%E5%86%B3Ubuntu%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE%E6%89%93%E4%B8%8D%E5%BC%80.html">
+<meta property="og:title" content="配置 DNSPod 自动获取泛域名证书">
+<meta property="og:url" content="https://skyhive.github.io/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html">
 <meta property="og:site_name" content="SkyHive&#39;s Blog">
-<meta property="og:description" content="今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法 1sudo apt-get install ubuntu-desktop         #这个会把Ubuntu预装的">
+<meta property="og:description" content="最近升级了下家里的 LB，通过 gitlab 将 LB 的配置做了版本管理，并且通过 docker-compose 实现 LB 的快速部署。但是家里的网络做了内外网的区分，为了实现内网 https 访问，我需要在内网的 LB 上配置一套 SSL 证书（公网的部分直接在 CDN 上配置了 let&#39;s encrypt 的免费证书，一年一换） 为了避免麻烦，对于内网的 https 证书希望做到以">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2017-02-14T11:23:32.000Z">
-<meta property="article:modified_time" content="2022-12-30T08:39:16.143Z">
+<meta property="article:published_time" content="2024-02-05T08:57:07.000Z">
+<meta property="article:modified_time" content="2024-02-07T04:54:28.355Z">
 <meta property="article:author" content="SkyHive">
-<meta property="article:tag" content="Linux">
-<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="证书">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://skyhive.github.io/2017/2/%E8%A7%A3%E5%86%B3Ubuntu%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE%E6%89%93%E4%B8%8D%E5%BC%80.html">
+<link rel="canonical" href="https://skyhive.github.io/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html">
 
 
 <script id="page-configurations">
@@ -48,7 +47,7 @@
   };
 </script>
 
-  <title>解决Ubuntu系统设置打不开 | SkyHive's Blog</title>
+  <title>配置 DNSPod 自动获取泛域名证书 | SkyHive's Blog</title>
   
 
 
@@ -170,7 +169,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2017/2/%E8%A7%A3%E5%86%B3Ubuntu%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE%E6%89%93%E4%B8%8D%E5%BC%80.html">
+    <link itemprop="mainEntityOfPage" href="https://skyhive.github.io/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.jpg">
@@ -183,7 +182,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          解决Ubuntu系统设置打不开
+          配置 DNSPod 自动获取泛域名证书
         </h1>
 
         <div class="post-meta">
@@ -193,14 +192,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-02-14 19:23:32" itemprop="dateCreated datePublished" datetime="2017-02-14T19:23:32+08:00">2017-02-14</time>
+              <time title="创建时间：2024-02-05 16:57:07" itemprop="dateCreated datePublished" datetime="2024-02-05T16:57:07+08:00">2024-02-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-30 16:39:16" itemprop="dateModified" datetime="2022-12-30T16:39:16+08:00">2022-12-30</time>
+                <time title="修改时间：2024-02-07 12:54:28" itemprop="dateModified" datetime="2024-02-07T12:54:28+08:00">2024-02-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -213,7 +212,7 @@
             </span>
 
           
-            <span id="/2017/2/%E8%A7%A3%E5%86%B3Ubuntu%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE%E6%89%93%E4%B8%8D%E5%BC%80.html" class="post-meta-item leancloud_visitors" data-flag-title="解决Ubuntu系统设置打不开" title="阅读次数">
+            <span id="/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html" class="post-meta-item leancloud_visitors" data-flag-title="配置 DNSPod 自动获取泛域名证书" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -235,8 +234,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2017/2/%E8%A7%A3%E5%86%B3Ubuntu%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE%E6%89%93%E4%B8%8D%E5%BC%80.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/2/%E8%A7%A3%E5%86%B3Ubuntu%E7%B3%BB%E7%BB%9F%E8%AE%BE%E7%BD%AE%E6%89%93%E4%B8%8D%E5%BC%80.html" itemprop="commentCount"></span>
+    <a title="valine" href="/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -246,14 +245,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>316</span>
+              <span>886</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -265,13 +264,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>今天把Ubuntu从16.04更新到16.10之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了iBus导致的，虽然我不懂为什么iBus和Ubuntu之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install ubuntu-desktop         <span class="comment">#这个会把Ubuntu预装的软件office还有Amazon什么的装回来，装完自己再慢慢卸载吧</span></span><br></pre></td></tr></table></figure>
-<p>或者他也提供了一次性的安装办法</p>
-<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install ibus-pinyin unity-control-<span class="built_in">center</span> unity-control-<span class="built_in">center</span>-signon webaccounts-extension-common xul-ext-webaccounts</span><br></pre></td></tr></table></figure>
-<p>但是我眉头一皱，发现事情并不简单，我继续搜了下去，也有很多人遇到这种问题，发现还有更简单的办法</p>
-<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install gnome-control-<span class="built_in">center</span>           #如果系统设置打不开，请重新安装gnome-control-<span class="built_in">center</span></span><br><span class="line">sudo apt-<span class="built_in">get</span> install unity-control-<span class="built_in">center</span>           #如果设置里只有很少的几个图标请重新安装unity-control-<span class="built_in">center</span></span><br></pre></td></tr></table></figure>
-<p>当然上面两个方法并没有尝试过，我也无从得知导致我系统设置打不开的原因是不是卸载了iBus</p>
+        <p>最近升级了下家里的 LB，通过 gitlab 将 LB 的配置做了版本管理，并且通过 docker-compose 实现 LB 的快速部署。但是家里的网络做了内外网的区分，为了实现内网 https 访问，我需要在内网的 LB 上配置一套 SSL 证书（公网的部分直接在 CDN 上配置了 <code>let&#39;s encrypt</code> 的免费证书，一年一换）</p>
+<p>为了避免麻烦，对于内网的 https 证书希望做到以下两点：</p>
+<ul>
+<li>到期自动续</li>
+<li>泛域名</li>
+</ul>
+<span id="more"></span>
+
+<p>查找了一番，有两个工具比较符合：<code>Certbot</code> 和 <code>acme.sh</code>，都是通过 <a href="https://en.wikipedia.org/wiki/Automatic_Certificate_Management_Environment"><code>ACME protocol</code></a> 去自动获取免费证书,但是需要自动获取泛域名证书的话，还需要能够自动在 DNS Provider 处更新 <a href="https://en.wikipedia.org/wiki/TXT_record"><code>DNS TXT Record</code></a>。由于我的域名是在 DNSPod 购买的，因此需要能够支持在 DNSPod 上自动更新 TXT 记录。Certbot 没有对应的官方插件，但是有第三方好心人写的插件能够实现该功能，如 <a href="https://github.com/tengattack/certbot-dns-dnspod">certbot-dns-dnspod</a>；而 acme.sh 是国人写的工具，官方支持 Aliyun 和 DNSPod，思来想去，还是打算使用 acme.sh。</p>
+<h3 id="Docker-Compose-Configuration"><a href="#Docker-Compose-Configuration" class="headerlink" title="Docker Compose Configuration"></a>Docker Compose Configuration</h3><p>根据 <a href="https://github.com/acmesh-official/acme.sh/wiki/deploy-to-docker-containers">官方文档</a> 先将 Docker Compose 配置好，从文档里可以看出，acme.sh 容器会以 daemon 的形式一直运行，后续的申请证书、部署、续签等操作都需要 docker compose exec 单独去操作。Dockers Compose 配置如下：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="string">&quot;3.9&quot;</span></span><br><span class="line">services:</span><br><span class="line">  nginx:</span><br><span class="line">    restart: always</span><br><span class="line">    container_name: nginx</span><br><span class="line">    image: nginx:latest</span><br><span class="line">    ports:</span><br><span class="line">      - <span class="number">80</span>:<span class="number">80</span></span><br><span class="line">      - <span class="number">443</span>:<span class="number">443</span></span><br><span class="line">    labels:</span><br><span class="line">      - sh.acme.autoload.domain=$&#123;DOMAIN_NAME&#125;</span><br><span class="line">    volumes:</span><br><span class="line">      - $PWD/conf.d:/etc/nginx/conf.d:ro</span><br><span class="line">      - $PWD/nginx.conf:/etc/nginx/nginx.conf:ro</span><br><span class="line">      - $PWD/log/:/var/log/nginx/:rw</span><br><span class="line">    environment:</span><br><span class="line">      - TZ=Asia/Shanghai</span><br><span class="line">  </span><br><span class="line">  acme:</span><br><span class="line">    image: neilpang/acme.sh</span><br><span class="line">    container_name: acme.sh</span><br><span class="line">    command: daemon</span><br><span class="line">    volumes:</span><br><span class="line">      - $PWD/acmeout:/acme.sh</span><br><span class="line">      - /var/<span class="keyword">run</span><span class="language-bash">/docker.sock:/var/run/docker.sock</span></span><br><span class="line">    dns:</span><br><span class="line">      - <span class="number">8.8</span>.<span class="number">8.8</span></span><br><span class="line">    environment:</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_LABEL=sh.acme.autoload.domain=$&#123;DOMAIN_NAME&#125;</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_KEY_FILE=/etc/nginx/ssl/key.pem</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_CERT_FILE=/etc/nginx/ssl/cert.pem</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_CA_FILE=/etc/nginx/ssl/ca.pem</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_FULLCHAIN_FILE=/etc/nginx/ssl/full.pem</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_RELOAD_CMD=<span class="string">&quot;service nginx force-reload&quot;</span></span><br><span class="line">      - DP_Id=$&#123;DP_Id&#125;</span><br><span class="line">      - DP_Key=$&#123;DP_Key&#125;</span><br></pre></td></tr></table></figure>
+<p>另外还需要添加一个 <code>.env</code> 文件用来存放如下变量：</p>
+<ul>
+<li><code>$&#123;DOMAIN_NAME&#125;</code>：用于申请证书的泛域名</li>
+<li><code>$&#123;DP_Id&#125;</code>：DNSPod API Key ID</li>
+<li><code>$&#123;DP_Key&#125;</code>：DNSPod API Key</li>
+</ul>
+<h3 id="申请证书"><a href="#申请证书" class="headerlink" title="申请证书"></a>申请证书</h3><p>acme.sh 默认的 ssl 服务器是 <code>ZeroSSL.com</code>，根据 <a href="https://github.com/acmesh-official/acme.sh/wiki/ZeroSSL.com-CA">文档</a> 里提到的，在申请证书之前，需要先注册账户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose exec acme --register-account -m &lt;your email address&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注册完成后就可以正式申请证书了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose exec acme --issue --dns dns_dp -d &#x27;*.skyhive.tech&#x27;</span><br></pre></td></tr></table></figure>
+<p>等待证书申请完成后，可以看到 <code>acmeout</code> 目录下会出现一个 <code>$&#123;DOMAIN_NAME&#125;</code> 命名的目录，该目录下就是我们申请到的证书。接着运行命令将证书部署到 nginx 的目录下（该目录则是在 docker compose 中通过 environment 传参给 acme 容器的）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose exec acme --deploy -d &#x27;*.skyhive.tech&#x27;  --deploy-hook docker</span><br></pre></td></tr></table></figure>
+<p>理论上到这里我们的证书申请和部署就已经结束了。</p>
+<h3 id="修锅"><a href="#修锅" class="headerlink" title="修锅"></a>修锅</h3><p>当然我在申请证书的时候，遇到了些问题，比如在等待证书签售的过程中，一直在报错</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Order</span> <span class="title">status</span> is processing, lets sleep <span class="keyword">and</span> retry</span><br></pre></td></tr></table></figure>
+<p>等待的超时时间是 15s，连续 retry 了多次之后肯定是有问题的，参考了 <a href="https://u.sb/acme-sh-ssl/">网络上其他的人建议</a>，将默认的 CA Server 从 <code>ZeroSSL.com</code> 更换成了 <code>Let&#39;s Encrypt</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose exec acme --set-default-ca --server letsencrypt</span><br></pre></td></tr></table></figure>
+
+<h3 id="续签证书"><a href="#续签证书" class="headerlink" title="续签证书"></a>续签证书</h3><p>acme.sh 不用我们手动去执行 renew 的命令来续签到期的证书，正如之前所说，acme 的容器是以 daemon 状态运行的，因此他会定时的去检测我们的证书到期时间，在到期之前会自动进行 renew 操作。可以在 <code>acmeout/$&#123;DOMAIN_NAME&#125;/$&#123;DOAMIN_NAME&#125;.conf</code> 中看到，有一项 <code>Le_NextRenewTimeStr</code> 配置，该配置了记录了 acme.sh 下一次续签证书的时间。</p>
 
     </div>
 
@@ -301,8 +324,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Linux/" rel="tag"># Linux</a>
-              <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+              <a href="/tags/%E8%AF%81%E4%B9%A6/" rel="tag"># 证书</a>
           </div>
 
         
@@ -311,13 +333,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2017/2/Hexo%E7%9A%84%E5%BB%BA%E7%AB%99%E4%B9%8B%E6%97%85.html" rel="prev" title="Hexo的建站之旅">
-      <i class="fa fa-chevron-left"></i> Hexo的建站之旅
+    <a href="/2021/11/%E9%BB%91%E7%BE%A4%E6%99%96%E8%A7%A3%E9%99%A4%E5%86%85%E5%AD%98%E9%99%90%E5%88%B6.html" rel="prev" title="黑群晖填坑">
+      <i class="fa fa-chevron-left"></i> 黑群晖填坑
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2017/2/Hexo%E6%90%AD%E9%85%8D%E4%B8%83%E7%89%9B%E5%AD%98%E5%82%A8%E5%9B%BE%E7%89%87%E7%AD%89%E5%AA%92%E4%BD%93%E8%B5%84%E6%BA%90.html" rel="next" title="Hexo 搭配七牛存储图片等媒体资源">
-      Hexo 搭配七牛存储图片等媒体资源 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -377,6 +396,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Compose-Configuration"><span class="nav-number">1.</span> <span class="nav-text">Docker Compose Configuration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B3%E8%AF%B7%E8%AF%81%E4%B9%A6"><span class="nav-number">2.</span> <span class="nav-text">申请证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E9%94%85"><span class="nav-number">3.</span> <span class="nav-text">修锅</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%AD%E7%AD%BE%E8%AF%81%E4%B9%A6"><span class="nav-number">4.</span> <span class="nav-text">续签证书</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
