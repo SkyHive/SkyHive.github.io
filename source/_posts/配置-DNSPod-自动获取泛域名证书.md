@@ -69,11 +69,11 @@ docker compose exec acme --register-account -m <your email address>
 
 注册完成后就可以正式申请证书了
 ```shell
-docker compose exec acme --issue --dns dns_dp -d '*.skyhive.tech'
+docker compose exec acme --issue --dns dns_dp -d ${DOMAIN_NAME}
 ```
 等待证书申请完成后，可以看到 `acmeout` 目录下会出现一个 `${DOMAIN_NAME}` 命名的目录，该目录下就是我们申请到的证书。接着运行命令将证书部署到 nginx 的目录下（该目录则是在 docker compose 中通过 environment 传参给 acme 容器的）
 ```shell
-docker compose exec acme --deploy -d '*.skyhive.tech'  --deploy-hook docker
+docker compose exec acme --deploy -d ${DOMAIN_NAME}  --deploy-hook docker
 ```
 理论上到这里我们的证书申请和部署就已经结束了。
 
