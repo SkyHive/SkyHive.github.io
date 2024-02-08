@@ -1401,9 +1401,9 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --register-account -m &lt;your email address&gt;</span><br></pre></td></tr></table></figure>
 
 <p>注册完成后就可以正式申请证书了</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --issue --dns dns_dp -d &#x27;*.skyhive.tech&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --issue --dns dns_dp -d $&#123;DOMAIN_NAME&#125;</span><br></pre></td></tr></table></figure>
 <p>等待证书申请完成后，可以看到 <code>acmeout</code> 目录下会出现一个 <code>$&#123;DOMAIN_NAME&#125;</code> 命名的目录，该目录下就是我们申请到的证书。接着运行命令将证书部署到 nginx 的目录下（该目录则是在 docker compose 中通过 environment 传参给 acme 容器的）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --deploy -d &#x27;*.skyhive.tech&#x27;  --deploy-hook docker</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --deploy -d $&#123;DOMAIN_NAME&#125;  --deploy-hook docker</span><br></pre></td></tr></table></figure>
 <p>理论上到这里我们的证书申请和部署就已经结束了。</p>
 <h3 id="修锅"><a href="#修锅" class="headerlink" title="修锅"></a>修锅</h3><p>当然我在申请证书的时候，遇到了些问题，比如在等待证书签售的过程中，一直在报错</p>
 <figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Order</span> <span class="title">status</span> is processing, lets sleep <span class="keyword">and</span> retry</span><br></pre></td></tr></table></figure>
