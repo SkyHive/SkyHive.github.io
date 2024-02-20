@@ -1419,4 +1419,30 @@
         <tag>证书</tag>
       </tags>
   </entry>
+  <entry>
+    <title>nginx 端口转发被强行更改</title>
+    <url>/2024/2/nginx-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E8%A2%AB%E5%BC%BA%E8%A1%8C%E6%9B%B4%E6%94%B9.html</url>
+    <content><![CDATA[<p><a href="https://blog.skyhive.tech/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html">上一篇文章</a>说到在家里把 LB 升了级并且通过 <code>acme.sh</code> 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：</p>
+<img  src=http://www.plantuml.com/plantuml/svg/IqmkoIzI22rEBUBY0f4Akhfs2Xf1-QKbgKMQLWesddb0HbvgYK90Vb69WeM9YR4T5qGMejB72QJADx40eW0ix-C4aNFEpqlBASrBJjM42xbdbkGa9Y7uKOb9IPaLIF95YMc9UOa80Q_Kd9pAjCmyJG00>
+
+<p>由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80&#x2F;443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。</p>
+<span id="more"></span>
+
+<p>那么对于网盘服务来说，正常的访问路径就是：</p>
+<img  src=http://www.plantuml.com/plantuml/svg/uqfCBialKWWjJYtYuWAH2hgwTWeQGVcb9Qb5cbOADfvvG4PUQeb2G7vHYO854DXnGMGXAdsSGAfy4miW2anCZEsuV9mWSdwf5IN9EVcbAI0b0KNv5PLGKmmi3Eou0000>
+
+<p>乍一看好像挺正常的，但是在我通过公网去访问的是时候</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl https://&lt;domain_name&gt;:8888</span><br></pre></td></tr></table></figure>
+<p>出现的结果往往是，nginx 直接把我的 8888 端口给重定向成了 8080，也就是变成了 <code>https://&lt;domain_name&gt;:8080</code> 的访问。后来查了一下，是需要在 nginx location 的配置中稍微做些修饰，随即将该方法记录下来</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">  ……</span><br><span class="line">  <span class="attribute">port_in_redirect</span> <span class="literal">off</span>;  <span class="comment">## 需要在 server 中加上这个配置防止 port redirect</span></span><br><span class="line"></span><br><span class="line">  <span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://192.168.2.150:8080;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>:<span class="variable">$server_port</span>;    <span class="comment">## Host header 需要有 $host:$server_port，即 host 和 port 都得有，否则 port 就会变成 proxy_pass 中的 port</span></span><br><span class="line">    ……</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上基本上可以解决问题，如若不能，则还得继续 Google 一番。</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
 </search>

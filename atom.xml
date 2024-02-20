@@ -6,7 +6,7 @@
   <link href="https://skyhive.github.io/atom.xml" rel="self"/>
   
   <link href="https://skyhive.github.io/"/>
-  <updated>2024-02-08T03:32:27.195Z</updated>
+  <updated>2024-02-20T09:17:47.038Z</updated>
   <id>https://skyhive.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>nginx 端口转发被强行更改</title>
+    <link href="https://skyhive.github.io/2024/2/nginx-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E8%A2%AB%E5%BC%BA%E8%A1%8C%E6%9B%B4%E6%94%B9.html"/>
+    <id>https://skyhive.github.io/2024/2/nginx-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E8%A2%AB%E5%BC%BA%E8%A1%8C%E6%9B%B4%E6%94%B9.html</id>
+    <published>2024-02-09T09:50:16.000Z</published>
+    <updated>2024-02-20T09:17:47.038Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://blog.skyhive.tech/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html">上一篇文章</a>说到在家里把 LB 升了级并且通过 <code>acme.sh</code> 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：</p><img  src=http://www.plantuml.com/plantuml/svg/IqmkoIzI22rEBUBY0f4Akhfs2Xf1-QKbgKMQLWesddb0HbvgYK90Vb69WeM9YR4T5qGMejB72QJADx40eW0ix-C4aNFEpqlBASrBJjM42xbdbkGa9Y7uKOb9IPaLIF95YMc9UOa80Q_Kd9pAjCmyJG00><p>由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80&#x2F;443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。</p><span id="more"></span><p>那么对于网盘服务来说，正常的访问路径就是：</p><img  src=http://www.plantuml.com/plantuml/svg/uqfCBialKWWjJYtYuWAH2hgwTWeQGVcb9Qb5cbOADfvvG4PUQeb2G7vHYO854DXnGMGXAdsSGAfy4miW2anCZEsuV9mWSdwf5IN9EVcbAI0b0KNv5PLGKmmi3Eou0000><p>乍一看好像挺正常的，但是在我通过公网去访问的是时候</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://&lt;domain_name&gt;:8888</span><br></pre></td></tr></table></figure><p>出现的结果往往是，nginx 直接把我的 8888 端口给重定向成了 8080，也就是变成了 <code>https://&lt;domain_name&gt;:8080</code> 的访问。后来查了一下，是需要在 nginx location 的配置中稍微做些修饰，随即将该方法记录下来</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">  ……</span><br><span class="line">  <span class="attribute">port_in_redirect</span> <span class="literal">off</span>;  <span class="comment">## 需要在 server 中加上这个配置防止 port redirect</span></span><br><span class="line"></span><br><span class="line">  <span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://192.168.2.150:8080;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>:<span class="variable">$server_port</span>;    <span class="comment">## Host header 需要有 $host:$server_port，即 host 和 port 都得有，否则 port 就会变成 proxy_pass 中的 port</span></span><br><span class="line">    ……</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>以上基本上可以解决问题，如若不能，则还得继续 Google 一番。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://blog.skyhive.tech/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html&quot;&gt;上一篇文章&lt;/a&gt;说到在家里把 LB 升了级并且通过 &lt;code&gt;acme.sh&lt;/code&gt; 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：&lt;/p&gt;
+&lt;img  src=http://www.plantuml.com/plantuml/svg/IqmkoIzI22rEBUBY0f4Akhfs2Xf1-QKbgKMQLWesddb0HbvgYK90Vb69WeM9YR4T5qGMejB72QJADx40eW0ix-C4aNFEpqlBASrBJjM42xbdbkGa9Y7uKOb9IPaLIF95YMc9UOa80Q_Kd9pAjCmyJG00&gt;
+
+&lt;p&gt;由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80&amp;#x2F;443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
+    
+    
+    <category term="nginx" scheme="https://skyhive.github.io/tags/nginx/"/>
+    
+  </entry>
   
   <entry>
     <title>配置 DNSPod 自动获取泛域名证书</title>
@@ -499,31 +523,6 @@
     
     
     <category term="Django" scheme="https://skyhive.github.io/tags/Django/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>配置 SSH 免密登录遇到的坑</title>
-    <link href="https://skyhive.github.io/2017/12/%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91.html"/>
-    <id>https://skyhive.github.io/2017/12/%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91.html</id>
-    <published>2017-12-08T03:12:43.000Z</published>
-    <updated>2022-12-30T08:39:16.143Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。<br>由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行</p><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ssh-keygen -t rsa</span></span><br></pre></td></tr></table></figure><p>然后一直回车，最后会在你主目录下生成一个<code>.ssh</code>目录，其中的<code>id_rsa</code>是你的密钥，<code>id_rsa.pub</code>是你要上传的公钥，<code>known_hosts</code>是你连接过的主机的信息</p><p>我们需要在<code>.ssh</code>目录下建立一个<code>authorized_keys</code>文件，将各个主机的公钥信息存储在该文件下，然后各个主机就可以通过ssh免密登录了，至于具体的原理，大家可以网上自行科普一下，无非是一些加密解密的过程。</p><p>然而就在我以为万无一失的时候，造化弄人，我不管怎么搞都需要输密码，试过改ssh的配置文件也无法解决，最后google到一个解决方法，说是目录的和文件的权限问题，<code>.ssh</code>目录的权限必须得是<strong>700</strong>，而文件<code>authorized_keys</code>的权限必须是<strong>644</strong>，而我当时是664,这才导致无法进行免密登录，这里大家需要注意一下权限的问题，即使权限放大了也是不行的！</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。&lt;br&gt;由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行&lt;/p&gt;
-&lt;figure clas</summary>
-      
-    
-    
-    
-    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
-    
-    
-    <category term="Linux" scheme="https://skyhive.github.io/tags/Linux/"/>
     
   </entry>
   
