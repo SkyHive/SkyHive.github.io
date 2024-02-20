@@ -363,16 +363,16 @@ codeblock:
   # Code Highlight theme
   # All available themes: https://theme-next.js.org/highlight/
   theme:
-    light: default
-    dark: stackoverflow-dark
+    light: atom-one-light
+    dark: atom-one-dark
   prism:
     light: prism
-    dark: prism-dark
+    dark: prism-night-owl
   # Add copy button on codeblock
   copy_button:
     enable: true
     # Available values: default | flat | mac
-    style:
+    style: mac
   # Fold code block
   fold:
     enable: false
@@ -424,10 +424,10 @@ github_banner:
 # ---------------------------------------------------------------
 
 font:
-  enable: false
+  enable: true
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  host:
+  host: fonts.loli.net
 
   # Font options:
   # `external: true` will load this font family from `host` above.
@@ -460,7 +460,7 @@ font:
   # Font settings for <code> and code blocks.
   codes:
     external: true
-    family:
+    family: Noto Serif SC
 
 
 # ---------------------------------------------------------------
