@@ -67,6 +67,59 @@
       </tags>
   </entry>
   <entry>
+    <title>ESXi 快照机制</title>
+    <url>/2020/6/ESXi-%E5%BF%AB%E7%85%A7%E6%9C%BA%E5%88%B6.html</url>
+    <content><![CDATA[<blockquote>
+<p><a href="https://kb.vmware.com/s/article/1015180">Understanding VM Sanpshots in ESXi</a></br><br><a href="https://kknews.cc/code/y5pnlkj.html">VMware vSphere 6.7 虚拟机快照原理及 Veeam Backup 备份</a></br><br><a href="https://docs.vmware.com/cn/VMware-vSphere/6.5/com.vmware.vsphere.virtualsan.doc/GUID-1D6AD25A-459A-43D6-8FF5-52475499D6A2.html">vSAN 中的闪存缓存设备设计注意事项</a></p>
+</blockquote>
+<h3 id="初时虚拟磁盘文件"><a href="#初时虚拟磁盘文件" class="headerlink" title="初时虚拟磁盘文件"></a>初时虚拟磁盘文件</h3><p>ESXi 虚拟机的存储文件主要为 .vmx、.vmsd、.vmdk 等文件，其中对于 .vmdk 文件：</p>
+<ul>
+<li>xx.vmdk：该文件保存的是磁盘的元数据，包括 xx-flat.vmdk 和 xx-ctk.vmdk 文件</li>
+<li>xx-flat.vmdk：该文件为 Extent Description 二级制文件啊，二级制数据保存在此文件中</li>
+<li>xx-ctk.vmdk：该文件为 CTK 文件，CBT（数据块修改跟踪）启动时自动生成</li>
+</ul>
+<h3 id="快照"><a href="#快照" class="headerlink" title="快照"></a>快照</h3><p>快照创建过程中，新增以下文件：</p>
+<ul>
+<li>**-000001.vmdk</li>
+<li>**-000001-ctk.vmdk</li>
+<li>**-000001-delta.vmdk（基础 vmdk 上的变更位图）</li>
+<li>**-Snapshot*.vmsn（快照状态文件）</li>
+</ul>
+<h4 id="快照创建过程简单描述如下"><a href="#快照创建过程简单描述如下" class="headerlink" title="快照创建过程简单描述如下"></a>快照创建过程简单描述如下</h4><ol>
+<li>当虚拟机未创建快照时，虚拟机的读写操作直接在 VMDK 文件进行；</li>
+<li>当虚拟机创建第一个快照时，这时生成 **-000001-delta.vmdk 和 **-000001.vmdk 文件，并立即锁住源 VMDK 文件，将其变为只读状态。虚拟机的写操作均在 **-000001.vmdk 上进行，读操作将在 **.vmdk 和 **-000001.vmdk 上进行（具体基于需要读的数据所在位置）；</li>
+<li>再次创建快照的原理和之前一样，生成 **-000002-delta.vmdk 和 **-000002.vmdk 文件，锁住 **-000001.vmdk 文件，将其变为只读状态。</li>
+</ol>
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
+<li>对于有用快照的虚拟机做写操作时，均在新的 vmdk 文件进行，如果数据在父 vmdk 上（被锁住成只读的 vmdk），先将数据拷贝到新的 vmdk 上，再进行修改；</li>
+<li>当读取某一块数据时，ESXi 需要判断从哪里去读：对于没有修改的数据块，从父 vmdk 读，对于已经修改的数据块，从新的 vmdk 上读。</li>
+<li>整合多个虚拟机快照时，主机会短暂无响应</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>虚拟化</tag>
+        <tag>ESXi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Ext4 文件系统缩容</title>
+    <url>/2019/10/Ext4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BC%A9%E5%AE%B9.html</url>
+    <content><![CDATA[<p>由于 <code>XFS</code> 文件系统不支持缩容，所以这里只讨论 <code>Ext4</code> 缩容的情况。</p>
+<p><code>Ext4</code> 文件系统调整的命令为 <code>resize2fs</code>，在使用这个命令前，我们需要将我们需要缩容的文件系统所在分区进行调整，由于 <code>LVM</code> 的调整相对简单，这里不做描述。</p>
+<p>如果需要调整的分区非系统盘，则可以直接先卸载已挂载的文件系统，然后进行操作；若需要调整的分区在系统盘上，则需要进入 <code>LiveCD</code> 的 <code>shell</code> 环境进行操作。</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo -i</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">## 文件系统缩容</span></span><br><span class="line">e2fsck -f <span class="regexp">/dev/</span>sda4</span><br><span class="line">resize2fs <span class="regexp">/dev/</span>sda4 &lt;想要变成的大小&gt;（如 <span class="number">200</span>G）</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">## 缩小分区</span></span><br><span class="line">fdisk <span class="regexp">/dev/</span>sda</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 键入 p 查看当前分区信息，记下要缩小的分区的 start 值</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 键入 d 选择要删除的分区</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 键入 n 新建分区，确认 start 值为刚刚原分区记录下来的 start 值</span></span><br><span class="line"><span class="comment"># end 设置为 +&lt;你想要的大小&gt;（如 +200G）</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 键入 p 确认分区大小没有问题后，键入 w 保存退出</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 重新 resize 文件系统</span></span><br><span class="line">resize2fs <span class="regexp">/dev/</span>sda4</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>Filesystem</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Galera 集群搭建</title>
     <url>/2021/8/Galera-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA.html</url>
     <content><![CDATA[<h3 id="Galera-简介"><a href="#Galera-简介" class="headerlink" title="Galera 简介"></a>Galera 简介</h3><p>Galera Cluster 是基于 MySQL&#x2F;Innodb 二次开发而成的一个支持“多主同步”的数据库主从集群。具备多主、同步复制、高可用等特点。</p>
@@ -147,59 +200,6 @@
       </categories>
       <tags>
         <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ESXi 快照机制</title>
-    <url>/2020/6/ESXi-%E5%BF%AB%E7%85%A7%E6%9C%BA%E5%88%B6.html</url>
-    <content><![CDATA[<blockquote>
-<p><a href="https://kb.vmware.com/s/article/1015180">Understanding VM Sanpshots in ESXi</a></br><br><a href="https://kknews.cc/code/y5pnlkj.html">VMware vSphere 6.7 虚拟机快照原理及 Veeam Backup 备份</a></br><br><a href="https://docs.vmware.com/cn/VMware-vSphere/6.5/com.vmware.vsphere.virtualsan.doc/GUID-1D6AD25A-459A-43D6-8FF5-52475499D6A2.html">vSAN 中的闪存缓存设备设计注意事项</a></p>
-</blockquote>
-<h3 id="初时虚拟磁盘文件"><a href="#初时虚拟磁盘文件" class="headerlink" title="初时虚拟磁盘文件"></a>初时虚拟磁盘文件</h3><p>ESXi 虚拟机的存储文件主要为 .vmx、.vmsd、.vmdk 等文件，其中对于 .vmdk 文件：</p>
-<ul>
-<li>xx.vmdk：该文件保存的是磁盘的元数据，包括 xx-flat.vmdk 和 xx-ctk.vmdk 文件</li>
-<li>xx-flat.vmdk：该文件为 Extent Description 二级制文件啊，二级制数据保存在此文件中</li>
-<li>xx-ctk.vmdk：该文件为 CTK 文件，CBT（数据块修改跟踪）启动时自动生成</li>
-</ul>
-<h3 id="快照"><a href="#快照" class="headerlink" title="快照"></a>快照</h3><p>快照创建过程中，新增以下文件：</p>
-<ul>
-<li>**-000001.vmdk</li>
-<li>**-000001-ctk.vmdk</li>
-<li>**-000001-delta.vmdk（基础 vmdk 上的变更位图）</li>
-<li>**-Snapshot*.vmsn（快照状态文件）</li>
-</ul>
-<h4 id="快照创建过程简单描述如下"><a href="#快照创建过程简单描述如下" class="headerlink" title="快照创建过程简单描述如下"></a>快照创建过程简单描述如下</h4><ol>
-<li>当虚拟机未创建快照时，虚拟机的读写操作直接在 VMDK 文件进行；</li>
-<li>当虚拟机创建第一个快照时，这时生成 **-000001-delta.vmdk 和 **-000001.vmdk 文件，并立即锁住源 VMDK 文件，将其变为只读状态。虚拟机的写操作均在 **-000001.vmdk 上进行，读操作将在 **.vmdk 和 **-000001.vmdk 上进行（具体基于需要读的数据所在位置）；</li>
-<li>再次创建快照的原理和之前一样，生成 **-000002-delta.vmdk 和 **-000002.vmdk 文件，锁住 **-000001.vmdk 文件，将其变为只读状态。</li>
-</ol>
-<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
-<li>对于有用快照的虚拟机做写操作时，均在新的 vmdk 文件进行，如果数据在父 vmdk 上（被锁住成只读的 vmdk），先将数据拷贝到新的 vmdk 上，再进行修改；</li>
-<li>当读取某一块数据时，ESXi 需要判断从哪里去读：对于没有修改的数据块，从父 vmdk 读，对于已经修改的数据块，从新的 vmdk 上读。</li>
-<li>整合多个虚拟机快照时，主机会短暂无响应</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>虚拟化</tag>
-        <tag>ESXi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Ext4 文件系统缩容</title>
-    <url>/2019/10/Ext4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BC%A9%E5%AE%B9.html</url>
-    <content><![CDATA[<p>由于 <code>XFS</code> 文件系统不支持缩容，所以这里只讨论 <code>Ext4</code> 缩容的情况。</p>
-<p><code>Ext4</code> 文件系统调整的命令为 <code>resize2fs</code>，在使用这个命令前，我们需要将我们需要缩容的文件系统所在分区进行调整，由于 <code>LVM</code> 的调整相对简单，这里不做描述。</p>
-<p>如果需要调整的分区非系统盘，则可以直接先卸载已挂载的文件系统，然后进行操作；若需要调整的分区在系统盘上，则需要进入 <code>LiveCD</code> 的 <code>shell</code> 环境进行操作。</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">sudo -i</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">## 文件系统缩容</span></span><br><span class="line">e2fsck -f <span class="regexp">/dev/</span>sda4</span><br><span class="line">resize2fs <span class="regexp">/dev/</span>sda4 &lt;想要变成的大小&gt;（如 <span class="number">200</span>G）</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">## 缩小分区</span></span><br><span class="line">fdisk <span class="regexp">/dev/</span>sda</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 键入 p 查看当前分区信息，记下要缩小的分区的 start 值</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 键入 d 选择要删除的分区</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 键入 n 新建分区，确认 start 值为刚刚原分区记录下来的 start 值</span></span><br><span class="line"><span class="comment"># end 设置为 +&lt;你想要的大小&gt;（如 +200G）</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 键入 p 确认分区大小没有问题后，键入 w 保存退出</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 重新 resize 文件系统</span></span><br><span class="line">resize2fs <span class="regexp">/dev/</span>sda4</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>Filesystem</tag>
       </tags>
   </entry>
   <entry>
@@ -381,64 +381,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SQL 语句的基本操作</title>
-    <url>/2017/4/SQL%E8%AF%AD%E5%8F%A5%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html</url>
-    <content><![CDATA[<h3 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h3><ol>
-<li>创建数据库： <code>CREATE DATABASE &lt;数据库名&gt; [其他选项]</code></li>
-<li>使用数据库： <code>USE &lt;数据库名&gt;</code></li>
-<li>修改数据库： <code>ALTER DATABASE &lt;数据库名&gt;</code></li>
-<li>删除数据库： <code>DROP DATABASE &lt;数据库名&gt;</code></li>
-</ol>
-<h3 id="数据表操作"><a href="#数据表操作" class="headerlink" title="数据表操作"></a>数据表操作</h3><ol>
-<li>创建表：<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> &lt;表名&gt;</span><br><span class="line">（</span><br><span class="line">     &lt;列名<span class="number">1</span>&gt;&lt;数据类型&gt;[&lt;列级完整性约束&gt;],</span><br><span class="line">    [&lt;列名n&gt;&lt;数据类型&gt;[&lt;列级完整性约束&gt;]]</span><br><span class="line"> ）;</span><br><span class="line">例：</span><br><span class="line">    <span class="keyword">create</span> <span class="keyword">table</span> studets</span><br><span class="line">    (</span><br><span class="line">        id <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span> auto_increment <span class="keyword">primary key</span>,</span><br><span class="line">        <span class="type">name</span> <span class="type">varchar</span>(<span class="number">8</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">        sex <span class="type">varchar</span>(<span class="number">5</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">        score <span class="type">int</span>(<span class="number">5</span>) <span class="keyword">not</span> <span class="keyword">null</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure></li>
-<li>修改基本表<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">add</span> &lt;列名&gt; &lt;列数据类型&gt; [<span class="keyword">after</span> 插入位置];         <span class="comment">--增加列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; change &lt;列名&gt; &lt;列新名&gt; &lt;新数据类型&gt;;              <span class="comment">--修改列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">drop</span> &lt;列名&gt;;                         <span class="comment">--删除列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">rename</span> &lt;新表名&gt;;                     <span class="comment">--重命名表</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> &lt;表名&gt;                                       <span class="comment">--删除表</span></span><br></pre></td></tr></table></figure></li>
-<li>表的基本操作</li>
-</ol>
-<ul>
-<li>插入数据：<code>insert [into] &lt;表名&gt; [(列名1,列名2,列名3……)] values (值1,值2,值3……);</code></li>
-<li>更新数据：<code>update &lt;表名&gt; set 列名=新值 where 更新条件;</code></li>
-<li>删除数据：<code>delete from &lt;表名&gt; where 删除条件;</code></li>
-<li>查询数据：<code>select &lt;列名&gt; from &lt;表名&gt; [查询条件];</code></li>
-<li>特定条件查询：where 不仅支持 “where 列名&#x3D;值” 这种名等于值的查询形式，对一般的比较运算的运算符都是支持的，如&#x3D;、&lt;、&gt;、！&#x3D; 等以及一些扩展运算符 is[not] null、in、like 等，还可以对查询条件使用 or 和 and 进行组合查询。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SQL 进阶</title>
-    <url>/2017/4/SQL%E8%BF%9B%E9%98%B6.html</url>
-    <content><![CDATA[<p>我们都知道 select 的基本用法<code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而<code>select</code>语句后面还可以跟很多限制条件。我们这次用 user 表来作为示范，下面是 user 表的结构：</p>
-<span id="more"></span>
-<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fuser.png" alt="user 表结构"></p>
-<h4 id="Between、And、In、-、等条件查询："><a href="#Between、And、In、-、等条件查询：" class="headerlink" title="Between、And、In、&lt;&#x3D;、&gt;&#x3D;、&lt;、&gt;等条件查询："></a>Between、And、In、&lt;&#x3D;、&gt;&#x3D;、&lt;、&gt;等条件查询：</h4><p>通过<code>select * from table where id between 1 and 3</code>和<code>select * from table where id &gt;=1 and id &lt;= 3 </code>的返回结果，我们可以发现<code>between and</code>和<code>&gt;= and &lt;=</code>是等同的。<br><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fbetween.png" alt="between"><br><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fbetween2.png" alt="between2"></p>
-<p>如果我们要查询的条件不是一个连续的数值，可以用<code>in</code>：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> id <span class="keyword">in</span> (<span class="number">2</span>,<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
-
-<h4 id="locate-函数：locate-substr-str"><a href="#locate-函数：locate-substr-str" class="headerlink" title="locate()函数：locate(substr,str)"></a>locate()函数：<code>locate(substr,str)</code></h4><p>这个函数返回<code>substr</code>在字符串<code>str</code>中的第一个出现的位置，如果不存在则值为0<br><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Flocate.png" alt="locate 函数"></p>
-<h4 id="Count-函数"><a href="#Count-函数" class="headerlink" title="Count()函数:"></a>Count()函数:</h4><ul>
-<li>count(字段名)：返回指定列的值的数目，但是字段值为<code>NULL</code>时不会被计算进去。<code>select count(字段名) from &lt;表名&gt;</code></li>
-<li>count(* )：返回表中的记录数，字段值为<code>NULL</code>时会被计算进去。<code>select count(*) from &lt;表名&gt;</code></li>
-</ul>
-<h4 id="Distinct语句："><a href="#Distinct语句：" class="headerlink" title="Distinct语句："></a>Distinct语句：</h4><p>Distinct语句用于去除重复行，比如：<code>select distinct * from &lt;表名&gt;</code>。<br>其他的语句或函数都可以和<code>distinct</code>配合使用，比如：<code>count(distinct &lt;字段名&gt;)</code>可以去除重复行统计行数，但是<code>count(distinct *)</code>是<strong>不被允许</strong>的</p>
-<h4 id="Union语句："><a href="#Union语句：" class="headerlink" title="Union语句："></a>Union语句：</h4><p>Union语句可以将两个<code>select</code>语句的结果集组合成一个：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">(<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> id <span class="operator">&gt;=</span> <span class="number">3</span>) <span class="keyword">union</span> (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<p>当我们使用<code>union</code>语句的时候，默认去除了重复行，和<code>distinct</code>的效果一样，如果要显示所有的结果，则要使用<code>union all</code>语句。</p>
-<h4 id="Drder-by语句："><a href="#Drder-by语句：" class="headerlink" title="Drder by语句："></a>Drder by语句：</h4><figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">order</span> <span class="keyword">by</span> &lt;字段名&gt; [<span class="keyword">asc</span>/<span class="keyword">desc</span>]</span><br></pre></td></tr></table></figure>
-<p>其中<code>asc</code>是默认的排序，为升序，<code>desc</code>为降序。<br>当然order by后面可以跟很多个字段，如：<code>select * from table order by info desc,id asc</code>,这个语句意为先按<code>info</code>字段降序，若<code>info</code>字段值相同的情况下，再按<code>id</code>字段升序。而且，<code>NULL</code>默认为值最小。</p>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python基础</title>
     <url>/2017/4/Python%E5%9F%BA%E7%A1%80.html</url>
     <content><![CDATA[<p><em>最近在自学Python，所以一边学也一边总结一些知识点</em></p>
@@ -510,6 +452,64 @@
       </tags>
   </entry>
   <entry>
+    <title>SQL 语句的基本操作</title>
+    <url>/2017/4/SQL%E8%AF%AD%E5%8F%A5%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.html</url>
+    <content><![CDATA[<h3 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h3><ol>
+<li>创建数据库： <code>CREATE DATABASE &lt;数据库名&gt; [其他选项]</code></li>
+<li>使用数据库： <code>USE &lt;数据库名&gt;</code></li>
+<li>修改数据库： <code>ALTER DATABASE &lt;数据库名&gt;</code></li>
+<li>删除数据库： <code>DROP DATABASE &lt;数据库名&gt;</code></li>
+</ol>
+<h3 id="数据表操作"><a href="#数据表操作" class="headerlink" title="数据表操作"></a>数据表操作</h3><ol>
+<li>创建表：<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> &lt;表名&gt;</span><br><span class="line">（</span><br><span class="line">     &lt;列名<span class="number">1</span>&gt;&lt;数据类型&gt;[&lt;列级完整性约束&gt;],</span><br><span class="line">    [&lt;列名n&gt;&lt;数据类型&gt;[&lt;列级完整性约束&gt;]]</span><br><span class="line"> ）;</span><br><span class="line">例：</span><br><span class="line">    <span class="keyword">create</span> <span class="keyword">table</span> studets</span><br><span class="line">    (</span><br><span class="line">        id <span class="type">int</span> <span class="keyword">not</span> <span class="keyword">null</span> auto_increment <span class="keyword">primary key</span>,</span><br><span class="line">        <span class="type">name</span> <span class="type">varchar</span>(<span class="number">8</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">        sex <span class="type">varchar</span>(<span class="number">5</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">        score <span class="type">int</span>(<span class="number">5</span>) <span class="keyword">not</span> <span class="keyword">null</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure></li>
+<li>修改基本表<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">add</span> &lt;列名&gt; &lt;列数据类型&gt; [<span class="keyword">after</span> 插入位置];         <span class="comment">--增加列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; change &lt;列名&gt; &lt;列新名&gt; &lt;新数据类型&gt;;              <span class="comment">--修改列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">drop</span> &lt;列名&gt;;                         <span class="comment">--删除列</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> &lt;表名&gt; <span class="keyword">rename</span> &lt;新表名&gt;;                     <span class="comment">--重命名表</span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> &lt;表名&gt;                                       <span class="comment">--删除表</span></span><br></pre></td></tr></table></figure></li>
+<li>表的基本操作</li>
+</ol>
+<ul>
+<li>插入数据：<code>insert [into] &lt;表名&gt; [(列名1,列名2,列名3……)] values (值1,值2,值3……);</code></li>
+<li>更新数据：<code>update &lt;表名&gt; set 列名=新值 where 更新条件;</code></li>
+<li>删除数据：<code>delete from &lt;表名&gt; where 删除条件;</code></li>
+<li>查询数据：<code>select &lt;列名&gt; from &lt;表名&gt; [查询条件];</code></li>
+<li>特定条件查询：where 不仅支持 “where 列名&#x3D;值” 这种名等于值的查询形式，对一般的比较运算的运算符都是支持的，如&#x3D;、&lt;、&gt;、！&#x3D; 等以及一些扩展运算符 is[not] null、in、like 等，还可以对查询条件使用 or 和 and 进行组合查询。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQL 进阶</title>
+    <url>/2017/4/SQL%E8%BF%9B%E9%98%B6.html</url>
+    <content><![CDATA[<p>我们都知道 select 的基本用法<code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而<code>select</code>语句后面还可以跟很多限制条件。我们这次用 user 表来作为示范，下面是 user 表的结构：</p>
+<span id="more"></span>
+<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fuser.png" alt="user 表结构"></p>
+<h4 id="Between、And、In、-、等条件查询："><a href="#Between、And、In、-、等条件查询：" class="headerlink" title="Between、And、In、&lt;&#x3D;、&gt;&#x3D;、&lt;、&gt;等条件查询："></a>Between、And、In、&lt;&#x3D;、&gt;&#x3D;、&lt;、&gt;等条件查询：</h4><p>通过<code>select * from table where id between 1 and 3</code>和<code>select * from table where id &gt;=1 and id &lt;= 3 </code>的返回结果，我们可以发现<code>between and</code>和<code>&gt;= and &lt;=</code>是等同的。<br><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fbetween.png" alt="between"><br><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fbetween2.png" alt="between2"></p>
+<p>如果我们要查询的条件不是一个连续的数值，可以用<code>in</code>：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> id <span class="keyword">in</span> (<span class="number">2</span>,<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="locate-函数：locate-substr-str"><a href="#locate-函数：locate-substr-str" class="headerlink" title="locate()函数：locate(substr,str)"></a>locate()函数：<code>locate(substr,str)</code></h4><p>这个函数返回<code>substr</code>在字符串<code>str</code>中的第一个出现的位置，如果不存在则值为0<br><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Flocate.png" alt="locate 函数"></p>
+<h4 id="Count-函数"><a href="#Count-函数" class="headerlink" title="Count()函数:"></a>Count()函数:</h4><ul>
+<li>count(字段名)：返回指定列的值的数目，但是字段值为<code>NULL</code>时不会被计算进去。<code>select count(字段名) from &lt;表名&gt;</code></li>
+<li>count(* )：返回表中的记录数，字段值为<code>NULL</code>时会被计算进去。<code>select count(*) from &lt;表名&gt;</code></li>
+</ul>
+<h4 id="Distinct语句："><a href="#Distinct语句：" class="headerlink" title="Distinct语句："></a>Distinct语句：</h4><p>Distinct语句用于去除重复行，比如：<code>select distinct * from &lt;表名&gt;</code>。<br>其他的语句或函数都可以和<code>distinct</code>配合使用，比如：<code>count(distinct &lt;字段名&gt;)</code>可以去除重复行统计行数，但是<code>count(distinct *)</code>是<strong>不被允许</strong>的</p>
+<h4 id="Union语句："><a href="#Union语句：" class="headerlink" title="Union语句："></a>Union语句：</h4><p>Union语句可以将两个<code>select</code>语句的结果集组合成一个：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">(<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> id <span class="operator">&gt;=</span> <span class="number">3</span>) <span class="keyword">union</span> (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>当我们使用<code>union</code>语句的时候，默认去除了重复行，和<code>distinct</code>的效果一样，如果要显示所有的结果，则要使用<code>union all</code>语句。</p>
+<h4 id="Drder-by语句："><a href="#Drder-by语句：" class="headerlink" title="Drder by语句："></a>Drder by语句：</h4><figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">order</span> <span class="keyword">by</span> &lt;字段名&gt; [<span class="keyword">asc</span>/<span class="keyword">desc</span>]</span><br></pre></td></tr></table></figure>
+<p>其中<code>asc</code>是默认的排序，为升序，<code>desc</code>为降序。<br>当然order by后面可以跟很多个字段，如：<code>select * from table order by info desc,id asc</code>,这个语句意为先按<code>info</code>字段降序，若<code>info</code>字段值相同的情况下，再按<code>id</code>字段升序。而且，<code>NULL</code>默认为值最小。</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Dell 7559 升级</title>
     <url>/2018/6/SSD%E4%B8%8E%E5%86%85%E5%AD%98%E6%9D%A1%E7%9A%84%E6%95%85%E4%BA%8B.html</url>
     <content><![CDATA[<p>昨天刚和杨老板达成了 PY 交易，今天货就到了，还真是快啊。淘宝链接我就不给了，大家自行搜索<code>内存之家</code>（原<code>配件之家</code>），粉丝数很少的那个就是了。</p>
@@ -577,6 +577,32 @@
       <tags>
         <tag>MySQL</tag>
         <tag>Security</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nginx 端口转发被强行更改</title>
+    <url>/2024/2/nginx-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E8%A2%AB%E5%BC%BA%E8%A1%8C%E6%9B%B4%E6%94%B9.html</url>
+    <content><![CDATA[<p><a href="https://blog.skyhive.tech/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html">上一篇文章</a>说到在家里把 LB 升了级并且通过 <code>acme.sh</code> 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：</p>
+<img  src=http://www.plantuml.com/plantuml/svg/IqmkoIzI22rEBUBY0f4Akhfs2Xf1-QKbgKMQLWesddb0HbvgYK90Vb69WeM9YR4T5qGMejB72QJADx40eW0ix-C4aNFEpqlBASrBJjM42xbdbkGa9Y7uKOb9IPaLIF95YMc9UOa80Q_Kd9pAjCmyJG00>
+
+<p>由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80&#x2F;443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。</p>
+<span id="more"></span>
+
+<p>那么对于网盘服务来说，正常的访问路径就是：</p>
+<img  src=http://www.plantuml.com/plantuml/svg/uqfCBialKWWjJYtYuWAH2hgwTWeQGVcb9Qb5cbOADfvvG4PUQeb2G7vHYO854DXnGMGXAdsSGAfy4miW2anCZEsuV9mWSdwf5IN9EVcbAI0b0KNv5PLGKmmi3Eou0000>
+
+<p>乍一看好像挺正常的，但是在我通过公网去访问的是时候</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl https://&lt;domain_name&gt;:8888</span><br></pre></td></tr></table></figure>
+<p>出现的结果往往是，nginx 直接把我的 8888 端口给重定向成了 8080，也就是变成了 <code>https://&lt;domain_name&gt;:8080</code> 的访问。后来查了一下，是需要在 nginx location 的配置中稍微做些修饰，随即将该方法记录下来</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">  ……</span><br><span class="line">  <span class="attribute">port_in_redirect</span> <span class="literal">off</span>;  <span class="comment">## 需要在 server 中加上这个配置防止 port redirect</span></span><br><span class="line"></span><br><span class="line">  <span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://192.168.2.150:8080;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>:<span class="variable">$server_port</span>;    <span class="comment">## Host header 需要有 $host:$server_port，即 host 和 port 都得有，否则 port 就会变成 proxy_pass 中的 port</span></span><br><span class="line">    ……</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上基本上可以解决问题，如若不能，则还得继续 Google 一番。</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -1105,6 +1131,48 @@
       </tags>
   </entry>
   <entry>
+    <title>配置 DNSPod 自动获取泛域名证书</title>
+    <url>/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html</url>
+    <content><![CDATA[<p>最近升级了下家里的 LB，通过 gitlab 将 LB 的配置做了版本管理，并且通过 docker-compose 实现 LB 的快速部署。但是家里的网络做了内外网的区分，为了实现内网 https 访问，我需要在内网的 LB 上配置一套 SSL 证书（公网的部分直接在 CDN 上配置了 <code>let&#39;s encrypt</code> 的免费证书，一年一换）</p>
+<p>为了避免麻烦，对于内网的 https 证书希望做到以下两点：</p>
+<ul>
+<li>到期自动续</li>
+<li>泛域名</li>
+</ul>
+<span id="more"></span>
+
+<p>查找了一番，有两个工具比较符合：<code>Certbot</code> 和 <code>acme.sh</code>，都是通过 <a href="https://en.wikipedia.org/wiki/Automatic_Certificate_Management_Environment"><code>ACME protocol</code></a> 去自动获取免费证书,但是需要自动获取泛域名证书的话，还需要能够自动在 DNS Provider 处更新 <a href="https://en.wikipedia.org/wiki/TXT_record"><code>DNS TXT Record</code></a>。由于我的域名是在 DNSPod 购买的，因此需要能够支持在 DNSPod 上自动更新 TXT 记录。Certbot 没有对应的官方插件，但是有第三方好心人写的插件能够实现该功能，如 <a href="https://github.com/tengattack/certbot-dns-dnspod">certbot-dns-dnspod</a>；而 acme.sh 是国人写的工具，官方支持 Aliyun 和 DNSPod，思来想去，还是打算使用 acme.sh。</p>
+<h3 id="Docker-Compose-Configuration"><a href="#Docker-Compose-Configuration" class="headerlink" title="Docker Compose Configuration"></a>Docker Compose Configuration</h3><p>根据 <a href="https://github.com/acmesh-official/acme.sh/wiki/deploy-to-docker-containers">官方文档</a> 先将 Docker Compose 配置好，从文档里可以看出，acme.sh 容器会以 daemon 的形式一直运行，后续的申请证书、部署、续签等操作都需要 docker compose exec 单独去操作。Dockers Compose 配置如下：</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">version: <span class="string">&quot;3.9&quot;</span></span><br><span class="line">services:</span><br><span class="line">  nginx:</span><br><span class="line">    restart: always</span><br><span class="line">    container_name: nginx</span><br><span class="line">    image: nginx:latest</span><br><span class="line">    ports:</span><br><span class="line">      - <span class="number">80</span>:<span class="number">80</span></span><br><span class="line">      - <span class="number">443</span>:<span class="number">443</span></span><br><span class="line">    labels:</span><br><span class="line">      - sh.acme.autoload.domain=$&#123;DOMAIN_NAME&#125;</span><br><span class="line">    volumes:</span><br><span class="line">      - $PWD/conf.d:/etc/nginx/conf.d:ro</span><br><span class="line">      - $PWD/nginx.conf:/etc/nginx/nginx.conf:ro</span><br><span class="line">      - $PWD/log/:/var/log/nginx/:rw</span><br><span class="line">    environment:</span><br><span class="line">      - TZ=Asia/Shanghai</span><br><span class="line">  </span><br><span class="line">  acme:</span><br><span class="line">    image: neilpang/acme.sh</span><br><span class="line">    container_name: acme.sh</span><br><span class="line">    command: daemon</span><br><span class="line">    volumes:</span><br><span class="line">      - $PWD/acmeout:/acme.sh</span><br><span class="line">      - /var/<span class="keyword">run</span><span class="language-bash">/docker.sock:/var/run/docker.sock</span></span><br><span class="line">    dns:</span><br><span class="line">      - <span class="number">8.8</span>.<span class="number">8.8</span></span><br><span class="line">    environment:</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_LABEL=sh.acme.autoload.domain=$&#123;DOMAIN_NAME&#125;</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_KEY_FILE=/etc/nginx/ssl/key.pem</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_CERT_FILE=/etc/nginx/ssl/cert.pem</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_CA_FILE=/etc/nginx/ssl/ca.pem</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_FULLCHAIN_FILE=/etc/nginx/ssl/full.pem</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_RELOAD_CMD=<span class="string">&quot;service nginx force-reload&quot;</span></span><br><span class="line">      - DP_Id=$&#123;DP_Id&#125;</span><br><span class="line">      - DP_Key=$&#123;DP_Key&#125;</span><br></pre></td></tr></table></figure>
+<p>另外还需要添加一个 <code>.env</code> 文件用来存放如下变量：</p>
+<ul>
+<li><code>$&#123;DOMAIN_NAME&#125;</code>：用于申请证书的泛域名</li>
+<li><code>$&#123;DP_Id&#125;</code>：DNSPod API Key ID</li>
+<li><code>$&#123;DP_Key&#125;</code>：DNSPod API Key</li>
+</ul>
+<h3 id="申请证书"><a href="#申请证书" class="headerlink" title="申请证书"></a>申请证书</h3><p>acme.sh 默认的 ssl 服务器是 <code>ZeroSSL.com</code>，根据 <a href="https://github.com/acmesh-official/acme.sh/wiki/ZeroSSL.com-CA">文档</a> 里提到的，在申请证书之前，需要先注册账户</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --register-account -m &lt;your email address&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注册完成后就可以正式申请证书了</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --issue --dns dns_dp -d $&#123;DOMAIN_NAME&#125;</span><br></pre></td></tr></table></figure>
+<p>等待证书申请完成后，可以看到 <code>acmeout</code> 目录下会出现一个 <code>$&#123;DOMAIN_NAME&#125;</code> 命名的目录，该目录下就是我们申请到的证书。接着运行命令将证书部署到 nginx 的目录下（该目录则是在 docker compose 中通过 environment 传参给 acme 容器的）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --deploy -d $&#123;DOMAIN_NAME&#125;  --deploy-hook docker</span><br></pre></td></tr></table></figure>
+<p>理论上到这里我们的证书申请和部署就已经结束了。</p>
+<h3 id="修锅"><a href="#修锅" class="headerlink" title="修锅"></a>修锅</h3><p>当然我在申请证书的时候，遇到了些问题，比如在等待证书签售的过程中，一直在报错</p>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Order</span> <span class="title">status</span> is processing, lets sleep <span class="keyword">and</span> retry</span><br></pre></td></tr></table></figure>
+<p>等待的超时时间是 15s，连续 retry 了多次之后肯定是有问题的，参考了 <a href="https://u.sb/acme-sh-ssl/">网络上其他的人建议</a>，将默认的 CA Server 从 <code>ZeroSSL.com</code> 更换成了 <code>Let&#39;s Encrypt</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --set-default-ca --server letsencrypt</span><br></pre></td></tr></table></figure>
+
+<h3 id="续签证书"><a href="#续签证书" class="headerlink" title="续签证书"></a>续签证书</h3><p>acme.sh 不用我们手动去执行 renew 的命令来续签到期的证书，正如之前所说，acme 的容器是以 daemon 状态运行的，因此他会定时的去检测我们的证书到期时间，在到期之前会自动进行 renew 操作。可以在 <code>acmeout/$&#123;DOMAIN_NAME&#125;/$&#123;DOAMIN_NAME&#125;.conf</code> 中看到，有一项 <code>Le_NextRenewTimeStr</code> 配置，该配置了记录了 acme.sh 下一次续签证书的时间。</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>证书</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>配置 SSH 免密登录遇到的坑</title>
     <url>/2017/12/%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91.html</url>
     <content><![CDATA[<p>最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台（一共四台服务器，这是一个怎样的 hadoop 啊），搭建的中途遇到一个小插曲。<br>由于需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行</p>
@@ -1228,9 +1296,9 @@
 </style>
 <h3 id="第二天"><a href="#第二天" class="headerlink" title="第二天"></a>第二天</h3><p>睡到中午，洗漱出门。</p>
 <p>步行至解放碑吃小吃，较场口夜市区域购买<strong>降龙爪爪、蜜雪冰城冰激凌</strong>，后步行至石灰市，购买现炸小酥肉，并于<strong>谭记王烤鱼</strong>就餐。</p>
-<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E9%99%8D%E9%BE%99%E7%88%AA%E7%88%AA.png" alt="降龙爪爪"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E8%9C%9C%E9%9B%AA%E5%86%B0%E5%9F%8E%E7%94%9C%E8%9C%9C%E8%9C%9C.png" alt="蜜雪冰城甜蜜蜜"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E7%83%A4%E7%8C%AA%E8%B9%84.png" alt="烤猪蹄"></div></div><div class="group-picture-row"></div></div></div>
+<div class="group-picture"><div class="group-picture-row"><div class="group-picture-column"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E9%99%8D%E9%BE%99%E7%88%AA%E7%88%AA.png" alt="降龙爪爪"></div><div class="group-picture-column"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E8%9C%9C%E9%9B%AA%E5%86%B0%E5%9F%8E%E7%94%9C%E8%9C%9C%E8%9C%9C.png" alt="蜜雪冰城甜蜜蜜"></div><div class="group-picture-column"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E7%83%A4%E7%8C%AA%E8%B9%84.png" alt="烤猪蹄"></div></div><div class="group-picture-row"></div></div>
 
-<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E5%B0%8F%E9%85%A5%E8%82%89.png" alt="小酥肉"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E7%83%A4%E5%9C%9F%E8%B1%86.png" alt="烤土豆"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E9%85%B8%E5%A5%B6%E7%89%9B.png" alt="酸奶牛"></div></div><div class="group-picture-row"></div></div></div>
+<div class="group-picture"><div class="group-picture-row"><div class="group-picture-column"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E5%B0%8F%E9%85%A5%E8%82%89.png" alt="小酥肉"></div><div class="group-picture-column"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E7%83%A4%E5%9C%9F%E8%B1%86.png" alt="烤土豆"></div><div class="group-picture-column"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E9%85%B8%E5%A5%B6%E7%89%9B.png" alt="酸奶牛"></div></div><div class="group-picture-row"></div></div>
 <p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E7%83%A4%E9%B1%BC.png" alt="烤鱼"></p>
 <blockquote>
 <ul>
@@ -1272,7 +1340,7 @@
 <p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E8%BE%A3%E5%AD%90%E9%B8%A1.png" alt="辣子鸡"><br>晚上回去买了俩烤猪蹄，到酒店洗洗、玩玩手机就睡了 💤。</p>
 <h3 id="第三天"><a href="#第三天" class="headerlink" title="第三天"></a>第三天</h3><p>早上鬼使神差的去吃了汉庭的早餐，种类比较少，不太好吃。</p>
 <p>洗漱后来到楼下买了一碗<strong>花市豌杂</strong>，小面打包至隔壁的类似大食堂的早餐店就餐，顺便点了一碗<strong>早茶</strong>（虽然已经是中午了）。</p>
-<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E8%8A%B1%E5%B8%82%E8%B1%8C%E6%9D%82.png" alt="花市豌杂"></div><div class="group-picture-column" style="width: 50%;"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E6%97%A9%E8%8C%B6.png" alt="早茶"></div></div></div></div>
+<div class="group-picture"><div class="group-picture-row"><div class="group-picture-column"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E8%8A%B1%E5%B8%82%E8%B1%8C%E6%9D%82.png" alt="花市豌杂"></div><div class="group-picture-column"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E6%97%A9%E8%8C%B6.png" alt="早茶"></div></div></div>
 
 <p>吃饱喝足后去乘坐地铁<strong>一号线（璧山方向）</strong>至大坪站换乘地铁<strong>二号线（较场口方向）</strong>，于李子坝站下车，跟着路标出地铁站来到马路对面的李子坝观景台拍照。<br><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E6%9D%8E%E5%AD%90%E5%9D%9D01.png" alt="李子坝 - 1"><br><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E6%9D%8E%E5%AD%90%E5%9D%9D02.png" alt="李子坝 - 2 "><br><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E6%9D%8E%E5%AD%90%E5%9D%9D%E6%B1%9F%E6%99%AF.png" alt="李子坝江景"></p>
 <p>李子坝观景台对面是防空洞，进去转转没啥意思。</p>
@@ -1300,7 +1368,7 @@
 </blockquote>
 <p>洪崖洞出来后，步行至<strong>石灰市莲花池社区</strong>，寻找<strong>巴渝龙老火锅</strong> ，今晚选择和盗月社同款打卡火锅店 - <a href="https://www.bilibili.com/video/BV1qs411M7S6">B 站链接</a>（也因为这是开在小区里的老火锅，物美价廉）</p>
 <p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E5%B7%B4%E6%B8%9D%E9%BE%99.png" alt="巴渝龙"></p>
-<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 50%;"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E9%BA%BB%E8%BE%A3%E7%89%9B%E8%82%89.png" alt="麻辣牛肉"></div><div class="group-picture-column" style="width: 50%;"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E7%8B%97%E5%AD%90.png" alt="狗子"></div></div><div class="group-picture-row"></div></div></div>
+<div class="group-picture"><div class="group-picture-row"><div class="group-picture-column"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E9%BA%BB%E8%BE%A3%E7%89%9B%E8%82%89.png" alt="麻辣牛肉"></div><div class="group-picture-column"><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E7%8B%97%E5%AD%90.png" alt="狗子"></div></div></div>
 
 <p>吃完（大概十点左右）步行回酒店，洗漱玩手机睡觉 💤</p>
 <h3 id="第四天"><a href="#第四天" class="headerlink" title="第四天"></a>第四天</h3><p>继续睡到中午，开始收拾行李，准备退房。</p>
@@ -1375,74 +1443,6 @@
       <tags>
         <tag>NAS</tag>
         <tag>黑群晖</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>配置 DNSPod 自动获取泛域名证书</title>
-    <url>/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html</url>
-    <content><![CDATA[<p>最近升级了下家里的 LB，通过 gitlab 将 LB 的配置做了版本管理，并且通过 docker-compose 实现 LB 的快速部署。但是家里的网络做了内外网的区分，为了实现内网 https 访问，我需要在内网的 LB 上配置一套 SSL 证书（公网的部分直接在 CDN 上配置了 <code>let&#39;s encrypt</code> 的免费证书，一年一换）</p>
-<p>为了避免麻烦，对于内网的 https 证书希望做到以下两点：</p>
-<ul>
-<li>到期自动续</li>
-<li>泛域名</li>
-</ul>
-<span id="more"></span>
-
-<p>查找了一番，有两个工具比较符合：<code>Certbot</code> 和 <code>acme.sh</code>，都是通过 <a href="https://en.wikipedia.org/wiki/Automatic_Certificate_Management_Environment"><code>ACME protocol</code></a> 去自动获取免费证书,但是需要自动获取泛域名证书的话，还需要能够自动在 DNS Provider 处更新 <a href="https://en.wikipedia.org/wiki/TXT_record"><code>DNS TXT Record</code></a>。由于我的域名是在 DNSPod 购买的，因此需要能够支持在 DNSPod 上自动更新 TXT 记录。Certbot 没有对应的官方插件，但是有第三方好心人写的插件能够实现该功能，如 <a href="https://github.com/tengattack/certbot-dns-dnspod">certbot-dns-dnspod</a>；而 acme.sh 是国人写的工具，官方支持 Aliyun 和 DNSPod，思来想去，还是打算使用 acme.sh。</p>
-<h3 id="Docker-Compose-Configuration"><a href="#Docker-Compose-Configuration" class="headerlink" title="Docker Compose Configuration"></a>Docker Compose Configuration</h3><p>根据 <a href="https://github.com/acmesh-official/acme.sh/wiki/deploy-to-docker-containers">官方文档</a> 先将 Docker Compose 配置好，从文档里可以看出，acme.sh 容器会以 daemon 的形式一直运行，后续的申请证书、部署、续签等操作都需要 docker compose exec 单独去操作。Dockers Compose 配置如下：</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">version: <span class="string">&quot;3.9&quot;</span></span><br><span class="line">services:</span><br><span class="line">  nginx:</span><br><span class="line">    restart: always</span><br><span class="line">    container_name: nginx</span><br><span class="line">    image: nginx:latest</span><br><span class="line">    ports:</span><br><span class="line">      - <span class="number">80</span>:<span class="number">80</span></span><br><span class="line">      - <span class="number">443</span>:<span class="number">443</span></span><br><span class="line">    labels:</span><br><span class="line">      - sh.acme.autoload.domain=$&#123;DOMAIN_NAME&#125;</span><br><span class="line">    volumes:</span><br><span class="line">      - $PWD/conf.d:/etc/nginx/conf.d:ro</span><br><span class="line">      - $PWD/nginx.conf:/etc/nginx/nginx.conf:ro</span><br><span class="line">      - $PWD/log/:/var/log/nginx/:rw</span><br><span class="line">    environment:</span><br><span class="line">      - TZ=Asia/Shanghai</span><br><span class="line">  </span><br><span class="line">  acme:</span><br><span class="line">    image: neilpang/acme.sh</span><br><span class="line">    container_name: acme.sh</span><br><span class="line">    command: daemon</span><br><span class="line">    volumes:</span><br><span class="line">      - $PWD/acmeout:/acme.sh</span><br><span class="line">      - /var/<span class="keyword">run</span><span class="language-bash">/docker.sock:/var/run/docker.sock</span></span><br><span class="line">    dns:</span><br><span class="line">      - <span class="number">8.8</span>.<span class="number">8.8</span></span><br><span class="line">    environment:</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_LABEL=sh.acme.autoload.domain=$&#123;DOMAIN_NAME&#125;</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_KEY_FILE=/etc/nginx/ssl/key.pem</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_CERT_FILE=/etc/nginx/ssl/cert.pem</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_CA_FILE=/etc/nginx/ssl/ca.pem</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_FULLCHAIN_FILE=/etc/nginx/ssl/full.pem</span><br><span class="line">      - DEPLOY_DOCKER_CONTAINER_RELOAD_CMD=<span class="string">&quot;service nginx force-reload&quot;</span></span><br><span class="line">      - DP_Id=$&#123;DP_Id&#125;</span><br><span class="line">      - DP_Key=$&#123;DP_Key&#125;</span><br></pre></td></tr></table></figure>
-<p>另外还需要添加一个 <code>.env</code> 文件用来存放如下变量：</p>
-<ul>
-<li><code>$&#123;DOMAIN_NAME&#125;</code>：用于申请证书的泛域名</li>
-<li><code>$&#123;DP_Id&#125;</code>：DNSPod API Key ID</li>
-<li><code>$&#123;DP_Key&#125;</code>：DNSPod API Key</li>
-</ul>
-<h3 id="申请证书"><a href="#申请证书" class="headerlink" title="申请证书"></a>申请证书</h3><p>acme.sh 默认的 ssl 服务器是 <code>ZeroSSL.com</code>，根据 <a href="https://github.com/acmesh-official/acme.sh/wiki/ZeroSSL.com-CA">文档</a> 里提到的，在申请证书之前，需要先注册账户</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --register-account -m &lt;your email address&gt;</span><br></pre></td></tr></table></figure>
-
-<p>注册完成后就可以正式申请证书了</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --issue --dns dns_dp -d $&#123;DOMAIN_NAME&#125;</span><br></pre></td></tr></table></figure>
-<p>等待证书申请完成后，可以看到 <code>acmeout</code> 目录下会出现一个 <code>$&#123;DOMAIN_NAME&#125;</code> 命名的目录，该目录下就是我们申请到的证书。接着运行命令将证书部署到 nginx 的目录下（该目录则是在 docker compose 中通过 environment 传参给 acme 容器的）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --deploy -d $&#123;DOMAIN_NAME&#125;  --deploy-hook docker</span><br></pre></td></tr></table></figure>
-<p>理论上到这里我们的证书申请和部署就已经结束了。</p>
-<h3 id="修锅"><a href="#修锅" class="headerlink" title="修锅"></a>修锅</h3><p>当然我在申请证书的时候，遇到了些问题，比如在等待证书签售的过程中，一直在报错</p>
-<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Order</span> <span class="title">status</span> is processing, lets sleep <span class="keyword">and</span> retry</span><br></pre></td></tr></table></figure>
-<p>等待的超时时间是 15s，连续 retry 了多次之后肯定是有问题的，参考了 <a href="https://u.sb/acme-sh-ssl/">网络上其他的人建议</a>，将默认的 CA Server 从 <code>ZeroSSL.com</code> 更换成了 <code>Let&#39;s Encrypt</code></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker compose exec acme --set-default-ca --server letsencrypt</span><br></pre></td></tr></table></figure>
-
-<h3 id="续签证书"><a href="#续签证书" class="headerlink" title="续签证书"></a>续签证书</h3><p>acme.sh 不用我们手动去执行 renew 的命令来续签到期的证书，正如之前所说，acme 的容器是以 daemon 状态运行的，因此他会定时的去检测我们的证书到期时间，在到期之前会自动进行 renew 操作。可以在 <code>acmeout/$&#123;DOMAIN_NAME&#125;/$&#123;DOAMIN_NAME&#125;.conf</code> 中看到，有一项 <code>Le_NextRenewTimeStr</code> 配置，该配置了记录了 acme.sh 下一次续签证书的时间。</p>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>证书</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nginx 端口转发被强行更改</title>
-    <url>/2024/2/nginx-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E8%A2%AB%E5%BC%BA%E8%A1%8C%E6%9B%B4%E6%94%B9.html</url>
-    <content><![CDATA[<p><a href="https://blog.skyhive.tech/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html">上一篇文章</a>说到在家里把 LB 升了级并且通过 <code>acme.sh</code> 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：</p>
-<img  src=http://www.plantuml.com/plantuml/svg/IqmkoIzI22rEBUBY0f4Akhfs2Xf1-QKbgKMQLWesddb0HbvgYK90Vb69WeM9YR4T5qGMejB72QJADx40eW0ix-C4aNFEpqlBASrBJjM42xbdbkGa9Y7uKOb9IPaLIF95YMc9UOa80Q_Kd9pAjCmyJG00>
-
-<p>由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80&#x2F;443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。</p>
-<span id="more"></span>
-
-<p>那么对于网盘服务来说，正常的访问路径就是：</p>
-<img  src=http://www.plantuml.com/plantuml/svg/uqfCBialKWWjJYtYuWAH2hgwTWeQGVcb9Qb5cbOADfvvG4PUQeb2G7vHYO854DXnGMGXAdsSGAfy4miW2anCZEsuV9mWSdwf5IN9EVcbAI0b0KNv5PLGKmmi3Eou0000>
-
-<p>乍一看好像挺正常的，但是在我通过公网去访问的是时候</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl https://&lt;domain_name&gt;:8888</span><br></pre></td></tr></table></figure>
-<p>出现的结果往往是，nginx 直接把我的 8888 端口给重定向成了 8080，也就是变成了 <code>https://&lt;domain_name&gt;:8080</code> 的访问。后来查了一下，是需要在 nginx location 的配置中稍微做些修饰，随即将该方法记录下来</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">  ……</span><br><span class="line">  <span class="attribute">port_in_redirect</span> <span class="literal">off</span>;  <span class="comment">## 需要在 server 中加上这个配置防止 port redirect</span></span><br><span class="line"></span><br><span class="line">  <span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://192.168.2.150:8080;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>:<span class="variable">$server_port</span>;    <span class="comment">## Host header 需要有 $host:$server_port，即 host 和 port 都得有，否则 port 就会变成 proxy_pass 中的 port</span></span><br><span class="line">    ……</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>以上基本上可以解决问题，如若不能，则还得继续 Google 一番。</p>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>nginx</tag>
       </tags>
   </entry>
 </search>
