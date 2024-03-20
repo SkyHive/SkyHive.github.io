@@ -2,6 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://skyhive.github.io/2018/10/%E7%BE%8E%E7%89%88V30%E7%B3%BB%E7%BB%9F%E5%8D%87%E7%BA%A7.html</loc>
+    
+    <lastmod>2024-03-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://skyhive.github.io/2018/6/Dell-7559-%E5%8D%87%E7%BA%A7.html</loc>
+    
+    <lastmod>2024-03-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://skyhive.github.io/2020/10/%E9%9B%BE%E9%83%BD%E6%B8%B8%E8%AE%B0.html</loc>
+    
+    <lastmod>2024-03-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://skyhive.github.io/2024/3/2023-%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93.html</loc>
+    
+    <lastmod>2024-03-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://skyhive.github.io/about/index.html</loc>
+    
+    <lastmod>2024-03-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://skyhive.github.io/2024/2/nginx-%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E8%A2%AB%E5%BC%BA%E8%A1%8C%E6%9B%B4%E6%94%B9.html</loc>
     
     <lastmod>2024-02-20</lastmod>
@@ -14,15 +59,6 @@
     <loc>https://skyhive.github.io/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html</loc>
     
     <lastmod>2024-02-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://skyhive.github.io/2020/10/%E9%9B%BE%E9%83%BD%E6%B8%B8%E8%AE%B0.html</loc>
-    
-    <lastmod>2023-12-04</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -74,15 +110,6 @@
   </url>
   
   <url>
-    <loc>https://skyhive.github.io/2018/10/%E7%BE%8E%E7%89%88V30%E7%B3%BB%E7%BB%9F%E5%8D%87%E7%BA%A7.html</loc>
-    
-    <lastmod>2023-12-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://skyhive.github.io/2017/4/%E4%B8%80%E4%B8%AA%E5%AD%A6%E4%B9%A0Python%E7%9A%84%E5%B0%8F%E6%B8%B8%E6%88%8F.html</loc>
     
     <lastmod>2023-12-04</lastmod>
@@ -120,15 +147,6 @@
   
   <url>
     <loc>https://skyhive.github.io/2017/4/SQL%E8%BF%9B%E9%98%B6.html</loc>
-    
-    <lastmod>2023-12-04</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://skyhive.github.io/2018/6/SSD%E4%B8%8E%E5%86%85%E5%AD%98%E6%9D%A1%E7%9A%84%E6%95%85%E4%BA%8B.html</loc>
     
     <lastmod>2023-12-04</lastmod>
     
@@ -362,15 +380,6 @@
   </url>
   
   <url>
-    <loc>https://skyhive.github.io/about/index.html</loc>
-    
-    <lastmod>2022-12-30</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://skyhive.github.io/tags/index.html</loc>
     
     <lastmod>2022-12-30</lastmod>
@@ -391,7 +400,7 @@
 
   <url>
     <loc>https://skyhive.github.io/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -399,175 +408,175 @@
   
   <url>
     <loc>https://skyhive.github.io/tags/DNS/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/Python/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/ESXi/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/Filesystem/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/MySQL/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/GitLab/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/Hadoop/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/OSS/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/KVM/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/Laptop/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/nginx/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/Security/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/Linux/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/Network/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/Ubuntu/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/Django/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/Android/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/Apache/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/PHP/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/Arch/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/%E8%AF%81%E4%B9%A6/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/%E6%97%85%E6%B8%B8/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/NAS/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/tags/%E9%BB%91%E7%BE%A4%E6%99%96/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -576,35 +585,42 @@
   
   <url>
     <loc>https://skyhive.github.io/categories/Infra/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/categories/Code/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/categories/Blog/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/categories/%E7%94%9F%E6%B4%BB/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://skyhive.github.io/categories/Algorithm/</loc>
-    <lastmod>2024-02-21</lastmod>
+    <lastmod>2024-03-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skyhive.github.io/categories/Life/</loc>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
