@@ -55,9 +55,9 @@ default_category: categorized
 category_map:
   Blog: Blog
   Code: Code
-  运维: Infra
-  数据结构与算法: Algorithm
-  生活: 生活
+  Infra: Infra
+  Algorithm: Algorithm
+  Life: Life
 
 tag_map:
 
