@@ -150,6 +150,13 @@ hljs:
     right: ':'
     copy: Copy Code
 
+syntax_highlighter: prismjs
+prismjs:
+  preprocess: true
+  line_number: true
+  line_threshold: 0
+  tab_replace: ""
+
 # hexo-neat
 # 博文压缩
 neat_enable: true
@@ -188,6 +195,7 @@ markdown:
     - markdown-it-ins
     - markdown-it-sub
     - markdown-it-sup
+    - markdown-it-emoji
   anchors:
     level: 2
     collisionSuffix: 'v'
