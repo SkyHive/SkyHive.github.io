@@ -28,6 +28,7 @@
     "hexo-renderer-markdown-it": "^7.1.1",
     "hexo-renderer-stylus": "^3.0.1",
     "hexo-server": "^3.0.0",
+    "hexo-sliding-spoiler": "^1.2.1",
     "hexo-tag-chart": "^1.0.8",
     "hexo-tag-plantuml": "^1.0.0",
     "hexo-word-counter": "^0.1.0",
