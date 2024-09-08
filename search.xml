@@ -2084,8 +2084,7 @@ net.ipv4.tcp_congestion_control = hybla
 <th>时间</th>
 <th>始发地</th>
 <th>目的地</th>
-<th>航班 / 班次</th>
-<th>备注</th>
+<th>航班</th>
 </tr>
 </thead>
 <tbody>
@@ -2094,28 +2093,24 @@ net.ipv4.tcp_congestion_control = hybla
 <td>杭州 HGH T4</td>
 <td> 吉隆坡 KUL T2</td>
 <td>D7307 空客 330</td>
-<td> 廉航经济舱</td>
 </tr>
 <tr>
 <td><code>2024-08-30 07:50 ~ 08:50</code></td>
 <td>吉隆坡 KUL T2</td>
 <td> 槟城 PEN D</td>
 <td>AK6112 空客 320</td>
-<td> 廉航经济舱</td>
 </tr>
 <tr>
 <td><code>2024-09-03 11:25 ~ 12:50</code></td>
 <td>槟城 PEN I</td>
 <td> 新加坡 SIN T1</td>
 <td>TR427 空客 321</td>
-<td> 廉航经济舱</td>
 </tr>
 <tr>
 <td><code>2024-09-03 16:30 ~ 21:35</code></td>
 <td>新加坡 SIN T1</td>
 <td> 杭州 HGH T4</td>
-<td>TR188 波音 787</td>
-<td> 廉航经济舱</td>
+<td>TR188 波音 787 </td>
 </tr>
 </tbody>
 </table>
