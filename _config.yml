@@ -98,14 +98,14 @@ plugin:
 
 # Feed Atom
 feed:
-type: atom
-path: atom.xml
-limit: 20
-content_limit: 140
-content_limit_delim: ' '
-order_by: -date
-autodiscovery: true
-template:
+  type: atom
+  path: atom.xml
+  limit: 20
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  autodiscovery: true
+  template:
   
 
 symbols_count_time:
