@@ -19,7 +19,7 @@ minify: false
 # Define custom file paths.
 # Create your custom files in site directory `source/_data` and uncomment needed files below.
 custom_file_path:
-  # head: source/_data/head.njk
+  #head: source/_data/head.njk
   #header: source/_data/header.njk
   #sidebar: source/_data/sidebar.njk
   #postMeta: source/_data/post-meta.njk
@@ -118,16 +118,18 @@ menu_settings:
 # ---------------------------------------------------------------
 
 sidebar:
-  # Sidebar Position.
+  # Sidebar position. Available values: left | right
   position: right
-  #position: right
 
-  # Manual define the sidebar width. If commented, will be default for:
-  # Muse | Mist: 320
-  # Pisces | Gemini: 240
-  #width: 300
+  # Sidebar width.
+  # Applicable to Muse | Mist and mobile of Pisces | Gemini.
+  width_expanded: 320
+  # Applicable to desktop of Pisces | Gemini.
+  width_dual_column: 240
 
-  # Sidebar Display (only for Muse | Mist), available values:
+  # Sidebar display.
+  # Applicable to Muse | Mist and mobile of Pisces | Gemini.
+  # Available values:
   #  - post    expand on posts automatically. Default.
   #  - always  expand for all pages automatically.
   #  - hide    expand only when click on the sidebar toggle icon.
@@ -373,7 +375,7 @@ codeblock:
   copy_button:
     enable: true
     # Available values: default | flat | mac
-    style: mac
+    style: flat
   # Fold code block
   fold:
     enable: false
@@ -701,7 +703,7 @@ waline:
   visitor: true # Article reading statistic
   comment_count: true # If false, comment count will only be displayed in post page, not in home page
   requiredFields: [nick] # Set required fields: [nick] | [nick, mail]
-  libUrl: # Set custom library cdn url
+  libUrl: 
 # DisqusJS
 # For more information: https://disqusjs.skk.moe
 disqusjs:
@@ -829,8 +831,8 @@ plausible:
 # You can visit https://www.leancloud.cn to get AppID and AppKey.
 leancloud_visitors:
   enable: false
-  app_id: 
-  app_key: 
+  app_id: # <your app id>
+  app_key: # <your app key>
   # Required for apps from CN region
   server_url: # <your server url>
   # Dependencies: https://github.com/theme-next/hexo-leancloud-counter-security
@@ -875,9 +877,6 @@ algolia_search:
 # Dependencies: https://github.com/next-theme/hexo-generator-searchdb
 local_search:
   enable: false
-  # If auto, trigger search by changing input.
-  # If manual, trigger search by pressing enter key or search button.
-  trigger: auto
   # Show top n results per article, show all results by setting to -1
   top_n_per_article: 1
   # Unescape html strings to the readable one.
