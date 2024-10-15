@@ -370,12 +370,12 @@ codeblock:
     dark: atom-one-dark
   prism:
     light: prism
-    dark: prism-night-owl
+    dark: prism-atom-dark
   # Add copy button on codeblock
   copy_button:
     enable: true
     # Available values: default | flat | mac
-    style: flat
+    style: mac
   # Fold code block
   fold:
     enable: false

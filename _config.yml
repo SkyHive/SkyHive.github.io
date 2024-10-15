@@ -198,6 +198,10 @@ markdown:
     - markdown-it-sup
     - markdown-it-emoji
     - markdown-it-ruby
+    - markdown-it-checkbox
+    - markdown-it-mark
+    - markdown-it-imsize
+    - markdown-it-expandable
   anchors:
     level: 2
     collisionSuffix: 'v'
