@@ -370,7 +370,7 @@ codeblock:
     dark: atom-one-dark
   prism:
     light: prism
-    dark: prism-atom-dark
+    dark: prism-night-owl
   # Add copy button on codeblock
   copy_button:
     enable: true
@@ -378,7 +378,7 @@ codeblock:
     style: mac
   # Fold code block
   fold:
-    enable: false
+    enable: true
     height: 500
 
 back2top:
