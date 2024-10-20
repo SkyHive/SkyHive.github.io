@@ -819,7 +819,7 @@ font:
 # Font settings for the site title and site subtitle
 blog_title_font:
   font_link:
-  font_family:
+  font_family: 'Noto Sans Simplified Chinese'
 
 # The setting of divider icon
 hr_icon:
@@ -900,7 +900,7 @@ clickShowText:
 # https://github.com/francoischalifour/medium-zoom
 # https://fancyapps.com/fancybox/
 # Leave it empty if you don't need lightbox
-lightbox: true
+lightbox: fancybox
 
 # --------------------------------------
 # Tag Plugins settings
