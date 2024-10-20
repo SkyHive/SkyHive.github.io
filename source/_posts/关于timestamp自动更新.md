@@ -1,9 +1,10 @@
 ---
 title: 关于 timestamp 自动更新
-date: 2017-02-09 11:10:32
 categories: Infra
 tags:
-- MySQL
+  - MySQL
+abbrlink: bc87c772
+date: 2017-02-09 11:10:32
 ---
 最近笔者在“温习TP框架”（其实就是不会然后抓紧时间啃），从最简单Blog开始做起，以前学习的时候是跟着教程，用time()函数获取当前时间戳，然后用int型数据来存储。这一次我突然想用Mysql内置的时间类型的数据——timestamp。
 <!--more-->

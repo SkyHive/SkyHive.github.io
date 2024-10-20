@@ -1,10 +1,11 @@
 ---
 title: 搭建属于自己的 Shadowsocks 服务
-date: 2017-08-11 12:52:41
 categories: Infra
-tags: 
-- Network
-- Linux
+tags:
+  - Network
+  - Linux
+abbrlink: 3d308a66
+date: 2017-08-11 12:52:41
 ---
 最近一直想自己搭一个 Shadowsocks 服务，并且利用服务器学习一些技术知识，但是国内的服务器实在是贵得很啊，像我这种苦逼大学生根本玩不起，无奈之下只好各种 Google 百度，最后找到了一些国外的 VPS 资源
 

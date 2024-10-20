@@ -1,9 +1,10 @@
 ---
 title: Ext4 文件系统缩容
-date: 2019-10-31 12:32:00
 categories: Infra
 tags:
-- Filesystem
+  - Filesystem
+abbrlink: 9fe434cf
+date: 2019-10-31 12:32:00
 ---
 由于 `XFS` 文件系统不支持缩容，所以这里只讨论 `Ext4` 缩容的情况。
 

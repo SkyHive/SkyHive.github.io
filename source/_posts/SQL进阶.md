@@ -1,9 +1,10 @@
 ---
 title: SQL 进阶
-date: 2017-04-17 17:04:51
 categories: Infra
 tags:
-- MySQL
+  - MySQL
+abbrlink: 5a67733d
+date: 2017-04-17 17:04:51
 ---
 我们都知道 select 的基本用法`select <字段名> from <表名> [where <限制条件>]`，然而`select`语句后面还可以跟很多限制条件。我们这次用 user 表来作为示范，下面是 user 表的结构：
 <!--more-->

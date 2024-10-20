@@ -1,9 +1,10 @@
 ---
 title: DNS 缓存清理
-date: 2020-04-01 12:34:22
 categories: Infra
 tags:
-- DNS
+  - DNS
+abbrlink: e4bc9b91
+date: 2020-04-01 12:34:22
 ---
 ## Windows 下清理
 ```

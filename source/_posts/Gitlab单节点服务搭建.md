@@ -1,9 +1,10 @@
 ---
 title: Gitlab单节点服务搭建
-date: 2019-07-25 12:25:01
 categories: Infra
 tags:
-- GitLab
+  - GitLab
+abbrlink: dfc3ccac
+date: 2019-07-25 12:25:01
 ---
 ## 搭建准备
 根据官方提供的说法，小规模使用 GitLab 只用单机部署即可，4C8G 的配置足够小一百人使用 Git，由于本次也只是熟悉一下 GitLab 的搭建过程和各组件之间的关系，所以就使用低配的虚拟机进行搭建了。

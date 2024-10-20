@@ -1,9 +1,10 @@
 ---
 title: 关于 TCP
-date: 2017-04-04 12:34:26
 categories: Infra
 tags:
-- Network
+  - Network
+abbrlink: 7f2ae283
+date: 2017-04-04 12:34:26
 ---
 > 互联网协议族（Internet Protocol Suite，缩写IPS）是一个网络通信模型，以及一整个网络传输协议家族，为互联网的基础通信架构。它常被通称为TCP/IP协议族（TCP/IP Protocol Suite，或TCP/IP Protocols），简称TCP/IP协议集。因为该协议家族的两个核心协议：TCP（传输控制协议）和IP（网际协议），为该家族中最早通过的标准。由于在网络通讯协议普遍采用分层的结构，当多个层次的协议共同工作时，类似计算机科学中的堆栈，因此又被称为TCP/IP协议栈（TCP/IP Protocol Stack）
 

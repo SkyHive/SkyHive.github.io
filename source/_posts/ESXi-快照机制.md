@@ -1,10 +1,11 @@
 ---
 title: ESXi 快照机制
-date: 2020-06-17 23:47:50
 categories: Infra
 tags:
-- 虚拟化
-- ESXi
+  - 虚拟化
+  - ESXi
+abbrlink: 35b185c
+date: 2020-06-17 23:47:50
 ---
 > [Understanding VM Sanpshots in ESXi](https://kb.vmware.com/s/article/1015180)</br>
 [VMware vSphere 6.7 虚拟机快照原理及 Veeam Backup 备份](https://kknews.cc/code/y5pnlkj.html)</br>

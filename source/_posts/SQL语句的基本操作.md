@@ -1,9 +1,10 @@
 ---
 title: SQL 语句的基本操作
-date: 2017-04-04 12:44:13
 categories: Infra
 tags:
-- MySQL
+  - MySQL
+abbrlink: '45981961'
+date: 2017-04-04 12:44:13
 ---
 ### 数据库操作
 1. 创建数据库： `CREATE DATABASE <数据库名> [其他选项]`

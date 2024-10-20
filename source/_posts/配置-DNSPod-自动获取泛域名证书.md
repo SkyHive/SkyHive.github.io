@@ -1,9 +1,10 @@
 ---
 title: 配置 DNSPod 自动获取泛域名证书
-date: 2024-02-05 16:57:07
 categories: Infra
-tags: 
-- 证书
+tags:
+  - 证书
+abbrlink: 4b4fd36b
+date: 2024-02-05 16:57:07
 ---
 最近升级了下家里的 LB，通过 gitlab 将 LB 的配置做了版本管理，并且通过 docker-compose 实现 LB 的快速部署。但是家里的网络做了内外网的区分，为了实现内网 https 访问，我需要在内网的 LB 上配置一套 SSL 证书（公网的部分直接在 CDN 上配置了 `let's encrypt` 的免费证书，一年一换）
 

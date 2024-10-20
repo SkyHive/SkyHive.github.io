@@ -1,9 +1,10 @@
 ---
 title: Gitlab EE 版本破解
-date: 2020-05-24 23:24:01
 categories: Infra
 tags:
-- GitLab
+  - GitLab
+abbrlink: 77d7dd4e
+date: 2020-05-24 23:24:01
 ---
 ### 环境信息
 * Ubuntu 16.04

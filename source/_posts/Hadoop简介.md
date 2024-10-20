@@ -1,9 +1,10 @@
 ---
 title: Hadoop 简介
-date: 2017-11-17 20:56:31
 categories: Infra
 tags:
-- Hadoop
+  - Hadoop
+abbrlink: 8164914c
+date: 2017-11-17 20:56:31
 ---
 ### Hadoop 介绍	
 

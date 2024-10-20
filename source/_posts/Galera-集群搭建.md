@@ -1,8 +1,9 @@
 ---
 title: Galera 集群搭建
-date: 2021-08-16 16:22:19
 categories: Infra
 tags: MySQL
+abbrlink: bb5c39fc
+date: 2021-08-16 16:22:19
 ---
 ### Galera 简介
 Galera Cluster 是基于 MySQL/Innodb 二次开发而成的一个支持“多主同步”的数据库主从集群。具备多主、同步复制、高可用等特点。

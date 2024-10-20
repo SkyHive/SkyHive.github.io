@@ -1,9 +1,10 @@
 ---
 title: Python基础
-date: 2017-04-07 09:25:45
 categories: Code
 tags:
-- Python
+  - Python
+abbrlink: 99832f47
+date: 2017-04-07 09:25:45
 ---
 *最近在自学Python，所以一边学也一边总结一些知识点*
 

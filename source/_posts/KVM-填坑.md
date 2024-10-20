@@ -1,10 +1,11 @@
 ---
 title: KVM 填坑
-date: 2020-09-06 17:35:31
 categories: Infra
 tags:
-- KVM
-- 虚拟化
+  - KVM
+  - 虚拟化
+abbrlink: 84d7a5a0
+date: 2020-09-06 17:35:31
 ---
 ### 1、UEFI 引导问题
 支持 KVM 虚拟机使用 UEFI 引导需要安装 OVMF 组件，参考[基于 CentOS 安装 KVM](https://blog.skyhive.tech/2020/06/10/%E5%9F%BA%E4%BA%8E-CentOS-%E5%AE%89%E8%A3%85-KVM/)。

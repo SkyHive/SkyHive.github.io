@@ -1,9 +1,10 @@
 ---
 title: 初探 Django 需要注意的事项
-date: 2018-03-25 20:55:33
 categories: Code
-tags: 
-- Django
+tags:
+  - Django
+abbrlink: 691098d6
+date: 2018-03-25 20:55:33
 ---
 #### 更改默认数据库为 MySQL
 

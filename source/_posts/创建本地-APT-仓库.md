@@ -1,9 +1,10 @@
 ---
 title: 创建本地 APT 仓库
-date: 2021-08-23 17:21:11
 categories: Infra
 tags:
-- Ubuntu
+  - Ubuntu
+abbrlink: 16067d8e
+date: 2021-08-23 17:21:11
 ---
 ### 背景
 由于部分限制级场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http://archive.ubuntu.com/ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。

@@ -1,10 +1,11 @@
 ---
 title: 基于 CentOS 安装 KVM
-date: 2020-06-10 17:40:03
 categories: Infra
 tags:
-- KVM
-- 虚拟化
+  - KVM
+  - 虚拟化
+abbrlink: 9411b67b
+date: 2020-06-10 17:40:03
 ---
 ### 安装操作系统
 UEFI 引导或者 Legacy BIOS 引导均可，冲就完事了
