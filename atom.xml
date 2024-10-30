@@ -6,7 +6,7 @@
   <link href="https://skyhive.github.io/atom.xml" rel="self"/>
   
   <link href="https://skyhive.github.io/"/>
-  <updated>2024-10-20T13:53:25.946Z</updated>
+  <updated>2024-10-30T07:42:13.897Z</updated>
   <id>https://skyhive.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>甲状腺乳头状癌治疗始末</title>
+    <link href="https://skyhive.github.io/post/1812e504.html"/>
+    <id>https://skyhive.github.io/post/1812e504.html</id>
+    <published>2024-10-29T03:50:27.000Z</published>
+    <updated>2024-10-30T07:42:13.897Z</updated>
+    
+    
+    
+    
+    <category term="Life" scheme="https://skyhive.github.io/categories/Life/"/>
+    
+    
+    <category term="甲状腺" scheme="https://skyhive.github.io/tags/%E7%94%B2%E7%8A%B6%E8%85%BA/"/>
+    
+    <category term="伤病" scheme="https://skyhive.github.io/tags/%E4%BC%A4%E7%97%85/"/>
+    
+    <category term="癌症" scheme="https://skyhive.github.io/tags/%E7%99%8C%E7%97%87/"/>
+    
+  </entry>
   
   <entry>
     <title>工欲善其事之趁手的终端</title>
@@ -546,27 +567,6 @@ ipconfig /flushdns&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers
     
     
     <category term="Linux" scheme="https://skyhive.github.io/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Dell 7559 升级</title>
-    <link href="https://skyhive.github.io/post/764b8961.html"/>
-    <id>https://skyhive.github.io/post/764b8961.html</id>
-    <published>2018-06-05T09:25:26.000Z</published>
-    <updated>2024-10-20T13:50:52.746Z</updated>
-    
-    <content type="html"><![CDATA[<p>昨天刚和杨老板达成了 PY 交易，今天货就到了，还真是快啊。淘宝链接我就不给了，大家自行搜索<code>内存之家</code>（原<code>配件之家</code>），粉丝数很少的那个就是了。</p><span id="more"></span><h4 id="开箱与安装"><a class="header-anchor" href="#开箱与安装">¶</a> 开箱与安装</h4><p>本次的产品是一张 WD 的 <code>Green Sata SSD M.2 2280</code> 120G 版本的，还有一张海力士的 8G DDR3L 1600 的内存。至于为什么 SSD 和内存不买好一点的呢，其实是因为我这台是 15 年的本子，也不想给他上太好的 SSD 和内存了，而且为了和原来的内存保持同一频率，所以只能上了 DDR3L 的条子，反正过不了几年就隐退二线了。</p><p>下面进行开箱<br><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E4%B8%AD%E9%97%B4%E4%B8%A4%E4%B8%AA%E5%B0%B1%E6%98%AF%E4%BB%8A%E5%A4%A9%E7%9A%84%E4%B8%BB%E8%A7%92%E5%95%A6.jpg" alt="中间这两个就是今天的主角啦"><br>真的是让人眼前一绿啊。</p><p>这台老机子是 <code>Dell Inspiron 7559</code>，也就是传说中的游匣，只不过比较古老了。不过好处呢就是 D 面只有一颗螺丝，拆起来非常的方便。一如既往的，我把电池留在本子上就开始装内存条和 SSD 了（不要问我哪儿来的勇气，我也不知道）。</p><h4 id="测评"><a class="header-anchor" href="#测评">¶</a> 测评</h4><h5 id="内存"><a class="header-anchor" href="#内存">¶</a> 内存</h5><p>首先内存并没有什么问题，正常开机后 Bios 提示我内存更换过，不鸟他继续进入系统。系统也是顺利的读取出了新的内存，并没有发生不兼容的情况。</p><p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2FCPU_Z%E7%9A%84%E6%95%B0%E6%8D%AE.png" alt="CPU-Z 数据"></p><p><em>其实之前我的内存就是一根金士顿和一根海力士的组合，所以这次还是海力士应该不会翻车</em></p><p>下面我们来做一下内存的读写测试</p><p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E5%86%85%E5%AD%98%E8%AF%BB%E5%86%99%E6%B5%8B%E8%AF%95.png" alt="内存读写测试"></p><p>可以看到给出的 <code>Read</code> 数据为 <code>23308 MB/s</code>，<code>Write</code> 数据为 <code>23556 MB/s</code>，<code>Copy</code> 数据为 <code>23069 MB/s</code>，这个数据在 DDR3L 的笔记本内存上来说也算是客观的了。不过使用体验这种东西也不能只看数据，还得看实际使用。</p><h5 id="SSD"><a class="header-anchor" href="#SSD">¶</a>SSD</h5><p>包装盒上只给了我 <code>545 MB/s</code> 的读取速度，我又去网上搜了下，给出的写入速度是 <code>400~500 MB/s</code> 的样子，下面我们测一下看看</p><p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2FSSD_Read%E6%B5%8B%E8%AF%95.jpg" alt="SSD Read 测试"><br><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2FSSD_Random_Write%E6%B5%8B%E8%AF%95.jpg" alt="SSD Random Write 测试"></p><p>emmmmm，一部分原因是我硬件没有能够把 SSD 全部性能带出来，另一部分原因也是这张条子有一定的缩水，大家心知肚明就好。(当年不懂顺序读写和随机读写的区别，误以为 400~500 MB/s 是随机性能)</p><p>我们来迁移系统（不要问我为什么不重装系统，就是懒）再测一次看看</p><p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E8%BF%81%E7%A7%BB%E5%AE%8C%E7%B3%BB%E7%BB%9F%E5%90%8E.png" alt="迁移系统后"></p><p>诶？性能怎么又上来了？</p><p><strong>不好意思，测试数据我用的是 <code>50MiB</code></strong>（皮这一下还挺开心😄）</p><p><strong>实际上迁移系统对 SSD 的性能还是有影响的，所以大家最好不要偷懒学我迁移系统，最好就是重装比较好。</strong></p><h4 id="最后"><a class="header-anchor" href="#最后">¶</a> 最后</h4><p>电脑没有装喜闻乐见的娱乐大师，所以就没有跑分了。</p><p>至于你们想要的开机启动时间，没有装管家也没有装卫士，又让你们失望了。</p><p>不过开机时间比以前少了，但是应该赶不上主流的 SSD。自从装了双系统开机就变得极慢无比，按道理来说双系统应该和开机速度没有关系才对；前段时间更新了 <code>win10</code> 的春季创意者更新之后开机就更加尿崩了，所以才入手了一块 SSD。</p><p>说到开机，目前有一个小问题，Bios 一旦开启 <code>Secure Boot</code> 就炸了，<code>Windows</code> 和 <code>Ubuntu</code> 都进不去，至今未解决。（实际上是因为当年的 Ubuntu 还不支持 Secure Boot，多数主板还不认 Linux 的签名）</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;昨天刚和杨老板达成了 PY 交易，今天货就到了，还真是快啊。淘宝链接我就不给了，大家自行搜索&lt;code&gt;内存之家&lt;/code&gt;（原&lt;code&gt;配件之家&lt;/code&gt;），粉丝数很少的那个就是了。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Infra" scheme="https://skyhive.github.io/categories/Infra/"/>
-    
-    
-    <category term="Laptop" scheme="https://skyhive.github.io/tags/Laptop/"/>
     
   </entry>
   
