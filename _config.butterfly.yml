@@ -583,7 +583,7 @@ valine:
 # Waline - A simple comment system with backend support fork from Valine
 # https://waline.js.org/
 waline:
-  serverURL: https://hexo-waline-omega.vercel.app/
+  serverURL: https://comment.skyhive.tech/
   bg:
   # Use Waline pageview count as the page view count
   pageview: true
