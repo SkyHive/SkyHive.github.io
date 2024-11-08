@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://skyhive.github.io/post/1812e504.html</loc>
+    
+    <lastmod>2024-11-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://skyhive.github.io/about/index.html</loc>
     
     <lastmod>2024-10-22</lastmod>
@@ -622,6 +631,27 @@
   
   <url>
     <loc>https://skyhive.github.io/tags/%E9%BB%91%E7%BE%A4%E6%99%96/</loc>
+    <lastmod>2024-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skyhive.github.io/tags/%E7%94%B2%E7%8A%B6%E8%85%BA/</loc>
+    <lastmod>2024-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skyhive.github.io/tags/%E4%BC%A4%E7%97%85/</loc>
+    <lastmod>2024-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://skyhive.github.io/tags/%E7%99%8C%E7%97%87/</loc>
     <lastmod>2024-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
