@@ -6,7 +6,7 @@ tags:
 abbrlink: '58e40093'
 date: 2024-02-09 17:50:16
 ---
-[上一篇文章](https://blog.skyhive.tech/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html)说到在家里把 LB 升了级并且通过 `acme.sh` 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：
+[上一篇文章](https://blog.skyhive.tech/post/4b4fd36b.html)说到在家里把 LB 升了级并且通过 `acme.sh` 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：
 
 {% plantuml %}
   actor User

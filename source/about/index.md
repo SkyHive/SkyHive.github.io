@@ -18,7 +18,7 @@ date: 2021-07-15 11:21:58
   - KVM
 - 容器
   - Docker
-  - Kubenetes
+  - Kubernetes
 - 计算机网络
 
 
