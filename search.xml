@@ -1403,7 +1403,7 @@ DROP TABLE &lt;表名&gt;                                       --删除表<span
   <entry>
     <title>nginx 端口转发被强行更改</title>
     <url>/post/58e40093.html</url>
-    <content><![CDATA[<p><a href="https://blog.skyhive.tech/2024/2/%E9%85%8D%E7%BD%AE-DNSPod-%E8%87%AA%E5%8A%A8%E8%8E%B7%E5%8F%96%E6%B3%9B%E5%9F%9F%E5%90%8D%E8%AF%81%E4%B9%A6.html">上一篇文章</a>说到在家里把 LB 升了级并且通过 <code>acme.sh</code> 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：</p>
+    <content><![CDATA[<p><a href="https://blog.skyhive.tech/post/4b4fd36b.html">上一篇文章</a>说到在家里把 LB 升了级并且通过 <code>acme.sh</code> 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：</p>
 <img src="http://www.plantuml.com/plantuml/svg/IqmkoIzI22rEBUBY0f4Akhfs2Xf1-QKbgKMQLWesddb0HbvgYK90Vb69WeM9YR4T5qGMejB72QJADx40eW0ix-C4aNFEpqlBASrBJjM42xbdbkGa9Y7uKOb9IPaLIF95YMc9UOa80Q_Kd9pAjCmyJG00">
 <p>由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80/443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。</p>
 <span id="more"></span>
@@ -2457,6 +2457,11 @@ wsl <span class="token operator">--</span>install <span class="token operator">-
 <span class="token function">ln</span> <span class="token parameter variable">-s</span> <span class="token parameter variable">-f</span> .tmux/.tmux.conf
 <span class="token function">cp</span> .tmux/.tmux.conf.local <span class="token builtin class-name">.</span>
 
+<span class="token comment">## 除此之外，我一般还会额外打开 tmux 的一些配置</span>
+<span class="token builtin class-name">set</span> <span class="token parameter variable">-g</span> history-limit <span class="token number">10000</span>    <span class="token comment">## tmux 默认的历史纪录太少了，多搞点</span>
+<span class="token builtin class-name">set</span> <span class="token parameter variable">-g</span> set-clipboard on    <span class="token comment">## 打开选中复制，当然你可以使用 Windows terminal 的选中复制功能</span>
+<span class="token builtin class-name">set</span> <span class="token parameter variable">-g</span> mouse on    <span class="token comment">## 打开鼠标支持，这样就不用 Ctrl+B 切换 panel 了</span>
+
 <span class="token comment">## 关于 tmux 使用的一些推荐阅读：</span>
 <span class="token comment">## - https://www.ruanyifeng.com/blog/2019/10/tmux.html</span>
 <span class="token comment">## - https://pengfeixc.com/blogs/developer-handbook/tmux.html</span>
@@ -2473,7 +2478,7 @@ wsl <span class="token operator">--</span>install <span class="token operator">-
   <span class="token function">tee</span> /etc/apt/sources.list.d/docker.list <span class="token operator">&gt;</span> /dev/null
 
 <span class="token function">apt-get</span> update
-<span class="token function">apt-get</span> <span class="token function">install</span> docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin <span class="token parameter variable">-y</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">apt-get</span> <span class="token function">install</span> docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin <span class="token parameter variable">-y</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里单独说一下 zsh 的配置，首当其冲的肯定是把 oh-my-zsh 给装上</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sh</span> <span class="token parameter variable">-c</span> <span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">curl</span> <span class="token parameter variable">-fsSL</span> https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh<span class="token variable">)</span></span>"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>接着肯定是要换一个美美的皮肤（bushi），主题的配置可以参考官方文档 <a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Themes">Themes|oh-my-zsh wiki</a>，我的配置如下：</p>
@@ -2538,6 +2543,15 @@ IdentityFile ~/.ssh/development-host
 <p><a href="https://github.com/agkozak/zsh-z">z</a><br>
 <code>z</code> 插件会基于历史访问过的目录进行快速跳转，无需输入全路径即可跳转，按下 <code>tab</code> 键即可显示历史目录列表，选择后回车即可跳转。<code>z</code> 已经被集成进 zsh 默认插件列表，无需单独安装。</p>
 </li>
+<li class="lvl-3">
+<p><a href="https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh-agent">ssh-agent</a><br>
+既然我们都这么依赖 ssh 来工作了，那么 <code>ssh-agent</code> 插件就必不可少，该插件会自动帮我们设置一些 ssh-agent 相关的配置，加载 credentials。由于该插件是 zsh 默认的插件，所以无需单独安装，直接在 <code>~/.zshrc</code> 中配置即可</p>
+ <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 配置 agent-forwading</span>
+zstyle :omz:plugins:ssh-agent agent-forwarding <span class="token function">yes</span>
+
+<span class="token comment">## 配置 identities</span>
+zstyle :omz:plugins:ssh-agent identities id_rsa id_rsa2 id_github    <span class="token comment">## 如果 identities 不在 ~/.ssh 目录下，则要写绝对路径</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ol>
 ]]></content>
       <categories>
@@ -2545,6 +2559,8 @@ IdentityFile ~/.ssh/development-host
       </categories>
       <tags>
         <tag>terminal</tag>
+        <tag>env</tag>
+        <tag>工欲善其事</tag>
       </tags>
   </entry>
   <entry>
@@ -3200,6 +3216,48 @@ net.ipv4.tcp_congestion_control = hybla
       </categories>
       <tags>
         <tag>旅游</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>甲状腺乳头状癌治疗始末</title>
+    <url>/post/1812e504.html</url>
+    <content><![CDATA[<p>2023 年 8 月的体检，我被检查出甲状腺结节，但此时并没有当回事儿，然而一年后的体检过程中，大夫千叮咛万嘱咐我去医院复查，告诉我很重要，至此我的 <strong>甲状腺乳头状癌</strong> 的诊疗之旅就此展开。下面我将会对我的 <strong>甲状腺乳头状癌</strong> 的发现、检查、手术以及术后恢复做一个详细的记录，希望可以帮助更多的人，同时也算是给自己留下一份纪念～</p>
+<span id="more"></span>
+<h3 id="事发"><a class="header-anchor" href="#事发">¶</a> 事发</h3>
+<p>2024.8.4 的体检有点不一样，B 超医生和我非常严肃地说了一句话：“你的这个甲状腺结节一定要去医院复查，很严重了”，随后我就怀着忐忑的心情带着体检报告去浙二挂了一个甲状腺外科，在医院超声检查后，我的右侧甲状腺结节被升级为了 <code>4a</code> 类型，医生建议我做穿刺确定性质。</p>
+<p>到目前为止我还能够保持比较乐观的心态，因为医生说如果穿刺结果是良性还能够做热消融，不用做手术切除。不出意外的话，那确实出意外了，9.12 的穿刺结果顺理成章的是恶性，并且被诊断为 <strong>甲状腺乳头状癌</strong>。当然此时的我还是抱着侥幸的心理在网上到处查询资料，看看事情还有没有转机，但是得到的结果都是对于肿瘤大小在 1cm 之内的有进行热消融的案例，而我的瘤子非常的给力，不负众望的长到了 3.5cm！！</p>
+<p>穿刺结果出来的两周后，我约了浙二的甲状腺外科副主任医师的专家号，最终确定的治疗方案是开放手术做患侧的甲状腺切除 + 患侧颈部淋巴结清扫，至少我还保留了另外一边甲状腺，这样想想可能就没那么难受了。</p>
+<h3 id="手术"><a class="header-anchor" href="#手术">¶</a> 手术</h3>
+<p>由于手术不仅需要切除患侧甲状腺，还需进行颈部淋巴结清扫，因此无法进行微创手术，只能在脖子上留下一条十几公分的切口（听起来还挺酷的）。</p>
+<p>手术有以下几个方面需要注意：</p>
+<ol>
+<li class="lvl-3">
+<p>手术前不能有<strong>上呼吸道感染</strong>症状（如咳嗽、鼻涕等），否则术中会有很大的呼吸道感染风险（如肺炎），并且会加大手术难等，增加手术本身风险</p>
+</li>
+<li class="lvl-3">
+<p>可能会需要插<strong>导尿管</strong>，具体取决于手术时间</p>
+</li>
+<li class="lvl-3">
+<p>甲状腺的位置比较刁钻，他靠近<strong>食管、气管</strong>以及<strong>颈动脉</strong>，如果结节 / 肿瘤的位置长得不好，在切除时会误伤或者不得已伤到其他器官的神经，从而术后留一下一些后遗症</p>
+</li>
+<li class="lvl-3">
+<p><strong>甲状旁腺</strong>生长在甲状腺周围，切除时可能会误伤 / 切到甲状旁腺，虽然医生会帮忙将甲状旁腺重新种植进肌肉，但手术后仍然会有一些后遗症（缺钙导致的手脚发麻，骨质疏松等）</p>
+</li>
+</ol>
+<p>我的手术相对来说较为顺利（却是一点儿也不轻松），从我进手术室到出来，一共经历了四个小时，要不怎么说是个<a href="https%3A%2F%2Fniha.org.cn%2Fprod-api%2Fprofile%2Fupload%2F2024%2F09%2F09%2F%25E5%2585%25B3%25E4%25BA%258E%25E5%258F%2591%25E5%25B8%2583%25E4%25B8%25AD%25E5%259B%25BD%25E5%258C%25BB%25E7%2596%2597%25E8%25B4%25A8%25E9%2587%258F%25E5%25A4%25A7%25E4%25BC%259A%25E4%25B8%2593%25E5%25AE%25B6%25E8%25A7%25A3%25E6%259E%2590%25E2%2580%2594%25E3%2580%258A%25E5%258C%25BB%25E7%2596%2597%25E6%259C%25BA%25E6%259E%2584%25E5%259B%259B%25E7%25BA%25A7%25E6%2589%258B%25E6%259C%25AF%25E5%2585%25A8%25E8%25BF%2587%25E7%25A8%258B%25E7%25AE%25A1%25E7%2590%2586%25EF%25BC%2588%25E4%25B8%2593%25E5%25AE%25B6%25E8%25A7%25A3%25E6%259E%2590%25EF%25BC%2589%25E3%2580%258B%25E7%259A%2584%25E9%2580%259A%25E7%259F%25A5_20240909144340A034.pdf&amp;usg=AOvVaw3s5NQJOrpCOq_Tm-WzFU2X&amp;opi=89978449">四级手术</a>呢。因为清扫了颈部淋巴结，为了观察伤口愈合情况，需要在住院期间放两根引流管在身上。</p>
+<p>第一天是最难熬的，前六个小时不吃不喝，由于没有插尿管，需要顶着麻药的后劲在床上用力尿尿（就是那种膀胱感觉都要憋炸了却怎么也尿不出来的感觉）。全程不能下床，鼻子上插着氧管，每隔一个小时自动测量血压，根本没法入睡，就这样强行熬了一夜，第二天终于可以下地活动了。总体来说我恢复的还不错，只是过了半天就可以随便活动，在床上翻身也不是很难了（主要是脖子上插着引流管，不敢太大幅度活动）。</p>
+<p>第三天上午医生来查了一次房就放我出院了（没想到医院的床位这么紧张），我也是收拾收拾赶紧滚回了家。</p>
+<h3 id="术后"><a class="header-anchor" href="#术后">¶</a> 术后</h3>
+<p>术后两周是最难熬的一段时间，对于我来说，这两周是黑暗无比的，毫无光泽。由于做了颈部淋巴清扫，为防止 <strong>淋巴漏</strong> 出现，术后两周内我都不能摄入油脂，吃的东西都是水煮，只能吃蔬菜，不能吃肉，吃鸡蛋还不能吃蛋黄。这段时期所吃的东西才是真正的 <strong>食之无味，弃之可惜</strong> 啊，短短两周直接瘦了十斤，所以只要管住嘴，就算不迈开腿也是可以减肥的，并且效果拔群。</p>
+<p>除了术后两周的饮食控制外，影响我生活最多的就是每天早上要先吃优甲乐（用于补充甲状腺激素）后一小时才能吃早餐，并且服药后的四小时内不能大量摄入蛋白质以及对胃部刺激大的东西（牛奶、豆浆、咖啡等），后续就定期复查，根据复查结果控制需要摄入的药量，根据病理分析，我属于高复发人群，所以术后老老实实吃药是非常必要的，经历过一次的人应该都不会想再经历第二次了，好好生活吧～</p>
+]]></content>
+      <categories>
+        <category>Life</category>
+      </categories>
+      <tags>
+        <tag>甲状腺</tag>
+        <tag>伤病</tag>
+        <tag>癌症</tag>
       </tags>
   </entry>
   <entry>
@@ -4041,19 +4099,6 @@ services:
       <tags>
         <tag>NAS</tag>
         <tag>黑群晖</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>甲状腺乳头状癌治疗始末</title>
-    <url>/post/1812e504.html</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Life</category>
-      </categories>
-      <tags>
-        <tag>甲状腺</tag>
-        <tag>伤病</tag>
-        <tag>癌症</tag>
       </tags>
   </entry>
 </search>
