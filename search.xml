@@ -537,165 +537,6 @@ resize2fs /dev/sda4<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </tags>
   </entry>
   <entry>
-    <title>Galera 集群搭建</title>
-    <url>/post/bb5c39fc.html</url>
-    <content><![CDATA[<h3 id="Galera-简介"><a class="header-anchor" href="#Galera-简介">¶</a>Galera 简介</h3>
-<p>Galera Cluster 是基于 MySQL/Innodb 二次开发而成的一个支持 “多主同步” 的数据库主从集群。具备多主、同步复制、高可用等特点。</p>
-<p>MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现，同 Percona 的 PXC 数据库集群，目前只支持运行在 Linux 系统上。从 MariaDB 10.1 版开始，MariaDB Server 和 MariaDB Galera Server 安装包已经合并，安装 MariaDB 时，Galera 相关依赖安装包会自动安装，像内置的插件或存储引擎一样，通过简单配置即可启用。</p>
-<h3 id="Galera-集群状态"><a class="header-anchor" href="#Galera-集群状态">¶</a>Galera 集群状态</h3>
-<p>查看集群状态</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">STATUS</span> <span class="token operator">LIKE</span> <span class="token string">'wsrep_local_state_comment'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<span id="more"></span>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">状态</th>
-<th style="text-align:center">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"> Open</td>
-<td style="text-align:center"> 节点启动成功，尝试连接到集群；如果失败则根据配置退出或者创建新集群</td>
-</tr>
-<tr>
-<td style="text-align:center"> Primary</td>
-<td style="text-align:center"> 节点已处于集群中，在新节点加入时，选取 donor 进行数据同步时会产生的状态</td>
-</tr>
-<tr>
-<td style="text-align:center"> Joiner</td>
-<td style="text-align:center"> 节点处于等待接收 / 接收同步文件的状态</td>
-</tr>
-<tr>
-<td style="text-align:center"> Joined</td>
-<td style="text-align:center"> 节点完成数据同步，但有部分数据没跟上，在尝试保持和集群进度一致的过程状态。<br>例如某个节点故障后，重新加入集群，在追赶集群进度时的状态</td>
-</tr>
-<tr>
-<td style="text-align:center"> Synced</td>
-<td style="text-align:center"> 节点正常提供服务的状态，表示已经同步完成并和集群进度保持一致</td>
-</tr>
-<tr>
-<td style="text-align:center"> Donor</td>
-<td style="text-align:center"> 节点处于为新节点提供全量数据同步时的状态。此时该节点对客户端不提供服务 </td>
-</tr>
-</tbody>
-</table>
-<h3 id="基本概念"><a class="header-anchor" href="#基本概念">¶</a> 基本概念</h3>
-<ol>
-<li class="lvl-3">
-<p>Primary Component：在网络发生故障时，由于网络连接原因，集群可能被分成好几个小集群，但只能有一个集群可以继续进行数据修改，集群的这部分称为 Primary Component</p>
-</li>
-<li class="lvl-3">
-<p>GTID：Global Transaction ID，由 UUID 和 sequence number 偏移量组成。wsrep api 中定义的集群内部全局事务 id，一个顺序 ID，用于记录集群中发生状态改变的唯一标识以及队列中的偏移量</p>
-</li>
-<li class="lvl-3">
-<p>SST：State Snapshot Transfer（状态快照迁移），集群中数据共享节点通过从一个节点到另外一个节点迁移完整的数据拷贝（全量拷贝）。当一个新的节点加入到集群中，新的节点从集群中已有节点同步数据，开始进行状态快照迁移，可以在 Galera 集群中选择两种不同的状态转移方法</p>
-<p>3.1 逻辑数据转移：采用 mysqldump 命令，在转移之前，需要数据接收方服务器完全启动，并准备好接受数据的连接准备。这是一个阻塞式方法，数据共享节点 Donor 在状态转移节点处于只读状态，在数据共享节点 Donor 上适用 FLUSH TABLES WITH READ LOCK 命令，mysqldump 是速度最慢的 SST 方法，在负载比较的数据库集群上可能是个问题。</p>
-<p>3.2 物理数据转移：该方法采用 rsync、rsync_wan、xtrabackup 或其他方法从服务器之间直接拷贝数据，数据接受服务器在拷贝完数据后启动服务器。该方法较 mysqldump 速度较快，但存在一定的限制，只能在服务器启动时采用，数据接受服务器需要同数据共享服务器 Donor 配置相同（例如，服务器间 innodb_file_per_table 配置必须完全一致）。</p>
-</li>
-<li class="lvl-3">
-<p>IST：Incremental State Transfer（增量状态迁移），集群一个节点通过识别新加入节点缺失的事务操作，将该操作发送，而并不像 SST 那样的全量数据拷贝。该方法只在特定条件下可用：</p>
-<p>4.1 新加入节点的状态 UUID 与集群组中节点一致；</p>
-<p>4.2 新加入节点所缺失的写数据集 write-sets 可以在 Donor 的写数据集 write-sets 存在。</p>
-</li>
-</ol>
-<h3 id="搭建过程"><a class="header-anchor" href="#搭建过程">¶</a> 搭建过程</h3>
-<h4 id="环境信息"><a class="header-anchor" href="#环境信息">¶</a> 环境信息</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">hostname</th>
-<th style="text-align:center">IP</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">db01</td>
-<td style="text-align:center">192.168.2.10</td>
-</tr>
-<tr>
-<td style="text-align:center">db02</td>
-<td style="text-align:center">192.168.2.11</td>
-</tr>
-<tr>
-<td style="text-align:center">db03</td>
-<td style="text-align:center">192.168.2.12</td>
-</tr>
-</tbody>
-</table>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 安装依赖</span>
-<span class="token function">sudo</span> <span class="token function">apt</span> update
-<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> mariadb-server-10.3
- 
-<span class="token comment">## 配置集群</span>
-<span class="token comment">### 在第一台主机操作</span>
-systemctl stop mysql
-<span class="token function">vim</span> /etc/mysql/mariadb.conf.d/50-server.cnf
-<span class="token comment"># 在 [mysqld] 下添加 skip-name-resolve</span>
-<span class="token comment"># 在文件末尾添加如下内容</span>
-<span class="token punctuation">[</span>galera<span class="token punctuation">]</span>
-<span class="token assign-left variable">wsrep_on</span><span class="token operator">=</span>ON
-<span class="token assign-left variable">wsrep_provider</span><span class="token operator">=</span>/usr/lib/galera/libgalera_smm.so
-<span class="token assign-left variable">wsrep_cluster_address</span><span class="token operator">=</span><span class="token string">"gcomm://"</span>
-<span class="token assign-left variable">binlog_format</span><span class="token operator">=</span>row
-<span class="token assign-left variable">default_storage_engine</span><span class="token operator">=</span>InnoDB
-<span class="token assign-left variable">innodb_autoinc_lock_mode</span><span class="token operator">=</span><span class="token number">2</span>
-bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
-<span class="token comment"># any cluster name</span>
-<span class="token assign-left variable">wsrep_cluster_name</span><span class="token operator">=</span><span class="token string">"MariaDB_Cluster"</span>
-<span class="token comment"># own IP address</span>
-<span class="token assign-left variable">wsrep_node_address</span><span class="token operator">=</span><span class="token string">"192.168.2.10"</span>
- 
-<span class="token comment">### 完成后保存退出</span>
-galera_new_cluster
- 
-mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span>
-  
-CREATE <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'Iamadm1n!!'</span><span class="token punctuation">;</span>
-GRANT ALL ON *.* TO <span class="token string">'root'</span>@<span class="token string">'%'</span><span class="token punctuation">;</span>
-update mysql.user <span class="token builtin class-name">set</span>  <span class="token assign-left variable">Grant_priv</span><span class="token operator">=</span><span class="token string">'Y'</span> where <span class="token assign-left variable">user</span><span class="token operator">=</span><span class="token string">'root'</span> and <span class="token assign-left variable">host</span><span class="token operator">=</span><span class="token string">'%'</span><span class="token punctuation">;</span>
-flush privileges<span class="token punctuation">;</span>
-<span class="token builtin class-name">exit</span>
-
-
-<span class="token comment">### 在其他两台主机操作</span>
-systemctl stop mysql
-<span class="token function">vim</span> /etc/mysql/mariadb.conf.d/50-server.cnf
-<span class="token comment"># 在 [mysqld] 下添加 skip-name-resolve</span>
-<span class="token comment"># 在文件末尾添加如下内容</span>
-<span class="token punctuation">[</span>galera<span class="token punctuation">]</span>
-<span class="token assign-left variable">wsrep_on</span><span class="token operator">=</span>ON
-<span class="token assign-left variable">wsrep_provider</span><span class="token operator">=</span>/usr/lib/galera/libgalera_smm.so
-<span class="token assign-left variable">wsrep_cluster_address</span><span class="token operator">=</span><span class="token string">"gcomm://192.168.2.10,192.168.2.11,192.168.2.12"</span>
-<span class="token assign-left variable">binlog_format</span><span class="token operator">=</span>row
-<span class="token assign-left variable">default_storage_engine</span><span class="token operator">=</span>InnoDB
-<span class="token assign-left variable">innodb_autoinc_lock_mode</span><span class="token operator">=</span><span class="token number">2</span>
-bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
-<span class="token comment"># any cluster name</span>
-<span class="token assign-left variable">wsrep_cluster_name</span><span class="token operator">=</span><span class="token string">"MariaDB_Cluster"</span>
-<span class="token comment"># own IP address</span>
-<span class="token assign-left variable">wsrep_node_address</span><span class="token operator">=</span><span class="token string">"192.168.2.11"</span>   <span class="token comment">## 注意：这里填写当前节点的 IP，另外一个节点填 192.168.2.12</span>
- 
-<span class="token comment">### 完成后保存退出</span>
-<span class="token comment">## 重启 MySQL 服务</span>
-systemctl start mysql
-systemctl <span class="token builtin class-name">enable</span> mysql
- 
-<span class="token comment">## 检查集群状态</span>
-mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span>
-show status like <span class="token string">'wsrep_cluster%'</span><span class="token punctuation">;</span>
-<span class="token comment">## 需观察 'wsrep_cluster_size' 是否正常（正常为节点数量），以及 'wsrep_cluster_status' 是否为 Primary</span>
- 
-<span class="token comment">## 如果集群状态正常，则去修改第一个节点的 /etc/mysql/mariadb.conf.d/50-server.cnf 文件</span>
-<span class="token comment">## 将 wsrep_cluster_address 配置修改和其他两个节点一致即可</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Gitlab EE 版本破解</title>
     <url>/post/77d7dd4e.html</url>
     <content><![CDATA[<h3 id="环境信息"><a class="header-anchor" href="#环境信息">¶</a> 环境信息</h3>
@@ -895,6 +736,218 @@ gitlab-ctl restart      <span class="token comment"># 重启 GitLab</span><span 
       </tags>
   </entry>
   <entry>
+    <title>Galera 集群搭建</title>
+    <url>/post/bb5c39fc.html</url>
+    <content><![CDATA[<h3 id="Galera-简介"><a class="header-anchor" href="#Galera-简介">¶</a>Galera 简介</h3>
+<p>Galera Cluster 是基于 MySQL/Innodb 二次开发而成的一个支持 “多主同步” 的数据库主从集群。具备多主、同步复制、高可用等特点。</p>
+<p>MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现，同 Percona 的 PXC 数据库集群，目前只支持运行在 Linux 系统上。从 MariaDB 10.1 版开始，MariaDB Server 和 MariaDB Galera Server 安装包已经合并，安装 MariaDB 时，Galera 相关依赖安装包会自动安装，像内置的插件或存储引擎一样，通过简单配置即可启用。</p>
+<h3 id="Galera-集群状态"><a class="header-anchor" href="#Galera-集群状态">¶</a>Galera 集群状态</h3>
+<p>查看集群状态</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">STATUS</span> <span class="token operator">LIKE</span> <span class="token string">'wsrep_local_state_comment'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<span id="more"></span>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">状态</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"> Open</td>
+<td style="text-align:center"> 节点启动成功，尝试连接到集群；如果失败则根据配置退出或者创建新集群</td>
+</tr>
+<tr>
+<td style="text-align:center"> Primary</td>
+<td style="text-align:center"> 节点已处于集群中，在新节点加入时，选取 donor 进行数据同步时会产生的状态</td>
+</tr>
+<tr>
+<td style="text-align:center"> Joiner</td>
+<td style="text-align:center"> 节点处于等待接收 / 接收同步文件的状态</td>
+</tr>
+<tr>
+<td style="text-align:center"> Joined</td>
+<td style="text-align:center"> 节点完成数据同步，但有部分数据没跟上，在尝试保持和集群进度一致的过程状态。<br>例如某个节点故障后，重新加入集群，在追赶集群进度时的状态</td>
+</tr>
+<tr>
+<td style="text-align:center"> Synced</td>
+<td style="text-align:center"> 节点正常提供服务的状态，表示已经同步完成并和集群进度保持一致</td>
+</tr>
+<tr>
+<td style="text-align:center"> Donor</td>
+<td style="text-align:center"> 节点处于为新节点提供全量数据同步时的状态。此时该节点对客户端不提供服务 </td>
+</tr>
+</tbody>
+</table>
+<h3 id="基本概念"><a class="header-anchor" href="#基本概念">¶</a> 基本概念</h3>
+<ol>
+<li class="lvl-3">
+<p>Primary Component：在网络发生故障时，由于网络连接原因，集群可能被分成好几个小集群，但只能有一个集群可以继续进行数据修改，集群的这部分称为 Primary Component</p>
+</li>
+<li class="lvl-3">
+<p>GTID：Global Transaction ID，由 UUID 和 sequence number 偏移量组成。wsrep api 中定义的集群内部全局事务 id，一个顺序 ID，用于记录集群中发生状态改变的唯一标识以及队列中的偏移量</p>
+</li>
+<li class="lvl-3">
+<p>SST：State Snapshot Transfer（状态快照迁移），集群中数据共享节点通过从一个节点到另外一个节点迁移完整的数据拷贝（全量拷贝）。当一个新的节点加入到集群中，新的节点从集群中已有节点同步数据，开始进行状态快照迁移，可以在 Galera 集群中选择两种不同的状态转移方法</p>
+<p>3.1 逻辑数据转移：采用 mysqldump 命令，在转移之前，需要数据接收方服务器完全启动，并准备好接受数据的连接准备。这是一个阻塞式方法，数据共享节点 Donor 在状态转移节点处于只读状态，在数据共享节点 Donor 上适用 FLUSH TABLES WITH READ LOCK 命令，mysqldump 是速度最慢的 SST 方法，在负载比较的数据库集群上可能是个问题。</p>
+<p>3.2 物理数据转移：该方法采用 rsync、rsync_wan、xtrabackup 或其他方法从服务器之间直接拷贝数据，数据接受服务器在拷贝完数据后启动服务器。该方法较 mysqldump 速度较快，但存在一定的限制，只能在服务器启动时采用，数据接受服务器需要同数据共享服务器 Donor 配置相同（例如，服务器间 innodb_file_per_table 配置必须完全一致）。</p>
+</li>
+<li class="lvl-3">
+<p>IST：Incremental State Transfer（增量状态迁移），集群一个节点通过识别新加入节点缺失的事务操作，将该操作发送，而并不像 SST 那样的全量数据拷贝。该方法只在特定条件下可用：</p>
+<p>4.1 新加入节点的状态 UUID 与集群组中节点一致；</p>
+<p>4.2 新加入节点所缺失的写数据集 write-sets 可以在 Donor 的写数据集 write-sets 存在。</p>
+</li>
+</ol>
+<h3 id="搭建过程"><a class="header-anchor" href="#搭建过程">¶</a> 搭建过程</h3>
+<h4 id="环境信息"><a class="header-anchor" href="#环境信息">¶</a> 环境信息</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">hostname</th>
+<th style="text-align:center">IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">db01</td>
+<td style="text-align:center">192.168.2.10</td>
+</tr>
+<tr>
+<td style="text-align:center">db02</td>
+<td style="text-align:center">192.168.2.11</td>
+</tr>
+<tr>
+<td style="text-align:center">db03</td>
+<td style="text-align:center">192.168.2.12</td>
+</tr>
+</tbody>
+</table>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 安装依赖</span>
+<span class="token function">sudo</span> <span class="token function">apt</span> update
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> mariadb-server-10.3
+ 
+<span class="token comment">## 配置集群</span>
+<span class="token comment">### 在第一台主机操作</span>
+systemctl stop mysql
+<span class="token function">vim</span> /etc/mysql/mariadb.conf.d/50-server.cnf
+<span class="token comment"># 在 [mysqld] 下添加 skip-name-resolve</span>
+<span class="token comment"># 在文件末尾添加如下内容</span>
+<span class="token punctuation">[</span>galera<span class="token punctuation">]</span>
+<span class="token assign-left variable">wsrep_on</span><span class="token operator">=</span>ON
+<span class="token assign-left variable">wsrep_provider</span><span class="token operator">=</span>/usr/lib/galera/libgalera_smm.so
+<span class="token assign-left variable">wsrep_cluster_address</span><span class="token operator">=</span><span class="token string">"gcomm://"</span>
+<span class="token assign-left variable">binlog_format</span><span class="token operator">=</span>row
+<span class="token assign-left variable">default_storage_engine</span><span class="token operator">=</span>InnoDB
+<span class="token assign-left variable">innodb_autoinc_lock_mode</span><span class="token operator">=</span><span class="token number">2</span>
+bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
+<span class="token comment"># any cluster name</span>
+<span class="token assign-left variable">wsrep_cluster_name</span><span class="token operator">=</span><span class="token string">"MariaDB_Cluster"</span>
+<span class="token comment"># own IP address</span>
+<span class="token assign-left variable">wsrep_node_address</span><span class="token operator">=</span><span class="token string">"192.168.2.10"</span>
+ 
+<span class="token comment">### 完成后保存退出</span>
+galera_new_cluster
+ 
+mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span>
+  
+CREATE <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'Iamadm1n!!'</span><span class="token punctuation">;</span>
+GRANT ALL ON *.* TO <span class="token string">'root'</span>@<span class="token string">'%'</span><span class="token punctuation">;</span>
+update mysql.user <span class="token builtin class-name">set</span>  <span class="token assign-left variable">Grant_priv</span><span class="token operator">=</span><span class="token string">'Y'</span> where <span class="token assign-left variable">user</span><span class="token operator">=</span><span class="token string">'root'</span> and <span class="token assign-left variable">host</span><span class="token operator">=</span><span class="token string">'%'</span><span class="token punctuation">;</span>
+flush privileges<span class="token punctuation">;</span>
+<span class="token builtin class-name">exit</span>
+
+
+<span class="token comment">### 在其他两台主机操作</span>
+systemctl stop mysql
+<span class="token function">vim</span> /etc/mysql/mariadb.conf.d/50-server.cnf
+<span class="token comment"># 在 [mysqld] 下添加 skip-name-resolve</span>
+<span class="token comment"># 在文件末尾添加如下内容</span>
+<span class="token punctuation">[</span>galera<span class="token punctuation">]</span>
+<span class="token assign-left variable">wsrep_on</span><span class="token operator">=</span>ON
+<span class="token assign-left variable">wsrep_provider</span><span class="token operator">=</span>/usr/lib/galera/libgalera_smm.so
+<span class="token assign-left variable">wsrep_cluster_address</span><span class="token operator">=</span><span class="token string">"gcomm://192.168.2.10,192.168.2.11,192.168.2.12"</span>
+<span class="token assign-left variable">binlog_format</span><span class="token operator">=</span>row
+<span class="token assign-left variable">default_storage_engine</span><span class="token operator">=</span>InnoDB
+<span class="token assign-left variable">innodb_autoinc_lock_mode</span><span class="token operator">=</span><span class="token number">2</span>
+bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
+<span class="token comment"># any cluster name</span>
+<span class="token assign-left variable">wsrep_cluster_name</span><span class="token operator">=</span><span class="token string">"MariaDB_Cluster"</span>
+<span class="token comment"># own IP address</span>
+<span class="token assign-left variable">wsrep_node_address</span><span class="token operator">=</span><span class="token string">"192.168.2.11"</span>   <span class="token comment">## 注意：这里填写当前节点的 IP，另外一个节点填 192.168.2.12</span>
+ 
+<span class="token comment">### 完成后保存退出</span>
+<span class="token comment">## 重启 MySQL 服务</span>
+systemctl start mysql
+systemctl <span class="token builtin class-name">enable</span> mysql
+ 
+<span class="token comment">## 检查集群状态</span>
+mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span>
+show status like <span class="token string">'wsrep_cluster%'</span><span class="token punctuation">;</span>
+<span class="token comment">## 需观察 'wsrep_cluster_size' 是否正常（正常为节点数量），以及 'wsrep_cluster_status' 是否为 Primary</span>
+ 
+<span class="token comment">## 如果集群状态正常，则去修改第一个节点的 /etc/mysql/mariadb.conf.d/50-server.cnf 文件</span>
+<span class="token comment">## 将 wsrep_cluster_address 配置修改和其他两个节点一致即可</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hadoop 简介</title>
+    <url>/post/8164914c.html</url>
+    <content><![CDATA[<h3 id="Hadoop-介绍"><a class="header-anchor" href="#Hadoop-介绍">¶</a>Hadoop 介绍</h3>
+<p>Hadoop 是 Apache 组织的一个分布式计算框架（java 语言），其最核心的设计就是：<strong>HDFS</strong> 和 <strong>MapReduce</strong>，HDFS 实现存储，MapReduce 实现原理分析处理。</p>
+<h4 id="HDFS文件系统"><a class="header-anchor" href="#HDFS文件系统">¶</a>HDFS 文件系统</h4>
+<p><strong>HDFS</strong>（Hadoop Distributed File System）是一个高度容错的系统，适合部署在廉价的机器上。HDFS 能提供高吞吐量的数据访问，适合那些有着超大数据集的应用程序。</p>
+<span id="more"></span>
+<h5 id="设计特点"><a class="header-anchor" href="#设计特点">¶</a> 设计特点</h5>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>大数据文件，适合大文件或者一堆大数据文件</p>
+</li>
+<li class="lvl-2">
+<p>文件分块存储，HDFS 会将一个完整的大文件平均分块存储到不同计算机上</p>
+</li>
+<li class="lvl-2">
+<p>流式数据访问，一次写入多次读写，和传统文件不同，它不支持动态改变文件内容，而是要求让文件一次写入就不做变化，要变化只能在文件末尾添加</p>
+</li>
+<li class="lvl-2">
+<p>廉价硬件</p>
+</li>
+<li class="lvl-2">
+<p>备份，为防止某个主机失效读取不到该主机的块文件，它将同一个文件块副本分配到其他某几个主机上</p>
+</li>
+</ul>
+<h5 id="Master-Slave架构"><a class="header-anchor" href="#Master-Slave架构">¶</a>Master / Slave 架构</h5>
+<p>一个 HDFS 集群是有一个 Namenode 和一定数目的 Datanode 组成。Namenode 作为中心服务器负责管理文件系统的 namespace 和客户端对文件的访问，Datanode 在集群中负责管理结点上他们附带的存储。在内部，一个文件其实分成一个或多个 block，这些 block 存储在 Datanode 集合里。Namenode 执行文件系统的 namespace 操作，如打开、关闭、重命名等，同时决定 block 到具体 Datanode 结点的映射。Datanode 在 Namenode 的指挥下进行 block 的创建、删除和复制。</p>
+<h5 id="HDFS的一些关键元素"><a class="header-anchor" href="#HDFS的一些关键元素">¶</a>HDFS 的一些关键元素</h5>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>Block：将文件分块，通常为 64M。</p>
+</li>
+<li class="lvl-2">
+<p>NameNode：保存整个文件系统的目录信息、文件信息及分块信息，由唯一一台主机专门保存。（2.0 版本后增加备份）</p>
+</li>
+<li class="lvl-2">
+<p>DataNode：用于存储 Block 文件。</p>
+</li>
+<li class="lvl-2">
+<p>NameNode 全权管理数据块的复制，它周期性地从集群中的每个 DataNode 接受心跳信号和块状态报告（BlockReport）。结合艘到心跳信号以为这该 DataNode 工作正常，块状态报告包含了一个该 DataNode 上所有数据块的列表。</p>
+</li>
+</ul>
+<h4 id="MapReduce文件系统"><a class="header-anchor" href="#MapReduce文件系统">¶</a>MapReduce 文件系统</h4>
+<p>MapReduce 是一种编程模型，用于大规模数据的并行运算。MapReduce 分成两个部分：<strong>Map</strong>（映射）和 <strong>Reduce</strong>（归纳）。当你向 MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个 Map 任务，然后分配到不同的节点上去执行，每一个 Map 任务处理输入数据中的一部分，当 Map 任务完成后，它会生成一些中间文件，这些中间文件将会作为 Reduce 任务的输入数据。Reduce 任务的主要目标就是把前面若干个 Map 的输出汇总并输出。</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Gitlab 单节点服务搭建</title>
     <url>/post/dfc3ccac.html</url>
     <content><![CDATA[<h2 id="搭建准备"><a class="header-anchor" href="#搭建准备">¶</a> 搭建准备</h2>
@@ -1037,59 +1090,6 @@ qiniu:
       </tags>
   </entry>
   <entry>
-    <title>Hadoop 简介</title>
-    <url>/post/8164914c.html</url>
-    <content><![CDATA[<h3 id="Hadoop-介绍"><a class="header-anchor" href="#Hadoop-介绍">¶</a>Hadoop 介绍</h3>
-<p>Hadoop 是 Apache 组织的一个分布式计算框架（java 语言），其最核心的设计就是：<strong>HDFS</strong> 和 <strong>MapReduce</strong>，HDFS 实现存储，MapReduce 实现原理分析处理。</p>
-<h4 id="HDFS文件系统"><a class="header-anchor" href="#HDFS文件系统">¶</a>HDFS 文件系统</h4>
-<p><strong>HDFS</strong>（Hadoop Distributed File System）是一个高度容错的系统，适合部署在廉价的机器上。HDFS 能提供高吞吐量的数据访问，适合那些有着超大数据集的应用程序。</p>
-<span id="more"></span>
-<h5 id="设计特点"><a class="header-anchor" href="#设计特点">¶</a> 设计特点</h5>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>大数据文件，适合大文件或者一堆大数据文件</p>
-</li>
-<li class="lvl-2">
-<p>文件分块存储，HDFS 会将一个完整的大文件平均分块存储到不同计算机上</p>
-</li>
-<li class="lvl-2">
-<p>流式数据访问，一次写入多次读写，和传统文件不同，它不支持动态改变文件内容，而是要求让文件一次写入就不做变化，要变化只能在文件末尾添加</p>
-</li>
-<li class="lvl-2">
-<p>廉价硬件</p>
-</li>
-<li class="lvl-2">
-<p>备份，为防止某个主机失效读取不到该主机的块文件，它将同一个文件块副本分配到其他某几个主机上</p>
-</li>
-</ul>
-<h5 id="Master-Slave架构"><a class="header-anchor" href="#Master-Slave架构">¶</a>Master / Slave 架构</h5>
-<p>一个 HDFS 集群是有一个 Namenode 和一定数目的 Datanode 组成。Namenode 作为中心服务器负责管理文件系统的 namespace 和客户端对文件的访问，Datanode 在集群中负责管理结点上他们附带的存储。在内部，一个文件其实分成一个或多个 block，这些 block 存储在 Datanode 集合里。Namenode 执行文件系统的 namespace 操作，如打开、关闭、重命名等，同时决定 block 到具体 Datanode 结点的映射。Datanode 在 Namenode 的指挥下进行 block 的创建、删除和复制。</p>
-<h5 id="HDFS的一些关键元素"><a class="header-anchor" href="#HDFS的一些关键元素">¶</a>HDFS 的一些关键元素</h5>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>Block：将文件分块，通常为 64M。</p>
-</li>
-<li class="lvl-2">
-<p>NameNode：保存整个文件系统的目录信息、文件信息及分块信息，由唯一一台主机专门保存。（2.0 版本后增加备份）</p>
-</li>
-<li class="lvl-2">
-<p>DataNode：用于存储 Block 文件。</p>
-</li>
-<li class="lvl-2">
-<p>NameNode 全权管理数据块的复制，它周期性地从集群中的每个 DataNode 接受心跳信号和块状态报告（BlockReport）。结合艘到心跳信号以为这该 DataNode 工作正常，块状态报告包含了一个该 DataNode 上所有数据块的列表。</p>
-</li>
-</ul>
-<h4 id="MapReduce文件系统"><a class="header-anchor" href="#MapReduce文件系统">¶</a>MapReduce 文件系统</h4>
-<p>MapReduce 是一种编程模型，用于大规模数据的并行运算。MapReduce 分成两个部分：<strong>Map</strong>（映射）和 <strong>Reduce</strong>（归纳）。当你向 MapReduce 框架提交一个计算作业时，它会首先把计算作业拆分成若干个 Map 任务，然后分配到不同的节点上去执行，每一个 Map 任务处理输入数据中的一部分，当 Map 任务完成后，它会生成一些中间文件，这些中间文件将会作为 Reduce 任务的输入数据。Reduce 任务的主要目标就是把前面若干个 Map 的输出汇总并输出。</p>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>Hadoop</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo 的建站之旅</title>
     <url>/post/2a8d7180.html</url>
     <content><![CDATA[<p>这几天觉得 wordpress 作为博客实在是太臃肿了，而且访问的后台以及更新都极其的慢，以至于想把博客迁到 Hexo 上去。<br>
@@ -1140,40 +1140,6 @@ hexo deploy			#部署博客到github<span aria-hidden="true" class="line-numbers
       <categories>
         <category>Blog</category>
       </categories>
-  </entry>
-  <entry>
-    <title>KVM 填坑</title>
-    <url>/post/84d7a5a0.html</url>
-    <content><![CDATA[<h3 id="1、UEFI-引导问题"><a class="header-anchor" href="#1、UEFI-引导问题">¶</a>1、UEFI 引导问题</h3>
-<p>支持 KVM 虚拟机使用 UEFI 引导需要安装 OVMF 组件，参考<a href="https://blog.skyhive.tech/2020/06/10/%E5%9F%BA%E4%BA%8E-CentOS-%E5%AE%89%E8%A3%85-KVM/">基于 CentOS 安装 KVM</a>。<br>
-目前通过 virt-v2v 导入的 ova 且使用 UEFI 启动的虚拟机（from vSphere）再 define domain 的时候会有报错，报错如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">error: Failed to define domain from /tmp/v2vlibvirt20e61b.xml
-error: unsupported configuration: smm is not available with this QEMU binary<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>以上报错是 OVMF 的问题，参考：<a href="https://access.redhat.com/discussions/3175901">https://access.redhat.com/discussions/3175901</a></p>
-<p>具体是因为因为 “OVMF_CODE.secboot.fd” 固件在当前的 qemu-kvm 中不受支持，RedHat Discussion 上有两种解决方案：</p>
-<ol>
-<li class="lvl-3">
-<p>重构 OVMF RPM 包，参考： <a href="https://access.redhat.com/discussions/3175901">https://access.redhat.com/discussions/3175901</a></p>
-<blockquote>
-<p>Removing “-D SMM_REQUIRE”, rebuild the rpm, browse inside the rpm and then copy OVMF_CODE.secboot.fd to /usr/share/OVMF/OVMF_CODE.fd makes it work but I don’t know whether this will reduce security.</p>
-</blockquote>
-</li>
-<li class="lvl-3">
-<p>升级 qemu-kvm 版本至 2.6 以上的 qemu-kvm-rhev 版本</p>
-<blockquote>
-<p>‘With this update, the “OVMF_CODE.secboot.fd” firmware binary file includes the Secure Boot feature. This binary can be used with pc-q35-rhel7.3.0 and later Q35 machine types only […]’<br>Those machine types are unavailable when using the 1.5.3-based “qemu-kvm” package of base RHEL. They are available only when using the 2.6.0-based “qemu-kvm-rhev” package, which is not part of base RHEL.</p>
-</blockquote>
-</li>
-</ol>
-<p>未完待续……</p>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>虚拟化</tag>
-        <tag>KVM</tag>
-      </tags>
   </entry>
   <entry>
     <title>Python 基础</title>
@@ -1289,6 +1255,83 @@ for x in num:
       </tags>
   </entry>
   <entry>
+    <title>KVM 填坑</title>
+    <url>/post/84d7a5a0.html</url>
+    <content><![CDATA[<h3 id="1、UEFI-引导问题"><a class="header-anchor" href="#1、UEFI-引导问题">¶</a>1、UEFI 引导问题</h3>
+<p>支持 KVM 虚拟机使用 UEFI 引导需要安装 OVMF 组件，参考<a href="https://blog.skyhive.tech/2020/06/10/%E5%9F%BA%E4%BA%8E-CentOS-%E5%AE%89%E8%A3%85-KVM/">基于 CentOS 安装 KVM</a>。<br>
+目前通过 virt-v2v 导入的 ova 且使用 UEFI 启动的虚拟机（from vSphere）再 define domain 的时候会有报错，报错如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">error: Failed to define domain from /tmp/v2vlibvirt20e61b.xml
+error: unsupported configuration: smm is not available with this QEMU binary<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>以上报错是 OVMF 的问题，参考：<a href="https://access.redhat.com/discussions/3175901">https://access.redhat.com/discussions/3175901</a></p>
+<p>具体是因为因为 “OVMF_CODE.secboot.fd” 固件在当前的 qemu-kvm 中不受支持，RedHat Discussion 上有两种解决方案：</p>
+<ol>
+<li class="lvl-3">
+<p>重构 OVMF RPM 包，参考： <a href="https://access.redhat.com/discussions/3175901">https://access.redhat.com/discussions/3175901</a></p>
+<blockquote>
+<p>Removing “-D SMM_REQUIRE”, rebuild the rpm, browse inside the rpm and then copy OVMF_CODE.secboot.fd to /usr/share/OVMF/OVMF_CODE.fd makes it work but I don’t know whether this will reduce security.</p>
+</blockquote>
+</li>
+<li class="lvl-3">
+<p>升级 qemu-kvm 版本至 2.6 以上的 qemu-kvm-rhev 版本</p>
+<blockquote>
+<p>‘With this update, the “OVMF_CODE.secboot.fd” firmware binary file includes the Secure Boot feature. This binary can be used with pc-q35-rhel7.3.0 and later Q35 machine types only […]’<br>Those machine types are unavailable when using the 1.5.3-based “qemu-kvm” package of base RHEL. They are available only when using the 2.6.0-based “qemu-kvm-rhev” package, which is not part of base RHEL.</p>
+</blockquote>
+</li>
+</ol>
+<p>未完待续……</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>虚拟化</tag>
+        <tag>KVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQL 进阶</title>
+    <url>/post/5a67733d.html</url>
+    <content><![CDATA[<p>我们都知道 select 的基本用法 <code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而 <code>select</code> 语句后面还可以跟很多限制条件。我们这次用 user 表来作为示范，下面是 user 表的结构：</p>
+<span id="more"></span>
+<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fuser.png" alt="user 表结构"></p>
+<h4 id="Between、And、In、-、-、-、-等条件查询："><a class="header-anchor" href="#Between、And、In、-、-、-、-等条件查询：">¶</a>Between、And、In、&lt;=、&gt;=、&lt;、&gt; 等条件查询：</h4>
+<p>通过 <code>select * from table where id between 1 and 3</code> 和 <code>select * from table where id &gt;=1 and id &lt;= 3 </code>的返回结果，我们可以发现 <code>between and</code> 和 <code>&gt;= and &lt;=</code> 是等同的。<br>
+<img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fbetween.png" alt="between"><br>
+<img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fbetween2.png" alt="between2"></p>
+<p>如果我们要查询的条件不是一个连续的数值，可以用 <code>in</code>：</p>
+<pre class="line-numbers language-none"><code class="language-none">select * from table where id in (2,4)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="locate-函数：locate-substr-str"><a class="header-anchor" href="#locate-函数：locate-substr-str">¶</a>locate () 函数：<code>locate(substr,str)</code></h4>
+<p>这个函数返回 <code>substr</code> 在字符串 <code>str</code> 中的第一个出现的位置，如果不存在则值为 0<br>
+<img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Flocate.png" alt="locate 函数"></p>
+<h4 id="Count-函数"><a class="header-anchor" href="#Count-函数">¶</a>Count () 函数:</h4>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>count (字段名)：返回指定列的值的数目，但是字段值为 <code>NULL</code> 时不会被计算进去。<code>select count(字段名) from &lt;表名&gt;</code></p>
+</li>
+<li class="lvl-2">
+<p>count (*)：返回表中的记录数，字段值为 <code>NULL</code> 时会被计算进去。<code>select count(*) from &lt;表名&gt;</code></p>
+</li>
+</ul>
+<h4 id="Distinct语句："><a class="header-anchor" href="#Distinct语句：">¶</a>Distinct 语句：</h4>
+<p>Distinct 语句用于去除重复行，比如：<code>select distinct * from &lt;表名&gt;</code>。<br>
+其他的语句或函数都可以和 <code>distinct</code> 配合使用，比如：<code>count(distinct &lt;字段名&gt;)</code> 可以去除重复行统计行数，但是 <code>count(distinct *)</code> 是<strong>不被允许</strong>的</p>
+<h4 id="Union语句："><a class="header-anchor" href="#Union语句：">¶</a>Union 语句：</h4>
+<p>Union 语句可以将两个 <code>select</code> 语句的结果集组合成一个：</p>
+<pre class="line-numbers language-none"><code class="language-none">(select * from table where id &gt;= 3) union (select * from table where id = 1)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>当我们使用 <code>union</code> 语句的时候，默认去除了重复行，和 <code>distinct</code> 的效果一样，如果要显示所有的结果，则要使用 <code>union all</code> 语句。</p>
+<h4 id="Drder-by语句："><a class="header-anchor" href="#Drder-by语句：">¶</a>Drder by 语句：</h4>
+<pre class="line-numbers language-none"><code class="language-none">select * from table order by &lt;字段名&gt; [asc/desc]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>其中 <code>asc</code> 是默认的排序，为升序，<code>desc</code> 为降序。<br>
+当然 order by 后面可以跟很多个字段，如：<code>select * from table order by info desc,id asc</code>, 这个语句意为先按 <code>info</code> 字段降序，若 <code>info</code> 字段值相同的情况下，再按 <code>id</code> 字段升序。而且，<code>NULL</code> 默认为值最小。</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL 语句的基本操作</title>
     <url>/post/45981961.html</url>
     <content><![CDATA[<h3 id="数据库操作"><a class="header-anchor" href="#数据库操作">¶</a> 数据库操作</h3>
@@ -1358,6 +1401,41 @@ DROP TABLE &lt;表名&gt;                                       --删除表<span
       </tags>
   </entry>
   <entry>
+    <title>nginx 端口转发被强行更改</title>
+    <url>/post/58e40093.html</url>
+    <content><![CDATA[<p><a href="https://blog.skyhive.tech/post/4b4fd36b.html">上一篇文章</a>说到在家里把 LB 升了级并且通过 <code>acme.sh</code> 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：</p>
+<img src="http://www.plantuml.com/plantuml/svg/IqmkoIzI22rEBUBY0f4Akhfs2Xf1-QKbgKMQLWesddb0HbvgYK90Vb69WeM9YR4T5qGMejB72QJADx40eW0ix-C4aNFEpqlBASrBJjM42xbdbkGa9Y7uKOb9IPaLIF95YMc9UOa80Q_Kd9pAjCmyJG00">
+<p>由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80/443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。</p>
+<span id="more"></span>
+<p>那么对于网盘服务来说，正常的访问路径就是：</p>
+<img src="http://www.plantuml.com/plantuml/svg/uqfCBialKWWjJYtYuWAH2hgwTWeQGVcb9Qb5cbOADfvvG4PUQeb2G7vHYO854DXnGMGXAdsSGAfy4miW2anCZEsuV9mWSdwf5IN9EVcbAI0b0KNv5PLGKmmi3Eou0000">
+<p>乍一看好像挺正常的，但是在我通过公网去访问的是时候</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> https://<span class="token operator">&lt;</span>domain_name<span class="token operator">&gt;</span>:8888<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>出现的结果往往是，nginx 直接把我的 8888 端口给重定向成了 8080，也就是变成了 <code>https://&lt;domain_name&gt;:8080</code> 的访问。后来查了一下，是需要在 nginx location 的配置中稍微做些修饰，随即将该方法记录下来</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">
+<span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+
+  <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl</span><span class="token punctuation">;</span>
+  ……
+  <span class="token directive"><span class="token keyword">port_in_redirect</span> <span class="token boolean">off</span></span><span class="token punctuation">;</span>  <span class="token comment">## 需要在 server 中加上这个配置防止 port redirect</span>
+
+  <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">{</span>
+    <span class="token directive"><span class="token keyword">proxy_pass</span> http://192.168.2.150:8080</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">proxy_set_header</span> Host <span class="token variable">$host</span>:<span class="token variable">$server_port</span></span><span class="token punctuation">;</span>    <span class="token comment">## Host header 需要有 $host:$server_port，即 host 和 port 都得有，否则 port 就会变成 proxy_pass 中的 port</span>
+    ……
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>以上基本上可以解决问题，如若不能，则还得继续 Google 一番。</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQLi-Labs 的安装</title>
     <url>/post/a802aee5.html</url>
     <content><![CDATA[<p>笔者前段时间安装了 sqli-labs，就想把 sqli-labs 和 lamp 环境的搭建都写出来，其实这两个东西都很简单，感觉比我折腾 hexo 要简单的得多了（手动滑稽）。</p>
@@ -1405,46 +1483,20 @@ $dbname1 = "challenges";
       </tags>
   </entry>
   <entry>
-    <title>SQL 进阶</title>
-    <url>/post/5a67733d.html</url>
-    <content><![CDATA[<p>我们都知道 select 的基本用法 <code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而 <code>select</code> 语句后面还可以跟很多限制条件。我们这次用 user 表来作为示范，下面是 user 表的结构：</p>
+    <title>一个学习 Python 的小游戏</title>
+    <url>/post/91a006a9.html</url>
+    <content><![CDATA[<p>笔者最近在自学 Python 的过程中想起曾经有人推荐过的一款学习编程的小游戏，叫做 <a href="https://cn.codecombat.com">Codecombat</a>，通过玩游戏的方式学习编程语言的语法规则。</p>
 <span id="more"></span>
-<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fuser.png" alt="user 表结构"></p>
-<h4 id="Between、And、In、-、-、-、-等条件查询："><a class="header-anchor" href="#Between、And、In、-、-、-、-等条件查询：">¶</a>Between、And、In、&lt;=、&gt;=、&lt;、&gt; 等条件查询：</h4>
-<p>通过 <code>select * from table where id between 1 and 3</code> 和 <code>select * from table where id &gt;=1 and id &lt;= 3 </code>的返回结果，我们可以发现 <code>between and</code> 和 <code>&gt;= and &lt;=</code> 是等同的。<br>
-<img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fbetween.png" alt="between"><br>
-<img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fbetween2.png" alt="between2"></p>
-<p>如果我们要查询的条件不是一个连续的数值，可以用 <code>in</code>：</p>
-<pre class="line-numbers language-none"><code class="language-none">select * from table where id in (2,4)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h4 id="locate-函数：locate-substr-str"><a class="header-anchor" href="#locate-函数：locate-substr-str">¶</a>locate () 函数：<code>locate(substr,str)</code></h4>
-<p>这个函数返回 <code>substr</code> 在字符串 <code>str</code> 中的第一个出现的位置，如果不存在则值为 0<br>
-<img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Flocate.png" alt="locate 函数"></p>
-<h4 id="Count-函数"><a class="header-anchor" href="#Count-函数">¶</a>Count () 函数:</h4>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>count (字段名)：返回指定列的值的数目，但是字段值为 <code>NULL</code> 时不会被计算进去。<code>select count(字段名) from &lt;表名&gt;</code></p>
-</li>
-<li class="lvl-2">
-<p>count (*)：返回表中的记录数，字段值为 <code>NULL</code> 时会被计算进去。<code>select count(*) from &lt;表名&gt;</code></p>
-</li>
-</ul>
-<h4 id="Distinct语句："><a class="header-anchor" href="#Distinct语句：">¶</a>Distinct 语句：</h4>
-<p>Distinct 语句用于去除重复行，比如：<code>select distinct * from &lt;表名&gt;</code>。<br>
-其他的语句或函数都可以和 <code>distinct</code> 配合使用，比如：<code>count(distinct &lt;字段名&gt;)</code> 可以去除重复行统计行数，但是 <code>count(distinct *)</code> 是<strong>不被允许</strong>的</p>
-<h4 id="Union语句："><a class="header-anchor" href="#Union语句：">¶</a>Union 语句：</h4>
-<p>Union 语句可以将两个 <code>select</code> 语句的结果集组合成一个：</p>
-<pre class="line-numbers language-none"><code class="language-none">(select * from table where id &gt;= 3) union (select * from table where id = 1)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>当我们使用 <code>union</code> 语句的时候，默认去除了重复行，和 <code>distinct</code> 的效果一样，如果要显示所有的结果，则要使用 <code>union all</code> 语句。</p>
-<h4 id="Drder-by语句："><a class="header-anchor" href="#Drder-by语句：">¶</a>Drder by 语句：</h4>
-<pre class="line-numbers language-none"><code class="language-none">select * from table order by &lt;字段名&gt; [asc/desc]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>其中 <code>asc</code> 是默认的排序，为升序，<code>desc</code> 为降序。<br>
-当然 order by 后面可以跟很多个字段，如：<code>select * from table order by info desc,id asc</code>, 这个语句意为先按 <code>info</code> 字段降序，若 <code>info</code> 字段值相同的情况下，再按 <code>id</code> 字段升序。而且，<code>NULL</code> 默认为值最小。</p>
+<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fcodecombat.png" alt="codecombat"><br>
+游戏有很多关卡，每个关卡都会有之前没有学过的语法，学习的难度是逐渐上升的，用游戏的方式将学习者带入比起看起枯燥的书本文字效果要好的多。</p>
+<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Flevel.png" alt="level"><br>
+当然这里除了有 Python 之外还有 Javascript 等脚本语言可以学习。</p>
 ]]></content>
       <categories>
-        <category>Infra</category>
+        <category>Code</category>
       </categories>
       <tags>
-        <tag>MySQL</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1470,58 +1522,6 @@ $dbname1 = "challenges";
       </categories>
       <tags>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>一个学习 Python 的小游戏</title>
-    <url>/post/91a006a9.html</url>
-    <content><![CDATA[<p>笔者最近在自学 Python 的过程中想起曾经有人推荐过的一款学习编程的小游戏，叫做 <a href="https://cn.codecombat.com">Codecombat</a>，通过玩游戏的方式学习编程语言的语法规则。</p>
-<span id="more"></span>
-<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fcodecombat.png" alt="codecombat"><br>
-游戏有很多关卡，每个关卡都会有之前没有学过的语法，学习的难度是逐渐上升的，用游戏的方式将学习者带入比起看起枯燥的书本文字效果要好的多。</p>
-<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Flevel.png" alt="level"><br>
-当然这里除了有 Python 之外还有 Javascript 等脚本语言可以学习。</p>
-]]></content>
-      <categories>
-        <category>Code</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nginx 端口转发被强行更改</title>
-    <url>/post/58e40093.html</url>
-    <content><![CDATA[<p><a href="https://blog.skyhive.tech/post/4b4fd36b.html">上一篇文章</a>说到在家里把 LB 升了级并且通过 <code>acme.sh</code> 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：</p>
-<img src="http://www.plantuml.com/plantuml/svg/IqmkoIzI22rEBUBY0f4Akhfs2Xf1-QKbgKMQLWesddb0HbvgYK90Vb69WeM9YR4T5qGMejB72QJADx40eW0ix-C4aNFEpqlBASrBJjM42xbdbkGa9Y7uKOb9IPaLIF95YMc9UOa80Q_Kd9pAjCmyJG00">
-<p>由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80/443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。</p>
-<span id="more"></span>
-<p>那么对于网盘服务来说，正常的访问路径就是：</p>
-<img src="http://www.plantuml.com/plantuml/svg/uqfCBialKWWjJYtYuWAH2hgwTWeQGVcb9Qb5cbOADfvvG4PUQeb2G7vHYO854DXnGMGXAdsSGAfy4miW2anCZEsuV9mWSdwf5IN9EVcbAI0b0KNv5PLGKmmi3Eou0000">
-<p>乍一看好像挺正常的，但是在我通过公网去访问的是时候</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> https://<span class="token operator">&lt;</span>domain_name<span class="token operator">&gt;</span>:8888<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>出现的结果往往是，nginx 直接把我的 8888 端口给重定向成了 8080，也就是变成了 <code>https://&lt;domain_name&gt;:8080</code> 的访问。后来查了一下，是需要在 nginx location 的配置中稍微做些修饰，随即将该方法记录下来</p>
-<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">
-<span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
-
-  <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl</span><span class="token punctuation">;</span>
-  ……
-  <span class="token directive"><span class="token keyword">port_in_redirect</span> <span class="token boolean">off</span></span><span class="token punctuation">;</span>  <span class="token comment">## 需要在 server 中加上这个配置防止 port redirect</span>
-
-  <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">{</span>
-    <span class="token directive"><span class="token keyword">proxy_pass</span> http://192.168.2.150:8080</span><span class="token punctuation">;</span>
-    <span class="token directive"><span class="token keyword">proxy_set_header</span> Host <span class="token variable">$host</span>:<span class="token variable">$server_port</span></span><span class="token punctuation">;</span>    <span class="token comment">## Host header 需要有 $host:$server_port，即 host 和 port 都得有，否则 port 就会变成 proxy_pass 中的 port</span>
-    ……
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>以上基本上可以解决问题，如若不能，则还得继续 Google 一番。</p>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -1824,159 +1824,6 @@ python <span class="token number">3</span> <span class="token punctuation">:</sp
       </categories>
       <tags>
         <tag>Django</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于 CentOS 安装 KVM</title>
-    <url>/post/9411b67b.html</url>
-    <content><![CDATA[<h3 id="安装操作系统"><a class="header-anchor" href="#安装操作系统">¶</a> 安装操作系统</h3>
-<p>UEFI 引导或者 Legacy BIOS 引导均可，冲就完事了</p>
-<span id="more"></span>
-<h3 id="安装-KVM-及其依赖"><a class="header-anchor" href="#安装-KVM-及其依赖">¶</a> 安装 KVM 及其依赖</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 先把源换了</span>
-yum <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token function">wget</span>
-<span class="token function">mv</span> /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
-<span class="token function">wget</span> <span class="token parameter variable">-O</span> /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-yum makecache
-
-<span class="token comment">## 安装 epel 源</span>
-yum <span class="token function">install</span> <span class="token parameter variable">-y</span> epel-release
-
-<span class="token comment">## 安装 KVM 以及依赖服务</span>
-yum <span class="token function">install</span> ntp kvm virt-manager virt-top qemu-kvm qemu-kvm-tools libvirt <span class="token function">git</span> <span class="token function">vim</span> <span class="token function">htop</span>
-systemctl start libvirtd
-systemctl <span class="token builtin class-name">enable</span> libvirtd
-
-<span class="token comment">## 配置 NTP</span>
-<span class="token function">vim</span> /etc/ntp.conf
---------
-server ntp.aliyun.com iburst  <span class="token comment"># 新增</span>
---------
-
-systemctl start ntpd
-systemctl <span class="token builtin class-name">enable</span> ntpd
-ntpq <span class="token parameter variable">-p</span>  <span class="token comment"># 检查同步状态</span>
-
-<span class="token comment">## 关闭 firewalled selinux</span>
-systemctl stop firewalld
-systemctl disable firewalld
-setenforce <span class="token number">0</span>
-<span class="token function">vim</span> /etc/sysconfig/selinux
--------
-<span class="token assign-left variable">SELINUX</span><span class="token operator">=</span>disabled  <span class="token comment">#修改</span>
--------
-
-<span class="token comment">## 修改 grub 引导配置</span>
-<span class="token function">vim</span> /etc/default/grub
--------
-<span class="token assign-left variable">GRUB_CMDLINE_LINUX</span><span class="token operator">=</span><span class="token string">"crashkernel=auto spectre_v2=retpoline rd.lvm.lv=centos/root rd.lvm.lv=centos/swap intel_iommu=on rhgb quiet"</span>  <span class="token comment"># 开启 intel iommu</span>
--------
-grub2-mkconfig <span class="token parameter variable">-o</span> /boot/grub2/grub.cfg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="网络配置"><a class="header-anchor" href="#网络配置">¶</a> 网络配置</h3>
-<p>因为环境需要将两个数据口创建 bond4 来使用，以下需要先创建 bond，再将 bond 加入网桥</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 安装依赖并禁用 NetworkManager</span>
-yum <span class="token function">install</span> <span class="token parameter variable">-y</span> bridge-utils
-systemctl stop NetworkManager
-systemctl disable NetworkManager
-
-<span class="token comment">## eno1 配置文件修改</span>
-<span class="token function">vim</span> /etc/sysconfig/network-scripts/ifcfg-eno1
-----------
-<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span><span class="token string">"eno1"</span>
-<span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Ethernet
-<span class="token assign-left variable">PROXY_METHOD</span><span class="token operator">=</span>none
-<span class="token assign-left variable">BROWSER_ONLY</span><span class="token operator">=</span>no
-<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>none
-<span class="token assign-left variable">DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV4_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6INIT</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_AUTOCONF</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6_ADDR_GEN_MODE</span><span class="token operator">=</span>stable-privacy
-<span class="token assign-left variable">NAME</span><span class="token operator">=</span>eno1
-<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">MASTER</span><span class="token operator">=</span>bond1
-<span class="token assign-left variable">SLAVE</span><span class="token operator">=</span>yes
-----------
- 
- 
-<span class="token comment">## eno2 配置文件修改</span>
-<span class="token function">vim</span> /etc/sysconfig/network-scripts/ifcfg-eno2
-----------
-<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span><span class="token string">"eno2"</span>
-<span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Ethernet
-<span class="token assign-left variable">PROXY_METHOD</span><span class="token operator">=</span>none
-<span class="token assign-left variable">BROWSER_ONLY</span><span class="token operator">=</span>no
-<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>none
-<span class="token assign-left variable">DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV4_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6INIT</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_AUTOCONF</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_DEFROUTE</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">IPV6_FAILURE_FATAL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">IPV6_ADDR_GEN_MODE</span><span class="token operator">=</span>stable-privacy
-<span class="token assign-left variable">NAME</span><span class="token operator">=</span>eno2
-<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">MASTER</span><span class="token operator">=</span>bond1
-<span class="token assign-left variable">SLAVE</span><span class="token operator">=</span>yes
-----------
- 
- 
-<span class="token comment">## bond1 配置添加</span>
-<span class="token function">vim</span> /etc/sysconfig/network-scripts/ifcfg-bond1
-----------
-<span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Bond
-<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>none
-<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">USERCTL</span><span class="token operator">=</span>no
-<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>bond1
-<span class="token assign-left variable">NAME</span><span class="token operator">=</span>bond1
-<span class="token assign-left variable">BONDING_MASTER</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">BONDING_OPTS</span><span class="token operator">=</span><span class="token string">"miimon=100 xmit_hash_policy=layer3+4 mode=4 lacp_rate=1"</span>
-<span class="token assign-left variable">BRIDGE</span><span class="token operator">=</span>br1
-----------
- 
- 
-<span class="token comment">## br1 配置添加</span>
-<span class="token function">vim</span> /etc/sysconfig/network-scripts/ifcfg-br1
-----------
-<span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Bridge
-<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>static
-<span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token variable">$ip</span>
-<span class="token assign-left variable">NETMASK</span><span class="token operator">=</span><span class="token variable">$netmask</span>
-<span class="token assign-left variable">GATEWAY</span><span class="token operator">=</span><span class="token variable">$gateway</span>
-<span class="token assign-left variable">PEEDNS</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">NAME</span><span class="token operator">=</span>br1
-<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>br1
-<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes
-<span class="token assign-left variable">DNS1</span><span class="token operator">=</span>x.x.x.x
-<span class="token assign-left variable">DNS2</span><span class="token operator">=</span>x.x.x.x
-----------
- 
-<span class="token comment">## 删除默认网桥</span>
-modprobe bonding
-<span class="token function">virsh</span> net-destory default<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="设置虚拟机支持从-UEFI-启动"><a class="header-anchor" href="#设置虚拟机支持从-UEFI-启动">¶</a> 设置虚拟机支持从 UEFI 启动</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 安装依赖</span>
-<span class="token function">wget</span> http://www.kraxel.org/repos/firmware.repo <span class="token parameter variable">-O</span> /etc/yum.repos.d/firmware.repo
-yum makecache
-yum <span class="token function">install</span> <span class="token parameter variable">-y</span> edk2.git-ovmf-x64 OVMF
- 
-<span class="token comment">## 配置 libvirtd</span>
-<span class="token function">vim</span> /etc/libvirt/qemu.conf  <span class="token comment"># 新增</span>
---------
-nvram <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"/usr/share/edk2.git/ovmf-x64/OVMF_CODE-pure-efi.fd:/usr/share/edk2.git/ovmf-x64/OVMF_VARS-pure-efi.fd"</span><span class="token punctuation">]</span>
---------
-systemctl restart libvirtd
- 
-<span class="token comment">## 后面创建虚拟机的时候可以在 firmware 中选择 uefi 了</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>虚拟化</tag>
-        <tag>KVM</tag>
       </tags>
   </entry>
   <entry>
@@ -2564,6 +2411,159 @@ zstyle :omz:plugins:ssh-agent identities id_rsa id_rsa2 id_github    <span class
       </tags>
   </entry>
   <entry>
+    <title>基于 CentOS 安装 KVM</title>
+    <url>/post/9411b67b.html</url>
+    <content><![CDATA[<h3 id="安装操作系统"><a class="header-anchor" href="#安装操作系统">¶</a> 安装操作系统</h3>
+<p>UEFI 引导或者 Legacy BIOS 引导均可，冲就完事了</p>
+<span id="more"></span>
+<h3 id="安装-KVM-及其依赖"><a class="header-anchor" href="#安装-KVM-及其依赖">¶</a> 安装 KVM 及其依赖</h3>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 先把源换了</span>
+yum <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token function">wget</span>
+<span class="token function">mv</span> /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+<span class="token function">wget</span> <span class="token parameter variable">-O</span> /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+yum makecache
+
+<span class="token comment">## 安装 epel 源</span>
+yum <span class="token function">install</span> <span class="token parameter variable">-y</span> epel-release
+
+<span class="token comment">## 安装 KVM 以及依赖服务</span>
+yum <span class="token function">install</span> ntp kvm virt-manager virt-top qemu-kvm qemu-kvm-tools libvirt <span class="token function">git</span> <span class="token function">vim</span> <span class="token function">htop</span>
+systemctl start libvirtd
+systemctl <span class="token builtin class-name">enable</span> libvirtd
+
+<span class="token comment">## 配置 NTP</span>
+<span class="token function">vim</span> /etc/ntp.conf
+--------
+server ntp.aliyun.com iburst  <span class="token comment"># 新增</span>
+--------
+
+systemctl start ntpd
+systemctl <span class="token builtin class-name">enable</span> ntpd
+ntpq <span class="token parameter variable">-p</span>  <span class="token comment"># 检查同步状态</span>
+
+<span class="token comment">## 关闭 firewalled selinux</span>
+systemctl stop firewalld
+systemctl disable firewalld
+setenforce <span class="token number">0</span>
+<span class="token function">vim</span> /etc/sysconfig/selinux
+-------
+<span class="token assign-left variable">SELINUX</span><span class="token operator">=</span>disabled  <span class="token comment">#修改</span>
+-------
+
+<span class="token comment">## 修改 grub 引导配置</span>
+<span class="token function">vim</span> /etc/default/grub
+-------
+<span class="token assign-left variable">GRUB_CMDLINE_LINUX</span><span class="token operator">=</span><span class="token string">"crashkernel=auto spectre_v2=retpoline rd.lvm.lv=centos/root rd.lvm.lv=centos/swap intel_iommu=on rhgb quiet"</span>  <span class="token comment"># 开启 intel iommu</span>
+-------
+grub2-mkconfig <span class="token parameter variable">-o</span> /boot/grub2/grub.cfg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="网络配置"><a class="header-anchor" href="#网络配置">¶</a> 网络配置</h3>
+<p>因为环境需要将两个数据口创建 bond4 来使用，以下需要先创建 bond，再将 bond 加入网桥</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 安装依赖并禁用 NetworkManager</span>
+yum <span class="token function">install</span> <span class="token parameter variable">-y</span> bridge-utils
+systemctl stop NetworkManager
+systemctl disable NetworkManager
+
+<span class="token comment">## eno1 配置文件修改</span>
+<span class="token function">vim</span> /etc/sysconfig/network-scripts/ifcfg-eno1
+----------
+<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span><span class="token string">"eno1"</span>
+<span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Ethernet
+<span class="token assign-left variable">PROXY_METHOD</span><span class="token operator">=</span>none
+<span class="token assign-left variable">BROWSER_ONLY</span><span class="token operator">=</span>no
+<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>none
+<span class="token assign-left variable">DEFROUTE</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPV4_FAILURE_FATAL</span><span class="token operator">=</span>no
+<span class="token assign-left variable">IPV6INIT</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPV6_AUTOCONF</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPV6_DEFROUTE</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPV6_FAILURE_FATAL</span><span class="token operator">=</span>no
+<span class="token assign-left variable">IPV6_ADDR_GEN_MODE</span><span class="token operator">=</span>stable-privacy
+<span class="token assign-left variable">NAME</span><span class="token operator">=</span>eno1
+<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">MASTER</span><span class="token operator">=</span>bond1
+<span class="token assign-left variable">SLAVE</span><span class="token operator">=</span>yes
+----------
+ 
+ 
+<span class="token comment">## eno2 配置文件修改</span>
+<span class="token function">vim</span> /etc/sysconfig/network-scripts/ifcfg-eno2
+----------
+<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span><span class="token string">"eno2"</span>
+<span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Ethernet
+<span class="token assign-left variable">PROXY_METHOD</span><span class="token operator">=</span>none
+<span class="token assign-left variable">BROWSER_ONLY</span><span class="token operator">=</span>no
+<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>none
+<span class="token assign-left variable">DEFROUTE</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPV4_FAILURE_FATAL</span><span class="token operator">=</span>no
+<span class="token assign-left variable">IPV6INIT</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPV6_AUTOCONF</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPV6_DEFROUTE</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">IPV6_FAILURE_FATAL</span><span class="token operator">=</span>no
+<span class="token assign-left variable">IPV6_ADDR_GEN_MODE</span><span class="token operator">=</span>stable-privacy
+<span class="token assign-left variable">NAME</span><span class="token operator">=</span>eno2
+<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">MASTER</span><span class="token operator">=</span>bond1
+<span class="token assign-left variable">SLAVE</span><span class="token operator">=</span>yes
+----------
+ 
+ 
+<span class="token comment">## bond1 配置添加</span>
+<span class="token function">vim</span> /etc/sysconfig/network-scripts/ifcfg-bond1
+----------
+<span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Bond
+<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>none
+<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">USERCTL</span><span class="token operator">=</span>no
+<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>bond1
+<span class="token assign-left variable">NAME</span><span class="token operator">=</span>bond1
+<span class="token assign-left variable">BONDING_MASTER</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">BONDING_OPTS</span><span class="token operator">=</span><span class="token string">"miimon=100 xmit_hash_policy=layer3+4 mode=4 lacp_rate=1"</span>
+<span class="token assign-left variable">BRIDGE</span><span class="token operator">=</span>br1
+----------
+ 
+ 
+<span class="token comment">## br1 配置添加</span>
+<span class="token function">vim</span> /etc/sysconfig/network-scripts/ifcfg-br1
+----------
+<span class="token assign-left variable">TYPE</span><span class="token operator">=</span>Bridge
+<span class="token assign-left variable">BOOTPROTO</span><span class="token operator">=</span>static
+<span class="token assign-left variable">IPADDR</span><span class="token operator">=</span><span class="token variable">$ip</span>
+<span class="token assign-left variable">NETMASK</span><span class="token operator">=</span><span class="token variable">$netmask</span>
+<span class="token assign-left variable">GATEWAY</span><span class="token operator">=</span><span class="token variable">$gateway</span>
+<span class="token assign-left variable">PEEDNS</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">NAME</span><span class="token operator">=</span>br1
+<span class="token assign-left variable">DEVICE</span><span class="token operator">=</span>br1
+<span class="token assign-left variable">ONBOOT</span><span class="token operator">=</span>yes
+<span class="token assign-left variable">DNS1</span><span class="token operator">=</span>x.x.x.x
+<span class="token assign-left variable">DNS2</span><span class="token operator">=</span>x.x.x.x
+----------
+ 
+<span class="token comment">## 删除默认网桥</span>
+modprobe bonding
+<span class="token function">virsh</span> net-destory default<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="设置虚拟机支持从-UEFI-启动"><a class="header-anchor" href="#设置虚拟机支持从-UEFI-启动">¶</a> 设置虚拟机支持从 UEFI 启动</h3>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 安装依赖</span>
+<span class="token function">wget</span> http://www.kraxel.org/repos/firmware.repo <span class="token parameter variable">-O</span> /etc/yum.repos.d/firmware.repo
+yum makecache
+yum <span class="token function">install</span> <span class="token parameter variable">-y</span> edk2.git-ovmf-x64 OVMF
+ 
+<span class="token comment">## 配置 libvirtd</span>
+<span class="token function">vim</span> /etc/libvirt/qemu.conf  <span class="token comment"># 新增</span>
+--------
+nvram <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"/usr/share/edk2.git/ovmf-x64/OVMF_CODE-pure-efi.fd:/usr/share/edk2.git/ovmf-x64/OVMF_VARS-pure-efi.fd"</span><span class="token punctuation">]</span>
+--------
+systemctl restart libvirtd
+ 
+<span class="token comment">## 后面创建虚拟机的时候可以在 firmware 中选择 uefi 了</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>虚拟化</tag>
+        <tag>KVM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>搭建属于自己的 Shadowsocks 服务</title>
     <url>/post/3d308a66.html</url>
     <content><![CDATA[<p>最近一直想自己搭一个 Shadowsocks 服务，并且利用服务器学习一些技术知识，但是国内的服务器实在是贵得很啊，像我这种苦逼大学生根本玩不起，无奈之下只好各种 Google 百度，最后找到了一些国外的 VPS 资源</p>
@@ -2690,258 +2690,10 @@ net.ipv4.tcp_congestion_control = hybla
       </tags>
   </entry>
   <entry>
-    <title>栈</title>
-    <url>/post/1f4ac2fb.html</url>
-    <content><![CDATA[<p>栈是一种<strong>先进后出</strong>的线性数据结构，规定只允许在一端进行插入和删除元素的操作。其中进栈操作又叫做压栈（Push），出栈操作又叫做弹出（Pop）。允许进行操作的一端叫做栈顶（top），另一端叫做栈底（base）。</p>
-<h4 id="分类"><a class="header-anchor" href="#分类">¶</a> 分类</h4>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>顺序栈：数组实现</p>
-</li>
-<li class="lvl-2">
-<p>链式栈：链表实现</p>
-</li>
-</ul>
-<span id="more"></span>
-<h4 id="代码实现"><a class="header-anchor" href="#代码实现">¶</a> 代码实现</h4>
-<h5 id="顺序栈"><a class="header-anchor" href="#顺序栈">¶</a> 顺序栈</h5>
-<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fstack.png" alt="stack"><br>
-1. 构建栈的结构</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">MAXSIZE</span> <span class="token expression"><span class="token number">1024</span>		</span><span class="token comment">//定义栈的空间大小</span></span>
-<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">stack</span><span class="token punctuation">{</span>
-  <span class="token keyword">int</span> data<span class="token punctuation">[</span>MAXSIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>	
-  <span class="token keyword">int</span> top<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>Stack<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>2. 初始化</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">Stack <span class="token operator">*</span><span class="token function">Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    Stack stack<span class="token punctuation">;</span>
-    stack <span class="token operator">=</span> <span class="token punctuation">(</span>Stack<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Stack<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-     	<span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token keyword">else</span><span class="token punctuation">{</span>
-      	stack<span class="token operator">-&gt;</span>top <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>	<span class="token comment">//C语言数组下标从0开始</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Init successfully!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> stack<span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>3. 判断栈是否为空</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span>stack<span class="token operator">-&gt;</span>top <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The stack is empty!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>4. 判断栈是否满</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isFull</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span>stack<span class="token operator">-&gt;</span>top <span class="token operator">==</span> MAXSIZE<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The satck is full!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>5. 进栈操作（Push）</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Push</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> stack<span class="token punctuation">,</span><span class="token keyword">int</span> item<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isFull</span><span class="token punctuation">(</span>stack<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token keyword">return</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	stack<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span><span class="token operator">++</span>stack<span class="token operator">-&gt;</span>top<span class="token punctuation">]</span> <span class="token operator">=</span> item<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><em>入站操作先移动 Top，再压入元素</em></p>
-<p>6. 出栈操作（Pop）</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Pop</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>stack<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">99</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token keyword">return</span> stack<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span>stack<span class="token operator">-&gt;</span>top<span class="token operator">--</span><span class="token punctuation">]</span><span class="token punctuation">;</span>	<span class="token comment">//返回被弹出的元素</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>7. 遍历操作</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Traverse</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> satck<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The items in the stack are:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>stack<span class="token operator">-&gt;</span>top<span class="token punctuation">;</span>i <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span> <span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span>stack<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="链式栈"><a class="header-anchor" href="#链式栈">¶</a> 链式栈</h5>
-<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fstack1.png" alt="stack1"><br>
-1. 构建栈的结构</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">node</span><span class="token punctuation">{</span>
-  	<span class="token keyword">int</span> data<span class="token punctuation">;</span>
-  	<span class="token keyword">struct</span> <span class="token class-name">node</span><span class="token operator">*</span> next<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>Node<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>2. 初始化栈</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">Node<span class="token operator">*</span> <span class="token function">Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	Node<span class="token operator">*</span> s<span class="token punctuation">;</span>
-  	s <span class="token operator">=</span> <span class="token punctuation">(</span>Node<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>s<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token keyword">else</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Init successfully!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> s<span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>3. 判断栈是否为空</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">return</span> <span class="token punctuation">(</span>s<span class="token operator">-&gt;</span>next <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>4. 进栈操作</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Push</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> s<span class="token punctuation">,</span><span class="token keyword">int</span> item<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	Node<span class="token operator">*</span> node<span class="token punctuation">;</span>		<span class="token comment">//为插入的元素构建一个节点</span>
-  	node <span class="token operator">=</span> <span class="token punctuation">(</span>Node<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>node<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	node<span class="token operator">-&gt;</span>data <span class="token operator">=</span> item<span class="token punctuation">;</span>
-  	node<span class="token operator">-&gt;</span>next <span class="token operator">=</span> s<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>		<span class="token comment">//这里写成node-&gt;next = NULL应该也可以吧</span>
-  	s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> node<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>5. 出栈操作</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Pop</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	Node<span class="token operator">*</span> Top<span class="token punctuation">;</span>
-  	<span class="token keyword">int</span> data<span class="token punctuation">;</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The stack is empty!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">99</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	Top <span class="token operator">=</span> s<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
-  	s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> Top<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
-  	data <span class="token operator">=</span> Top<span class="token operator">-&gt;</span>data<span class="token punctuation">;</span>
-  	<span class="token function">free</span><span class="token punctuation">(</span>Top<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">return</span> data<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>6. 遍历操作</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Traverse</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The items in the stack are:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	Node<span class="token operator">*</span> p<span class="token punctuation">;</span>
-    p <span class="token operator">=</span> s<span class="token punctuation">;</span>
-  	<span class="token keyword">while</span> <span class="token punctuation">(</span>p<span class="token operator">-&gt;</span>next <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-      	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span>p<span class="token operator">-&gt;</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	p <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>美版 V30 系统升级</title>
-    <url>/post/a154c72c.html</url>
-    <content><![CDATA[<p>关于国行版本的 Andorid 手机的系统升级，肯定是没有什么问题的，连了网升就完事儿了；但是非国行版本的呢？会有一点小问题。</p>
-<p>前两天刚入手了一款次次旗舰 LG V30，去年的旗舰 835，4+64 的配置今年已然跌倒了千元来搞基的价位，果断入手了。说是要搞基，但是作为一个老年人，实在是懒得折腾了，某鱼的老板说韩版卖断货了，近期只有一款美版的 H932 支持移动全频段，就入手了。</p>
-<p>到手稍微检查了一下，一切正常，梯子挂上美滋滋，但是出现了一个奇怪的问题 —— 系统更新下载不下来。当时的网络状态是挂了梯子的，但是由于 Google 在系统上做的一些安全机制，导致挂了梯子（即网络流量被监控）的机器的系统更新了的流量不从梯子上走，所以会一直卡在 System Update Downloading。</p>
-<p>解决的办法有三个：</p>
-<span id="more"></span>
-<ol>
-<li class="lvl-3">
-<p>肉身翻墙</p>
-</li>
-<li class="lvl-3">
-<p>路由器翻墙</p>
-</li>
-<li class="lvl-3">
-<p>用一台翻墙的机器将网络共享给你的手机</p>
-</li>
-</ol>
-<p>前两个方法对于大多数人来说还是比较困难的，正常人一般都是直接挂梯子，路由器翻墙虽然很多人家里都有设置，但是如果是在公共网络环境下的话，只能使用第三种方法（刷机除外）。</p>
-<p>步骤很简单：</p>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>一台机器挂上 SS/SSR （我这里是用电脑，手机我觉得也是可以的）</p>
-</li>
-<li class="lvl-2">
-<p>挂上梯子的这台机器的 SS/SSR 选项勾选 <code>允许来自局域网的连接</code><br>
-<img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E5%85%81%E8%AE%B8%E6%9D%A5%E8%87%AA%E5%B1%80%E5%9F%9F%E7%BD%91%E7%9A%84%E8%BF%9E%E6%8E%A5.png" alt="允许来自局域网的连接.png"></p>
-</li>
-<li class="lvl-2">
-<p>查看本机的局域网 IP ，并记住</p>
-</li>
-<li class="lvl-2">
-<p>手机连上和翻墙的机器同一个局域网，在 WiFi 的高级选项中，设置代理</p>
-</li>
-<li class="lvl-2">
-<p>代理设置为手动，代理主机为翻墙机器的局域网 IP，端口号为 1080（上一步中有），保存即可<br>
-<img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2FWiFi%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE.png" alt="WiFi 代理设置"></p>
-</li>
-</ul>
-<p>至此，我们就已经成功地不在手机上挂梯子也能翻墙了（MDZZ），下面就能愉快的更新啦！</p>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>Network</tag>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决 Ubuntu 下 Apache 不解析 PHP 问题</title>
-    <url>/post/d0b9a1b4.html</url>
-    <content><![CDATA[<p>这两天笔者遇到了一个很操蛋的问题 ——Apache 无法解析 PHP 代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是 php5 的版本，而我却是 7 的版本，我就先顺便把 5 版本的解决方法贴出来：</p>
-<blockquote>
-<p>修改 apache 的配置文件 httpd.conf</p>
-</blockquote>
-<blockquote>
-<p>在 httpd.conf 中找到：<br>
-<code>AddType application/x-gzip .gz .tgz</code><br>
-在该行下面添加<br>
-<code>AddType application/x-httpd-php .php</code></p>
-</blockquote>
-<blockquote>
-<p>再找继续找到：<br>
-<code>DirectoryIndex index.html</code>，<br>
-把此行修改成<br>
-<code>DirectoryIndex index.html index.htm index.php</code></p>
-</blockquote>
-<blockquote>
-<p>再找到：<br>
-<code>#ServerName www.example.com:80</code><br>
-改成<br>
-<code>ServerName localhost:80</code></p>
-</blockquote>
-<p>然而 Ubuntu 下的 Apache 并没有 httpd.conf 这个配置文件，而是通过一个 apache2.conf 来引用每个部分的配置文件，这样在一个配置包里找到那一句配置也并不简单，而且我还没有找到。。。</p>
-<p>不过皇天不负有心人，终于是找到了解决办法：</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo apt-get install libapache2-mod-php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这一步安装了 apache 的扩展包，可以用于解析 php，我觉得不管是 7 版本还是 5 版本都可以适用。</p>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Apache</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>槟城旅行指北</title>
     <url>/post/1b4b0584.html</url>
     <content><![CDATA[<p>2023/12/26 我第一次出国，和女朋友来到了马来西亚，囫囵吞枣式的游玩让我往返了吉隆坡和槟城两座城市，体验了大马的<strong>飞机、高铁、轮渡</strong>以及<strong>地铁</strong>这四种交通工具。但也因为是第一次踏上这片陌生的领土，即便之前的准备做得再充分，也难免有很多无法顾及的地方，因此时隔八个月，我们将再次踏上这片熟悉又陌生的领土，特此写下一篇槟城旅行指北（<s><strong>不是游记，不是游记，不是游记</strong></s>）</p>
 <span id="more"></span>
-<!--style>
-.page-post-detail .post-body .group-picture-column {
-  float: none;
-  margin-top: 5px;
-  // width: auto ;
-  img { margin: 0 auto;  width: 100% ; }
-}
-.fancybox {
-    display: inline-block;
-}
-
-.content{
-  img{
-      border-radius: 5px
-      margin-bottom: 10px 
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2)
-  }
-}
-</style-->
 <h3 id="前期准备"><a class="header-anchor" href="#前期准备">¶</a> 前期准备</h3>
 <h4 id="交通"><a class="header-anchor" href="#交通">¶</a> 交通</h4>
 <table>
@@ -3307,19 +3059,274 @@ net.ipv4.tcp_congestion_control = hybla
       </tags>
   </entry>
   <entry>
-    <title>解决 Ubuntu 下搜狗拼音候选词乱码</title>
-    <url>/post/9c2f7ad8.html</url>
-    <content><![CDATA[<p>今天 Ubuntu 系统下的搜狗拼音突然抽疯了，中文输入的时候候选词区域都是全是一串无意义的英文字母，不知道是不是因为对 Linux 系统的支持问题还是怎么回事，解决办法也很简单，就是删除搜狗的配置文件，重新登录就好了，只是需要重新设置原来的配置</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> ~/.config
-<span class="token function">rm</span> <span class="token parameter variable">-rf</span> SogouPY* sogou*<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>别忘了注销再登录哦</p>
+    <title>甲状腺乳头状癌治疗始末</title>
+    <url>/post/1812e504.html</url>
+    <content><![CDATA[<p>2023 年 8 月的体检，我被检查出甲状腺结节，但此时并没有当回事儿，然而一年后的体检过程中，大夫千叮咛万嘱咐我去医院复查，告诉我很重要，至此我的 <strong>甲状腺乳头状癌</strong> 的诊疗之旅就此展开。下面我将会对我的 <strong>甲状腺乳头状癌</strong> 的发现、检查、手术以及术后恢复做一个详细的记录，希望可以帮助更多的人，同时也算是给自己留下一份纪念～</p>
+<span id="more"></span>
+<h3 id="事发"><a class="header-anchor" href="#事发">¶</a> 事发</h3>
+<p>2024.8.4 的体检有点不一样，B 超医生和我非常严肃地说了一句话：“你的这个甲状腺结节一定要去医院复查，很严重了”，随后我就怀着忐忑的心情带着体检报告去浙二挂了一个甲状腺外科，在医院超声检查后，我的右侧甲状腺结节被升级为了 <code>4a</code> 类型，医生建议我做穿刺确定性质。</p>
+<p>到目前为止我还能够保持比较乐观的心态，因为医生说如果穿刺结果是良性还能够做热消融，不用做手术切除。不出意外的话，那确实出意外了，9.12 的穿刺结果顺理成章的是恶性，并且被诊断为 <strong>甲状腺乳头状癌</strong>。当然此时的我还是抱着侥幸的心理在网上到处查询资料，看看事情还有没有转机，但是得到的结果都是对于肿瘤大小在 1cm 之内的有进行热消融的案例，而我的瘤子非常的给力，不负众望的长到了 3.5cm！！</p>
+<p>穿刺结果出来的两周后，我约了浙二的甲状腺外科副主任医师的专家号，最终确定的治疗方案是开放手术做患侧的甲状腺切除 + 患侧颈部淋巴结清扫，至少我还保留了另外一边甲状腺，这样想想可能就没那么难受了。</p>
+<h3 id="手术"><a class="header-anchor" href="#手术">¶</a> 手术</h3>
+<p>由于手术不仅需要切除患侧甲状腺，还需进行颈部淋巴结清扫，因此无法进行微创手术，只能在脖子上留下一条十几公分的切口（听起来还挺酷的）。</p>
+<p>手术有以下几个方面需要注意：</p>
+<ol>
+<li class="lvl-3">
+<p>手术前不能有<strong>上呼吸道感染</strong>症状（如咳嗽、鼻涕等），否则术中会有很大的呼吸道感染风险（如肺炎），并且会加大手术难等，增加手术本身风险</p>
+</li>
+<li class="lvl-3">
+<p>可能会需要插<strong>导尿管</strong>，具体取决于手术时间</p>
+</li>
+<li class="lvl-3">
+<p>甲状腺的位置比较刁钻，他靠近<strong>食管、气管</strong>以及<strong>颈动脉</strong>，如果结节 / 肿瘤的位置长得不好，在切除时会误伤或者不得已伤到其他器官的神经，从而术后留一下一些后遗症</p>
+</li>
+<li class="lvl-3">
+<p><strong>甲状旁腺</strong>生长在甲状腺周围，切除时可能会误伤 / 切到甲状旁腺，虽然医生会帮忙将甲状旁腺重新种植进肌肉，但手术后仍然会有一些后遗症（缺钙导致的手脚发麻，骨质疏松等）</p>
+</li>
+</ol>
+<p>我的手术相对来说较为顺利（却是一点儿也不轻松），从我进手术室到出来，一共经历了四个小时，要不怎么说是个<a href="https%3A%2F%2Fniha.org.cn%2Fprod-api%2Fprofile%2Fupload%2F2024%2F09%2F09%2F%25E5%2585%25B3%25E4%25BA%258E%25E5%258F%2591%25E5%25B8%2583%25E4%25B8%25AD%25E5%259B%25BD%25E5%258C%25BB%25E7%2596%2597%25E8%25B4%25A8%25E9%2587%258F%25E5%25A4%25A7%25E4%25BC%259A%25E4%25B8%2593%25E5%25AE%25B6%25E8%25A7%25A3%25E6%259E%2590%25E2%2580%2594%25E3%2580%258A%25E5%258C%25BB%25E7%2596%2597%25E6%259C%25BA%25E6%259E%2584%25E5%259B%259B%25E7%25BA%25A7%25E6%2589%258B%25E6%259C%25AF%25E5%2585%25A8%25E8%25BF%2587%25E7%25A8%258B%25E7%25AE%25A1%25E7%2590%2586%25EF%25BC%2588%25E4%25B8%2593%25E5%25AE%25B6%25E8%25A7%25A3%25E6%259E%2590%25EF%25BC%2589%25E3%2580%258B%25E7%259A%2584%25E9%2580%259A%25E7%259F%25A5_20240909144340A034.pdf&amp;usg=AOvVaw3s5NQJOrpCOq_Tm-WzFU2X&amp;opi=89978449">四级手术</a>呢。因为清扫了颈部淋巴结，为了观察伤口愈合情况，需要在住院期间放两根引流管在身上。</p>
+<p>第一天是最难熬的，前六个小时不吃不喝，由于没有插尿管，需要顶着麻药的后劲在床上用力尿尿（就是那种膀胱感觉都要憋炸了却怎么也尿不出来的感觉）。全程不能下床，鼻子上插着氧管，每隔一个小时自动测量血压，根本没法入睡，就这样强行熬了一夜，第二天终于可以下地活动了。总体来说我恢复的还不错，只是过了半天就可以随便活动，在床上翻身也不是很难了（主要是脖子上插着引流管，不敢太大幅度活动）。</p>
+<p>第三天上午医生来查了一次房就放我出院了（没想到医院的床位这么紧张），我也是收拾收拾赶紧滚回了家。</p>
+<h3 id="术后"><a class="header-anchor" href="#术后">¶</a> 术后</h3>
+<p>术后两周是最难熬的一段时间，对于我来说，这两周是黑暗无比的，毫无光泽。由于做了颈部淋巴清扫，为防止 <strong>淋巴漏</strong> 出现，术后两周内我都不能摄入油脂，吃的东西都是水煮，只能吃蔬菜，不能吃肉，吃鸡蛋还不能吃蛋黄。这段时期所吃的东西才是真正的 <strong>食之无味，弃之可惜</strong> 啊，短短两周直接瘦了十斤，所以只要管住嘴，就算不迈开腿也是可以减肥的，并且效果拔群。</p>
+<p>除了术后两周的饮食控制外，影响我生活最多的就是每天早上要先吃优甲乐（用于补充甲状腺激素）后一小时才能吃早餐，并且服药后的四小时内不能大量摄入蛋白质以及对胃部刺激大的东西（牛奶、豆浆、咖啡等），后续就定期复查，根据复查结果控制需要摄入的药量，根据病理分析，我属于高复发人群，所以术后老老实实吃药是非常必要的，经历过一次的人应该都不会想再经历第二次了，好好生活吧～</p>
+]]></content>
+      <categories>
+        <category>Life</category>
+      </categories>
+      <tags>
+        <tag>甲状腺</tag>
+        <tag>伤病</tag>
+        <tag>癌症</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>栈</title>
+    <url>/post/1f4ac2fb.html</url>
+    <content><![CDATA[<p>栈是一种<strong>先进后出</strong>的线性数据结构，规定只允许在一端进行插入和删除元素的操作。其中进栈操作又叫做压栈（Push），出栈操作又叫做弹出（Pop）。允许进行操作的一端叫做栈顶（top），另一端叫做栈底（base）。</p>
+<h4 id="分类"><a class="header-anchor" href="#分类">¶</a> 分类</h4>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>顺序栈：数组实现</p>
+</li>
+<li class="lvl-2">
+<p>链式栈：链表实现</p>
+</li>
+</ul>
+<span id="more"></span>
+<h4 id="代码实现"><a class="header-anchor" href="#代码实现">¶</a> 代码实现</h4>
+<h5 id="顺序栈"><a class="header-anchor" href="#顺序栈">¶</a> 顺序栈</h5>
+<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fstack.png" alt="stack"><br>
+1. 构建栈的结构</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">MAXSIZE</span> <span class="token expression"><span class="token number">1024</span>		</span><span class="token comment">//定义栈的空间大小</span></span>
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">stack</span><span class="token punctuation">{</span>
+  <span class="token keyword">int</span> data<span class="token punctuation">[</span>MAXSIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>	
+  <span class="token keyword">int</span> top<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>Stack<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>2. 初始化</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">Stack <span class="token operator">*</span><span class="token function">Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Stack stack<span class="token punctuation">;</span>
+    stack <span class="token operator">=</span> <span class="token punctuation">(</span>Stack<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Stack<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     	<span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	<span class="token keyword">else</span><span class="token punctuation">{</span>
+      	stack<span class="token operator">-&gt;</span>top <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>	<span class="token comment">//C语言数组下标从0开始</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Init successfully!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	<span class="token keyword">return</span> stack<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>3. 判断栈是否为空</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span>stack<span class="token operator">-&gt;</span>top <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The stack is empty!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>4. 判断栈是否满</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isFull</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span>stack<span class="token operator">-&gt;</span>top <span class="token operator">==</span> MAXSIZE<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The satck is full!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>5. 进栈操作（Push）</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Push</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> stack<span class="token punctuation">,</span><span class="token keyword">int</span> item<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isFull</span><span class="token punctuation">(</span>stack<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token keyword">return</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	stack<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span><span class="token operator">++</span>stack<span class="token operator">-&gt;</span>top<span class="token punctuation">]</span> <span class="token operator">=</span> item<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><em>入站操作先移动 Top，再压入元素</em></p>
+<p>6. 出栈操作（Pop）</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Pop</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>stack<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">99</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	<span class="token keyword">return</span> stack<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span>stack<span class="token operator">-&gt;</span>top<span class="token operator">--</span><span class="token punctuation">]</span><span class="token punctuation">;</span>	<span class="token comment">//返回被弹出的元素</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>7. 遍历操作</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Traverse</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> satck<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The items in the stack are:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>stack<span class="token operator">-&gt;</span>top<span class="token punctuation">;</span>i <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span> <span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span>stack<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="链式栈"><a class="header-anchor" href="#链式栈">¶</a> 链式栈</h5>
+<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fstack1.png" alt="stack1"><br>
+1. 构建栈的结构</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">node</span><span class="token punctuation">{</span>
+  	<span class="token keyword">int</span> data<span class="token punctuation">;</span>
+  	<span class="token keyword">struct</span> <span class="token class-name">node</span><span class="token operator">*</span> next<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>Node<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>2. 初始化栈</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">Node<span class="token operator">*</span> <span class="token function">Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	Node<span class="token operator">*</span> s<span class="token punctuation">;</span>
+  	s <span class="token operator">=</span> <span class="token punctuation">(</span>Node<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>s<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	<span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	<span class="token keyword">else</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Init successfully!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+      	<span class="token keyword">return</span> s<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>3. 判断栈是否为空</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">return</span> <span class="token punctuation">(</span>s<span class="token operator">-&gt;</span>next <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>4. 进栈操作</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Push</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> s<span class="token punctuation">,</span><span class="token keyword">int</span> item<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	Node<span class="token operator">*</span> node<span class="token punctuation">;</span>		<span class="token comment">//为插入的元素构建一个节点</span>
+  	node <span class="token operator">=</span> <span class="token punctuation">(</span>Node<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>node<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	<span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	node<span class="token operator">-&gt;</span>data <span class="token operator">=</span> item<span class="token punctuation">;</span>
+  	node<span class="token operator">-&gt;</span>next <span class="token operator">=</span> s<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>		<span class="token comment">//这里写成node-&gt;next = NULL应该也可以吧</span>
+  	s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> node<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>5. 出栈操作</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Pop</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	Node<span class="token operator">*</span> Top<span class="token punctuation">;</span>
+  	<span class="token keyword">int</span> data<span class="token punctuation">;</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The stack is empty!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	<span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">99</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	Top <span class="token operator">=</span> s<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+  	s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> Top<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+  	data <span class="token operator">=</span> Top<span class="token operator">-&gt;</span>data<span class="token punctuation">;</span>
+  	<span class="token function">free</span><span class="token punctuation">(</span>Top<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  	<span class="token keyword">return</span> data<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>6. 遍历操作</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Traverse</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The items in the stack are:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  	Node<span class="token operator">*</span> p<span class="token punctuation">;</span>
+    p <span class="token operator">=</span> s<span class="token punctuation">;</span>
+  	<span class="token keyword">while</span> <span class="token punctuation">(</span>p<span class="token operator">-&gt;</span>next <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span>p<span class="token operator">-&gt;</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	p <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>美版 V30 系统升级</title>
+    <url>/post/a154c72c.html</url>
+    <content><![CDATA[<p>关于国行版本的 Andorid 手机的系统升级，肯定是没有什么问题的，连了网升就完事儿了；但是非国行版本的呢？会有一点小问题。</p>
+<p>前两天刚入手了一款次次旗舰 LG V30，去年的旗舰 835，4+64 的配置今年已然跌倒了千元来搞基的价位，果断入手了。说是要搞基，但是作为一个老年人，实在是懒得折腾了，某鱼的老板说韩版卖断货了，近期只有一款美版的 H932 支持移动全频段，就入手了。</p>
+<p>到手稍微检查了一下，一切正常，梯子挂上美滋滋，但是出现了一个奇怪的问题 —— 系统更新下载不下来。当时的网络状态是挂了梯子的，但是由于 Google 在系统上做的一些安全机制，导致挂了梯子（即网络流量被监控）的机器的系统更新了的流量不从梯子上走，所以会一直卡在 System Update Downloading。</p>
+<p>解决的办法有三个：</p>
+<span id="more"></span>
+<ol>
+<li class="lvl-3">
+<p>肉身翻墙</p>
+</li>
+<li class="lvl-3">
+<p>路由器翻墙</p>
+</li>
+<li class="lvl-3">
+<p>用一台翻墙的机器将网络共享给你的手机</p>
+</li>
+</ol>
+<p>前两个方法对于大多数人来说还是比较困难的，正常人一般都是直接挂梯子，路由器翻墙虽然很多人家里都有设置，但是如果是在公共网络环境下的话，只能使用第三种方法（刷机除外）。</p>
+<p>步骤很简单：</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>一台机器挂上 SS/SSR （我这里是用电脑，手机我觉得也是可以的）</p>
+</li>
+<li class="lvl-2">
+<p>挂上梯子的这台机器的 SS/SSR 选项勾选 <code>允许来自局域网的连接</code><br>
+<img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E5%85%81%E8%AE%B8%E6%9D%A5%E8%87%AA%E5%B1%80%E5%9F%9F%E7%BD%91%E7%9A%84%E8%BF%9E%E6%8E%A5.png" alt="允许来自局域网的连接.png"></p>
+</li>
+<li class="lvl-2">
+<p>查看本机的局域网 IP ，并记住</p>
+</li>
+<li class="lvl-2">
+<p>手机连上和翻墙的机器同一个局域网，在 WiFi 的高级选项中，设置代理</p>
+</li>
+<li class="lvl-2">
+<p>代理设置为手动，代理主机为翻墙机器的局域网 IP，端口号为 1080（上一步中有），保存即可<br>
+<img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2FWiFi%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE.png" alt="WiFi 代理设置"></p>
+</li>
+</ul>
+<p>至此，我们就已经成功地不在手机上挂梯子也能翻墙了（MDZZ），下面就能愉快的更新啦！</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>Network</tag>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Ubuntu 下 Apache 不解析 PHP 问题</title>
+    <url>/post/d0b9a1b4.html</url>
+    <content><![CDATA[<p>这两天笔者遇到了一个很操蛋的问题 ——Apache 无法解析 PHP 代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是 php5 的版本，而我却是 7 的版本，我就先顺便把 5 版本的解决方法贴出来：</p>
+<blockquote>
+<p>修改 apache 的配置文件 httpd.conf</p>
+</blockquote>
+<blockquote>
+<p>在 httpd.conf 中找到：<br>
+<code>AddType application/x-gzip .gz .tgz</code><br>
+在该行下面添加<br>
+<code>AddType application/x-httpd-php .php</code></p>
+</blockquote>
+<blockquote>
+<p>再找继续找到：<br>
+<code>DirectoryIndex index.html</code>，<br>
+把此行修改成<br>
+<code>DirectoryIndex index.html index.htm index.php</code></p>
+</blockquote>
+<blockquote>
+<p>再找到：<br>
+<code>#ServerName www.example.com:80</code><br>
+改成<br>
+<code>ServerName localhost:80</code></p>
+</blockquote>
+<p>然而 Ubuntu 下的 Apache 并没有 httpd.conf 这个配置文件，而是通过一个 apache2.conf 来引用每个部分的配置文件，这样在一个配置包里找到那一句配置也并不简单，而且我还没有找到。。。</p>
+<p>不过皇天不负有心人，终于是找到了解决办法：</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo apt-get install libapache2-mod-php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这一步安装了 apache 的扩展包，可以用于解析 php，我觉得不管是 7 版本还是 5 版本都可以适用。</p>
 ]]></content>
       <categories>
         <category>Infra</category>
       </categories>
       <tags>
         <tag>Linux</tag>
-        <tag>Ubuntu</tag>
+        <tag>Apache</tag>
       </tags>
   </entry>
   <entry>
@@ -3341,6 +3348,22 @@ net.ipv4.tcp_congestion_control = hybla
       <tags>
         <tag>Ubuntu</tag>
         <tag>PHP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决 Ubuntu 下搜狗拼音候选词乱码</title>
+    <url>/post/9c2f7ad8.html</url>
+    <content><![CDATA[<p>今天 Ubuntu 系统下的搜狗拼音突然抽疯了，中文输入的时候候选词区域都是全是一串无意义的英文字母，不知道是不是因为对 Linux 系统的支持问题还是怎么回事，解决办法也很简单，就是删除搜狗的配置文件，重新登录就好了，只是需要重新设置原来的配置</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> ~/.config
+<span class="token function">rm</span> <span class="token parameter variable">-rf</span> SogouPY* sogou*<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>别忘了注销再登录哦</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Ubuntu</tag>
       </tags>
   </entry>
   <entry>
@@ -3378,43 +3401,6 @@ sudo apt-get install unity-control-center           #如果设置里只有很少
       </categories>
       <tags>
         <tag>OSS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>什么情况？访问不了虚拟机了？？</title>
-    <url>/post/680966d1.html</url>
-    <content><![CDATA[<p>前几日在家中遇到一件有趣的事情，与大家分享一下。</p>
-<p>起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到 ESXi。这时的我还很天真的以为是虚拟化和黑苹果之间的问题，Google 了一番未果还是换回了 Windows。</p>
-<span id="more"></span>
-<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E5%8F%98%E6%9B%B4%E5%8F%B2.png" alt="变更史"></p>
-<p>天真我以为这样就已经解决了问题，但结果是并没有什么卵用。同时我发现一直在使用的电脑访问 ESXi 也出现了问题，网络丢包严重，但是访问虚拟机却一点事情也没有。事已至此只能先简单抓包看一下，从硬件 A ping 向 ESXi（硬件 B）的同时，在 ESXi 上使用 tcpdump-uw 进行抓包（通过虚拟机作为跳板机连上 ESXi），结果是硬件 A 正常发送 ARP 请求，但是 ESXi 这里并没有收到 A 发送的请求。</p>
-<p>到这里我基本断定是 ARP 的问题，但是为啥 ESXi 收不到我发出来的 ARP 包，其他的硬件却都能收到，我不得而知。但是为了验证我的猜想，我决定先在 Windows 上静态绑定一下 ARP 记录。</p>
-<pre class="line-numbers language-none"><code class="language-none"># 先用 netsh 找到对应 interface 的 idx
-netsh i i show in   # netsh interface ipv4 show interfaces
-
-# 绑定 IP-MAC
-netsh -c "i i" add ne &lt;idx&gt; &lt;IP&gt; &lt;MAC&gt;  # netsh -c "interfaces ipv4" add neighbors &lt;idx&gt; &lt;IP&gt; &lt;MAC&gt;
-
-# 也可以直接用 arp 命令进行临时绑定
-arp -s &lt;IP&gt; &lt;MAC&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里 ESXi 的 MAC 是从虚拟机 ARP 获得的，因为目前只有虚拟机访问 ESXi 比较正常。绑定完 MAC 地址后我又信誓旦旦进行验证，结果网络依然不通！！WTF？？到底发生甚么事了了？一开始以为 MAC 地址写错了，反复比对后确认了 MAC 地址并没有问题，那么为啥虚拟机用这个 MAC 地址可以 ping 通 ESXi，我用这个 MAC 就不行呢？</p>
-<p>后来我怀疑是交换机的问题，我众多设备不是都接在同一个交换机上的，实际上是两个串联的傻瓜交换机，客厅一个卧室一个，而 ESXi 在客厅，实验的两台电脑在卧室。但是这个不成熟的猜想瞬间就被我给否定了，毕竟客厅和卧室里其他的设备互联都没有问题。</p>
-<p>就在我一筹莫展把注意力集中到 Windows 的网络配置上时，我突然发现了一个神奇的事情 —— 硬件 B Windows 的 MAC 地址为啥和我 ESXi 一摸一样？？这真是见了鬼了，两个不同硬件为啥会有相同的 MAC 地址！难道是因为 ESXi 迁移的时候 MAC 地址并没有跟着硬件走？毕竟 ESXi 的管理地址是在 VMKernel 上的，这并不是一个物理接口。</p>
-<p>简单了搜了一下，在 VMware 的 KB 中确实有这样的记载 —— <a href="https://kb.vmware.com/s/article/1031111?lang=zh_CN">更换网卡后或 vmkernel 的 MAC 地址重复时 vmk0 管理网络 MAC 地址不更新</a>。如果已经冲突了就只能删除原来的管理端口，重新创建，但是我这台 ESXi 只有一个网络接口，如果删了的话就只能连上显示器去配置了，所以为了省事就在 Web 界面先添加一个端口，再删除原来的即可。</p>
-<p>如果要配置静态的 IP 地址又不想接显示器的话，可以 SSH 到 ESXi 后进行如下操作</p>
-<pre class="line-numbers language-none"><code class="language-none">TERM=xterm
-dcui<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fesxi.png" alt="ESXi 控制台"><br>
-绝对的懒人福音！！</p>
-<p>重建了管理端口后，没有了 MAC 地址冲突，硬件 A 的 Windows 又满血复活了，这件事情告诉我们，没事别特么的拆东墙补西墙！</p>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>虚拟化</tag>
-        <tag>ESXi</tag>
-        <tag>Network</tag>
       </tags>
   </entry>
   <entry>
@@ -3567,6 +3553,43 @@ services:
       </categories>
       <tags>
         <tag>证书</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么情况？访问不了虚拟机了？？</title>
+    <url>/post/680966d1.html</url>
+    <content><![CDATA[<p>前几日在家中遇到一件有趣的事情，与大家分享一下。</p>
+<p>起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到 ESXi。这时的我还很天真的以为是虚拟化和黑苹果之间的问题，Google 了一番未果还是换回了 Windows。</p>
+<span id="more"></span>
+<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E5%8F%98%E6%9B%B4%E5%8F%B2.png" alt="变更史"></p>
+<p>天真我以为这样就已经解决了问题，但结果是并没有什么卵用。同时我发现一直在使用的电脑访问 ESXi 也出现了问题，网络丢包严重，但是访问虚拟机却一点事情也没有。事已至此只能先简单抓包看一下，从硬件 A ping 向 ESXi（硬件 B）的同时，在 ESXi 上使用 tcpdump-uw 进行抓包（通过虚拟机作为跳板机连上 ESXi），结果是硬件 A 正常发送 ARP 请求，但是 ESXi 这里并没有收到 A 发送的请求。</p>
+<p>到这里我基本断定是 ARP 的问题，但是为啥 ESXi 收不到我发出来的 ARP 包，其他的硬件却都能收到，我不得而知。但是为了验证我的猜想，我决定先在 Windows 上静态绑定一下 ARP 记录。</p>
+<pre class="line-numbers language-none"><code class="language-none"># 先用 netsh 找到对应 interface 的 idx
+netsh i i show in   # netsh interface ipv4 show interfaces
+
+# 绑定 IP-MAC
+netsh -c "i i" add ne &lt;idx&gt; &lt;IP&gt; &lt;MAC&gt;  # netsh -c "interfaces ipv4" add neighbors &lt;idx&gt; &lt;IP&gt; &lt;MAC&gt;
+
+# 也可以直接用 arp 命令进行临时绑定
+arp -s &lt;IP&gt; &lt;MAC&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里 ESXi 的 MAC 是从虚拟机 ARP 获得的，因为目前只有虚拟机访问 ESXi 比较正常。绑定完 MAC 地址后我又信誓旦旦进行验证，结果网络依然不通！！WTF？？到底发生甚么事了了？一开始以为 MAC 地址写错了，反复比对后确认了 MAC 地址并没有问题，那么为啥虚拟机用这个 MAC 地址可以 ping 通 ESXi，我用这个 MAC 就不行呢？</p>
+<p>后来我怀疑是交换机的问题，我众多设备不是都接在同一个交换机上的，实际上是两个串联的傻瓜交换机，客厅一个卧室一个，而 ESXi 在客厅，实验的两台电脑在卧室。但是这个不成熟的猜想瞬间就被我给否定了，毕竟客厅和卧室里其他的设备互联都没有问题。</p>
+<p>就在我一筹莫展把注意力集中到 Windows 的网络配置上时，我突然发现了一个神奇的事情 —— 硬件 B Windows 的 MAC 地址为啥和我 ESXi 一摸一样？？这真是见了鬼了，两个不同硬件为啥会有相同的 MAC 地址！难道是因为 ESXi 迁移的时候 MAC 地址并没有跟着硬件走？毕竟 ESXi 的管理地址是在 VMKernel 上的，这并不是一个物理接口。</p>
+<p>简单了搜了一下，在 VMware 的 KB 中确实有这样的记载 —— <a href="https://kb.vmware.com/s/article/1031111?lang=zh_CN">更换网卡后或 vmkernel 的 MAC 地址重复时 vmk0 管理网络 MAC 地址不更新</a>。如果已经冲突了就只能删除原来的管理端口，重新创建，但是我这台 ESXi 只有一个网络接口，如果删了的话就只能连上显示器去配置了，所以为了省事就在 Web 界面先添加一个端口，再删除原来的即可。</p>
+<p>如果要配置静态的 IP 地址又不想接显示器的话，可以 SSH 到 ESXi 后进行如下操作</p>
+<pre class="line-numbers language-none"><code class="language-none">TERM=xterm
+dcui<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><img src="https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fesxi.png" alt="ESXi 控制台"><br>
+绝对的懒人福音！！</p>
+<p>重建了管理端口后，没有了 MAC 地址冲突，硬件 A 的 Windows 又满血复活了，这件事情告诉我们，没事别特么的拆东墙补西墙！</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>虚拟化</tag>
+        <tag>ESXi</tag>
+        <tag>Network</tag>
       </tags>
   </entry>
   <entry>
@@ -4057,24 +4080,6 @@ services:
       </categories>
       <tags>
         <tag>旅游</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>甲状腺乳头状癌治疗始末</title>
-    <url>/post/1812e504.html</url>
-    <content><![CDATA[<p>2023 年 8 月的体检，我被检查出甲状腺结节，但此时并没有当回事儿，然而一年后的体检过程中，大夫千叮咛万嘱咐我去医院复查，告诉我很重要，至此我的 <strong>甲状腺乳头状癌</strong> 的诊疗之旅就此展开。下面我将会对我的 <strong>甲状腺乳头状癌</strong> 的发现、检查、手术以及术后恢复做一个详细的记录，希望可以帮助更多的人，同时也算是给自己留下一个纪念～</p>
-<span id="more"></span>
-<h3 id="事发"><a class="header-anchor" href="#事发">¶</a> 事发</h3>
-<p>2024.8.4 的体检有点不一样，B 超医生和我非常严肃地说了一句话：“你的这个甲状腺结节一定要去医院复查，很严重了”，随后我就怀着忐忑的心情带着体检报告去浙二挂了一个甲状腺外科，在医院超声检查后，我的右侧甲状腺结节被升级为了 <code>4a</code> 类型，医生建议我做穿刺确定性质。</p>
-<p>到目前为止我还能够保持比较乐观的心态，因为医生说如果穿刺结果是良性还能够做热消融，不用做手术切除。</p>
-]]></content>
-      <categories>
-        <category>Life</category>
-      </categories>
-      <tags>
-        <tag>甲状腺</tag>
-        <tag>伤病</tag>
-        <tag>癌症</tag>
       </tags>
   </entry>
 </search>
