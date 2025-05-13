@@ -1363,16 +1363,16 @@ DROP TABLE &lt;表名&gt;                                       --删除表<span
     <content><![CDATA[<p>我们都知道 select 的基本用法 <code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而 <code>select</code> 语句后面还可以跟很多限制条件。我们这次用 user 表来作为示范，下面是 user 表的结构：</p>
 <span id="more"></span>
 <p><img src="https://blogpic.skyhive.tech/pic%2Fuser.png" alt="user 表结构"></p>
-<h4 id="Between、And、In、-、-、-、-等条件查询："><a class="header-anchor" href="#Between、And、In、-、-、-、-等条件查询：">¶</a>Between、And、In、&lt;=、&gt;=、&lt;、&gt; 等条件查询：</h4>
-<p>通过 <code>select * from table where id between 1 and 3</code> 和 <code>select * from table where id &gt;=1 and id &lt;= 3 </code>的返回结果，我们可以发现 <code>between and</code> 和 <code>&gt;= and &lt;=</code> 是等同的。<br>
+<h4 id="Between、And、In、-、-、-、-等条件查询"><a class="header-anchor" href="#Between、And、In、-、-、-、-等条件查询">¶</a>Between、And、In、&lt;=、&gt;=、&lt;、&gt; 等条件查询</h4>
+<p>通过 <code>select * from table where id between 1 and 3</code> 和 <code>select * from table where id &gt;=1 and id &lt;= 3</code> 的返回结果，我们可以发现 <code>between and</code> 和 <code>&gt;= and &lt;=</code> 是等同的。<br>
 <img src="https://blogpic.skyhive.tech/pic%2Fbetween.png" alt="between"><br>
 <img src="https://blogpic.skyhive.tech/pic%2Fbetween2.png" alt="between2"></p>
 <p>如果我们要查询的条件不是一个连续的数值，可以用 <code>in</code>：</p>
-<pre class="line-numbers language-none"><code class="language-none">select * from table where id in (2,4)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">where</span> id <span class="token operator">in</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h4 id="locate-函数：locate-substr-str"><a class="header-anchor" href="#locate-函数：locate-substr-str">¶</a>locate () 函数：<code>locate(substr,str)</code></h4>
 <p>这个函数返回 <code>substr</code> 在字符串 <code>str</code> 中的第一个出现的位置，如果不存在则值为 0<br>
 <img src="https://blogpic.skyhive.tech/pic%2Flocate.png" alt="locate 函数"></p>
-<h4 id="Count-函数"><a class="header-anchor" href="#Count-函数">¶</a>Count () 函数:</h4>
+<h4 id="Count-函数"><a class="header-anchor" href="#Count-函数">¶</a>Count () 函数</h4>
 <ul class="lvl-0">
 <li class="lvl-2">
 <p>count (字段名)：返回指定列的值的数目，但是字段值为 <code>NULL</code> 时不会被计算进去。<code>select count(字段名) from &lt;表名&gt;</code></p>
@@ -1381,15 +1381,15 @@ DROP TABLE &lt;表名&gt;                                       --删除表<span
 <p>count (*)：返回表中的记录数，字段值为 <code>NULL</code> 时会被计算进去。<code>select count(*) from &lt;表名&gt;</code></p>
 </li>
 </ul>
-<h4 id="Distinct语句："><a class="header-anchor" href="#Distinct语句：">¶</a>Distinct 语句：</h4>
+<h4 id="Distinct语句"><a class="header-anchor" href="#Distinct语句">¶</a>Distinct 语句</h4>
 <p>Distinct 语句用于去除重复行，比如：<code>select distinct * from &lt;表名&gt;</code>。<br>
 其他的语句或函数都可以和 <code>distinct</code> 配合使用，比如：<code>count(distinct &lt;字段名&gt;)</code> 可以去除重复行统计行数，但是 <code>count(distinct *)</code> 是<strong>不被允许</strong>的</p>
-<h4 id="Union语句："><a class="header-anchor" href="#Union语句：">¶</a>Union 语句：</h4>
+<h4 id="Union语句"><a class="header-anchor" href="#Union语句">¶</a>Union 语句</h4>
 <p>Union 语句可以将两个 <code>select</code> 语句的结果集组合成一个：</p>
-<pre class="line-numbers language-none"><code class="language-none">(select * from table where id &gt;= 3) union (select * from table where id = 1)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">where</span> id <span class="token operator">&gt;=</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token keyword">union</span> <span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">where</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>当我们使用 <code>union</code> 语句的时候，默认去除了重复行，和 <code>distinct</code> 的效果一样，如果要显示所有的结果，则要使用 <code>union all</code> 语句。</p>
-<h4 id="Drder-by语句："><a class="header-anchor" href="#Drder-by语句：">¶</a>Drder by 语句：</h4>
-<pre class="line-numbers language-none"><code class="language-none">select * from table order by &lt;字段名&gt; [asc/desc]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="Drder-by语句"><a class="header-anchor" href="#Drder-by语句">¶</a>Drder by 语句</h4>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">order</span> <span class="token keyword">by</span> <span class="token operator">&lt;</span>字段名<span class="token operator">&gt;</span> <span class="token punctuation">[</span><span class="token keyword">asc</span><span class="token operator">/</span><span class="token keyword">desc</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>其中 <code>asc</code> 是默认的排序，为升序，<code>desc</code> 为降序。<br>
 当然 order by 后面可以跟很多个字段，如：<code>select * from table order by info desc,id asc</code>, 这个语句意为先按 <code>info</code> 字段降序，若 <code>info</code> 字段值相同的情况下，再按 <code>id</code> 字段升序。而且，<code>NULL</code> 默认为值最小。</p>
 ]]></content>
@@ -1544,7 +1544,7 @@ $dbname1 = "challenges";
 <p>TCP 协议通过划窗机制来对流量进行控制管理，接收端通过发送确认号告诉发送端自己获包的情况，接收端通过三次发包后了解接收端的网络吞吐能力，然后稳定发包。</p>
 <h4 id="TCP-重传"><a class="header-anchor" href="#TCP-重传">¶</a>TCP 重传</h4>
 <p>TCP 包超时未响应后进行重传，一个包最多重传 16 次，无法处理后连接断开重连，三次失败后无法进行连接</p>
-<p>*** 以上均为自己极浅的理解，详细内容还请移步至 Google ***</p>
+<p><em><strong>以上均为自己极浅的理解，详细内容还请移步至 Google</strong></em></p>
 ]]></content>
       <categories>
         <category>Infra</category>
@@ -2606,76 +2606,77 @@ zstyle :omz:plugins:ssh-agent identities id_rsa id_rsa2 id_github    <span class
 <p>下面就开始搭建我们的 <code>Shadowsocks</code> 服务：</p>
 <h4 id="安装Shadowsocks"><a class="header-anchor" href="#安装Shadowsocks">¶</a> 安装 Shadowsocks</h4>
 <p>首先我们要安装 <code>Shadowsocks</code>，由于 <code>Shadowsocks</code> 是用 <code>python</code> 写的，我们先安装 <code>pip</code></p>
-<pre class="line-numbers language-none"><code class="language-none">#由于我用的是Ubuntu的系统，其他系统的用户请自行Google
-apt-get install python-pip
-pip install shadowsocks<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">#由于我用的是Ubuntu的系统，其他系统的用户请自行Google</span>
+<span class="token function">apt-get</span> <span class="token function">install</span> python-pip
+pip <span class="token function">install</span> shadowsocks<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <h4 id="优化Shadowsocks性能"><a class="header-anchor" href="#优化Shadowsocks性能">¶</a> 优化 Shadowsocks 性能</h4>
 <p>按照 SS 官方 Wiki，我们进行优化：</p>
 <p>创建 <code>local.conf</code> 配置文件</p>
-<pre class="line-numbers language-none"><code class="language-none">vim /etc/sysctl.d/local.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>进入编辑模式之后输入以下内容：</p>
-<pre class="line-numbers language-none"><code class="language-none"># max open files
-fs.file-max = 51200
-# max read buffer
-net.core.rmem_max = 67108864
-# max write buffer
-net.core.wmem_max = 67108864
-# default read buffer
-net.core.rmem_default = 65536
-# default write buffer
-net.core.wmem_default = 65536
-# max processor input queue
-net.core.netdev_max_backlog = 4096
-# max backlog
-net.core.somaxconn = 4096
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> /etc/sysctl.d/local.conf
+<span class="token comment"># 进入编辑模式之后输入以下内容：</span>
 
-# resist SYN flood attacks
-net.ipv4.tcp_syncookies = 1
-# reuse timewait sockets when safe
-net.ipv4.tcp_tw_reuse = 1
-# turn off fast timewait sockets recycling
-net.ipv4.tcp_tw_recycle = 0
-# short FIN timeout
-net.ipv4.tcp_fin_timeout = 30
-# short keepalive time
-net.ipv4.tcp_keepalive_time = 1200
-# outbound port range
-net.ipv4.ip_local_port_range = 10000 65000
-# max SYN backlog
-net.ipv4.tcp_max_syn_backlog = 4096
-# max timewait sockets held by system simultaneously
-net.ipv4.tcp_max_tw_buckets = 5000
-# turn on TCP Fast Open on both client and server side
-net.ipv4.tcp_fastopen = 3
-# TCP receive buffer
-net.ipv4.tcp_rmem = 4096 87380 67108864
-# TCP write buffer
-net.ipv4.tcp_wmem = 4096 65536 67108864
-# turn on path MTU discovery
-net.ipv4.tcp_mtu_probing = 1
+<span class="token comment"># max open files</span>
+fs.file-max <span class="token operator">=</span> <span class="token number">51200</span>
+<span class="token comment"># max read buffer</span>
+net.core.rmem_max <span class="token operator">=</span> <span class="token number">67108864</span>
+<span class="token comment"># max write buffer</span>
+net.core.wmem_max <span class="token operator">=</span> <span class="token number">67108864</span>
+<span class="token comment"># default read buffer</span>
+net.core.rmem_default <span class="token operator">=</span> <span class="token number">65536</span>
+<span class="token comment"># default write buffer</span>
+net.core.wmem_default <span class="token operator">=</span> <span class="token number">65536</span>
+<span class="token comment"># max processor input queue</span>
+net.core.netdev_max_backlog <span class="token operator">=</span> <span class="token number">4096</span>
+<span class="token comment"># max backlog</span>
+net.core.somaxconn <span class="token operator">=</span> <span class="token number">4096</span>
 
-# for high-latency network
-net.ipv4.tcp_congestion_control = hybla
+<span class="token comment"># resist SYN flood attacks</span>
+net.ipv4.tcp_syncookies <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token comment"># reuse timewait sockets when safe</span>
+net.ipv4.tcp_tw_reuse <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token comment"># turn off fast timewait sockets recycling</span>
+net.ipv4.tcp_tw_recycle <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token comment"># short FIN timeout</span>
+net.ipv4.tcp_fin_timeout <span class="token operator">=</span> <span class="token number">30</span>
+<span class="token comment"># short keepalive time</span>
+net.ipv4.tcp_keepalive_time <span class="token operator">=</span> <span class="token number">1200</span>
+<span class="token comment"># outbound port range</span>
+net.ipv4.ip_local_port_range <span class="token operator">=</span> <span class="token number">10000</span> <span class="token number">65000</span>
+<span class="token comment"># max SYN backlog</span>
+net.ipv4.tcp_max_syn_backlog <span class="token operator">=</span> <span class="token number">4096</span>
+<span class="token comment"># max timewait sockets held by system simultaneously</span>
+net.ipv4.tcp_max_tw_buckets <span class="token operator">=</span> <span class="token number">5000</span>
+<span class="token comment"># turn on TCP Fast Open on both client and server side</span>
+net.ipv4.tcp_fastopen <span class="token operator">=</span> <span class="token number">3</span>
+<span class="token comment"># TCP receive buffer</span>
+net.ipv4.tcp_rmem <span class="token operator">=</span> <span class="token number">4096</span> <span class="token number">87380</span> <span class="token number">67108864</span>
+<span class="token comment"># TCP write buffer</span>
+net.ipv4.tcp_wmem <span class="token operator">=</span> <span class="token number">4096</span> <span class="token number">65536</span> <span class="token number">67108864</span>
+<span class="token comment"># turn on path MTU discovery</span>
+net.ipv4.tcp_mtu_probing <span class="token operator">=</span> <span class="token number">1</span>
 
-# for low-latency network, use cubic instead
-# net.ipv4.tcp_congestion_control = cubic<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment"># for high-latency network</span>
+net.ipv4.tcp_congestion_control <span class="token operator">=</span> hybla
+
+<span class="token comment"># for low-latency network, use cubic instead</span>
+<span class="token comment"># net.ipv4.tcp_congestion_control = cubic</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>保存退出后，执行以下命令使之生效：</p>
-<pre class="line-numbers language-none"><code class="language-none">sysctl --system<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sysctl</span> <span class="token parameter variable">--system</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h4 id="配置Shadowsocks配置文件"><a class="header-anchor" href="#配置Shadowsocks配置文件">¶</a> 配置 Shadowsocks 配置文件</h4>
 <p>在 <code>/etc/</code> 下创建配置文件：<code>vim /etc/shadowsocks.json</code><br>
 然后进行编辑：</p>
-<pre class="line-numbers language-none"><code class="language-none">{
-    "server":"my_server_ip",
-    "server_port":8388,
-    "local_address":"127.0.0.1",
-    "local_port":1080,
-    "password":"mypassword",
-    "timeout":300,
-    "method":"aes-256-cfb"        #这里的加密方式也可以选择其他的类型，自行把握
-    "fast_open":false
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"server"</span><span class="token operator">:</span><span class="token string">"my_server_ip"</span><span class="token punctuation">,</span>
+    <span class="token property">"server_port"</span><span class="token operator">:</span><span class="token number">8388</span><span class="token punctuation">,</span>
+    <span class="token property">"local_address"</span><span class="token operator">:</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">,</span>
+    <span class="token property">"local_port"</span><span class="token operator">:</span><span class="token number">1080</span><span class="token punctuation">,</span>
+    <span class="token property">"password"</span><span class="token operator">:</span><span class="token string">"mypassword"</span><span class="token punctuation">,</span>
+    <span class="token property">"timeout"</span><span class="token operator">:</span><span class="token number">300</span><span class="token punctuation">,</span>
+    <span class="token property">"method"</span><span class="token operator">:</span><span class="token string">"aes-256-cfb"</span>        #这里的加密方式也可以选择其他的类型，自行把握
+    <span class="token property">"fast_open"</span><span class="token operator">:</span><span class="token boolean">false</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="最后启用Shadowsocks服务端功能"><a class="header-anchor" href="#最后启用Shadowsocks服务端功能">¶</a> 最后启用 Shadowsocks 服务端功能</h4>
-<pre class="line-numbers language-none"><code class="language-none">nohup ssserver -c /etc/shadowsocks.json -d start &amp;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">nohup</span> ssserver <span class="token parameter variable">-c</span> /etc/shadowsocks.json <span class="token parameter variable">-d</span> start <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <blockquote>
 <p><code>nohup</code> 是把运行日志输出到当前用户主目录下的 <code>nohup.out</code> 文件中</p>
 </blockquote>
@@ -2707,9 +2708,9 @@ net.ipv4.tcp_congestion_control = hybla
 <h5 id="顺序栈"><a class="header-anchor" href="#顺序栈">¶</a> 顺序栈</h5>
 <p><img src="https://blogpic.skyhive.tech/pic%2Fstack.png" alt="stack"><br>
 1. 构建栈的结构</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">MAXSIZE</span> <span class="token expression"><span class="token number">1024</span>		</span><span class="token comment">//定义栈的空间大小</span></span>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">MAXSIZE</span> <span class="token expression"><span class="token number">1024</span>  </span><span class="token comment">//定义栈的空间大小</span></span>
 <span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">stack</span><span class="token punctuation">{</span>
-  <span class="token keyword">int</span> data<span class="token punctuation">[</span>MAXSIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>	
+  <span class="token keyword">int</span> data<span class="token punctuation">[</span>MAXSIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>
   <span class="token keyword">int</span> top<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>Stack<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>2. 初始化</p>
@@ -2717,113 +2718,113 @@ net.ipv4.tcp_congestion_control = hybla
     Stack stack<span class="token punctuation">;</span>
     stack <span class="token operator">=</span> <span class="token punctuation">(</span>Stack<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Stack<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-     	<span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token keyword">else</span><span class="token punctuation">{</span>
-      	stack<span class="token operator">-&gt;</span>top <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>	<span class="token comment">//C语言数组下标从0开始</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Init successfully!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> stack<span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+    <span class="token keyword">else</span><span class="token punctuation">{</span>
+        stack<span class="token operator">-&gt;</span>top <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>  <span class="token comment">//C语言数组下标从0开始</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Init successfully!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>3. 判断栈是否为空</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span>stack<span class="token operator">-&gt;</span>top <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The stack is empty!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>stack<span class="token operator">-&gt;</span>top <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The stack is empty!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>4. 判断栈是否满</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isFull</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span>stack<span class="token operator">-&gt;</span>top <span class="token operator">==</span> MAXSIZE<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The satck is full!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>stack<span class="token operator">-&gt;</span>top <span class="token operator">==</span> MAXSIZE<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The satck is full!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>5. 进栈操作（Push）</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Push</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> stack<span class="token punctuation">,</span><span class="token keyword">int</span> item<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isFull</span><span class="token punctuation">(</span>stack<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token keyword">return</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	stack<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span><span class="token operator">++</span>stack<span class="token operator">-&gt;</span>top<span class="token punctuation">]</span> <span class="token operator">=</span> item<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isFull</span><span class="token punctuation">(</span>stack<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+    stack<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span><span class="token operator">++</span>stack<span class="token operator">-&gt;</span>top<span class="token punctuation">]</span> <span class="token operator">=</span> item<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><em>入站操作先移动 Top，再压入元素</em></p>
 <p>6. 出栈操作（Pop）</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Pop</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>stack<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">99</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token keyword">return</span> stack<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span>stack<span class="token operator">-&gt;</span>top<span class="token operator">--</span><span class="token punctuation">]</span><span class="token punctuation">;</span>	<span class="token comment">//返回被弹出的元素</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>stack<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">99</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> stack<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span>stack<span class="token operator">-&gt;</span>top<span class="token operator">--</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">//返回被弹出的元素</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>7. 遍历操作</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Traverse</span><span class="token punctuation">(</span>Stack<span class="token operator">*</span> satck<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The items in the stack are:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>stack<span class="token operator">-&gt;</span>top<span class="token punctuation">;</span>i <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span> <span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span>stack<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The items in the stack are:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>stack<span class="token operator">-&gt;</span>top<span class="token punctuation">;</span>i <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token function">printf</span> <span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span>stack<span class="token operator">-&gt;</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h5 id="链式栈"><a class="header-anchor" href="#链式栈">¶</a> 链式栈</h5>
 <p><img src="https://blogpic.skyhive.tech/pic%2Fstack1.png" alt="stack1"><br>
 1. 构建栈的结构</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">node</span><span class="token punctuation">{</span>
-  	<span class="token keyword">int</span> data<span class="token punctuation">;</span>
-  	<span class="token keyword">struct</span> <span class="token class-name">node</span><span class="token operator">*</span> next<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> data<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">node</span><span class="token operator">*</span> next<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>Node<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>2. 初始化栈</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">Node<span class="token operator">*</span> <span class="token function">Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	Node<span class="token operator">*</span> s<span class="token punctuation">;</span>
-  	s <span class="token operator">=</span> <span class="token punctuation">(</span>Node<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>s<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token keyword">else</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Init successfully!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> s<span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
+    Node<span class="token operator">*</span> s<span class="token punctuation">;</span>
+    s <span class="token operator">=</span> <span class="token punctuation">(</span>Node<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>s<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+    <span class="token keyword">else</span><span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Init successfully!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> s<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>3. 判断栈是否为空</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">return</span> <span class="token punctuation">(</span>s<span class="token operator">-&gt;</span>next <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>s<span class="token operator">-&gt;</span>next <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>4. 进栈操作</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Push</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> s<span class="token punctuation">,</span><span class="token keyword">int</span> item<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	Node<span class="token operator">*</span> node<span class="token punctuation">;</span>		<span class="token comment">//为插入的元素构建一个节点</span>
-  	node <span class="token operator">=</span> <span class="token punctuation">(</span>Node<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>node<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	node<span class="token operator">-&gt;</span>data <span class="token operator">=</span> item<span class="token punctuation">;</span>
-  	node<span class="token operator">-&gt;</span>next <span class="token operator">=</span> s<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>		<span class="token comment">//这里写成node-&gt;next = NULL应该也可以吧</span>
-  	s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> node<span class="token punctuation">;</span>
+    Node<span class="token operator">*</span> node<span class="token punctuation">;</span>   <span class="token comment">//为插入的元素构建一个节点</span>
+    node <span class="token operator">=</span> <span class="token punctuation">(</span>Node<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>node<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+    node<span class="token operator">-&gt;</span>data <span class="token operator">=</span> item<span class="token punctuation">;</span>
+    node<span class="token operator">-&gt;</span>next <span class="token operator">=</span> s<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>   <span class="token comment">//这里写成node-&gt;next = NULL应该也可以吧</span>
+    s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> node<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>5. 出栈操作</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Pop</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	Node<span class="token operator">*</span> Top<span class="token punctuation">;</span>
-  	<span class="token keyword">int</span> data<span class="token punctuation">;</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The stack is empty!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">99</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	Top <span class="token operator">=</span> s<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
-  	s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> Top<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
-  	data <span class="token operator">=</span> Top<span class="token operator">-&gt;</span>data<span class="token punctuation">;</span>
-  	<span class="token function">free</span><span class="token punctuation">(</span>Top<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">return</span> data<span class="token punctuation">;</span>
+    Node<span class="token operator">*</span> Top<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> data<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The stack is empty!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">99</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+    Top <span class="token operator">=</span> s<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+    s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> Top<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+    data <span class="token operator">=</span> Top<span class="token operator">-&gt;</span>data<span class="token punctuation">;</span>
+    <span class="token function">free</span><span class="token punctuation">(</span>Top<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> data<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>6. 遍历操作</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Traverse</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The items in the stack are:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	Node<span class="token operator">*</span> p<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The items in the stack are:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Node<span class="token operator">*</span> p<span class="token punctuation">;</span>
     p <span class="token operator">=</span> s<span class="token punctuation">;</span>
-  	<span class="token keyword">while</span> <span class="token punctuation">(</span>p<span class="token operator">-&gt;</span>next <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-      	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span>p<span class="token operator">-&gt;</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	p <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>p<span class="token operator">-&gt;</span>next <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span>p<span class="token operator">-&gt;</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        p <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 ]]></content>
       <categories>
@@ -4071,7 +4072,8 @@ services:
 <span class="token comment">## 在 set common_args_3617 中加入 disable_mtrr_trim 配置</span>
 <span class="token comment">## 注意这里 3617 是因为我的黑群晖是 DS 3617xs，其他型号应该不一样</span>
 <span class="token builtin class-name">set</span> <span class="token assign-left variable">common_args_3617</span><span class="token operator">=</span><span class="token string">'disable_mtrr_trim syno_hdd_powerup_seq=0 HddHotplug=0 syno_hw_version=DS3617xs vender_format_version=2 console=ttyS0,115200n8 withefi elevator=elevator quiet syno_port_thaw=1'</span>
-<span class="token comment">## 重启后内存信息就正常了</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+<span class="token comment">## 重启后内存信息就正常了</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+]]></content>
       <categories>
         <category>Infra</category>
       </categories>
