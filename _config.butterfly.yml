@@ -735,8 +735,8 @@ ad:
 # --------------------------------------
 
 site_verification:
-  # - name: google-site-verification
-  #   content: xxxxxx
+  - name: google-site-verification
+    content: 83MwLF836at8faxuiJfSi7o6lPaQSRy2GAPO6kCY1BM
   # - name: baidu-site-verification
   #   content: xxxxxxx
 
