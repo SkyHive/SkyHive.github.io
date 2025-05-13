@@ -11,8 +11,8 @@ date: 2017-02-14 22:19:40
 <!--more-->
 注册完成之后就可以进行创建空间了，注意我们添加的资源为**对象存储**，访问控制为**公开空间**
 
-![qiniu create](https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fqiniu_create.png)
-![qiniu set](https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2Fqiniu_set.png)
+![qiniu create](https://blogpic.skyhive.tech/pic%2Fqiniu_create.png)
+![qiniu set](https://blogpic.skyhive.tech/pic%2Fqiniu_set.png)
 
 然后点击右上角进入**密钥管理**，复制当前使用的AK和SK，配置的时候会用得到
 下面我们会用到一个叫做的[hexo-qiniu-sync](https://github.com/gyk001/hexo-qiniu-sync)的插件，首先在hexo主目录下安装：

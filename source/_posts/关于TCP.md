@@ -22,7 +22,7 @@ TCP 会话的每一端都包含一个 32 位（bit）的序列号，该序列号
 
 例如在握手的时候，源向目的发送 syn 包，seq=x；目的会给源一个回应，seq=y，ack=x+1；源收到了之后给目的回一个确认包，ack=y+1。
 
-![三次握手](https://skyhive-blog-1252738260.cos.ap-shanghai.myqcloud.com/pic%2F%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png)
+![三次握手](https://blogpic.skyhive.tech/pic%2F%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png)
 #### TCP 划窗
 TCP 协议通过划窗机制来对流量进行控制管理，接收端通过发送确认号告诉发送端自己获包的情况，接收端通过三次发包后了解接收端的网络吞吐能力，然后稳定发包。
 
