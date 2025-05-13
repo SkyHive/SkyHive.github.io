@@ -25,6 +25,7 @@ date: 2017-08-11 12:52:41
 既然是给学生用的，那么 github 肯定要判断你学生的身份，这个时候你需要一个edu邮箱，基本上国内很多大学都会给学生使用 edu 邮箱的，用你的 edu 邮箱去注册 github；或者有的已经注册过 github 的怎么办呢，登录帐号后进入 setting 选项，在右侧的 Email 中添加一个 Email 地址，然后验证就好了。进入[学生包申请页面](https://education.github.com)，点击`GET your pack`，然后就正常填写信息即可，之后我们就能获得需要的优惠码了。
 ![DO4](https://blogpic.skyhive.tech/pic%2FDO4.png)
 下面我[注册Digital Ocean](https://m.do.co/c/0b7931b5f2e8)，正常的注册步骤，邮箱注册可以使用任意邮箱；邮箱验证结束之后进入到第二部验证，这一步需要有`信用卡`或者`PayPal`之类的(如果你我皆是大穷逼的话，可以和我一样选择使用`PayPal`，[注册](https://www.paypal.com)一个PayPal再去绑定一张卡即可),选择`PayPal`验证，然后支付 $5 即可完成验证，第三步是创建一个 Droplet，即创建一个 VPS，至于配置：
+
 * 系统根据你的需要去选择
 
 * size 选最小的 $5/mo 即可，你要是有钱我也不说什么了
@@ -37,22 +38,27 @@ VPS创建完之后，Digital Ocean会把 IP、账号和密码都发到你的注�
 
 -----------------------------------------
 下面就开始搭建我们的`Shadowsocks`服务：
+
 #### 安装Shadowsocks
+
 首先我们要安装`Shadowsocks`，由于`Shadowsocks`是用`python`写的，我们先安装`pip`
-```
+
+```bash
 #由于我用的是Ubuntu的系统，其他系统的用户请自行Google
 apt-get install python-pip
 pip install shadowsocks
 ```
+
 #### 优化Shadowsocks性能
+
 按照SS官方Wiki，我们进行优化：
 
 创建`local.conf`配置文件
-```
+
+```bash
 vim /etc/sysctl.d/local.conf
-```
-进入编辑模式之后输入以下内容：
-```
+# 进入编辑模式之后输入以下内容：
+
 # max open files
 fs.file-max = 51200
 # max read buffer
@@ -99,15 +105,19 @@ net.ipv4.tcp_congestion_control = hybla
 # for low-latency network, use cubic instead
 # net.ipv4.tcp_congestion_control = cubic
 ```
+
 保存退出后，执行以下命令使之生效：
-```
+
+```bash
 sysctl --system
 ```
 
 #### 配置Shadowsocks配置文件
+
 在`/etc/`下创建配置文件：`vim /etc/shadowsocks.json`
 然后进行编辑：
-```
+
+```json
 {
     "server":"my_server_ip",
     "server_port":8388,
@@ -119,11 +129,13 @@ sysctl --system
     "fast_open":false
 }
 ```
+
 #### 最后启用Shadowsocks服务端功能
-```
+
+```bash
 nohup ssserver -c /etc/shadowsocks.json -d start &
 ```
+
 >`nohup`是把运行日志输出到当前用户主目录下的`nohup.out`文件中
 
 到这里 VPS 上的 Shadowsocks 服务基本上就搭建完毕了，接下来的事情我想大家应该都会做了吧，爬上梯子开始翻墙吧。
-

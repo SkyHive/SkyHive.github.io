@@ -13,4 +13,3 @@ date: 2017-04-21 21:44:57
 
 ![level](https://blogpic.skyhive.tech/pic%2Flevel.png)
 当然这里除了有 Python 之外还有 Javascript 等脚本语言可以学习。
-
