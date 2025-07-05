@@ -72,7 +72,7 @@ disable_top_img: false
 default_top_img:
 
 # The banner image of index page
-index_img: /uploads/banner.jpg
+index_img: https://blogpic.skyhive.tech/pic/banner.jpg
 
 # The banner image of archive page
 archive_img:
@@ -107,7 +107,7 @@ cover:
   archives_enable: false
   # When cover is not set, the default cover is displayed
   default_cover:
-    - /uploads/banner.jpg
+    - https://blogpic.skyhive.tech/pic/banner.jpg
     # - xxx.jpg
 
 # Replace Broken Images

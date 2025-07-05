@@ -206,7 +206,7 @@ markdown:
     - markdown-it-imsize
     - markdown-it-expandable
   anchors:
-    level: 2
+    level: 1
     collisionSuffix: 'v'
     permalink: true
     permalinkClass: header-anchor
