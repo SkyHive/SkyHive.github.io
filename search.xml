@@ -1998,41 +1998,6 @@ DROP TABLE &lt;表名&gt;                                       --删除表<span
       </tags>
   </entry>
   <entry>
-    <title>nginx 端口转发被强行更改</title>
-    <url>/post/58e40093.html</url>
-    <content><![CDATA[<p><a href="https://blog.skyhive.tech/post/4b4fd36b.html">上一篇文章</a>说到在家里把 LB 升了级并且通过 <code>acme.sh</code> 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：</p>
-<img src="http://www.plantuml.com/plantuml/svg/IqmkoIzI22rEBUBY0f4Akhfs2Xf1-QKbgKMQLWesddb0HbvgYK90Vb69WeM9YR4T5qGMejB72QJADx40eW0ix-C4aNFEpqlBASrBJjM42xbdbkGa9Y7uKOb9IPaLIF95YMc9UOa80Q_Kd9pAjCmyJG00">
-<p>由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80/443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。</p>
-<span id="more"></span>
-<p>那么对于网盘服务来说，正常的访问路径就是：</p>
-<img src="http://www.plantuml.com/plantuml/svg/uqfCBialKWWjJYtYuWAH2hgwTWeQGVcb9Qb5cbOADfvvG4PUQeb2G7vHYO854DXnGMGXAdsSGAfy4miW2anCZEsuV9mWSdwf5IN9EVcbAI0b0KNv5PLGKmmi3Eou0000">
-<p>乍一看好像挺正常的，但是在我通过公网去访问的是时候</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> https://<span class="token operator">&lt;</span>domain_name<span class="token operator">&gt;</span>:8888<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>出现的结果往往是，nginx 直接把我的 8888 端口给重定向成了 8080，也就是变成了 <code>https://&lt;domain_name&gt;:8080</code> 的访问。后来查了一下，是需要在 nginx location 的配置中稍微做些修饰，随即将该方法记录下来</p>
-<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">
-<span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
-
-  <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl</span><span class="token punctuation">;</span>
-  ……
-  <span class="token directive"><span class="token keyword">port_in_redirect</span> <span class="token boolean">off</span></span><span class="token punctuation">;</span>  <span class="token comment">## 需要在 server 中加上这个配置防止 port redirect</span>
-
-  <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">{</span>
-    <span class="token directive"><span class="token keyword">proxy_pass</span> http://192.168.2.150:8080</span><span class="token punctuation">;</span>
-    <span class="token directive"><span class="token keyword">proxy_set_header</span> Host <span class="token variable">$host</span>:<span class="token variable">$server_port</span></span><span class="token punctuation">;</span>    <span class="token comment">## Host header 需要有 $host:$server_port，即 host 和 port 都得有，否则 port 就会变成 proxy_pass 中的 port</span>
-    ……
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>以上基本上可以解决问题，如若不能，则还得继续 Google 一番。</p>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>nginx</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SQLi-Labs 的安装</title>
     <url>/post/a802aee5.html</url>
     <content><![CDATA[<p>笔者前段时间安装了 sqli-labs，就想把 sqli-labs 和 lamp 环境的搭建都写出来，其实这两个东西都很简单，感觉比我折腾 hexo 要简单的得多了（手动滑稽）。</p>
@@ -2094,6 +2059,41 @@ $dbname1 = "challenges";
       </categories>
       <tags>
         <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>nginx 端口转发被强行更改</title>
+    <url>/post/58e40093.html</url>
+    <content><![CDATA[<p><a href="https://blog.skyhive.tech/post/4b4fd36b.html">上一篇文章</a>说到在家里把 LB 升了级并且通过 <code>acme.sh</code> 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：</p>
+<img src="http://www.plantuml.com/plantuml/svg/IqmkoIzI22rEBUBY0f4Akhfs2Xf1-QKbgKMQLWesddb0HbvgYK90Vb69WeM9YR4T5qGMejB72QJADx40eW0ix-C4aNFEpqlBASrBJjM42xbdbkGa9Y7uKOb9IPaLIF95YMc9UOa80Q_Kd9pAjCmyJG00">
+<p>由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80/443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。</p>
+<span id="more"></span>
+<p>那么对于网盘服务来说，正常的访问路径就是：</p>
+<img src="http://www.plantuml.com/plantuml/svg/uqfCBialKWWjJYtYuWAH2hgwTWeQGVcb9Qb5cbOADfvvG4PUQeb2G7vHYO854DXnGMGXAdsSGAfy4miW2anCZEsuV9mWSdwf5IN9EVcbAI0b0KNv5PLGKmmi3Eou0000">
+<p>乍一看好像挺正常的，但是在我通过公网去访问的是时候</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> https://<span class="token operator">&lt;</span>domain_name<span class="token operator">&gt;</span>:8888<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>出现的结果往往是，nginx 直接把我的 8888 端口给重定向成了 8080，也就是变成了 <code>https://&lt;domain_name&gt;:8080</code> 的访问。后来查了一下，是需要在 nginx location 的配置中稍微做些修饰，随即将该方法记录下来</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">
+<span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+
+  <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl</span><span class="token punctuation">;</span>
+  ……
+  <span class="token directive"><span class="token keyword">port_in_redirect</span> <span class="token boolean">off</span></span><span class="token punctuation">;</span>  <span class="token comment">## 需要在 server 中加上这个配置防止 port redirect</span>
+
+  <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">{</span>
+    <span class="token directive"><span class="token keyword">proxy_pass</span> http://192.168.2.150:8080</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">proxy_set_header</span> Host <span class="token variable">$host</span>:<span class="token variable">$server_port</span></span><span class="token punctuation">;</span>    <span class="token comment">## Host header 需要有 $host:$server_port，即 host 和 port 都得有，否则 port 就会变成 proxy_pass 中的 port</span>
+    ……
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>以上基本上可以解决问题，如若不能，则还得继续 Google 一番。</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -4004,43 +4004,6 @@ sudo apt-get install unity-control-center           #如果设置里只有很少
       </tags>
   </entry>
   <entry>
-    <title>什么情况？访问不了虚拟机了？？</title>
-    <url>/post/680966d1.html</url>
-    <content><![CDATA[<p>前几日在家中遇到一件有趣的事情，与大家分享一下。</p>
-<p>起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到 ESXi。这时的我还很天真的以为是虚拟化和黑苹果之间的问题，Google 了一番未果还是换回了 Windows。</p>
-<span id="more"></span>
-<p><img src="https://blogpic.skyhive.tech/pic%2F%E5%8F%98%E6%9B%B4%E5%8F%B2.png" alt="变更史"></p>
-<p>天真我以为这样就已经解决了问题，但结果是并没有什么卵用。同时我发现一直在使用的电脑访问 ESXi 也出现了问题，网络丢包严重，但是访问虚拟机却一点事情也没有。事已至此只能先简单抓包看一下，从硬件 A ping 向 ESXi（硬件 B）的同时，在 ESXi 上使用 tcpdump-uw 进行抓包（通过虚拟机作为跳板机连上 ESXi），结果是硬件 A 正常发送 ARP 请求，但是 ESXi 这里并没有收到 A 发送的请求。</p>
-<p>到这里我基本断定是 ARP 的问题，但是为啥 ESXi 收不到我发出来的 ARP 包，其他的硬件却都能收到，我不得而知。但是为了验证我的猜想，我决定先在 Windows 上静态绑定一下 ARP 记录。</p>
-<pre class="line-numbers language-none"><code class="language-none"># 先用 netsh 找到对应 interface 的 idx
-netsh i i show in   # netsh interface ipv4 show interfaces
-
-# 绑定 IP-MAC
-netsh -c "i i" add ne &lt;idx&gt; &lt;IP&gt; &lt;MAC&gt;  # netsh -c "interfaces ipv4" add neighbors &lt;idx&gt; &lt;IP&gt; &lt;MAC&gt;
-
-# 也可以直接用 arp 命令进行临时绑定
-arp -s &lt;IP&gt; &lt;MAC&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里 ESXi 的 MAC 是从虚拟机 ARP 获得的，因为目前只有虚拟机访问 ESXi 比较正常。绑定完 MAC 地址后我又信誓旦旦进行验证，结果网络依然不通！！WTF？？到底发生甚么事了了？一开始以为 MAC 地址写错了，反复比对后确认了 MAC 地址并没有问题，那么为啥虚拟机用这个 MAC 地址可以 ping 通 ESXi，我用这个 MAC 就不行呢？</p>
-<p>后来我怀疑是交换机的问题，我众多设备不是都接在同一个交换机上的，实际上是两个串联的傻瓜交换机，客厅一个卧室一个，而 ESXi 在客厅，实验的两台电脑在卧室。但是这个不成熟的猜想瞬间就被我给否定了，毕竟客厅和卧室里其他的设备互联都没有问题。</p>
-<p>就在我一筹莫展把注意力集中到 Windows 的网络配置上时，我突然发现了一个神奇的事情 —— 硬件 B Windows 的 MAC 地址为啥和我 ESXi 一摸一样？？这真是见了鬼了，两个不同硬件为啥会有相同的 MAC 地址！难道是因为 ESXi 迁移的时候 MAC 地址并没有跟着硬件走？毕竟 ESXi 的管理地址是在 VMKernel 上的，这并不是一个物理接口。</p>
-<p>简单了搜了一下，在 VMware 的 KB 中确实有这样的记载 —— <a href="https://kb.vmware.com/s/article/1031111?lang=zh_CN">更换网卡后或 vmkernel 的 MAC 地址重复时 vmk0 管理网络 MAC 地址不更新</a>。如果已经冲突了就只能删除原来的管理端口，重新创建，但是我这台 ESXi 只有一个网络接口，如果删了的话就只能连上显示器去配置了，所以为了省事就在 Web 界面先添加一个端口，再删除原来的即可。</p>
-<p>如果要配置静态的 IP 地址又不想接显示器的话，可以 SSH 到 ESXi 后进行如下操作</p>
-<pre class="line-numbers language-none"><code class="language-none">TERM=xterm
-dcui<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><img src="https://blogpic.skyhive.tech/pic%2Fesxi.png" alt="ESXi 控制台"><br>
-绝对的懒人福音！！</p>
-<p>重建了管理端口后，没有了 MAC 地址冲突，硬件 A 的 Windows 又满血复活了，这件事情告诉我们，没事别特么的拆东墙补西墙！</p>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>虚拟化</tag>
-        <tag>ESXi</tag>
-        <tag>Network</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>记一次 Arch 的安装经历</title>
     <url>/post/ab2e3e73.html</url>
     <content><![CDATA[<p>最近由于听信了别人的 “谗言”，心血来潮想试一试 Arch，所以便准备在虚拟机上装一个 Arch 来看看效果，也算是一次艰难的装系统之路了吧。</p>
@@ -4102,6 +4065,43 @@ reboot<span aria-hidden="true" class="line-numbers-rows"><span></span><span></sp
       <tags>
         <tag>Linux</tag>
         <tag>Arch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>什么情况？访问不了虚拟机了？？</title>
+    <url>/post/680966d1.html</url>
+    <content><![CDATA[<p>前几日在家中遇到一件有趣的事情，与大家分享一下。</p>
+<p>起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到 ESXi。这时的我还很天真的以为是虚拟化和黑苹果之间的问题，Google 了一番未果还是换回了 Windows。</p>
+<span id="more"></span>
+<p><img src="https://blogpic.skyhive.tech/pic%2F%E5%8F%98%E6%9B%B4%E5%8F%B2.png" alt="变更史"></p>
+<p>天真我以为这样就已经解决了问题，但结果是并没有什么卵用。同时我发现一直在使用的电脑访问 ESXi 也出现了问题，网络丢包严重，但是访问虚拟机却一点事情也没有。事已至此只能先简单抓包看一下，从硬件 A ping 向 ESXi（硬件 B）的同时，在 ESXi 上使用 tcpdump-uw 进行抓包（通过虚拟机作为跳板机连上 ESXi），结果是硬件 A 正常发送 ARP 请求，但是 ESXi 这里并没有收到 A 发送的请求。</p>
+<p>到这里我基本断定是 ARP 的问题，但是为啥 ESXi 收不到我发出来的 ARP 包，其他的硬件却都能收到，我不得而知。但是为了验证我的猜想，我决定先在 Windows 上静态绑定一下 ARP 记录。</p>
+<pre class="line-numbers language-none"><code class="language-none"># 先用 netsh 找到对应 interface 的 idx
+netsh i i show in   # netsh interface ipv4 show interfaces
+
+# 绑定 IP-MAC
+netsh -c "i i" add ne &lt;idx&gt; &lt;IP&gt; &lt;MAC&gt;  # netsh -c "interfaces ipv4" add neighbors &lt;idx&gt; &lt;IP&gt; &lt;MAC&gt;
+
+# 也可以直接用 arp 命令进行临时绑定
+arp -s &lt;IP&gt; &lt;MAC&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里 ESXi 的 MAC 是从虚拟机 ARP 获得的，因为目前只有虚拟机访问 ESXi 比较正常。绑定完 MAC 地址后我又信誓旦旦进行验证，结果网络依然不通！！WTF？？到底发生甚么事了了？一开始以为 MAC 地址写错了，反复比对后确认了 MAC 地址并没有问题，那么为啥虚拟机用这个 MAC 地址可以 ping 通 ESXi，我用这个 MAC 就不行呢？</p>
+<p>后来我怀疑是交换机的问题，我众多设备不是都接在同一个交换机上的，实际上是两个串联的傻瓜交换机，客厅一个卧室一个，而 ESXi 在客厅，实验的两台电脑在卧室。但是这个不成熟的猜想瞬间就被我给否定了，毕竟客厅和卧室里其他的设备互联都没有问题。</p>
+<p>就在我一筹莫展把注意力集中到 Windows 的网络配置上时，我突然发现了一个神奇的事情 —— 硬件 B Windows 的 MAC 地址为啥和我 ESXi 一摸一样？？这真是见了鬼了，两个不同硬件为啥会有相同的 MAC 地址！难道是因为 ESXi 迁移的时候 MAC 地址并没有跟着硬件走？毕竟 ESXi 的管理地址是在 VMKernel 上的，这并不是一个物理接口。</p>
+<p>简单了搜了一下，在 VMware 的 KB 中确实有这样的记载 —— <a href="https://kb.vmware.com/s/article/1031111?lang=zh_CN">更换网卡后或 vmkernel 的 MAC 地址重复时 vmk0 管理网络 MAC 地址不更新</a>。如果已经冲突了就只能删除原来的管理端口，重新创建，但是我这台 ESXi 只有一个网络接口，如果删了的话就只能连上显示器去配置了，所以为了省事就在 Web 界面先添加一个端口，再删除原来的即可。</p>
+<p>如果要配置静态的 IP 地址又不想接显示器的话，可以 SSH 到 ESXi 后进行如下操作</p>
+<pre class="line-numbers language-none"><code class="language-none">TERM=xterm
+dcui<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><img src="https://blogpic.skyhive.tech/pic%2Fesxi.png" alt="ESXi 控制台"><br>
+绝对的懒人福音！！</p>
+<p>重建了管理端口后，没有了 MAC 地址冲突，硬件 A 的 Windows 又满血复活了，这件事情告诉我们，没事别特么的拆东墙补西墙！</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>虚拟化</tag>
+        <tag>ESXi</tag>
+        <tag>Network</tag>
       </tags>
   </entry>
   <entry>
@@ -4208,6 +4208,192 @@ services:
       <tags>
         <tag>Linux</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>队列</title>
+    <url>/post/b6c47025.html</url>
+    <content><![CDATA[<h3 id="队列"><a class="header-anchor" href="#队列">¶</a> 队列</h3>
+<p>队列是一种可以实现<strong>先进先出</strong> (first in first out,FIFO) 的存储结构。与栈不一样的是，队列规定只在一端进行插入操作，在另一端进行删除操作。允许插入的一端叫做队尾 (rear)，允许删除的一端叫做队首 (front)。</p>
+<h4 id="分类"><a class="header-anchor" href="#分类">¶</a> 分类</h4>
+<ul class="lvl-0">
+<li class="lvl-4">
+<p>链式队列：用链表实现。</p>
+</li>
+<li class="lvl-4">
+<p>静态队列：用数组实现。(<em>为了解决假溢出现象，静态队列通常都必须是循环队列</em>)</p>
+</li>
+</ul>
+<span id="more"></span>
+<h4 id="循环队列"><a class="header-anchor" href="#循环队列">¶</a> 循环队列</h4>
+<p><img src="https://blogpic.skyhive.tech/pic%2FQueue.jpg" alt="循环队列"></p>
+<h5 id="参数：front、rear"><a class="header-anchor" href="#参数：front、rear">¶</a> 参数：front、rear</h5>
+<ul class="lvl-0">
+<li class="lvl-4">
+<p>rear 所指的单元始终为空</p>
+</li>
+<li class="lvl-4">
+<p>队列初始化：front 和 rear 的值都是 0。</p>
+</li>
+<li class="lvl-4">
+<p>队列非空：front 指向队列的第一个元素；rear 指向队列的最后一个有效元素的下一个元素。</p>
+</li>
+<li class="lvl-4">
+<p>队列空：front 和 rear 值相等，但不一定是 0。</p>
+</li>
+</ul>
+<h5 id="算法解析"><a class="header-anchor" href="#算法解析">¶</a> 算法解析</h5>
+<p>1. 入队：将值存入 rear 所代表的位置 <code>r</code></p>
+<ul class="lvl-0">
+<li class="lvl-4">
+<p>错误写法：<code>r=r+1</code></p>
+</li>
+<li class="lvl-4">
+<p>正确写法：<code>r=(r+1)%数组长度</code></p>
+</li>
+</ul>
+<p>2. 出队：<br>
+<code>f=(f+1)%数组长度</code></p>
+<p>3. 判断循环队列是否为空</p>
+<p><code>rear = front</code></p>
+<p>4. 判断循环队列是否已满</p>
+<ul class="lvl-0">
+<li class="lvl-4">
+<p>多增加一个参数标志满或者空（一般不用此方式）</p>
+</li>
+<li class="lvl-4">
+<p>少用一个元素：如果 <code>(r+1)%数组长度==f</code> 表示循环队列已满</p>
+</li>
+</ul>
+<h5 id="代码实现"><a class="header-anchor" href="#代码实现">¶</a> 代码实现</h5>
+<p>1. 队列数据建构</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">queue</span> <span class="token punctuation">{</span>
+  	<span class="token keyword">int</span> <span class="token operator">*</span>p<span class="token punctuation">;</span>
+  	<span class="token keyword">int</span> front<span class="token punctuation">;</span>
+  	<span class="token keyword">int</span> rear<span class="token punctuation">;</span>
+  	<span class="token keyword">int</span> maxsize<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>Queue<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>2. 初始化队列</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">CreateQueue</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">,</span><span class="token keyword">int</span> maxsize<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	Q<span class="token operator">-&gt;</span>p <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token operator">*</span>maxsize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>Q<span class="token operator">-&gt;</span>p<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failure!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	Q<span class="token operator">-&gt;</span>front <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>rear<span class="token punctuation">;</span>
+  	Q<span class="token operator">-&gt;</span>maxize <span class="token operator">=</span> maxsize<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>3. 判断循环队列是否为满</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isFull</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>rear<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>Q<span class="token operator">-&gt;</span>maxsize <span class="token operator">==</span> Q<span class="token operator">-&gt;</span>front<span class="token punctuation">)</span>
+      	<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  	<span class="token keyword">else</span>
+      	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>4. 判断循环队列是否为空</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>rear <span class="token operator">==</span> Q<span class="token operator">-&gt;</span>front<span class="token punctuation">)</span>
+      	<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+ 	<span class="token keyword">else</span>
+      	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>5. 入队操作</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Enter</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isFull</span><span class="token punctuation">(</span>Q<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The queue is full!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  		<span class="token keyword">return</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	<span class="token keyword">else</span><span class="token punctuation">{</span>
+  		Q<span class="token operator">-&gt;</span>p<span class="token punctuation">[</span>Q<span class="token operator">-&gt;</span>rear<span class="token punctuation">]</span> <span class="token operator">=</span> val<span class="token punctuation">;</span>
+      	Q<span class="token operator">-&gt;</span>rear <span class="token operator">=</span> <span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>rear<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>Q<span class="token operator">-&gt;</span>maxsize<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>6. 出队操作</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Delete</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">,</span><span class="token keyword">int</span> <span class="token operator">*</span>val<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>Q<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  	<span class="token keyword">else</span><span class="token punctuation">{</span>
+  		<span class="token operator">*</span>val <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>p<span class="token punctuation">[</span>Q<span class="token operator">-&gt;</span>front<span class="token punctuation">]</span><span class="token punctuation">;</span>
+      	Q<span class="token operator">-&gt;</span>front<span class="token operator">=</span><span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>front<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>Q<span class="token operator">-&gt;</span>maxszie<span class="token punctuation">;</span>
+      	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Get out of the queue successfully!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>7. 遍历操作</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Traverse</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">int</span> i <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>front<span class="token punctuation">;</span>
+  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The items in queue are:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  	<span class="token keyword">while</span><span class="token punctuation">(</span>i<span class="token operator">%</span>Q<span class="token operator">-&gt;</span>maxsize<span class="token operator">!=</span>Q<span class="token operator">-&gt;</span>rear<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span>Q<span class="token operator">-&gt;</span>p<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	i<span class="token operator">=</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>Q<span class="token operator">-&gt;</span>maxsize<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="链式队列"><a class="header-anchor" href="#链式队列">¶</a> 链式队列</h4>
+<p>链式队列实现和链式栈相差不多，只是将删除操作放在了另外一端，有效的解决了顺序队列存储空间不足的缺陷。</p>
+<h5 id="代码实现-v2"><a class="header-anchor" href="#代码实现-v2">¶</a> 代码实现</h5>
+<p>1. 队列节点构建</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
+  	<span class="token keyword">int</span> data<span class="token punctuation">;</span>		<span class="token comment">//数据域</span>
+  	<span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>next<span class="token punctuation">;</span>		<span class="token comment">//指针域</span>
+<span class="token punctuation">}</span>Node<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span><span class="token punctuation">{</span>
+  	Node <span class="token operator">*</span>front<span class="token punctuation">;</span>
+  	Node <span class="token operator">*</span>rear<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>Queue<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>2. 队列初始化</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">InitQueue</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	Node <span class="token operator">*</span>head <span class="token operator">=</span> <span class="token punctuation">(</span>Node<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>head<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	<span class="token keyword">return</span> <span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	head<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+  	Q<span class="token operator">-&gt;</span>rear <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>front <span class="token operator">=</span> head<span class="token punctuation">;</span>		<span class="token comment">//front和rear都指向头指针</span>
+  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Init successfully!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>3. 入队操作</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Enter</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">,</span><span class="token keyword">int</span> item<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	Node <span class="token operator">*</span>s <span class="token operator">=</span> <span class="token punctuation">(</span>Node<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>s<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	<span class="token keyword">return</span> <span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+  	s<span class="token operator">-&gt;</span>data <span class="token operator">=</span> item<span class="token punctuation">;</span>
+  	Q<span class="token operator">-&gt;</span>rear<span class="token operator">-&gt;</span>next <span class="token operator">=</span> s<span class="token punctuation">;</span>
+  	Q<span class="token operator">-&gt;</span>rear <span class="token operator">=</span> s<span class="token punctuation">;</span>
+  	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>4. 出队操作</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Delete</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">,</span><span class="token keyword">int</span> <span class="token operator">*</span>item<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>front <span class="token operator">==</span> Q<span class="token operator">-&gt;</span>rear<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The queue is empty!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	<span class="token keyword">return</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	Node <span class="token operator">*</span>p<span class="token punctuation">;</span>
+  	p <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>front<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>		<span class="token comment">//先将要出栈的节点存在P中</span>
+  	Q<span class="token operator">-&gt;</span>front<span class="token operator">-&gt;</span>next <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>		<span class="token comment">//重新构造队头元素的后继</span>
+  	<span class="token operator">*</span>item <span class="token operator">=</span> p<span class="token operator">-&gt;</span>data<span class="token punctuation">;</span>			<span class="token comment">//保存出队的数据；</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>rear <span class="token operator">==</span> p<span class="token punctuation">)</span>		<span class="token comment">//判断删除的节点是否为队尾元素</span>
+      	Q<span class="token operator">-&gt;</span>rear <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>front<span class="token punctuation">;</span>
+  	<span class="token function">free</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>5. 遍历元素</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Traverse</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  	<span class="token keyword">if</span><span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>front <span class="token operator">==</span> Q<span class="token operator">-&gt;</span>rear<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The queue is empty!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	Node <span class="token operator">*</span>p <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>front<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+  	<span class="token keyword">while</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span>p<span class="token operator">-&gt;</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      	p <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
   </entry>
   <entry>
     <title>雾都游记</title>
@@ -4494,191 +4680,5 @@ services:
         <tag>NAS</tag>
         <tag>黑群晖</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>队列</title>
-    <url>/post/b6c47025.html</url>
-    <content><![CDATA[<h3 id="队列"><a class="header-anchor" href="#队列">¶</a> 队列</h3>
-<p>队列是一种可以实现<strong>先进先出</strong> (first in first out,FIFO) 的存储结构。与栈不一样的是，队列规定只在一端进行插入操作，在另一端进行删除操作。允许插入的一端叫做队尾 (rear)，允许删除的一端叫做队首 (front)。</p>
-<h4 id="分类"><a class="header-anchor" href="#分类">¶</a> 分类</h4>
-<ul class="lvl-0">
-<li class="lvl-4">
-<p>链式队列：用链表实现。</p>
-</li>
-<li class="lvl-4">
-<p>静态队列：用数组实现。(<em>为了解决假溢出现象，静态队列通常都必须是循环队列</em>)</p>
-</li>
-</ul>
-<span id="more"></span>
-<h4 id="循环队列"><a class="header-anchor" href="#循环队列">¶</a> 循环队列</h4>
-<p><img src="https://blogpic.skyhive.tech/pic%2FQueue.jpg" alt="循环队列"></p>
-<h5 id="参数：front、rear"><a class="header-anchor" href="#参数：front、rear">¶</a> 参数：front、rear</h5>
-<ul class="lvl-0">
-<li class="lvl-4">
-<p>rear 所指的单元始终为空</p>
-</li>
-<li class="lvl-4">
-<p>队列初始化：front 和 rear 的值都是 0。</p>
-</li>
-<li class="lvl-4">
-<p>队列非空：front 指向队列的第一个元素；rear 指向队列的最后一个有效元素的下一个元素。</p>
-</li>
-<li class="lvl-4">
-<p>队列空：front 和 rear 值相等，但不一定是 0。</p>
-</li>
-</ul>
-<h5 id="算法解析"><a class="header-anchor" href="#算法解析">¶</a> 算法解析</h5>
-<p>1. 入队：将值存入 rear 所代表的位置 <code>r</code></p>
-<ul class="lvl-0">
-<li class="lvl-4">
-<p>错误写法：<code>r=r+1</code></p>
-</li>
-<li class="lvl-4">
-<p>正确写法：<code>r=(r+1)%数组长度</code></p>
-</li>
-</ul>
-<p>2. 出队：<br>
-<code>f=(f+1)%数组长度</code></p>
-<p>3. 判断循环队列是否为空</p>
-<p><code>rear = front</code></p>
-<p>4. 判断循环队列是否已满</p>
-<ul class="lvl-0">
-<li class="lvl-4">
-<p>多增加一个参数标志满或者空（一般不用此方式）</p>
-</li>
-<li class="lvl-4">
-<p>少用一个元素：如果 <code>(r+1)%数组长度==f</code> 表示循环队列已满</p>
-</li>
-</ul>
-<h5 id="代码实现"><a class="header-anchor" href="#代码实现">¶</a> 代码实现</h5>
-<p>1. 队列数据建构</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">queue</span> <span class="token punctuation">{</span>
-  	<span class="token keyword">int</span> <span class="token operator">*</span>p<span class="token punctuation">;</span>
-  	<span class="token keyword">int</span> front<span class="token punctuation">;</span>
-  	<span class="token keyword">int</span> rear<span class="token punctuation">;</span>
-  	<span class="token keyword">int</span> maxsize<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>Queue<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>2. 初始化队列</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">CreateQueue</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">,</span><span class="token keyword">int</span> maxsize<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	Q<span class="token operator">-&gt;</span>p <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token operator">*</span>maxsize<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>Q<span class="token operator">-&gt;</span>p<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failure!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	Q<span class="token operator">-&gt;</span>front <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>rear<span class="token punctuation">;</span>
-  	Q<span class="token operator">-&gt;</span>maxize <span class="token operator">=</span> maxsize<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>3. 判断循环队列是否为满</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isFull</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>rear<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>Q<span class="token operator">-&gt;</span>maxsize <span class="token operator">==</span> Q<span class="token operator">-&gt;</span>front<span class="token punctuation">)</span>
-      	<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
-  	<span class="token keyword">else</span>
-      	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>4. 判断循环队列是否为空</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>rear <span class="token operator">==</span> Q<span class="token operator">-&gt;</span>front<span class="token punctuation">)</span>
-      	<span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
- 	<span class="token keyword">else</span>
-      	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>5. 入队操作</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Enter</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isFull</span><span class="token punctuation">(</span>Q<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The queue is full!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  		<span class="token keyword">return</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token keyword">else</span><span class="token punctuation">{</span>
-  		Q<span class="token operator">-&gt;</span>p<span class="token punctuation">[</span>Q<span class="token operator">-&gt;</span>rear<span class="token punctuation">]</span> <span class="token operator">=</span> val<span class="token punctuation">;</span>
-      	Q<span class="token operator">-&gt;</span>rear <span class="token operator">=</span> <span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>rear<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>Q<span class="token operator">-&gt;</span>maxsize<span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>6. 出队操作</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Delete</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">,</span><span class="token keyword">int</span> <span class="token operator">*</span>val<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>Q<span class="token punctuation">)</span><span class="token punctuation">)</span>
-		<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  	<span class="token keyword">else</span><span class="token punctuation">{</span>
-  		<span class="token operator">*</span>val <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>p<span class="token punctuation">[</span>Q<span class="token operator">-&gt;</span>front<span class="token punctuation">]</span><span class="token punctuation">;</span>
-      	Q<span class="token operator">-&gt;</span>front<span class="token operator">=</span><span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>front<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>Q<span class="token operator">-&gt;</span>maxszie<span class="token punctuation">;</span>
-      	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Get out of the queue successfully!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>7. 遍历操作</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Traverse</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">int</span> i <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>front<span class="token punctuation">;</span>
-  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The items in queue are:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">while</span><span class="token punctuation">(</span>i<span class="token operator">%</span>Q<span class="token operator">-&gt;</span>maxsize<span class="token operator">!=</span>Q<span class="token operator">-&gt;</span>rear<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span>Q<span class="token operator">-&gt;</span>p<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	i<span class="token operator">=</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">%</span>Q<span class="token operator">-&gt;</span>maxsize<span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="链式队列"><a class="header-anchor" href="#链式队列">¶</a> 链式队列</h4>
-<p>链式队列实现和链式栈相差不多，只是将删除操作放在了另外一端，有效的解决了顺序队列存储空间不足的缺陷。</p>
-<h5 id="代码实现-v2"><a class="header-anchor" href="#代码实现-v2">¶</a> 代码实现</h5>
-<p>1. 队列节点构建</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
-  	<span class="token keyword">int</span> data<span class="token punctuation">;</span>		<span class="token comment">//数据域</span>
-  	<span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>next<span class="token punctuation">;</span>		<span class="token comment">//指针域</span>
-<span class="token punctuation">}</span>Node<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span><span class="token punctuation">{</span>
-  	Node <span class="token operator">*</span>front<span class="token punctuation">;</span>
-  	Node <span class="token operator">*</span>rear<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>Queue<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>2. 队列初始化</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">InitQueue</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	Node <span class="token operator">*</span>head <span class="token operator">=</span> <span class="token punctuation">(</span>Node<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>head<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> <span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	head<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-  	Q<span class="token operator">-&gt;</span>rear <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>front <span class="token operator">=</span> head<span class="token punctuation">;</span>		<span class="token comment">//front和rear都指向头指针</span>
-  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Init successfully!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>3. 入队操作</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Enter</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">,</span><span class="token keyword">int</span> item<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	Node <span class="token operator">*</span>s <span class="token operator">=</span> <span class="token punctuation">(</span>Node<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>Node<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>s<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Memory allocation failed!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span> <span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	s<span class="token operator">-&gt;</span>next <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-  	s<span class="token operator">-&gt;</span>data <span class="token operator">=</span> item<span class="token punctuation">;</span>
-  	Q<span class="token operator">-&gt;</span>rear<span class="token operator">-&gt;</span>next <span class="token operator">=</span> s<span class="token punctuation">;</span>
-  	Q<span class="token operator">-&gt;</span>rear <span class="token operator">=</span> s<span class="token punctuation">;</span>
-  	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>4. 出队操作</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Delete</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">,</span><span class="token keyword">int</span> <span class="token operator">*</span>item<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>front <span class="token operator">==</span> Q<span class="token operator">-&gt;</span>rear<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The queue is empty!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	<span class="token keyword">return</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	Node <span class="token operator">*</span>p<span class="token punctuation">;</span>
-  	p <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>front<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>		<span class="token comment">//先将要出栈的节点存在P中</span>
-  	Q<span class="token operator">-&gt;</span>front<span class="token operator">-&gt;</span>next <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>		<span class="token comment">//重新构造队头元素的后继</span>
-  	<span class="token operator">*</span>item <span class="token operator">=</span> p<span class="token operator">-&gt;</span>data<span class="token punctuation">;</span>			<span class="token comment">//保存出队的数据；</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>rear <span class="token operator">==</span> p<span class="token punctuation">)</span>		<span class="token comment">//判断删除的节点是否为队尾元素</span>
-      	Q<span class="token operator">-&gt;</span>rear <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>front<span class="token punctuation">;</span>
-  	<span class="token function">free</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>5. 遍历元素</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Traverse</span><span class="token punctuation">(</span>Queue <span class="token operator">*</span>Q<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  	<span class="token keyword">if</span><span class="token punctuation">(</span>Q<span class="token operator">-&gt;</span>front <span class="token operator">==</span> Q<span class="token operator">-&gt;</span>rear<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The queue is empty!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	Node <span class="token operator">*</span>p <span class="token operator">=</span> Q<span class="token operator">-&gt;</span>front<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
-  	<span class="token keyword">while</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span>p<span class="token operator">-&gt;</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      	p <span class="token operator">=</span> p<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-  	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-      </categories>
   </entry>
 </search>
