@@ -986,43 +986,6 @@ sudo /etc/init.d/dns-clean start<span aria-hidden="true" class="line-numbers-row
       </tags>
   </entry>
   <entry>
-    <title>Dict 和 Set</title>
-    <url>/post/f9cadbda.html</url>
-    <content><![CDATA[<h4 id="Dict"><a class="header-anchor" href="#Dict">¶</a>Dict</h4>
-<p>Python 内置了字典 Dict（全称 Dictionary），使用键 - 值（key-value）存储，具有极快的查找速度。Dict 的查找原理和查字典类似，key 就相当于字典的索引，Python 可以通过 key 计算出所对应的 value 存放的内存地址，直接取出，所以查找速度快。<br>
-Dict 的初始化很简单，语法如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">&gt;&gt;&gt; dict = {key1' : value1, 'key2' = value2, 'key3' = value3}
-&gt;&gt;&gt; dict['key2']
-value2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>一个 key 只能对应一个 value，所以当我们对一个 key 多次赋值时会将前一个 value 覆盖掉。由于需要查找的 key 不存在时，dict 会报错，为了避免 key 不存在的情况，Python 提供了两种方法：</p>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>通过 <code>in</code> 判断，如果 key 存在，就返回 <code>True</code>，反之返回 <code>False</code>：</p>
-</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">&gt;&gt;&gt; `key` in dict<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>通过 <code>get</code> 判断，如果 key 不存在就返回 None（<em>返回 None 的时候交互式命令行不显示结果</em>），也可以是自己指定返回的内容：</p>
-</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">&gt;&gt;&gt; dict.get('key')     #返回None
-&gt;&gt;&gt; dict.get('key',-1)      #返回自己指定的值`-1`<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>删除 Dict 可以使用 <code>dict.pop(key)</code> 方法，对应的 value 也会从 dict 中删除。<br>
-Dict 内部的存放顺序和 key 的放入没有关系，Dict 的查找和插入速度不会随着 key 的增加而变慢，需要占用大量的内存，是一种用空间来换取时间的方法。</p>
-<h4 id="Set"><a class="header-anchor" href="#Set">¶</a>Set</h4>
-<p>Set 和 Dict 类似，也是一组 key 的集合，但是不存储 value。由于 key 不能重复，所以在 set 中没有重复的 key。要创建一个 set 需要提供一个 list 作为输入的集合：</p>
-<pre class="line-numbers language-none"><code class="language-none">&gt;&gt;&gt; s = set([1,2,3,4,5])<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>重复的元素会被 set 自动过滤，可以通过 <code>add(key)</code> 方法向 set 添加元素，通过 <code>remove(key)</code> 方法删除元素。我们可以将 set 看作数学意义上的集合，因此，两个 set 之间可以做数学意义上的交 (&amp;)、并 (|) 集等运算</p>
-]]></content>
-      <categories>
-        <category>Code</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ESXi 快照机制</title>
     <url>/post/35b185c.html</url>
     <content><![CDATA[<blockquote>
@@ -1131,165 +1094,6 @@ resize2fs /dev/sda4<span aria-hidden="true" class="line-numbers-rows"><span></sp
       </categories>
       <tags>
         <tag>Filesystem</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Galera 集群搭建</title>
-    <url>/post/bb5c39fc.html</url>
-    <content><![CDATA[<h3 id="Galera-简介"><a class="header-anchor" href="#Galera-简介">¶</a>Galera 简介</h3>
-<p>Galera Cluster 是基于 MySQL/Innodb 二次开发而成的一个支持 “多主同步” 的数据库主从集群。具备多主、同步复制、高可用等特点。</p>
-<p>MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现，同 Percona 的 PXC 数据库集群，目前只支持运行在 Linux 系统上。从 MariaDB 10.1 版开始，MariaDB Server 和 MariaDB Galera Server 安装包已经合并，安装 MariaDB 时，Galera 相关依赖安装包会自动安装，像内置的插件或存储引擎一样，通过简单配置即可启用。</p>
-<h3 id="Galera-集群状态"><a class="header-anchor" href="#Galera-集群状态">¶</a>Galera 集群状态</h3>
-<p>查看集群状态</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">STATUS</span> <span class="token operator">LIKE</span> <span class="token string">'wsrep_local_state_comment'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<span id="more"></span>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">状态</th>
-<th style="text-align:center">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"> Open</td>
-<td style="text-align:center"> 节点启动成功，尝试连接到集群；如果失败则根据配置退出或者创建新集群</td>
-</tr>
-<tr>
-<td style="text-align:center"> Primary</td>
-<td style="text-align:center"> 节点已处于集群中，在新节点加入时，选取 donor 进行数据同步时会产生的状态</td>
-</tr>
-<tr>
-<td style="text-align:center"> Joiner</td>
-<td style="text-align:center"> 节点处于等待接收 / 接收同步文件的状态</td>
-</tr>
-<tr>
-<td style="text-align:center"> Joined</td>
-<td style="text-align:center"> 节点完成数据同步，但有部分数据没跟上，在尝试保持和集群进度一致的过程状态。<br>例如某个节点故障后，重新加入集群，在追赶集群进度时的状态</td>
-</tr>
-<tr>
-<td style="text-align:center"> Synced</td>
-<td style="text-align:center"> 节点正常提供服务的状态，表示已经同步完成并和集群进度保持一致</td>
-</tr>
-<tr>
-<td style="text-align:center"> Donor</td>
-<td style="text-align:center"> 节点处于为新节点提供全量数据同步时的状态。此时该节点对客户端不提供服务 </td>
-</tr>
-</tbody>
-</table>
-<h3 id="基本概念"><a class="header-anchor" href="#基本概念">¶</a> 基本概念</h3>
-<ol>
-<li class="lvl-3">
-<p>Primary Component：在网络发生故障时，由于网络连接原因，集群可能被分成好几个小集群，但只能有一个集群可以继续进行数据修改，集群的这部分称为 Primary Component</p>
-</li>
-<li class="lvl-3">
-<p>GTID：Global Transaction ID，由 UUID 和 sequence number 偏移量组成。wsrep api 中定义的集群内部全局事务 id，一个顺序 ID，用于记录集群中发生状态改变的唯一标识以及队列中的偏移量</p>
-</li>
-<li class="lvl-3">
-<p>SST：State Snapshot Transfer（状态快照迁移），集群中数据共享节点通过从一个节点到另外一个节点迁移完整的数据拷贝（全量拷贝）。当一个新的节点加入到集群中，新的节点从集群中已有节点同步数据，开始进行状态快照迁移，可以在 Galera 集群中选择两种不同的状态转移方法</p>
-<p>3.1 逻辑数据转移：采用 mysqldump 命令，在转移之前，需要数据接收方服务器完全启动，并准备好接受数据的连接准备。这是一个阻塞式方法，数据共享节点 Donor 在状态转移节点处于只读状态，在数据共享节点 Donor 上适用 FLUSH TABLES WITH READ LOCK 命令，mysqldump 是速度最慢的 SST 方法，在负载比较的数据库集群上可能是个问题。</p>
-<p>3.2 物理数据转移：该方法采用 rsync、rsync_wan、xtrabackup 或其他方法从服务器之间直接拷贝数据，数据接受服务器在拷贝完数据后启动服务器。该方法较 mysqldump 速度较快，但存在一定的限制，只能在服务器启动时采用，数据接受服务器需要同数据共享服务器 Donor 配置相同（例如，服务器间 innodb_file_per_table 配置必须完全一致）。</p>
-</li>
-<li class="lvl-3">
-<p>IST：Incremental State Transfer（增量状态迁移），集群一个节点通过识别新加入节点缺失的事务操作，将该操作发送，而并不像 SST 那样的全量数据拷贝。该方法只在特定条件下可用：</p>
-<p>4.1 新加入节点的状态 UUID 与集群组中节点一致；</p>
-<p>4.2 新加入节点所缺失的写数据集 write-sets 可以在 Donor 的写数据集 write-sets 存在。</p>
-</li>
-</ol>
-<h3 id="搭建过程"><a class="header-anchor" href="#搭建过程">¶</a> 搭建过程</h3>
-<h4 id="环境信息"><a class="header-anchor" href="#环境信息">¶</a> 环境信息</h4>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">hostname</th>
-<th style="text-align:center">IP</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">db01</td>
-<td style="text-align:center">192.168.2.10</td>
-</tr>
-<tr>
-<td style="text-align:center">db02</td>
-<td style="text-align:center">192.168.2.11</td>
-</tr>
-<tr>
-<td style="text-align:center">db03</td>
-<td style="text-align:center">192.168.2.12</td>
-</tr>
-</tbody>
-</table>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 安装依赖</span>
-<span class="token function">sudo</span> <span class="token function">apt</span> update
-<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> mariadb-server-10.3
- 
-<span class="token comment">## 配置集群</span>
-<span class="token comment">### 在第一台主机操作</span>
-systemctl stop mysql
-<span class="token function">vim</span> /etc/mysql/mariadb.conf.d/50-server.cnf
-<span class="token comment"># 在 [mysqld] 下添加 skip-name-resolve</span>
-<span class="token comment"># 在文件末尾添加如下内容</span>
-<span class="token punctuation">[</span>galera<span class="token punctuation">]</span>
-<span class="token assign-left variable">wsrep_on</span><span class="token operator">=</span>ON
-<span class="token assign-left variable">wsrep_provider</span><span class="token operator">=</span>/usr/lib/galera/libgalera_smm.so
-<span class="token assign-left variable">wsrep_cluster_address</span><span class="token operator">=</span><span class="token string">"gcomm://"</span>
-<span class="token assign-left variable">binlog_format</span><span class="token operator">=</span>row
-<span class="token assign-left variable">default_storage_engine</span><span class="token operator">=</span>InnoDB
-<span class="token assign-left variable">innodb_autoinc_lock_mode</span><span class="token operator">=</span><span class="token number">2</span>
-bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
-<span class="token comment"># any cluster name</span>
-<span class="token assign-left variable">wsrep_cluster_name</span><span class="token operator">=</span><span class="token string">"MariaDB_Cluster"</span>
-<span class="token comment"># own IP address</span>
-<span class="token assign-left variable">wsrep_node_address</span><span class="token operator">=</span><span class="token string">"192.168.2.10"</span>
- 
-<span class="token comment">### 完成后保存退出</span>
-galera_new_cluster
- 
-mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span>
-  
-CREATE <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'Iamadm1n!!'</span><span class="token punctuation">;</span>
-GRANT ALL ON *.* TO <span class="token string">'root'</span>@<span class="token string">'%'</span><span class="token punctuation">;</span>
-update mysql.user <span class="token builtin class-name">set</span>  <span class="token assign-left variable">Grant_priv</span><span class="token operator">=</span><span class="token string">'Y'</span> where <span class="token assign-left variable">user</span><span class="token operator">=</span><span class="token string">'root'</span> and <span class="token assign-left variable">host</span><span class="token operator">=</span><span class="token string">'%'</span><span class="token punctuation">;</span>
-flush privileges<span class="token punctuation">;</span>
-<span class="token builtin class-name">exit</span>
-
-
-<span class="token comment">### 在其他两台主机操作</span>
-systemctl stop mysql
-<span class="token function">vim</span> /etc/mysql/mariadb.conf.d/50-server.cnf
-<span class="token comment"># 在 [mysqld] 下添加 skip-name-resolve</span>
-<span class="token comment"># 在文件末尾添加如下内容</span>
-<span class="token punctuation">[</span>galera<span class="token punctuation">]</span>
-<span class="token assign-left variable">wsrep_on</span><span class="token operator">=</span>ON
-<span class="token assign-left variable">wsrep_provider</span><span class="token operator">=</span>/usr/lib/galera/libgalera_smm.so
-<span class="token assign-left variable">wsrep_cluster_address</span><span class="token operator">=</span><span class="token string">"gcomm://192.168.2.10,192.168.2.11,192.168.2.12"</span>
-<span class="token assign-left variable">binlog_format</span><span class="token operator">=</span>row
-<span class="token assign-left variable">default_storage_engine</span><span class="token operator">=</span>InnoDB
-<span class="token assign-left variable">innodb_autoinc_lock_mode</span><span class="token operator">=</span><span class="token number">2</span>
-bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
-<span class="token comment"># any cluster name</span>
-<span class="token assign-left variable">wsrep_cluster_name</span><span class="token operator">=</span><span class="token string">"MariaDB_Cluster"</span>
-<span class="token comment"># own IP address</span>
-<span class="token assign-left variable">wsrep_node_address</span><span class="token operator">=</span><span class="token string">"192.168.2.11"</span>   <span class="token comment">## 注意：这里填写当前节点的 IP，另外一个节点填 192.168.2.12</span>
- 
-<span class="token comment">### 完成后保存退出</span>
-<span class="token comment">## 重启 MySQL 服务</span>
-systemctl start mysql
-systemctl <span class="token builtin class-name">enable</span> mysql
- 
-<span class="token comment">## 检查集群状态</span>
-mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span>
-show status like <span class="token string">'wsrep_cluster%'</span><span class="token punctuation">;</span>
-<span class="token comment">## 需观察 'wsrep_cluster_size' 是否正常（正常为节点数量），以及 'wsrep_cluster_status' 是否为 Primary</span>
- 
-<span class="token comment">## 如果集群状态正常，则去修改第一个节点的 /etc/mysql/mariadb.conf.d/50-server.cnf 文件</span>
-<span class="token comment">## 将 wsrep_cluster_address 配置修改和其他两个节点一致即可</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -1492,6 +1296,165 @@ gitlab-ctl restart      <span class="token comment"># 重启 GitLab</span><span 
       </tags>
   </entry>
   <entry>
+    <title>Galera 集群搭建</title>
+    <url>/post/bb5c39fc.html</url>
+    <content><![CDATA[<h3 id="Galera-简介"><a class="header-anchor" href="#Galera-简介">¶</a>Galera 简介</h3>
+<p>Galera Cluster 是基于 MySQL/Innodb 二次开发而成的一个支持 “多主同步” 的数据库主从集群。具备多主、同步复制、高可用等特点。</p>
+<p>MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现，同 Percona 的 PXC 数据库集群，目前只支持运行在 Linux 系统上。从 MariaDB 10.1 版开始，MariaDB Server 和 MariaDB Galera Server 安装包已经合并，安装 MariaDB 时，Galera 相关依赖安装包会自动安装，像内置的插件或存储引擎一样，通过简单配置即可启用。</p>
+<h3 id="Galera-集群状态"><a class="header-anchor" href="#Galera-集群状态">¶</a>Galera 集群状态</h3>
+<p>查看集群状态</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">STATUS</span> <span class="token operator">LIKE</span> <span class="token string">'wsrep_local_state_comment'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<span id="more"></span>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">状态</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"> Open</td>
+<td style="text-align:center"> 节点启动成功，尝试连接到集群；如果失败则根据配置退出或者创建新集群</td>
+</tr>
+<tr>
+<td style="text-align:center"> Primary</td>
+<td style="text-align:center"> 节点已处于集群中，在新节点加入时，选取 donor 进行数据同步时会产生的状态</td>
+</tr>
+<tr>
+<td style="text-align:center"> Joiner</td>
+<td style="text-align:center"> 节点处于等待接收 / 接收同步文件的状态</td>
+</tr>
+<tr>
+<td style="text-align:center"> Joined</td>
+<td style="text-align:center"> 节点完成数据同步，但有部分数据没跟上，在尝试保持和集群进度一致的过程状态。<br>例如某个节点故障后，重新加入集群，在追赶集群进度时的状态</td>
+</tr>
+<tr>
+<td style="text-align:center"> Synced</td>
+<td style="text-align:center"> 节点正常提供服务的状态，表示已经同步完成并和集群进度保持一致</td>
+</tr>
+<tr>
+<td style="text-align:center"> Donor</td>
+<td style="text-align:center"> 节点处于为新节点提供全量数据同步时的状态。此时该节点对客户端不提供服务 </td>
+</tr>
+</tbody>
+</table>
+<h3 id="基本概念"><a class="header-anchor" href="#基本概念">¶</a> 基本概念</h3>
+<ol>
+<li class="lvl-3">
+<p>Primary Component：在网络发生故障时，由于网络连接原因，集群可能被分成好几个小集群，但只能有一个集群可以继续进行数据修改，集群的这部分称为 Primary Component</p>
+</li>
+<li class="lvl-3">
+<p>GTID：Global Transaction ID，由 UUID 和 sequence number 偏移量组成。wsrep api 中定义的集群内部全局事务 id，一个顺序 ID，用于记录集群中发生状态改变的唯一标识以及队列中的偏移量</p>
+</li>
+<li class="lvl-3">
+<p>SST：State Snapshot Transfer（状态快照迁移），集群中数据共享节点通过从一个节点到另外一个节点迁移完整的数据拷贝（全量拷贝）。当一个新的节点加入到集群中，新的节点从集群中已有节点同步数据，开始进行状态快照迁移，可以在 Galera 集群中选择两种不同的状态转移方法</p>
+<p>3.1 逻辑数据转移：采用 mysqldump 命令，在转移之前，需要数据接收方服务器完全启动，并准备好接受数据的连接准备。这是一个阻塞式方法，数据共享节点 Donor 在状态转移节点处于只读状态，在数据共享节点 Donor 上适用 FLUSH TABLES WITH READ LOCK 命令，mysqldump 是速度最慢的 SST 方法，在负载比较的数据库集群上可能是个问题。</p>
+<p>3.2 物理数据转移：该方法采用 rsync、rsync_wan、xtrabackup 或其他方法从服务器之间直接拷贝数据，数据接受服务器在拷贝完数据后启动服务器。该方法较 mysqldump 速度较快，但存在一定的限制，只能在服务器启动时采用，数据接受服务器需要同数据共享服务器 Donor 配置相同（例如，服务器间 innodb_file_per_table 配置必须完全一致）。</p>
+</li>
+<li class="lvl-3">
+<p>IST：Incremental State Transfer（增量状态迁移），集群一个节点通过识别新加入节点缺失的事务操作，将该操作发送，而并不像 SST 那样的全量数据拷贝。该方法只在特定条件下可用：</p>
+<p>4.1 新加入节点的状态 UUID 与集群组中节点一致；</p>
+<p>4.2 新加入节点所缺失的写数据集 write-sets 可以在 Donor 的写数据集 write-sets 存在。</p>
+</li>
+</ol>
+<h3 id="搭建过程"><a class="header-anchor" href="#搭建过程">¶</a> 搭建过程</h3>
+<h4 id="环境信息"><a class="header-anchor" href="#环境信息">¶</a> 环境信息</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">hostname</th>
+<th style="text-align:center">IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">db01</td>
+<td style="text-align:center">192.168.2.10</td>
+</tr>
+<tr>
+<td style="text-align:center">db02</td>
+<td style="text-align:center">192.168.2.11</td>
+</tr>
+<tr>
+<td style="text-align:center">db03</td>
+<td style="text-align:center">192.168.2.12</td>
+</tr>
+</tbody>
+</table>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 安装依赖</span>
+<span class="token function">sudo</span> <span class="token function">apt</span> update
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> mariadb-server-10.3
+ 
+<span class="token comment">## 配置集群</span>
+<span class="token comment">### 在第一台主机操作</span>
+systemctl stop mysql
+<span class="token function">vim</span> /etc/mysql/mariadb.conf.d/50-server.cnf
+<span class="token comment"># 在 [mysqld] 下添加 skip-name-resolve</span>
+<span class="token comment"># 在文件末尾添加如下内容</span>
+<span class="token punctuation">[</span>galera<span class="token punctuation">]</span>
+<span class="token assign-left variable">wsrep_on</span><span class="token operator">=</span>ON
+<span class="token assign-left variable">wsrep_provider</span><span class="token operator">=</span>/usr/lib/galera/libgalera_smm.so
+<span class="token assign-left variable">wsrep_cluster_address</span><span class="token operator">=</span><span class="token string">"gcomm://"</span>
+<span class="token assign-left variable">binlog_format</span><span class="token operator">=</span>row
+<span class="token assign-left variable">default_storage_engine</span><span class="token operator">=</span>InnoDB
+<span class="token assign-left variable">innodb_autoinc_lock_mode</span><span class="token operator">=</span><span class="token number">2</span>
+bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
+<span class="token comment"># any cluster name</span>
+<span class="token assign-left variable">wsrep_cluster_name</span><span class="token operator">=</span><span class="token string">"MariaDB_Cluster"</span>
+<span class="token comment"># own IP address</span>
+<span class="token assign-left variable">wsrep_node_address</span><span class="token operator">=</span><span class="token string">"192.168.2.10"</span>
+ 
+<span class="token comment">### 完成后保存退出</span>
+galera_new_cluster
+ 
+mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span>
+  
+CREATE <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'Iamadm1n!!'</span><span class="token punctuation">;</span>
+GRANT ALL ON *.* TO <span class="token string">'root'</span>@<span class="token string">'%'</span><span class="token punctuation">;</span>
+update mysql.user <span class="token builtin class-name">set</span>  <span class="token assign-left variable">Grant_priv</span><span class="token operator">=</span><span class="token string">'Y'</span> where <span class="token assign-left variable">user</span><span class="token operator">=</span><span class="token string">'root'</span> and <span class="token assign-left variable">host</span><span class="token operator">=</span><span class="token string">'%'</span><span class="token punctuation">;</span>
+flush privileges<span class="token punctuation">;</span>
+<span class="token builtin class-name">exit</span>
+
+
+<span class="token comment">### 在其他两台主机操作</span>
+systemctl stop mysql
+<span class="token function">vim</span> /etc/mysql/mariadb.conf.d/50-server.cnf
+<span class="token comment"># 在 [mysqld] 下添加 skip-name-resolve</span>
+<span class="token comment"># 在文件末尾添加如下内容</span>
+<span class="token punctuation">[</span>galera<span class="token punctuation">]</span>
+<span class="token assign-left variable">wsrep_on</span><span class="token operator">=</span>ON
+<span class="token assign-left variable">wsrep_provider</span><span class="token operator">=</span>/usr/lib/galera/libgalera_smm.so
+<span class="token assign-left variable">wsrep_cluster_address</span><span class="token operator">=</span><span class="token string">"gcomm://192.168.2.10,192.168.2.11,192.168.2.12"</span>
+<span class="token assign-left variable">binlog_format</span><span class="token operator">=</span>row
+<span class="token assign-left variable">default_storage_engine</span><span class="token operator">=</span>InnoDB
+<span class="token assign-left variable">innodb_autoinc_lock_mode</span><span class="token operator">=</span><span class="token number">2</span>
+bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
+<span class="token comment"># any cluster name</span>
+<span class="token assign-left variable">wsrep_cluster_name</span><span class="token operator">=</span><span class="token string">"MariaDB_Cluster"</span>
+<span class="token comment"># own IP address</span>
+<span class="token assign-left variable">wsrep_node_address</span><span class="token operator">=</span><span class="token string">"192.168.2.11"</span>   <span class="token comment">## 注意：这里填写当前节点的 IP，另外一个节点填 192.168.2.12</span>
+ 
+<span class="token comment">### 完成后保存退出</span>
+<span class="token comment">## 重启 MySQL 服务</span>
+systemctl start mysql
+systemctl <span class="token builtin class-name">enable</span> mysql
+ 
+<span class="token comment">## 检查集群状态</span>
+mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span>
+show status like <span class="token string">'wsrep_cluster%'</span><span class="token punctuation">;</span>
+<span class="token comment">## 需观察 'wsrep_cluster_size' 是否正常（正常为节点数量），以及 'wsrep_cluster_status' 是否为 Primary</span>
+ 
+<span class="token comment">## 如果集群状态正常，则去修改第一个节点的 /etc/mysql/mariadb.conf.d/50-server.cnf 文件</span>
+<span class="token comment">## 将 wsrep_cluster_address 配置修改和其他两个节点一致即可</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Gitlab 单节点服务搭建</title>
     <url>/post/dfc3ccac.html</url>
     <content><![CDATA[<h2 id="搭建准备"><a class="header-anchor" href="#搭建准备">¶</a> 搭建准备</h2>
@@ -1684,6 +1647,43 @@ qiniu:
       </categories>
       <tags>
         <tag>OSS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Dict 和 Set</title>
+    <url>/post/f9cadbda.html</url>
+    <content><![CDATA[<h4 id="Dict"><a class="header-anchor" href="#Dict">¶</a>Dict</h4>
+<p>Python 内置了字典 Dict（全称 Dictionary），使用键 - 值（key-value）存储，具有极快的查找速度。Dict 的查找原理和查字典类似，key 就相当于字典的索引，Python 可以通过 key 计算出所对应的 value 存放的内存地址，直接取出，所以查找速度快。<br>
+Dict 的初始化很简单，语法如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">&gt;&gt;&gt; dict = {key1' : value1, 'key2' = value2, 'key3' = value3}
+&gt;&gt;&gt; dict['key2']
+value2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>一个 key 只能对应一个 value，所以当我们对一个 key 多次赋值时会将前一个 value 覆盖掉。由于需要查找的 key 不存在时，dict 会报错，为了避免 key 不存在的情况，Python 提供了两种方法：</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>通过 <code>in</code> 判断，如果 key 存在，就返回 <code>True</code>，反之返回 <code>False</code>：</p>
+</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">&gt;&gt;&gt; `key` in dict<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>通过 <code>get</code> 判断，如果 key 不存在就返回 None（<em>返回 None 的时候交互式命令行不显示结果</em>），也可以是自己指定返回的内容：</p>
+</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">&gt;&gt;&gt; dict.get('key')     #返回None
+&gt;&gt;&gt; dict.get('key',-1)      #返回自己指定的值`-1`<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>删除 Dict 可以使用 <code>dict.pop(key)</code> 方法，对应的 value 也会从 dict 中删除。<br>
+Dict 内部的存放顺序和 key 的放入没有关系，Dict 的查找和插入速度不会随着 key 的增加而变慢，需要占用大量的内存，是一种用空间来换取时间的方法。</p>
+<h4 id="Set"><a class="header-anchor" href="#Set">¶</a>Set</h4>
+<p>Set 和 Dict 类似，也是一组 key 的集合，但是不存储 value。由于 key 不能重复，所以在 set 中没有重复的 key。要创建一个 set 需要提供一个 list 作为输入的集合：</p>
+<pre class="line-numbers language-none"><code class="language-none">&gt;&gt;&gt; s = set([1,2,3,4,5])<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>重复的元素会被 set 自动过滤，可以通过 <code>add(key)</code> 方法向 set 添加元素，通过 <code>remove(key)</code> 方法删除元素。我们可以将 set 看作数学意义上的集合，因此，两个 set 之间可以做数学意义上的交 (&amp;)、并 (|) 集等运算</p>
+]]></content>
+      <categories>
+        <category>Code</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1955,46 +1955,38 @@ DROP TABLE &lt;表名&gt;                                       --删除表<span
       </tags>
   </entry>
   <entry>
-    <title>SQL 进阶</title>
-    <url>/post/5a67733d.html</url>
-    <content><![CDATA[<p>我们都知道 select 的基本用法 <code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而 <code>select</code> 语句后面还可以跟很多限制条件。我们这次用 user 表来作为示范，下面是 user 表的结构：</p>
+    <title>nginx 端口转发被强行更改</title>
+    <url>/post/58e40093.html</url>
+    <content><![CDATA[<p><a href="https://blog.skyhive.tech/post/4b4fd36b.html">上一篇文章</a>说到在家里把 LB 升了级并且通过 <code>acme.sh</code> 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：</p>
+<img src="http://www.plantuml.com/plantuml/svg/IqmkoIzI22rEBUBY0f4Akhfs2Xf1-QKbgKMQLWesddb0HbvgYK90Vb69WeM9YR4T5qGMejB72QJADx40eW0ix-C4aNFEpqlBASrBJjM42xbdbkGa9Y7uKOb9IPaLIF95YMc9UOa80Q_Kd9pAjCmyJG00">
+<p>由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80/443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。</p>
 <span id="more"></span>
-<p><img src="https://blogpic.skyhive.tech/pic%2Fuser.png" alt="user 表结构"></p>
-<h4 id="Between、And、In、-、-、-、-等条件查询"><a class="header-anchor" href="#Between、And、In、-、-、-、-等条件查询">¶</a>Between、And、In、&lt;=、&gt;=、&lt;、&gt; 等条件查询</h4>
-<p>通过 <code>select * from table where id between 1 and 3</code> 和 <code>select * from table where id &gt;=1 and id &lt;= 3</code> 的返回结果，我们可以发现 <code>between and</code> 和 <code>&gt;= and &lt;=</code> 是等同的。<br>
-<img src="https://blogpic.skyhive.tech/pic%2Fbetween.png" alt="between"><br>
-<img src="https://blogpic.skyhive.tech/pic%2Fbetween2.png" alt="between2"></p>
-<p>如果我们要查询的条件不是一个连续的数值，可以用 <code>in</code>：</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">where</span> id <span class="token operator">in</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h4 id="locate-函数：locate-substr-str"><a class="header-anchor" href="#locate-函数：locate-substr-str">¶</a>locate () 函数：<code>locate(substr,str)</code></h4>
-<p>这个函数返回 <code>substr</code> 在字符串 <code>str</code> 中的第一个出现的位置，如果不存在则值为 0<br>
-<img src="https://blogpic.skyhive.tech/pic%2Flocate.png" alt="locate 函数"></p>
-<h4 id="Count-函数"><a class="header-anchor" href="#Count-函数">¶</a>Count () 函数</h4>
-<ul class="lvl-0">
-<li class="lvl-2">
-<p>count (字段名)：返回指定列的值的数目，但是字段值为 <code>NULL</code> 时不会被计算进去。<code>select count(字段名) from &lt;表名&gt;</code></p>
-</li>
-<li class="lvl-2">
-<p>count (*)：返回表中的记录数，字段值为 <code>NULL</code> 时会被计算进去。<code>select count(*) from &lt;表名&gt;</code></p>
-</li>
-</ul>
-<h4 id="Distinct语句"><a class="header-anchor" href="#Distinct语句">¶</a>Distinct 语句</h4>
-<p>Distinct 语句用于去除重复行，比如：<code>select distinct * from &lt;表名&gt;</code>。<br>
-其他的语句或函数都可以和 <code>distinct</code> 配合使用，比如：<code>count(distinct &lt;字段名&gt;)</code> 可以去除重复行统计行数，但是 <code>count(distinct *)</code> 是<strong>不被允许</strong>的</p>
-<h4 id="Union语句"><a class="header-anchor" href="#Union语句">¶</a>Union 语句</h4>
-<p>Union 语句可以将两个 <code>select</code> 语句的结果集组合成一个：</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">where</span> id <span class="token operator">&gt;=</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token keyword">union</span> <span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">where</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>当我们使用 <code>union</code> 语句的时候，默认去除了重复行，和 <code>distinct</code> 的效果一样，如果要显示所有的结果，则要使用 <code>union all</code> 语句。</p>
-<h4 id="Drder-by语句"><a class="header-anchor" href="#Drder-by语句">¶</a>Drder by 语句</h4>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">order</span> <span class="token keyword">by</span> <span class="token operator">&lt;</span>字段名<span class="token operator">&gt;</span> <span class="token punctuation">[</span><span class="token keyword">asc</span><span class="token operator">/</span><span class="token keyword">desc</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>其中 <code>asc</code> 是默认的排序，为升序，<code>desc</code> 为降序。<br>
-当然 order by 后面可以跟很多个字段，如：<code>select * from table order by info desc,id asc</code>, 这个语句意为先按 <code>info</code> 字段降序，若 <code>info</code> 字段值相同的情况下，再按 <code>id</code> 字段升序。而且，<code>NULL</code> 默认为值最小。</p>
+<p>那么对于网盘服务来说，正常的访问路径就是：</p>
+<img src="http://www.plantuml.com/plantuml/svg/uqfCBialKWWjJYtYuWAH2hgwTWeQGVcb9Qb5cbOADfvvG4PUQeb2G7vHYO854DXnGMGXAdsSGAfy4miW2anCZEsuV9mWSdwf5IN9EVcbAI0b0KNv5PLGKmmi3Eou0000">
+<p>乍一看好像挺正常的，但是在我通过公网去访问的是时候</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> https://<span class="token operator">&lt;</span>domain_name<span class="token operator">&gt;</span>:8888<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>出现的结果往往是，nginx 直接把我的 8888 端口给重定向成了 8080，也就是变成了 <code>https://&lt;domain_name&gt;:8080</code> 的访问。后来查了一下，是需要在 nginx location 的配置中稍微做些修饰，随即将该方法记录下来</p>
+<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">
+<span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+
+  <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl</span><span class="token punctuation">;</span>
+  ……
+  <span class="token directive"><span class="token keyword">port_in_redirect</span> <span class="token boolean">off</span></span><span class="token punctuation">;</span>  <span class="token comment">## 需要在 server 中加上这个配置防止 port redirect</span>
+
+  <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">{</span>
+    <span class="token directive"><span class="token keyword">proxy_pass</span> http://192.168.2.150:8080</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">proxy_set_header</span> Host <span class="token variable">$host</span>:<span class="token variable">$server_port</span></span><span class="token punctuation">;</span>    <span class="token comment">## Host header 需要有 $host:$server_port，即 host 和 port 都得有，否则 port 就会变成 proxy_pass 中的 port</span>
+    ……
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>以上基本上可以解决问题，如若不能，则还得继续 Google 一番。</p>
 ]]></content>
       <categories>
         <category>Infra</category>
       </categories>
       <tags>
-        <tag>MySQL</tag>
+        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -2045,6 +2037,49 @@ $dbname1 = "challenges";
       </tags>
   </entry>
   <entry>
+    <title>SQL 进阶</title>
+    <url>/post/5a67733d.html</url>
+    <content><![CDATA[<p>我们都知道 select 的基本用法 <code>select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]</code>，然而 <code>select</code> 语句后面还可以跟很多限制条件。我们这次用 user 表来作为示范，下面是 user 表的结构：</p>
+<span id="more"></span>
+<p><img src="https://blogpic.skyhive.tech/pic%2Fuser.png" alt="user 表结构"></p>
+<h4 id="Between、And、In、-、-、-、-等条件查询"><a class="header-anchor" href="#Between、And、In、-、-、-、-等条件查询">¶</a>Between、And、In、&lt;=、&gt;=、&lt;、&gt; 等条件查询</h4>
+<p>通过 <code>select * from table where id between 1 and 3</code> 和 <code>select * from table where id &gt;=1 and id &lt;= 3</code> 的返回结果，我们可以发现 <code>between and</code> 和 <code>&gt;= and &lt;=</code> 是等同的。<br>
+<img src="https://blogpic.skyhive.tech/pic%2Fbetween.png" alt="between"><br>
+<img src="https://blogpic.skyhive.tech/pic%2Fbetween2.png" alt="between2"></p>
+<p>如果我们要查询的条件不是一个连续的数值，可以用 <code>in</code>：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">where</span> id <span class="token operator">in</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="locate-函数：locate-substr-str"><a class="header-anchor" href="#locate-函数：locate-substr-str">¶</a>locate () 函数：<code>locate(substr,str)</code></h4>
+<p>这个函数返回 <code>substr</code> 在字符串 <code>str</code> 中的第一个出现的位置，如果不存在则值为 0<br>
+<img src="https://blogpic.skyhive.tech/pic%2Flocate.png" alt="locate 函数"></p>
+<h4 id="Count-函数"><a class="header-anchor" href="#Count-函数">¶</a>Count () 函数</h4>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>count (字段名)：返回指定列的值的数目，但是字段值为 <code>NULL</code> 时不会被计算进去。<code>select count(字段名) from &lt;表名&gt;</code></p>
+</li>
+<li class="lvl-2">
+<p>count (*)：返回表中的记录数，字段值为 <code>NULL</code> 时会被计算进去。<code>select count(*) from &lt;表名&gt;</code></p>
+</li>
+</ul>
+<h4 id="Distinct语句"><a class="header-anchor" href="#Distinct语句">¶</a>Distinct 语句</h4>
+<p>Distinct 语句用于去除重复行，比如：<code>select distinct * from &lt;表名&gt;</code>。<br>
+其他的语句或函数都可以和 <code>distinct</code> 配合使用，比如：<code>count(distinct &lt;字段名&gt;)</code> 可以去除重复行统计行数，但是 <code>count(distinct *)</code> 是<strong>不被允许</strong>的</p>
+<h4 id="Union语句"><a class="header-anchor" href="#Union语句">¶</a>Union 语句</h4>
+<p>Union 语句可以将两个 <code>select</code> 语句的结果集组合成一个：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">where</span> id <span class="token operator">&gt;=</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token keyword">union</span> <span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">where</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>当我们使用 <code>union</code> 语句的时候，默认去除了重复行，和 <code>distinct</code> 的效果一样，如果要显示所有的结果，则要使用 <code>union all</code> 语句。</p>
+<h4 id="Drder-by语句"><a class="header-anchor" href="#Drder-by语句">¶</a>Drder by 语句</h4>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token keyword">order</span> <span class="token keyword">by</span> <span class="token operator">&lt;</span>字段名<span class="token operator">&gt;</span> <span class="token punctuation">[</span><span class="token keyword">asc</span><span class="token operator">/</span><span class="token keyword">desc</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>其中 <code>asc</code> 是默认的排序，为升序，<code>desc</code> 为降序。<br>
+当然 order by 后面可以跟很多个字段，如：<code>select * from table order by info desc,id asc</code>, 这个语句意为先按 <code>info</code> 字段降序，若 <code>info</code> 字段值相同的情况下，再按 <code>id</code> 字段升序。而且，<code>NULL</code> 默认为值最小。</p>
+]]></content>
+      <categories>
+        <category>Infra</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一个学习 Python 的小游戏</title>
     <url>/post/91a006a9.html</url>
     <content><![CDATA[<p>笔者最近在自学 Python 的过程中想起曾经有人推荐过的一款学习编程的小游戏，叫做 <a href="https://cn.codecombat.com">Codecombat</a>，通过玩游戏的方式学习编程语言的语法规则。</p>
@@ -2059,41 +2094,6 @@ $dbname1 = "challenges";
       </categories>
       <tags>
         <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nginx 端口转发被强行更改</title>
-    <url>/post/58e40093.html</url>
-    <content><![CDATA[<p><a href="https://blog.skyhive.tech/post/4b4fd36b.html">上一篇文章</a>说到在家里把 LB 升了级并且通过 <code>acme.sh</code> 自动配置了 LB 的泛域名证书，可以看到基本的结构如下：</p>
-<img src="http://www.plantuml.com/plantuml/svg/IqmkoIzI22rEBUBY0f4Akhfs2Xf1-QKbgKMQLWesddb0HbvgYK90Vb69WeM9YR4T5qGMejB72QJADx40eW0ix-C4aNFEpqlBASrBJjM42xbdbkGa9Y7uKOb9IPaLIF95YMc9UOa80Q_Kd9pAjCmyJG00">
-<p>由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80/443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。</p>
-<span id="more"></span>
-<p>那么对于网盘服务来说，正常的访问路径就是：</p>
-<img src="http://www.plantuml.com/plantuml/svg/uqfCBialKWWjJYtYuWAH2hgwTWeQGVcb9Qb5cbOADfvvG4PUQeb2G7vHYO854DXnGMGXAdsSGAfy4miW2anCZEsuV9mWSdwf5IN9EVcbAI0b0KNv5PLGKmmi3Eou0000">
-<p>乍一看好像挺正常的，但是在我通过公网去访问的是时候</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">curl</span> https://<span class="token operator">&lt;</span>domain_name<span class="token operator">&gt;</span>:8888<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>出现的结果往往是，nginx 直接把我的 8888 端口给重定向成了 8080，也就是变成了 <code>https://&lt;domain_name&gt;:8080</code> 的访问。后来查了一下，是需要在 nginx location 的配置中稍微做些修饰，随即将该方法记录下来</p>
-<pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx">
-<span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
-
-  <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl</span><span class="token punctuation">;</span>
-  ……
-  <span class="token directive"><span class="token keyword">port_in_redirect</span> <span class="token boolean">off</span></span><span class="token punctuation">;</span>  <span class="token comment">## 需要在 server 中加上这个配置防止 port redirect</span>
-
-  <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">{</span>
-    <span class="token directive"><span class="token keyword">proxy_pass</span> http://192.168.2.150:8080</span><span class="token punctuation">;</span>
-    <span class="token directive"><span class="token keyword">proxy_set_header</span> Host <span class="token variable">$host</span>:<span class="token variable">$server_port</span></span><span class="token punctuation">;</span>    <span class="token comment">## Host header 需要有 $host:$server_port，即 host 和 port 都得有，否则 port 就会变成 proxy_pass 中的 port</span>
-    ……
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>以上基本上可以解决问题，如若不能，则还得继续 Google 一番。</p>
-]]></content>
-      <categories>
-        <category>Infra</category>
-      </categories>
-      <tags>
-        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
