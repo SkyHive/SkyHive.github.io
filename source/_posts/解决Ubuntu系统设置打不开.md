@@ -1,6 +1,6 @@
 ---
 title: 解决Ubuntu系统设置打不开
-categories: Infra
+categories: 技术相关
 tags:
   - Linux
   - Ubuntu

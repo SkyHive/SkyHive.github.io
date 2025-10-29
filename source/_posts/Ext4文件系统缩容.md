@@ -1,6 +1,6 @@
 ---
 title: Ext4 文件系统缩容
-categories: Infra
+categories: 技术相关
 tags:
   - Filesystem
 abbrlink: 9fe434cf

@@ -1,6 +1,6 @@
 ---
 title: Dict 和 Set
-categories: Code
+categories: 技术相关
 tags:
   - Python
 abbrlink: f9cadbda

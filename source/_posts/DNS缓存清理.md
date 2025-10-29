@@ -1,6 +1,6 @@
 ---
 title: DNS 缓存清理
-categories: Infra
+categories: 技术相关
 tags:
   - DNS
 abbrlink: e4bc9b91

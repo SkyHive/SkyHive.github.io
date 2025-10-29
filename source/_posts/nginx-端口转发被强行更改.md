@@ -1,6 +1,6 @@
 ---
 title: nginx 端口转发被强行更改
-categories: Infra
+categories: 技术相关
 tags:
   - nginx
 abbrlink: '58e40093'

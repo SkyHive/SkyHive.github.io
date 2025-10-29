@@ -1,6 +1,6 @@
 ---
 title: Gitlab单节点服务搭建
-categories: Infra
+categories: 技术相关
 tags:
   - GitLab
 abbrlink: dfc3ccac

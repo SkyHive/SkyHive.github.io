@@ -1,6 +1,6 @@
 ---
 title: SQL 进阶
-categories: Infra
+categories: 技术相关
 tags:
   - MySQL
 abbrlink: 5a67733d

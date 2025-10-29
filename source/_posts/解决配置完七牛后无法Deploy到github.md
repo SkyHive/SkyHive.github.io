@@ -1,6 +1,6 @@
 ---
 title: 解决配置完七牛后无法 Deploy 到 Github
-categories: Blog
+categories: 技术相关
 tags:
   - OSS
 abbrlink: 662bd6d7

@@ -1,6 +1,6 @@
 ---
 title: SQLi-Labs的安装
-categories: Infra
+categories: 技术相关
 tags:
   - MySQL
   - Security

@@ -1,6 +1,6 @@
 ---
 title: 解决 Ubuntu 下 PHP 验证码不显示问题
-categories: Infra
+categories: 技术相关
 tags:
   - PHP
   - Ubuntu

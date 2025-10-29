@@ -1,6 +1,6 @@
 ---
 title: 创建本地 APT 仓库
-categories: Infra
+categories: 技术相关
 tags:
   - Ubuntu
 abbrlink: 16067d8e

@@ -1,6 +1,6 @@
 ---
 title: 修改sudoers文件导致sudo无法使用的解决办法
-categories: Infra
+categories: 技术相关
 tags:
   - Linux
 abbrlink: 2a7a180a

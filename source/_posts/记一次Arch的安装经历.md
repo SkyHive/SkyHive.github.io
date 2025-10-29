@@ -1,6 +1,6 @@
 ---
 title: 记一次Arch的安装经历
-categories: Infra
+categories: 技术相关
 tags:
   - Linux
   - Arch

@@ -1,6 +1,6 @@
 ---
 title: Gitlab EE 版本破解
-categories: Infra
+categories: 技术相关
 tags:
   - GitLab
 abbrlink: 77d7dd4e

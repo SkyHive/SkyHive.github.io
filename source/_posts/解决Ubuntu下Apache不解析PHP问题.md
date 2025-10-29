@@ -1,6 +1,6 @@
 ---
 title: 解决 Ubuntu 下 Apache 不解析 PHP 问题
-categories: Infra
+categories: 技术相关
 tags:
   - Linux
   - Apache

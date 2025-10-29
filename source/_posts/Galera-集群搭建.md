@@ -1,6 +1,6 @@
 ---
 title: Galera 集群搭建
-categories: Infra
+categories: 技术相关
 tags: MySQL
 abbrlink: bb5c39fc
 date: 2021-08-16 16:22:19

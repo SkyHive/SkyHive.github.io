@@ -1,6 +1,6 @@
 ---
 title: 初探 Django 需要注意的事项
-categories: Code
+categories: 技术相关
 tags:
   - Django
 abbrlink: 691098d6

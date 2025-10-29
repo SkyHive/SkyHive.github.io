@@ -1,6 +1,6 @@
 ---
 title: Hexo的建站之旅
-categories: Blog
+categories: 技术相关
 abbrlink: 2a8d7180
 date: 2017-02-14 17:54:35
 tags:

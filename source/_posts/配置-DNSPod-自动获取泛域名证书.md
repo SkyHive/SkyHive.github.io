@@ -1,6 +1,6 @@
 ---
 title: 配置 DNSPod 自动获取泛域名证书
-categories: Infra
+categories: 技术相关
 tags:
   - 证书
 abbrlink: 4b4fd36b

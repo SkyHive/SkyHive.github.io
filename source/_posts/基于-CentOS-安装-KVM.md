@@ -1,6 +1,6 @@
 ---
 title: 基于 CentOS 安装 KVM
-categories: Infra
+categories: 技术相关
 tags:
   - KVM
   - 虚拟化

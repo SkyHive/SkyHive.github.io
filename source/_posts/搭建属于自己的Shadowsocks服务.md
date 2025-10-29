@@ -1,6 +1,6 @@
 ---
 title: 搭建属于自己的 Shadowsocks 服务
-categories: Infra
+categories: 技术相关
 tags:
   - Network
   - Linux

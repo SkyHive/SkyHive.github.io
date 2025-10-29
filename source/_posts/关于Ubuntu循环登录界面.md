@@ -1,6 +1,6 @@
 ---
 title: 关于 Ubuntu 循环登录界面
-categories: Infra
+categories: 技术相关
 tags:
   - Linux
   - Ubuntu

@@ -1,6 +1,6 @@
 ---
 title: 关于 TCP
-categories: Infra
+categories: 技术相关
 tags:
   - Network
 abbrlink: 7f2ae283

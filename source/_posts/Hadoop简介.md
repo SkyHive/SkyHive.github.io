@@ -1,6 +1,6 @@
 ---
 title: Hadoop 简介
-categories: Infra
+categories: 技术相关
 tags:
   - Hadoop
 abbrlink: 8164914c

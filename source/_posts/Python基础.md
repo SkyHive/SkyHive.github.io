@@ -1,6 +1,6 @@
 ---
 title: Python基础
-categories: Code
+categories: 技术相关
 tags:
   - Python
 abbrlink: 99832f47

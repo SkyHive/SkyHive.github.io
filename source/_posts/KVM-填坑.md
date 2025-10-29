@@ -1,6 +1,6 @@
 ---
 title: KVM 填坑
-categories: Infra
+categories: 技术相关
 tags:
   - KVM
   - 虚拟化

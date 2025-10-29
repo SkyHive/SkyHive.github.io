@@ -56,11 +56,9 @@ highlight:
 # Category & Tag
 default_category: categorized
 category_map:
-  Blog: Blog
-  Code: Code
-  Infra: Infra
-  Algorithm: Algorithm
-  Life: Life
+  "技术相关": Tech
+  "生活相关": Life
+  "思考感悟": Think
 
 tag_map:
 

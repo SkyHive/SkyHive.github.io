@@ -1,6 +1,6 @@
 ---
 title: 解决 Ubuntu 下搜狗拼音候选词乱码
-categories: Infra
+categories: 技术相关
 tags:
   - Linux
   - Ubuntu

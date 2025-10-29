@@ -1,6 +1,6 @@
 ---
 title: 关于 timestamp 自动更新
-categories: Infra
+categories: 技术相关
 tags:
   - MySQL
 abbrlink: bc87c772

@@ -54,6 +54,7 @@ social:
   fab fa-github: https://github.com/skyhive || Github || '#24292e'
   fas fa-envelope: mailto:skyhive35@gmail.com || Email || '#4a7dbe'
   fas fa-rss: https://blog.skyhive.tech/atom.xml
+  fas fa-book: https://www.xiaohongshu.com/user/profile/6723a94c000000001d02d7db || Red Note || '#d70000'
 
 # --------------------------------------
 # Image Settings
@@ -341,7 +342,7 @@ aside:
   card_post_series:
     enable: true
     # The title shows the series name
-    series_title: false
+    series_title: true
     # Order by title or date
     orderBy: 'date'
     # Sort of order. 1, asc for ascending; -1, desc for descending

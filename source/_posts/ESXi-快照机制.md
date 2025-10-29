@@ -1,6 +1,6 @@
 ---
 title: ESXi 快照机制
-categories: Infra
+categories: 技术相关
 tags:
   - 虚拟化
   - ESXi

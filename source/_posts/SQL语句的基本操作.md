@@ -1,6 +1,6 @@
 ---
 title: SQL 语句的基本操作
-categories: Infra
+categories: 技术相关
 tags:
   - MySQL
 abbrlink: '45981961'

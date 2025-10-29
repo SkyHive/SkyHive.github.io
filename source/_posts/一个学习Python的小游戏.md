@@ -1,6 +1,6 @@
 ---
 title: 一个学习 Python 的小游戏
-categories: Code
+categories: 技术相关
 tags:
   - Python
 abbrlink: 91a006a9

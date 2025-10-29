@@ -1,6 +1,6 @@
 ---
 title: Hexo 搭配七牛存储图片等媒体资源
-categories: Blog
+categories: 技术相关
 tags:
   - OSS
 abbrlink: 26d4b698

@@ -1,6 +1,6 @@
 ---
 title: 配置 SSH 免密登录遇到的坑
-categories: Infra
+categories: 技术相关
 tags:
   - Linux
 abbrlink: cc074592
