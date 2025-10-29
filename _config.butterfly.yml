@@ -72,7 +72,7 @@ disable_top_img: false
 default_top_img:
 
 # The banner image of index page
-index_img: https://blogpic.skyhive.tech/pic/banner.jpg
+index_img: https://blogpic.skyhive.tech/pic/banner/john-towner.png
 
 # The banner image of archive page
 archive_img:
@@ -107,7 +107,7 @@ cover:
   archives_enable: false
   # When cover is not set, the default cover is displayed
   default_cover:
-    - https://blogpic.skyhive.tech/pic/banner.jpg
+    - https://blogpic.skyhive.tech/pic/banner/john-towner.png
     # - xxx.jpg
 
 # Replace Broken Images
@@ -532,7 +532,7 @@ comments:
   text: true
   # Lazyload: The comment system will be load when comment element enters the browser's viewport.
   # If you set it to true, the comment count will be invalid
-  lazyload: false
+  lazyload: true
   # Display comment count in post's top_img
   count: true
   # Display comment count in Home Page
@@ -988,7 +988,7 @@ pangu:
 lazyload:
   enable: false
   # Specify the field to use lazyload (site or post)
-  field: site
+  field: post
   placeholder:
   blur: false
 
@@ -1070,7 +1070,7 @@ CDN:
     # fancybox: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.js
     # fancybox_css: https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/fancybox/3.5.7/jquery.fancybox.min.css
     # fireworks:
-    # fontawesome: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css
+    fontawesome: https://cdn.staticfile.net/font-awesome/6.7.1/css/all.min.css
     # gitalk:
     # gitalk_css:
     # giscus:
