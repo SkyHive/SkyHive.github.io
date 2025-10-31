@@ -2,27 +2,33 @@
 title: Gitlab单节点服务搭建
 categories: 技术相关
 tags:
-  - GitLab
+  - gitlab
 abbrlink: dfc3ccac
 date: 2019-07-25 12:25:01
 ---
 ## 搭建准备
+
 根据官方提供的说法，小规模使用 GitLab 只用单机部署即可，4C8G 的配置足够小一百人使用 Git，由于本次也只是熟悉一下 GitLab 的搭建过程和各组件之间的关系，所以就使用低配的虚拟机进行搭建了。
+
 ### 虚拟机配置
+
 |CPU|内存|硬盘|
 |---|---|---|
 |4\*vCPU|8GB|200GB|
 <!--more-->
 ## 搭建过程
+
 ### 安装依赖
-```
+
+```shell
 sudo apt update
 sudo apt install curl openssh-server ca-certificates postfix
 ```
 
 ### 搭建服务
-```
-wget --content-disposition https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/xenial/gitlab-ce_12.0.1-ce.0_amd64.deb/download.deb		## 下载官方 deb 包
+
+```shell
+wget --content-disposition https://packages.gitlab.com/gitlab/gitlab-ce/packages/ubuntu/xenial/gitlab-ce_12.0.1-ce.0_amd64.deb/download.deb  ## 下载官方 deb 包
 sudo dpkg -i gitlab-ce_12.0.1-ce.0_amd64.deb
 
 ## 卸载原有 nginx
@@ -38,9 +44,10 @@ sudo gitlab-ctl reconfigure
 ```
 
 ### 汉化
+
 汉化的步骤实际上没有太大比较，GitLab 的汉化一直做的比较“晦涩难懂”，不如直接英语界面来的舒服。
 
-```
+```shell
 ## 去 https://gitlab.com/xhang/gitlab 找到对应版本的分支
 wget https://gitlab.com/xhang/gitlab/-/archive/v12.0.1/gitlab-v12.0.1.tar.gz
 tar -zxvf gitlab-v12.0.1.tar.gz ## 解压
@@ -52,13 +59,14 @@ sudo tar zcvf /opt/gitlab/embedded/service/gitlab-rails-bak.tar.gz /opt/gitlab/e
 ## 汉化包覆盖
 sudo cp -rf ~/gitlab-v12.0.1/* /opt/gitlab/embedded/service/gitlab-rails/
 
-sudo gitlab-ctl start 	## GitLab 启动服务
+sudo gitlab-ctl start  ## GitLab 启动服务
 
 sudo gitlab-ctl reconfigure ## 重新配置
 ```
 
 ### 基操
-```
+
+```shell
 ## 查看 GitLab 状态
 sudo gitlab-ctl status
 

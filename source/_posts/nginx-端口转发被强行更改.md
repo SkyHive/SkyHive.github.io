@@ -1,8 +1,10 @@
 ---
 title: nginx 端口转发被强行更改
 categories: 技术相关
+series: HomeLab
 tags:
   - nginx
+  - homelab
 abbrlink: '58e40093'
 date: 2024-02-09 17:50:16
 ---
@@ -36,10 +38,13 @@ LB --> (Nextcloud): <Proxy Port 8080>
 {% endplantuml %}
 
 乍一看好像挺正常的，但是在我通过公网去访问的是时候
+
 ```shell
 curl https://<domain_name>:8888
 ```
+
 出现的结果往往是，nginx 直接把我的 8888 端口给重定向成了 8080，也就是变成了 `https://<domain_name>:8080` 的访问。后来查了一下，是需要在 nginx location 的配置中稍微做些修饰，随即将该方法记录下来
+
 ```nginx
 
 server {

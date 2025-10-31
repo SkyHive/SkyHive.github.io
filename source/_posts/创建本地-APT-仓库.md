@@ -7,12 +7,14 @@ abbrlink: 16067d8e
 date: 2021-08-23 17:21:11
 ---
 ### 背景
-由于部分限制级场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http://archive.ubuntu.com/ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。
+
+由于部分限制级场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 <http://archive.ubuntu.com/ubuntu> 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。
 由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的 apt 仓库，我们将需要的依赖包都下载好，使用 apt-fptarchive 来发布我们的仓库。
 
 <!--more-->
 
 ### 仓库制作
+
 ```bash
 sudo -i
  
@@ -112,7 +114,9 @@ mv /opt/repo ./
 ```
 
 ### 修改 MAAS Package repos 配置
+
 如果客户环境连不到外网，那么我们在部署之前需要修改一下 maas 的配置
+
 1. 登录至 maas web 控制界面
 2. 定位置至 Settings → Package repos
 3. 修改 Ubuntu archive URL 为 http://maas_ip/repo/；并将之前导出的 maas.pub 内容粘贴至  Ubuntu archive  Key 中，保存

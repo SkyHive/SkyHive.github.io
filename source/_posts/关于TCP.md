@@ -2,7 +2,7 @@
 title: 关于 TCP
 categories: 技术相关
 tags:
-  - Network
+  - network
 abbrlink: 7f2ae283
 date: 2017-04-04 12:34:26
 ---

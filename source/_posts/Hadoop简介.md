@@ -6,7 +6,7 @@ tags:
 abbrlink: 8164914c
 date: 2017-11-17 20:56:31
 ---
-### Hadoop 介绍	
+### Hadoop 介绍
 
 Hadoop 是 Apache 组织的一个分布式计算框架（java语言），其最核心的设计就是：**HDFS** 和**MapReduce**，HDFS实现存储，MapReduce实现原理分析处理。
 
@@ -32,8 +32,6 @@ Hadoop 是 Apache 组织的一个分布式计算框架（java语言），其最�
 * NameNode：保存整个文件系统的目录信息、文件信息及分块信息，由唯一一台主机专门保存。（2.0版本后增加备份）
 * DataNode：用于存储Block文件。
 * NameNode全权管理数据块的复制，它周期性地从集群中的每个DataNode接受心跳信号和块状态报告（BlockReport）。结合艘到心跳信号以为这该DataNode工作正常，块状态报告包含了一个该DataNode上所有数据块的列表。
-
-
 
 #### MapReduce文件系统
 

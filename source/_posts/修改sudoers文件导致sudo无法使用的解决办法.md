@@ -2,7 +2,7 @@
 title: 修改sudoers文件导致sudo无法使用的解决办法
 categories: 技术相关
 tags:
-  - Linux
+  - linux
 abbrlink: 2a7a180a
 date: 2018-08-08 22:09:41
 ---
@@ -38,7 +38,5 @@ pkexec visudo
 第四步：回到第二个session，你会发现Bash提示你进行权限认证，输入密码后，再回到第一个session
 
 第五步：回到第一个session后就是我们熟悉的visudo界面啦，下面的操作大家心里都有数了
-
-
 
 **总结一下，没事不要乱改和sudo有关的任何东西，会出事，绝逼会出事**

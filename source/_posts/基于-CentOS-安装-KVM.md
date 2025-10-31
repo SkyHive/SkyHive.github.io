@@ -8,9 +8,11 @@ abbrlink: 9411b67b
 date: 2020-06-10 17:40:03
 ---
 ### 安装操作系统
+
 UEFI 引导或者 Legacy BIOS 引导均可，冲就完事了
 <!--more-->
 ### 安装 KVM 及其依赖
+
 ```bash
 ## 先把源换了
 yum install -y wget
@@ -54,7 +56,9 @@ grub2-mkconfig -o /boot/grub2/grub.cfg
 ```
 
 ### 网络配置
+
 因为环境需要将两个数据口创建 bond4 来使用，以下需要先创建 bond，再将 bond 加入网桥
+
 ```bash
 ## 安装依赖并禁用 NetworkManager
 yum install -y bridge-utils
@@ -140,7 +144,9 @@ DNS2=x.x.x.x
 modprobe bonding
 virsh net-destory default
 ```
+
 ### 设置虚拟机支持从 UEFI 启动
+
 ```bash
 ## 安装依赖
 wget http://www.kraxel.org/repos/firmware.repo -O /etc/yum.repos.d/firmware.repo

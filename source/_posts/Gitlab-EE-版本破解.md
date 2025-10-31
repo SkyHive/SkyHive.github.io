@@ -2,16 +2,21 @@
 title: Gitlab EE 版本破解
 categories: 技术相关
 tags:
-  - GitLab
+  - gitlab
 abbrlink: 77d7dd4e
 date: 2020-05-24 23:24:01
 ---
 ### 环境信息
+
 * Ubuntu 16.04
 * Ruby 环境（Version ≥2.5）
 
+> 配合 [Gitlab 单节点服务搭建](https://blog.skyhive.tech/post/dfc3ccac.html) 食用更好
+
 ### 破解过程
+
 #### 安装依赖
+
 ```bash
 ## 确认 ruby 版本最低为 2.5，否则需要升级
 sudo apt-add-repository ppa:brightbox/ruby-ng
@@ -25,6 +30,7 @@ sudo gem install openssl
 ```
 <!--more-->
 #### 签名
+
 创建 license.rb 文件，并写入一下内容
 
 ```bash
@@ -182,7 +188,9 @@ ruby license.rb
 # license_key.pub 为自签名的公钥
 # licens_key 为自签名的私钥
 ```
+
 #### 更换证书，添加 license
+
 ```bash
 ## 替换证书
 # 将上一步生成的公钥文件 license_key.pub 替换 GitLab 服务器中的 /opt/gitlab/embedded/service/gitlab-rails/.license_encryption_key.pub 文件
@@ -196,7 +204,9 @@ delete from licenses where id = 1;   # 如果有多条记录就都删掉
 ## 添加 license
 # 将上一步生成的 GitLabBV.gitlab-license 导入 GitLab 即可
 ```
+
 #### 修改 GitLab 等级
+
 ```bash
 ## 默认的 EE 版等级肯定不能满足我们，这一波直接拉满
 vim /opt/gitlab/embedded/service/gitlab-rails/ee/app/models/license.rb

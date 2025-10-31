@@ -2,12 +2,12 @@
 title: 关于 Ubuntu 循环登录界面
 categories: 技术相关
 tags:
-  - Linux
+  - linux
   - Ubuntu
 abbrlink: 93f970d9
 date: 2018-04-20 12:36:21
 ---
-其实事情的起因很奇怪，前两天一直想升级Ubuntu 18.04，不知道为什么17.10用着怪怪的，但是18.04又要到4月26号才发布，没有办法了只能Beta 2先用着试试了。
+其实事情的起因很奇怪，前两天一直想升级 `Ubuntu 18.04`，不知道为什么 `17.10` 用着怪怪的，但是 `18.04` 又要到4月26号才发布，没有办法了只能 `Beta 2` 先用着试试了。
 
 然后就是一顿正常的操作
 
@@ -29,7 +29,7 @@ sudo do-release-upgrade -d
 
 没错，就是那个带着Ubuntu logo，然后logo下面还有几个小点点的那个界面，卡的死死的。ESC之后显示的状态应该是这样的
 
-```
+```ini
 [Started] Gnome Display Manage
 ```
 

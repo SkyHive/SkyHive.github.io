@@ -3,6 +3,7 @@ title: Hexo 搭配七牛存储图片等媒体资源
 categories: 技术相关
 tags:
   - OSS
+  - hexo
 abbrlink: 26d4b698
 date: 2017-02-14 22:19:40
 ---
@@ -16,11 +17,14 @@ date: 2017-02-14 22:19:40
 
 然后点击右上角进入**密钥管理**，复制当前使用的AK和SK，配置的时候会用得到
 下面我们会用到一个叫做的[hexo-qiniu-sync](https://github.com/gyk001/hexo-qiniu-sync)的插件，首先在hexo主目录下安装：
-```
+
+```shell
 npm install hexo-qiniu-sync - -save
 ```
+
 然后把配置信息添加到_config.yml中
-```
+
+```yaml
 plugins:
   - hexo-qiniu-sync
 
@@ -59,17 +63,21 @@ qiniu:
   css:
     folder: css
 ```
+
 其中各个参数在插件的[README文件](https://github.com/gyk001/hexo-qiniu-sync/blob/master/README.md)中都有详细的介绍，按照github上的教程一步一步来是很简单的。
 
 然后在hexo主目录下创建本地目录（该目录要和配置中local_dir参数保持一致），然后创建iamges、js、css子目录，这样基本的配置就完成了
 
 下面就可以在你的文章中试着插入图片了，比如你想引用在你/local_dir/images/下的图片1.png
-```
+
+```shell
 {% qnimg 1.png %}
 ```
+
 更高级的用法请参考github上的说明。
 
 下面进行同步
-```
+
+```shell
 hexo qiniu s    
 ```

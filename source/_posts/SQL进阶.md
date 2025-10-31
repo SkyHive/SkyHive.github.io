@@ -47,7 +47,7 @@ Union语句可以将两个`select`语句的结果集组合成一个：
 
 当我们使用`union`语句的时候，默认去除了重复行，和`distinct`的效果一样，如果要显示所有的结果，则要使用`union all`语句。
 
-#### Drder by语句
+#### Order by语句
 
 ```sql
 select * from table order by <字段名> [asc/desc]

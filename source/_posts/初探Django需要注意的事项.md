@@ -3,6 +3,7 @@ title: 初探 Django 需要注意的事项
 categories: 技术相关
 tags:
   - Django
+  - Python
 abbrlink: 691098d6
 date: 2018-03-25 20:55:33
 ---
@@ -19,8 +20,8 @@ DATABASES = {
         'NAME': '项目对应的数据库名称',
         'USER': '登录mysql的帐户',
         'PASSWORD': '登录mysql的密码',
-        'HOST': '127.0.0.1',	#由于是在本地开发，所以是127.0.0.1
-        'PORT': '3306'	#这里mysql使用的是默认的3306端口
+        'HOST': '127.0.0.1', #由于是在本地开发，所以是127.0.0.1
+        'PORT': '3306' #这里mysql使用的是默认的3306端口
     }
 }
 ```
@@ -50,7 +51,7 @@ DATABASES = {
 ```python
 python 2.7 : __unicode__(self)
 python 3 : __str__(self)
-然后在方法中返回self.var	#var是类中数据中用来显示数据的变量
+然后在方法中返回self.var #var是类中数据中用来显示数据的变量
 ```
 
 #### Tamplates 过滤器
@@ -64,5 +65,5 @@ python 3 : __str__(self)
 有些过滤器会跟有参数，过滤器的参数都是跟随冒号，例如
 
 ```python
-{{var | default:'0'}}	#为变量var设置默认值0
+{{var | default:'0'}} #为变量var设置默认值0
 ```

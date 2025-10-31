@@ -2,8 +2,8 @@
 title: 搭建属于自己的 Shadowsocks 服务
 categories: 技术相关
 tags:
-  - Network
-  - Linux
+  - network
+  - linux
 abbrlink: 3d308a66
 date: 2017-08-11 12:52:41
 ---
