@@ -1,5 +1,5 @@
 ---
-title: HomeLab系列-认证
+title: HomeLab系列-认证(上)
 series: HomeLab
 abbrlink: cb650389
 date: 2025-10-30 14:40:20
@@ -276,3 +276,46 @@ users:
       - 'admins'
       - 'dev'
 ```
+
+最后就是 `nginx` 的配置
+
+```nginx
+server {
+  listen         443 ssl http2;
+  server_name    auth.skyhive.tech;
+  access_log  /var/log/nginx/auth.skyhive.tech_access.log;
+  error_log   /var/log/nginx/auth.skyhive.tech_error.log;
+  ssl_certificate /etc/nginx/ssl/full.pem;
+  ssl_certificate_key /etc/nginx/ssl/key.pem;
+  ssl_protocols        TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers          ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
+  ssl_prefer_server_ciphers  on;
+  ssl_session_cache    shared:SSL:10m;
+  ssl_session_timeout  10m;
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+  set $upstream http://192.168.2.12:9091;
+
+  location / {
+      include /etc/nginx/snippets/proxy.conf;
+      proxy_pass $upstream;
+  }
+
+#  location = /api/verify {
+#      proxy_pass $upstream;
+#  }
+#
+#  location /api/authz/ {
+#      proxy_pass $upstream;
+#  }
+
+}
+
+server {
+  listen         80;
+  server_name    auth.skyhive.tech;
+  return 301 https://$host$request_uri;
+}
+```
+
+此处 `server_name` 就是前面在 `configuration.yaml` 中配置的 `authelia_url` 的域名。至此整个初始化的流程就全部走完了，后续就是应用去对接 `LDAP` 或者 `OIDC` 了 ~
