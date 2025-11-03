@@ -5,7 +5,7 @@ abbrlink: cb650389
 date: 2025-10-30 14:40:20
 categories: 技术相关
 tags:
-- lldp
+- lldap
 - authelia
 - auth
 ---
