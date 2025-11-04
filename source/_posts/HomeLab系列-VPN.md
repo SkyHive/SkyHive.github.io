@@ -2,7 +2,7 @@
 title: HomeLab系列-VPN
 series: HomeLab
 categories: 技术相关
-published: false
+# published: false
 tags:
   - openvpn
   - docker
@@ -61,8 +61,8 @@ flowchart TB
     B{🔒 OpenVPN<br/>GavinTan/openvpn}
     C[(👥 LLDAP<br/>认证服务器)]
     D[💾 NAS]
-    E[🖥️ App01]
-    F[🖥️ App02]
+    E[🖥️ App01</br> Confluence / immich]
+    F[🖥️ App02</br> Gitea]
     G[📱 IoT设备]
     H{🌍 远程VPN用户}
     I(🔗 VPN网络<br/>10.8.0.0/24)
@@ -174,3 +174,41 @@ sudo iptables -A FORWARD -d 10.8.0.0/24 -j ACCEPT
 至此，我们的部署就完成了。
 
 ## 配置
+
+根据我们前面部署的配置，Web UI 的端口是 `8833`，通过浏览器访问登陆后，我们就可以开始进行配置了
+
+首先需要新增一条客户端配置，右上角 `管理 --> 客户端` 进入客户端列表
+
+![客户端配置列表](https://blogpic.skyhive.tech/pic/openvpn/client-config-list.png)
+
+点击右上角的 `添加` 按钮，开始添加配置
+
+![添加配置](https://blogpic.skyhive.tech/pic/openvpn/client-config.png)
+
+这里需要说明一下：
+
+- VPNServer：这里需要填写你外网 IP / 域名和端口，因为你最终是需要从公网连过来的
+- CCD 配置这里你可以配置 `ifconfig-push` 来固定客户端的 IP 地址，其他配置可以去查询文档自行决定
+- 自定义配置可以添加 `route <network> <netmask>`，其他配置可以去查询文档自行决定
+
+客户端配置添加完成后，我们在去添加账号和配置的映射关系，右上角 `管理 --> VPN 账号` 进入账号列表
+
+![VPN 账号列表](https://blogpic.skyhive.tech/pic/openvpn/account-list.png)
+
+*注意，右下角有提示：已启用 LDAP 认证，本地 VPN 账号将不再工作！* 这里指的是添加后的账号认证由 `LDAP` 接管，本地不再进行认证，仅实现认证后的 VPN 配置匹配。
+
+点击右上角 `添加` 按钮，开始添加账号
+
+![添加账号](https://blogpic.skyhive.tech/pic/openvpn/add-account.png)
+
+*注意：*
+
+- 用户名：由于我们对接了 LDAP，这里要填写域账号（并且如果配置了 `LDAP_USER_GROUP_DN` 则需要填写该组中的用户）
+- 密码：密码随便填，不生效的
+- IP 地址：理论上可以固定 IP 地址，但是我测试过不生效，最后通过配置文件中 `ifconfig-push` 来实现固定了
+
+至此，我们的配置就已经全部完成，现在使用配置好的域账号登录 Web 页面，可以看到如下界面：
+
+![OpenVPN Web UI](https://blogpic.skyhive.tech/pic/openvpn/client-ui.png)
+
+可以在此处下载配置文件和客户端，进行客户端的连接，另外如果配置启用了 MFA，则可以在此处对 MFA 进行配置。

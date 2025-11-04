@@ -776,7 +776,7 @@ tag_ui:
 rounded_corners_ui: true
 
 # Stretches the lines so that each line has equal width
-text_align_justify: false
+text_align_justify: true
 
 # Add a mask to the header and footer
 mask:
