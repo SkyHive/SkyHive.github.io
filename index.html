@@ -1,0 +1,299 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>SkyHive's Blog</title><meta name="author" content="SkyHive"><meta name="copyright" content="SkyHive"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="莫听穿林打叶声，何妨吟啸且徐行"><meta property="og:type" content="website"><meta property="og:title" content="SkyHive&#39;s Blog"><meta property="og:url" content="https://skyhive.github.io/index.html"><meta property="og:site_name" content="SkyHive&#39;s Blog"><meta property="og:description" content="莫听穿林打叶声，何妨吟啸且徐行"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://skyhive.github.io/uploads/avatar.jpg"><meta property="article:author" content="SkyHive"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://skyhive.github.io/uploads/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "SkyHive's Blog",
+  "alternateName": [
+    "skyhive.github.io"
+  ],
+  "url": "https://skyhive.github.io/"
+}</script><link rel="shortcut icon" href="/"><link rel="canonical" href="https://skyhive.github.io/index.html"><link rel="preconnect" href="https://cdn.staticfile.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><meta name="google-site-verification" content="83MwLF836at8faxuiJfSi7o6lPaQSRy2GAPO6kCY1BM"><link rel="stylesheet" href="/css/index.css?v=5.5.1"><link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.7.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.staticfile.net/node-snackbar/0.1.16/snackbar.min.css" media="print" onload='this.media="all"'><link rel="stylesheet" href="https://cdn.staticfile.net/fancyapps-ui/6.0.33/fancybox/fancybox.min.css" media="print" onload='this.media="all"'><script>(() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle=window.adsbygoogle||[]).push({google_ad_client:"ca-pub-4272530297151894",enable_page_level_ads:"true"})</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":"enable","top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":500,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: SkyHive","link":"链接: ","source":"来源: SkyHive's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.staticfile.net/egjs-infinitegrid/4.12.0/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE={title:"SkyHive's Blog",isHighlightShrink:!1,isToc:!1,pageType:"home"}</script><link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css"><link rel="stylesheet" href="/css/layout-overrides.css"><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="SkyHive's Blog" type="application/atom+xml"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')</script><link rel="stylesheet" href="https://cdn.staticfile.net/pace/1.2.4/themes/blue/pace-theme-minimal.min.css"><script src="https://cdn.staticfile.net/pace/1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/uploads/avatar.jpg" onerror='this.onerror=null,this.src="/img/friend_404.gif"' alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-clock"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image:url(https://blogpic.skyhive.tech/pic/banner/john-towner.png)"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SkyHive's Blog</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-clock"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">SkyHive's Blog</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/skyhive" target="_blank" title="Github"><i class="fab fa-github" style="color:#24292e"></i></a><a class="social-icon" href="mailto:skyhive35@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color:#4a7dbe"></i></a><a class="social-icon" href="https://blog.skyhive.tech/atom.xml" target="_blank"><i class="fas fa-rss"></i></a><a class="social-icon" href="https://www.xiaohongshu.com/user/profile/6723a94c000000001d02d7db" target="_blank" title="Red Note"><i class="fas fa-book" style="color:#d70000"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/11841089.html" title="HomeLab 系列 - VPN">HomeLab 系列 - VPN</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-11-03T02:13:13.000Z" title="发表于 2025-11-03 10:13:13">2025-11-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tech/">技术相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/openvpn/">openvpn</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/docker/">docker</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/iptables/">iptables</a></span></div><div class="content">原本路由器上的 Openwrt 已经自带了 OpenVPN Server，但是最近有需要开多账号给同事来访问家里的服务器资源，索性就稍稍改造一下，让 OpenVPN 支持多用户登录，顺便结合上一篇 HomeLab 系列 - 认证 (上) 用 LLDAP 管理用户。 ¶ 选型 OpenVPN 是一个老牌的开源 VPN 系统了，中心化的网络要求你必须得有一个公网 IP 地址，如果没有 IP 地址的可以尝试使用 Zerotier 这种解决方案。 那么言归正传，OpenVPN 和 OpenVPN-AS(Access Server) 的部署在网上有很多，简单说下区别： 特性 OpenVPN (社区版) OpenVPN Access Server (企业版) 核心性质 开源的底层协议和软件 基于开源核心的商业产品 授权模式 完全免费 按并发连接数收费，提供免费 2 个连接 安装配置 复杂：手动编辑配置文件、管理证书、设置路由和防火墙。 极简：基于 Web 的图形化界面，几分钟内即可完成部署。 用户管理 手动为每个用户生成证书和配置文件。 内置用户管理系统，支持本地...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/cb650389.html" title="HomeLab 系列 - 认证 (上)">HomeLab 系列 - 认证 (上)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-10-30T06:40:20.000Z" title="发表于 2025-10-30 14:40:20">2025-10-30</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tech/">技术相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/lldap/">lldap</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/authelia/">authelia</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/auth/">auth</a></span></div><div class="content">其实不管是在家里还是在企业里都有一个绕不过去的问题 – 认证（当然如果你在家里所有的系统都只用一个账号，当就不用看这篇文章了）,过去的一段时间内我都是使用本地帐号游走在各个系统。由于系统职能不同，各个系统的账号也不尽相同，例如 Confluence、Gitea 这类我会创建自己的用户账号，但是 Zabbix、Grafana 这类监控系统我就会直接用默认的 Admin 账号（我承认这是习惯不好），但是如果家庭中不止一个用户呢，如果你的这些服务还需要开放到公网让更多人使用呢？ 统一的用户管理在这一刻就显得很有必要，正常在企业中大多会使用 Microsoft Active Domain + SSO 作为统一管理用户的后端，但是在家里使用就显得太重了，调研了许久，最终采用 lldap + authelia 的方案。 ¶ 方案介绍 LLDAP(Light LDAP implementation) 是一个开源的轻量级 LDAP 服务解决方案，同时也提供了一套简单的 Web UI 用于管理，非常适合家用，具体可以前往 Github 地址 自行了解。 Authelia 是一个轻量级的 SSO ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/3bd9168d.html" title="2025 大马榴莲季全攻略">2025 大马榴莲季全攻略</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-07-14T15:07:47.000Z" title="发表于 2025-07-14 23:07:47">2025-07-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Life/">生活相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%97%85%E6%B8%B8/">旅游</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E9%A9%AC%E6%9D%A5%E8%A5%BF%E4%BA%9A/">马来西亚</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%A7%9F%E5%9F%8E/">槟城</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%B8%B8%E8%AE%B0/">游记</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%A6%B4%E8%8E%B2/">榴莲</a></span></div><div class="content">¶ 序 2023 年 12 月我们第一次前往槟城，但当时不吃榴莲；2024 年 8 月底我们第二次前往槟城，但当时榴莲季已经到了尾声，已经吃不到什么本地的品种，并且两个人的战力实在太弱。 然而 2025 年，我们提前半年订好机票，计划在 7.11-7.15 前往槟城品鉴榴莲，没想到，人算不如天算，槟城的榴莲季却提前了半个月进入尾声，很多果园的果子在 7.10 就掉的差不多了。尽管如此，我们还是吃上了二十五个榴莲品种！！！ ¶ 清单 ¶ 交通 由于去年从槟城回杭州的时候飞机延误赔付了 4 张 150 元的机票券，对于 2025 年榴莲季的行程，我提前了半年就开始进行规划。最终在 2024-12-19 遇上亚航周年大促，再叠加之前赔付的机票券，得到如下的交通计划 类型 时间 始发地 目的地 航班 / 车次 价格 (不含托运) 飞机 ✈ 2025-07-11 00:15 ~ 05:35 杭州 HGH T4 吉隆坡 KUL T2 D7307 空客 A330-300 ￥405 (券后) 飞机 ✈ 2025-07-15 18:30 ~ 19:30 槟城 PEN D 吉隆坡 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/58a7bd86.html" title="2025 青甘大环线游记">2025 青甘大环线游记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-06-22T01:57:54.000Z" title="发表于 2025-06-22 09:57:54">2025-06-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Life/">生活相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%97%85%E6%B8%B8/">旅游</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%B8%B8%E8%AE%B0/">游记</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%A4%A7%E8%A5%BF%E5%8C%97/">大西北</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E9%9D%92%E7%94%98%E5%A4%A7%E7%8E%AF%E7%BA%BF/">青甘大环线</a></span></div><div class="content">¶ 序 事情源于三月初和朋友的一场烤肉局，大家在极度 chill 的状态下讨论想要去出去玩的地点，最后一拍即合，在新疆、川西、青甘这几个选项中选择了青甘大环线。一周后，大家以极高的执行力定下了往返的机票，至此，车门半焊死，谁都不许下车！！ ¶ 清单 ¶ 交通 作为打工的牛马，既要考虑机票的性价比，又要考虑假期时长，我们最终把时间定在了2025-05-01 ~ 2025-05-07的杭州 - 兰州往返机票。去程机票是 05.01 下午五点落地兰州，返程机票是 05.07 早上七点飞回杭州，因此，我们大环线真正有效的时间是 05.02-05.06 五整天，属于是特种兵旅行了 (打工人就是这样的)。 虽然五一期间不是青甘环线的旅游旺季，但为了避开人流，我们还是计划逆时针完成大环线，具体线路可见下图 👇 类型 时间 始发地 目的地 航班 / 车次 价格 (不含托运) 飞机 ✈ 2025-05-01 13:59 ~ 16:49 杭州 HGH T3 兰州 LHW T3 9C6602 空客 A320 ￥1089 飞机 ✈ 2025-05-07 07:10 ~ 09:34 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/1812e504.html" title="甲状腺乳头状癌治疗始末">甲状腺乳头状癌治疗始末</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-10-29T03:50:27.000Z" title="发表于 2024-10-29 11:50:27">2024-10-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Life/">生活相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%94%B2%E7%8A%B6%E8%85%BA/">甲状腺</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E4%BC%A4%E7%97%85/">伤病</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%99%8C%E7%97%87/">癌症</a></span></div><div class="content">2023 年 8 月的体检，我被检查出甲状腺结节，但此时并没有当回事儿，然而一年后的体检过程中，大夫千叮咛万嘱咐我去医院复查，告诉我很重要，至此我的 甲状腺乳头状癌 的诊疗之旅就此展开。下面我将会对我的 甲状腺乳头状癌 的发现、检查、手术以及术后恢复做一个详细的记录，希望可以帮助更多的人，同时也算是给自己留下一份纪念 ~ ¶ 事发 2024.8.4 的体检有点不一样，B 超医生和我非常严肃地说了一句话：“你的这个甲状腺结节一定要去医院复查，很严重了”，随后我就怀着忐忑的心情带着体检报告去浙二挂了一个甲状腺外科，在医院超声检查后，我的右侧甲状腺结节被升级为了4a 类型，医生建议我做穿刺确定性质。 到目前为止我还能够保持比较乐观的心态，因为医生说如果穿刺结果是良性还能够做热消融，不用做手术切除。不出意外的话，那确实出意外了，9.12 的穿刺结果顺理成章的是恶性，并且被诊断为 甲状腺乳头状癌。当然此时的我还是抱着侥幸的心理在网上到处查询资料，看看事情还有没有转机，但是得到的结果都是对于肿瘤大小在 1cm 之内的有进行热消融的案例，而我的瘤子非常的给力，不负众望的长到了 3.5cm！！...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/2069fb37.html" title="工欲善其事之趁手的终端">工欲善其事之趁手的终端</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-10-14T11:49:31.000Z" title="发表于 2024-10-14 19:49:31">2024-10-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tech/">技术相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/terminal/">terminal</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/env/">env</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B/">工欲善其事</a></span></div><div class="content">俗话说的好，工欲善其事必先利其器，要想活干得漂亮，就得有一个趁手的兵器。对于运维人来说，一个好的 Terminal，绝对可以大大滴提高工作效率。 曾经的我是 Ubuntu 的无脑吹、脑残粉，主要是命令行配合着一众工具使用起来非常丝滑，效率极高。而在 Windows 上除了安装各种执行环境配置环境变量外，还需要借助 xShell 这类工具来完成我的日常工作，虽然当时也折腾过一段时间的 cmder，但却是没有原生 Terminal 顺滑。 好在巨硬还有良心，推出了 Windows Terminal 和 WSL，一度让我从 Ubuntu 脑残粉变成了 Windows 无脑吹~ 本文则是用来记录一下我自己的终端配置，因为我的工作环境几乎是跑在 WSL 上的，所以 Linux 和 MacOS 均可借鉴。 ¶ 前置操作 一个 Windows 11 的操作系统 电脑开启虚拟化技术（默认已开启，未开启的则需要进 BIOS 中开启该设置，不同品牌的电脑不一样，请自行 Google） 安装 Windows Terminal（Windows 11 默认已安装，否则请在 Microsoft...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/1b4b0584.html" title="槟城旅行指北">槟城旅行指北</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-09-02T13:50:32.000Z" title="发表于 2024-09-02 21:50:32">2024-09-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Life/">生活相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%97%85%E6%B8%B8/">旅游</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E9%A9%AC%E6%9D%A5%E8%A5%BF%E4%BA%9A/">马来西亚</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%A6%B4%E8%8E%B2/">榴莲</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%97%85%E8%A1%8C%E6%8C%87%E5%8D%97/">旅行指南</a></span></div><div class="content">2023/12/26 我第一次出国，和女朋友来到了马来西亚，囫囵吞枣式的游玩让我往返了吉隆坡和槟城两座城市，体验了大马的飞机、高铁、轮渡以及地铁这四种交通工具。但也因为是第一次踏上这片陌生的领土，即便之前的准备做得再充分，也难免有很多无法顾及的地方，因此时隔八个月，我们将再次踏上这片熟悉又陌生的领土，特此写下一篇槟城旅行指北（不是游记，不是游记，不是游记） ¶ 前期准备 ¶ 交通 时间 始发地 目的地 航班 2024-08-30 00:15 ~ 05:35 杭州 HGH T4 吉隆坡 KUL T2 D7307 空客 330 2024-08-30 07:50 ~ 08:50 吉隆坡 KUL T2 槟城 PEN D AK6112 空客 320 2024-09-03 11:25 ~ 12:50 槟城 PEN I 新加坡 SIN T1 TR427 空客 321 2024-09-03 16:30 ~ 21:35 新加坡 SIN T1 杭州 HGH T4 TR188 波音 787 本来有一个往返 槟城 和 怡保 的高铁 / 巴士行程，但是由于马来国庆加上个人...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/ccc2b0d8.html" title="2023 年度总结">2023 年度总结</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-03-20T07:34:25.000Z" title="发表于 2024-03-20 15:34:25">2024-03-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Think/">思考感悟</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/">年度总结</a></span></div><div class="content">2023 年过的很快，感觉啥也没干就结束了，但是相比于过去的两年，2023 年过得还是相对比较精彩的： 去了几个城市旅游 开始健身 重新搭建了 home-lab 环境 开始带团队 ¶ 工作 22 年的时候换了工作，从上海搬到杭州，用同样的租金在杭州获得了 50% 的租房面积提升。由于是老牌的 TP 公司，在技术上有很多陈年旧账需要慢慢去修，除了每年要感受两波大促紧锣密鼓的节奏之外，还需要天天吐槽 N 年以前留下来的天坑 ~ 最大的改变就是从原来的孤军奋战变成了带着小团队进行战斗，再次拓宽了自己的技能点（深感带团队的不易），目前主要遇到的问题如下： 自己的时间不够用，更别提带教 与下属做事的认知差异比较大，自己想把活干到自己认知的 80 分甚至 90 分，但是团队其他人受限于工作经历和认知，大多只知道 60 - 70 分的标准是什么样的 很多运维的观念和认知难以传递，可能也受限于他们过往的经历以及我个人的输出 后续空下来了还是需要多看看团队管理的书来弥补一下这方面的短板。 ¶ 旅游 一年下来，跑了很多地方，基本上就是三个假期 —— 五一、国庆以及元旦，虽然五...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/58e40093.html" title="nginx 端口转发被强行更改">nginx 端口转发被强行更改</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-02-09T09:50:16.000Z" title="发表于 2024-02-09 17:50:16">2024-02-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tech/">技术相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/nginx/">nginx</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/homelab/">homelab</a></span></div><div class="content">上一篇文章说到在家里把 LB 升了级并且通过 acme.sh 自动配置了 LB 的泛域名证书，可以看到基本的结构如下： 由于这些服务都是运行在家里的服务器中，最终 LB 的 443 端口我是在路由器上通过端口映射的方式转到 8443 端口上的（家庭宽带的公网 IP 会将 80 / 443 等常用端口封禁）。而我为了优雅（确实不想在公网通过域名加端口的形式访问某个网站或者服务），在公网使用 CDN 来把我对公网映射的 8443 端口转换成了 443。这个做法对于正常的 Web 服务来说没有任何问题，但是对于网盘服务来说就有些伤筋动骨，毕竟网盘服务流量比较大，使用 CDN 的话确实比较费钱。因此对于网盘服务我又单独映射了一个 8888 端口到公网，在金钱面前，我不再选择优雅。 那么对于网盘服务来说，正常的访问路径就是： 乍一看好像挺正常的，但是在我通过公网去访问的是时候 curl https://&lt;domain_name&gt;:8888 出现的结果往往是，nginx 直接把我的 8888 端口给重定向成了 8080，也就是变成了 https://&lt;domain_n...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/4b4fd36b.html" title="配置 DNSPod 自动获取泛域名证书">配置 DNSPod 自动获取泛域名证书</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-02-05T08:57:07.000Z" title="发表于 2024-02-05 16:57:07">2024-02-05</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tech/">技术相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/nginx/">nginx</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E8%AF%81%E4%B9%A6/">证书</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/acme/">acme</a></span></div><div class="content">最近升级了下家里的 LB，通过 gitlab 将 LB 的配置做了版本管理，并且通过 docker-compose 实现 LB 的快速部署。但是家里的网络做了内外网的区分，为了实现内网 https 访问，我需要在内网的 LB 上配置一套 SSL 证书（公网的部分直接在 CDN 上配置了 let's encrypt 的免费证书，一年一换） 为了避免麻烦，对于内网的 https 证书希望做到以下两点： 到期自动续 泛域名 查找了一番，有两个工具比较符合：Certbot 和 acme.sh，都是通过 ACME protocol 去自动获取免费证书, 但是需要自动获取泛域名证书的话，还需要能够自动在 DNS Provider 处更新 DNS TXT Record。由于我的域名是在 DNSPod 购买的，因此需要能够支持在 DNSPod 上自动更新 TXT 记录。Certbot 没有对应的官方插件，但是有第三方好心人写的插件能够实现该功能，如 certbot-dns-dnspod；而 acme.sh 是国人写的工具，官方支持 Aliyun 和 DNSPod，思来想去，还是打算...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/1aac8d0a.html" title="黑群晖填坑">黑群晖填坑</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-17T03:36:05.000Z" title="发表于 2021-11-17 11:36:05">2021-11-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tech/">技术相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/NAS/">NAS</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E9%BB%91%E7%BE%A4%E6%99%96/">黑群晖</a></span></div><div class="content">前段时间把家里的 NAS 做了一次改造，将用之前用了一年的架构推翻，换上了黑群晖。 故事还得从一年前说起。最初本着折腾的精神，采取了 Bcache + LVM 的方案，简单架构如下： 没有冗余没有备份，对于存储来说是很危险的。当时其实也是纠结了很久，手上有一块 RAID 卡，纠结了半天也没有上 RAID，原因是当时硬盘的配置是 6T * 1+4T * 3, 如果上了 RAID 就意味着 6T 盘会浪费 2T 空间。 既然如此，干脆一不做二不休，直接上 LVM，然后把重要的数据定时同步出来，正好还有两块 2T 盘，可以拿来做备份使用。结果最后因为太懒，以及 2T 盘没有多余的机器可以让我接入，导致备份的计划迟迟没有落地。 后来考虑到 Bcache 这个东西比较不优雅，这个项目也多年没有人维护更新（主要是存储跑了一年一直没有冗余和备份，比较慌），最终还是考虑换成黑群晖。 换成黑群晖后也多多少少遇到了些问题，这里先记录下来，算是填坑了 ¶ 存储冗余问题 由于短时间内我还不会把 4T 盘都换成 6T，因此正常的 RAID 阵列还是不考虑了，决定使用 SHR（Synology Hybr...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/680966d1.html" title="什么情况？访问不了虚拟机了？？">什么情况？访问不了虚拟机了？？</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-27T03:59:21.000Z" title="发表于 2021-10-27 11:59:21">2021-10-27</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tech/">技术相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/">虚拟化</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/ESXi/">ESXi</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Network/">Network</a></span></div><div class="content">前几日在家中遇到一件有趣的事情，与大家分享一下。 起初我有一套硬件 A，安装了 ESXi 与一些虚拟机，后来将 A 上的数据盘与系统盘（U 盘）拆至硬件 B 上，即 ESXi 从 A 迁移到了 B。闲置下来的硬件 A 就被我拿来安装了黑苹果，然而在黑苹果的路上遇到了很多的坑，例如掉帧、黑色块的问题（显卡驱动），蓝牙鼠标掉线的问题（蓝牙驱动），后来甚至发现这套黑苹果访问不了我的虚拟机们，也访问不到 ESXi。这时的我还很天真的以为是虚拟化和黑苹果之间的问题，Google 了一番未果还是换回了 Windows。 天真我以为这样就已经解决了问题，但结果是并没有什么卵用。同时我发现一直在使用的电脑访问 ESXi 也出现了问题，网络丢包严重，但是访问虚拟机却一点事情也没有。事已至此只能先简单抓包看一下，从硬件 A ping 向 ESXi（硬件 B）的同时，在 ESXi 上使用 tcpdump-uw 进行抓包（通过虚拟机作为跳板机连上 ESXi），结果是硬件 A 正常发送 ARP 请求，但是 ESXi 这里并没有收到 A 发送的请求。 到这里我基本断定是 ARP 的问题，但是为啥 ESX...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/16067d8e.html" title="创建本地 APT 仓库">创建本地 APT 仓库</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-08-23T09:21:11.000Z" title="发表于 2021-08-23 17:21:11">2021-08-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tech/">技术相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Ubuntu/">Ubuntu</a></span></div><div class="content">¶ 背景 由于部分限制级场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http://archive.ubuntu.com/ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。 由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的 apt 仓库，我们将需要的依赖包都下载好，使用 apt-fptarchive 来发布我们的仓库。 ¶ 仓库制作 sudo -i ## 先删除本地的缓存的 deb 包 rm -rf /var/cache/apt/archives/*.deb ## 下载依赖包 apt -d reinstall -y amd64-microcode crda freeipmi-common freeipmi-tools grub-common grub-gfxpayload-lists grub-pc-bin grub-pc grub2-common intel-microcode ipm...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/bb5c39fc.html" title="Galera 集群搭建">Galera 集群搭建</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-08-16T08:22:19.000Z" title="发表于 2021-08-16 16:22:19">2021-08-16</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tech/">技术相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/MySQL/">MySQL</a></span></div><div class="content">¶Galera 简介 Galera Cluster 是基于 MySQL / Innodb 二次开发而成的一个支持 “多主同步” 的数据库主从集群。具备多主、同步复制、高可用等特点。 MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现, 同 Percona 的 PXC 数据库集群, 目前只支持运行在 Linux 系统上。从 MariaDB 10.1 版开始，MariaDB Server 和 MariaDB Galera Server 安装包已经合并，安装 MariaDB 时，Galera 相关依赖安装包会自动安装，像内置的插件或存储引擎一样，通过简单配置即可启用。 ¶Galera 集群状态 查看集群状态 SHOW STATUS LIKE 'wsrep_local_state_comment'; 状态 说明 Open 节点启动成功，尝试连接到集群；如果失败则根据配置退出或者创建新集群 Primary 节点已处于集群中，在新节点加入时，选取 donor 进行数据同步时会产生的状态 Joiner 节点处于等待接收...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/post/aa1bd7a9.html" title="雾都游记">雾都游记</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-10-22T07:07:20.000Z" title="发表于 2020-10-22 15:07:20">2020-10-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Life/">生活相关</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%97%85%E6%B8%B8/">旅游</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E9%87%8D%E5%BA%86/">重庆</a></span></div><div class="content">¶ 第一天 18:30 落地，取得托运行李后，自江北机场 T3 航站楼乘坐地铁十号线（鲤鱼池方向）至红土地换乘地铁六号线（茶园方向）至小什字下车（8 号口），马路对面就是宾馆！！ 重庆地铁可使用支付宝刷码进站 宾馆前台在 16F，10-15F 是客房 企业金会员，有双早，但是早饭不好吃 紧承上一条，楼下马路对面就有花市豌杂面（如果不想吃汤面就和老板说要干溜），不想排队等座位的话，可以考虑打包去别的地方吃（隔壁就有类似大食堂的早餐店） 在宾馆休整些许后，步行出发去九村烤脑花（西西推荐，冤有头债有主，觉得不好吃不要找我），步行至洪崖洞店，在附近买了两杯一只酸奶牛后就餐；推荐香菜牛肉、烤茄子、烤鸡翅等 宾馆附近有三家九村烤脑花，分别在来福士、洪崖洞、解放碑，三个店离宾馆差不多距离，来福士店十点关门，所以建议去其他两个店 九村烤脑花是烧烤店，烤脑花为特色菜，其他菜也很好吃，人均 70~80，人越多越划算 吃完回酒店修锅，一夜无事 💤 ¶ 第二天 睡到中午，洗漱出门。 步行至解放碑吃小吃，较场口夜市区域购买降龙爪爪、蜜雪冰城冰激凌，后步行至石...</div></div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><a class="page-number" href="/page/3/#content-inner">3</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/uploads/avatar.jpg" onerror='this.onerror=null,this.src="/img/friend_404.gif"' alt="avatar"></div><div class="author-info-name">SkyHive</div><div class="author-info-description">菜鸡运维一枚</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" href="https://github.com/skyhive"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/skyhive" target="_blank" title="Github"><i class="fab fa-github" style="color:#24292e"></i></a><a class="social-icon" href="mailto:skyhive35@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color:#4a7dbe"></i></a><a class="social-icon" href="https://blog.skyhive.tech/atom.xml" target="_blank"><i class="fas fa-rss"></i></a><a class="social-icon" href="https://www.xiaohongshu.com/user/profile/6723a94c000000001d02d7db" target="_blank" title="Red Note"><i class="fas fa-book" style="color:#d70000"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的小站，这里会分享我的一些技术总结，以及生活日常~</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/11841089.html" title="HomeLab 系列 - VPN">HomeLab 系列 - VPN</a><time datetime="2025-11-03T02:13:13.000Z" title="发表于 2025-11-03 10:13:13">2025-11-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cb650389.html" title="HomeLab 系列 - 认证 (上)">HomeLab 系列 - 认证 (上)</a><time datetime="2025-10-30T06:40:20.000Z" title="发表于 2025-10-30 14:40:20">2025-10-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/3bd9168d.html" title="2025 大马榴莲季全攻略">2025 大马榴莲季全攻略</a><time datetime="2025-07-14T15:07:47.000Z" title="发表于 2025-07-14 23:07:47">2025-07-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/58a7bd86.html" title="2025 青甘大环线游记">2025 青甘大环线游记</a><time datetime="2025-06-22T01:57:54.000Z" title="发表于 2025-06-22 09:57:54">2025-06-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/1812e504.html" title="甲状腺乳头状癌治疗始末">甲状腺乳头状癌治疗始末</a><time datetime="2024-10-29T03:50:27.000Z" title="发表于 2024-10-29 11:50:27">2024-10-29</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline"><i class="fas fa-folder-open"></i> <span>分类</span></div><ul class="card-category-list" id="aside-cat-list"><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/Think/"><span class="card-category-list-name">思考感悟</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/Tech/"><span class="card-category-list-name">技术相关</span><span class="card-category-list-count">39</span></a></li><li class="card-category-list-item"><a class="card-category-list-link" href="/categories/Life/"><span class="card-category-list-name">生活相关</span><span class="card-category-list-count">5</span></a></li></ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/env/" style="font-size:1.1em;color:#999">env</a> <a href="/tags/KVM/" style="font-size:1.18em;color:#999ca1">KVM</a> <a href="/tags/%E6%A7%9F%E5%9F%8E/" style="font-size:1.1em;color:#999">槟城</a> <a href="/tags/%E9%BB%91%E7%BE%A4%E6%99%96/" style="font-size:1.1em;color:#999">黑群晖</a> <a href="/tags/MySQL/" style="font-size:1.34em;color:#99a3b0">MySQL</a> <a href="/tags/apache/" style="font-size:1.1em;color:#999">apache</a> <a href="/tags/Network/" style="font-size:1.1em;color:#999">Network</a> <a href="/tags/Python/" style="font-size:1.26em;color:#999fa8">Python</a> <a href="/tags/%E9%A9%AC%E6%9D%A5%E8%A5%BF%E4%BA%9A/" style="font-size:1.18em;color:#999ca1">马来西亚</a> <a href="/tags/docker/" style="font-size:1.1em;color:#999">docker</a> <a href="/tags/%E9%9D%92%E7%94%98%E5%A4%A7%E7%8E%AF%E7%BA%BF/" style="font-size:1.1em;color:#999">青甘大环线</a> <a href="/tags/%E6%B8%B8%E8%AE%B0/" style="font-size:1.18em;color:#999ca1">游记</a> <a href="/tags/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B/" style="font-size:1.1em;color:#999">工欲善其事</a> <a href="/tags/%E6%A6%B4%E8%8E%B2/" style="font-size:1.18em;color:#999ca1">榴莲</a> <a href="/tags/Android/" style="font-size:1.1em;color:#999">Android</a> <a href="/tags/%E8%AF%81%E4%B9%A6/" style="font-size:1.1em;color:#999">证书</a> <a href="/tags/%E9%87%8D%E5%BA%86/" style="font-size:1.1em;color:#999">重庆</a> <a href="/tags/terminal/" style="font-size:1.1em;color:#999">terminal</a> <a href="/tags/network/" style="font-size:1.26em;color:#999fa8">network</a> <a href="/tags/auth/" style="font-size:1.1em;color:#999">auth</a> <a href="/tags/DNS/" style="font-size:1.1em;color:#999">DNS</a> <a href="/tags/acme/" style="font-size:1.1em;color:#999">acme</a> <a href="/tags/nginx/" style="font-size:1.18em;color:#999ca1">nginx</a> <a href="/tags/NAS/" style="font-size:1.1em;color:#999">NAS</a> <a href="/tags/homelab/" style="font-size:1.1em;color:#999">homelab</a> <a href="/tags/linux/" style="font-size:1.5em;color:#99a9bf">linux</a> <a href="/tags/Ubuntu/" style="font-size:1.42em;color:#99a6b7">Ubuntu</a> <a href="/tags/openvpn/" style="font-size:1.1em;color:#999">openvpn</a> <a href="/tags/OSS/" style="font-size:1.18em;color:#999ca1">OSS</a> <a href="/tags/%E6%97%85%E8%A1%8C%E6%8C%87%E5%8D%97/" style="font-size:1.1em;color:#999">旅行指南</a> <a href="/tags/iptables/" style="font-size:1.1em;color:#999">iptables</a> <a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size:1.34em;color:#99a3b0">虚拟化</a> <a href="/tags/filesystem/" style="font-size:1.1em;color:#999">filesystem</a> <a href="/tags/Hadoop/" style="font-size:1.1em;color:#999">Hadoop</a> <a href="/tags/%E6%97%85%E6%B8%B8/" style="font-size:1.34em;color:#99a3b0">旅游</a> <a href="/tags/%E5%A4%A7%E8%A5%BF%E5%8C%97/" style="font-size:1.1em;color:#999">大西北</a> <a href="/tags/Django/" style="font-size:1.1em;color:#999">Django</a> <a href="/tags/PHP/" style="font-size:1.1em;color:#999">PHP</a> <a href="/tags/%E7%94%B2%E7%8A%B6%E8%85%BA/" style="font-size:1.1em;color:#999">甲状腺</a> <a href="/tags/gitlab/" style="font-size:1.18em;color:#999ca1">gitlab</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i> <span>归档</span> <a class="card-more-btn" href="/archives/" title="查看更多"><i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/11/"><span class="card-archive-list-date">十一月 2025 </span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/10/"><span class="card-archive-list-date">十月 2025 </span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date">七月 2025 </span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/06/"><span class="card-archive-list-date">六月 2025 </span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">十月 2024 </span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024 </span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024 </span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024 </span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">45</div></div><div class="webinfo-item"><div class="item-name">运行时间 :</div><div class="item-count" id="runtimeshow" data-publishdate="2017-02-18T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">57k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastpushdate="2025-11-05T03:24:11.126Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2017 - 2025 By SkyHive</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.1"></script><script src="/js/main.js?v=5.5.1"></script><script src="https://cdn.staticfile.net/fancyapps-ui/6.0.33/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.staticfile.net/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.staticfile.net/node-snackbar/0.1.16/snackbar.min.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.staticfile.net/typed.js/2.1.0/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  },
+  processSubtitle: (content, extraContents = []) => {
+    if (true) {
+      const sub = [].slice()
+
+      if (extraContents.length > 0) {
+        sub.unshift(...extraContents)
+      }
+
+      if (typeof content === 'string') {
+        sub.unshift(content)
+      } else if (Array.isArray(content)) {
+        sub.unshift(...content)
+      }
+
+      sub.length > 0 && typedJSFn.init(sub)
+    } else {
+      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
+        (Array.isArray(content) && content.length > 0 ? content[0] : '')
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')</script><script>function subtitleType () {
+  fetch('https://v1.hitokoto.cn')
+    .then(response => response.json())
+    .then(data => {
+      const from = '出自 ' + data.from
+      typedJSFn.processSubtitle(data.hitokoto, [from])
+    })
+    .catch(err => {
+      console.error('Failed to get the Hitokoto API:', err)
+      typedJSFn.processSubtitle([])
+    })
+}
+typedJSFn.run(subtitleType)</script><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.staticfile.net/mermaid/11.12.0/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="https://cdn.staticfile.net/pjax/0.2.8/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span> 数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"></div><hr><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.1"></script></div></div></body></html>

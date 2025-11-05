@@ -1,0 +1,371 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><link href="https://fastly.jsdelivr.net/npm/hexo-tag-common@0.2.0/css/index.css" rel="stylesheet"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Galera 集群搭建 | SkyHive's Blog</title><meta name="author" content="SkyHive"><meta name="copyright" content="SkyHive"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="¶Galera 简介 Galera Cluster 是基于 MySQL &#x2F; Innodb 二次开发而成的一个支持 “多主同步” 的数据库主从集群。具备多主、同步复制、高可用等特点。 MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现, 同 Percona 的 PXC 数据库集群, 目前只支持运行在 Linux 系统上。从 MariaDB 10.1"><meta property="og:type" content="article"><meta property="og:title" content="Galera 集群搭建"><meta property="og:url" content="https://skyhive.github.io/post/bb5c39fc.html"><meta property="og:site_name" content="SkyHive&#39;s Blog"><meta property="og:description" content="¶Galera 简介 Galera Cluster 是基于 MySQL &#x2F; Innodb 二次开发而成的一个支持 “多主同步” 的数据库主从集群。具备多主、同步复制、高可用等特点。 MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现, 同 Percona 的 PXC 数据库集群, 目前只支持运行在 Linux 系统上。从 MariaDB 10.1"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://blogpic.skyhive.tech/pic/banner/john-towner.png"><meta property="article:published_time" content="2021-08-16T08:22:19.000Z"><meta property="article:modified_time" content="2025-11-05T02:19:51.965Z"><meta property="article:author" content="SkyHive"><meta property="article:tag" content="MySQL"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://blogpic.skyhive.tech/pic/banner/john-towner.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Galera 集群搭建",
+  "url": "https://skyhive.github.io/post/bb5c39fc.html",
+  "image": "https://blogpic.skyhive.tech/pic/banner/john-towner.png",
+  "datePublished": "2021-08-16T08:22:19.000Z",
+  "dateModified": "2025-11-05T02:19:51.965Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "SkyHive",
+      "url": "https://skyhive.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/"><link rel="canonical" href="https://skyhive.github.io/post/bb5c39fc.html"><link rel="preconnect" href="https://cdn.staticfile.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><meta name="google-site-verification" content="83MwLF836at8faxuiJfSi7o6lPaQSRy2GAPO6kCY1BM"><link rel="stylesheet" href="/css/index.css?v=5.5.1"><link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.7.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.staticfile.net/node-snackbar/0.1.16/snackbar.min.css" media="print" onload='this.media="all"'><link rel="stylesheet" href="https://cdn.staticfile.net/fancyapps-ui/6.0.33/fancybox/fancybox.min.css" media="print" onload='this.media="all"'><script>(() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle=window.adsbygoogle||[]).push({google_ad_client:"ca-pub-4272530297151894",enable_page_level_ads:"true"})</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":"enable","top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":500,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: SkyHive","link":"链接: ","source":"来源: SkyHive's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.staticfile.net/egjs-infinitegrid/4.12.0/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE={title:"Galera 集群搭建",isHighlightShrink:!1,isToc:!0,pageType:"post"}</script><link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css"><link rel="stylesheet" href="/css/layout-overrides.css"><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="SkyHive's Blog" type="application/atom+xml"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')</script><link rel="stylesheet" href="https://cdn.staticfile.net/pace/1.2.4/themes/blue/pace-theme-minimal.min.css"><script src="https://cdn.staticfile.net/pace/1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/uploads/avatar.jpg" onerror='this.onerror=null,this.src="/img/friend_404.gif"' alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-clock"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image:url(https://blogpic.skyhive.tech/pic/banner/john-towner.png)"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SkyHive's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">Galera 集群搭建</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span> 返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-clock"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Galera 集群搭建</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-16T08:22:19.000Z" title="发表于 2021-08-16 16:22:19">2021-08-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-05T02:19:51.965Z" title="更新于 2025-11-05 10:19:51">2025-11-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Tech/">技术相关</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">1.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2025-11-05 10:19:51&quot;}" hidden></div><h3 id="Galera-简介"><a class="header-anchor" href="#Galera-简介">¶</a>Galera 简介</h3><p>Galera Cluster 是基于 MySQL / Innodb 二次开发而成的一个支持 “多主同步” 的数据库主从集群。具备多主、同步复制、高可用等特点。</p><p>MariaDB Galera Cluster，由 MariaDB 和 MySQL-wsrep 补丁实现, 同 Percona 的 PXC 数据库集群, 目前只支持运行在 Linux 系统上。从 MariaDB 10.1 版开始，MariaDB Server 和 MariaDB Galera Server 安装包已经合并，安装 MariaDB 时，Galera 相关依赖安装包会自动安装，像内置的插件或存储引擎一样，通过简单配置即可启用。</p><h3 id="Galera-集群状态"><a class="header-anchor" href="#Galera-集群状态">¶</a>Galera 集群状态</h3><p>查看集群状态</p><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">STATUS</span> <span class="token operator">LIKE</span> <span class="token string">'wsrep_local_state_comment'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><span id="more"></span><table><thead><tr><th style="text-align:center">状态</th><th style="text-align:center">说明</th></tr></thead><tbody><tr><td style="text-align:center">Open</td><td style="text-align:center">节点启动成功，尝试连接到集群；如果失败则根据配置退出或者创建新集群</td></tr><tr><td style="text-align:center">Primary</td><td style="text-align:center">节点已处于集群中，在新节点加入时，选取 donor 进行数据同步时会产生的状态</td></tr><tr><td style="text-align:center">Joiner</td><td style="text-align:center">节点处于等待接收 / 接收同步文件的状态</td></tr><tr><td style="text-align:center">Joined</td><td style="text-align:center">节点完成数据同步，但有部分数据没跟上，在尝试保持和集群进度一致的过程状态。<br>例如某个节点故障后，重新加入集群，在追赶集群进度时的状态</td></tr><tr><td style="text-align:center">Synced</td><td style="text-align:center">节点正常提供服务的状态，表示已经同步完成并和集群进度保持一致</td></tr><tr><td style="text-align:center">Donor</td><td style="text-align:center">节点处于为新节点提供全量数据同步时的状态。此时该节点对客户端不提供服务</td></tr></tbody></table><h3 id="基本概念"><a class="header-anchor" href="#基本概念">¶</a> 基本概念</h3><ol><li class="lvl-3"><p>Primary Component：在网络发生故障时，由于网络连接原因，集群可能被分成好几个小集群，但只能有一个集群可以继续进行数据修改，集群的这部分称为 Primary Component</p></li><li class="lvl-3"><p>GTID：Global Transaction ID，由 UUID 和 sequence number 偏移量组成。wsrep api 中定义的集群内部全局事务 id，一个顺序 ID，用于记录集群中发生状态改变的唯一标识以及队列中的偏移量</p></li><li class="lvl-3"><p>SST：State Snapshot Transfer（状态快照迁移），集群中数据共享节点通过从一个节点到另外一个节点迁移完整的数据拷贝（全量拷贝）。当一个新的节点加入到集群中，新的节点从集群中已有节点同步数据，开始进行状态快照迁移，可以在 Galera 集群中选择两种不同的状态转移方法</p><p>3.1 逻辑数据转移：采用 mysqldump 命令，在转移之前，需要数据接收方服务器完全启动，并准备好接受数据的连接准备。这是一个阻塞式方法，数据共享节点 Donor 在状态转移节点处于只读状态，在数据共享节点 Donor 上适用 FLUSH TABLES WITH READ LOCK 命令，mysqldump 是速度最慢的 SST 方法，在负载比较的数据库集群上可能是个问题。</p><p>3.2 物理数据转移：该方法采用 rsync、rsync_wan、xtrabackup 或其他方法从服务器之间直接拷贝数据，数据接受服务器在拷贝完数据后启动服务器。该方法较 mysqldump 速度较快，但存在一定的限制，只能在服务器启动时采用，数据接受服务器需要同数据共享服务器 Donor 配置相同（例如，服务器间 innodb_file_per_table 配置必须完全一致）。</p></li><li class="lvl-3"><p>IST：Incremental State Transfer（增量状态迁移），集群一个节点通过识别新加入节点缺失的事务操作，将该操作发送，而并不像 SST 那样的全量数据拷贝。该方法只在特定条件下可用：</p><p>4.1 新加入节点的状态 UUID 与集群组中节点一致；</p><p>4.2 新加入节点所缺失的写数据集 write-sets 可以在 Donor 的写数据集 write-sets 存在。</p></li></ol><h3 id="搭建过程"><a class="header-anchor" href="#搭建过程">¶</a> 搭建过程</h3><h4 id="环境信息"><a class="header-anchor" href="#环境信息">¶</a> 环境信息</h4><table><thead><tr><th style="text-align:center">hostname</th><th style="text-align:center">IP</th></tr></thead><tbody><tr><td style="text-align:center">db01</td><td style="text-align:center">192.168.2.10</td></tr><tr><td style="text-align:center">db02</td><td style="text-align:center">192.168.2.11</td></tr><tr><td style="text-align:center">db03</td><td style="text-align:center">192.168.2.12</td></tr></tbody></table><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment">## 安装依赖</span>
+<span class="token function">sudo</span> <span class="token function">apt</span> update
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> mariadb-server-10.3
+ 
+<span class="token comment">## 配置集群</span>
+<span class="token comment">### 在第一台主机操作</span>
+systemctl stop mysql
+<span class="token function">vim</span> /etc/mysql/mariadb.conf.d/50-server.cnf
+<span class="token comment"># 在 [mysqld] 下添加 skip-name-resolve</span>
+<span class="token comment"># 在文件末尾添加如下内容</span>
+<span class="token punctuation">[</span>galera<span class="token punctuation">]</span>
+<span class="token assign-left variable">wsrep_on</span><span class="token operator">=</span>ON
+<span class="token assign-left variable">wsrep_provider</span><span class="token operator">=</span>/usr/lib/galera/libgalera_smm.so
+<span class="token assign-left variable">wsrep_cluster_address</span><span class="token operator">=</span><span class="token string">"gcomm://"</span>
+<span class="token assign-left variable">binlog_format</span><span class="token operator">=</span>row
+<span class="token assign-left variable">default_storage_engine</span><span class="token operator">=</span>InnoDB
+<span class="token assign-left variable">innodb_autoinc_lock_mode</span><span class="token operator">=</span><span class="token number">2</span>
+bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
+<span class="token comment"># any cluster name</span>
+<span class="token assign-left variable">wsrep_cluster_name</span><span class="token operator">=</span><span class="token string">"MariaDB_Cluster"</span>
+<span class="token comment"># own IP address</span>
+<span class="token assign-left variable">wsrep_node_address</span><span class="token operator">=</span><span class="token string">"192.168.2.10"</span>
+ 
+<span class="token comment">### 完成后保存退出</span>
+galera_new_cluster
+ 
+mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span>
+  
+CREATE <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'Iamadm1n!!'</span><span class="token punctuation">;</span>
+GRANT ALL ON *.* TO <span class="token string">'root'</span>@<span class="token string">'%'</span><span class="token punctuation">;</span>
+update mysql.user <span class="token builtin class-name">set</span>  <span class="token assign-left variable">Grant_priv</span><span class="token operator">=</span><span class="token string">'Y'</span> where <span class="token assign-left variable">user</span><span class="token operator">=</span><span class="token string">'root'</span> and <span class="token assign-left variable">host</span><span class="token operator">=</span><span class="token string">'%'</span><span class="token punctuation">;</span>
+flush privileges<span class="token punctuation">;</span>
+<span class="token builtin class-name">exit</span>
+
+
+<span class="token comment">### 在其他两台主机操作</span>
+systemctl stop mysql
+<span class="token function">vim</span> /etc/mysql/mariadb.conf.d/50-server.cnf
+<span class="token comment"># 在 [mysqld] 下添加 skip-name-resolve</span>
+<span class="token comment"># 在文件末尾添加如下内容</span>
+<span class="token punctuation">[</span>galera<span class="token punctuation">]</span>
+<span class="token assign-left variable">wsrep_on</span><span class="token operator">=</span>ON
+<span class="token assign-left variable">wsrep_provider</span><span class="token operator">=</span>/usr/lib/galera/libgalera_smm.so
+<span class="token assign-left variable">wsrep_cluster_address</span><span class="token operator">=</span><span class="token string">"gcomm://192.168.2.10,192.168.2.11,192.168.2.12"</span>
+<span class="token assign-left variable">binlog_format</span><span class="token operator">=</span>row
+<span class="token assign-left variable">default_storage_engine</span><span class="token operator">=</span>InnoDB
+<span class="token assign-left variable">innodb_autoinc_lock_mode</span><span class="token operator">=</span><span class="token number">2</span>
+bind-address<span class="token operator">=</span><span class="token number">0.0</span>.0.0
+<span class="token comment"># any cluster name</span>
+<span class="token assign-left variable">wsrep_cluster_name</span><span class="token operator">=</span><span class="token string">"MariaDB_Cluster"</span>
+<span class="token comment"># own IP address</span>
+<span class="token assign-left variable">wsrep_node_address</span><span class="token operator">=</span><span class="token string">"192.168.2.11"</span>   <span class="token comment">## 注意：这里填写当前节点的 IP，另外一个节点填 192.168.2.12</span>
+ 
+<span class="token comment">### 完成后保存退出</span>
+<span class="token comment">## 重启 MySQL 服务</span>
+systemctl start mysql
+systemctl <span class="token builtin class-name">enable</span> mysql
+ 
+<span class="token comment">## 检查集群状态</span>
+mysql <span class="token parameter variable">-uroot</span> <span class="token parameter variable">-p</span>
+show status like <span class="token string">'wsrep_cluster%'</span><span class="token punctuation">;</span>
+<span class="token comment">## 需观察 'wsrep_cluster_size' 是否正常（正常为节点数量），以及 'wsrep_cluster_status' 是否为 Primary</span>
+ 
+<span class="token comment">## 如果集群状态正常，则去修改第一个节点的 /etc/mysql/mariadb.conf.d/50-server.cnf 文件</span>
+<span class="token comment">## 将 wsrep_cluster_address 配置修改和其他两个节点一致即可</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://skyhive.github.io">SkyHive</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skyhive.github.io/post/bb5c39fc.html">https://skyhive.github.io/post/bb5c39fc.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skyhive.github.io" target="_blank">SkyHive's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a></div><div class="post-share"><div class="social-share" data-image="https://blogpic.skyhive.tech/pic/banner/john-towner.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.staticfile.net/butterfly-extsrc/1.1.6/sharejs/dist/css/share.min.css" media="print" onload='this.media="all"'><script src="https://cdn.staticfile.net/butterfly-extsrc/1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/uploads/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/uploads/wechatpay.jpg" alt="wechat"></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/uploads/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/uploads/alipay.jpg" alt="alipay"></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/16067d8e.html" title="创建本地 APT 仓库"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" onerror='onerror=null,src="/img/404.jpg"' alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">创建本地 APT 仓库</div></div><div class="info-2"><div class="info-item-1">¶ 背景 由于部分限制级场景无法联通外网，而 MAAS 在部署镜像的过程中，会默认连接 http://archive.ubuntu.com/ubuntu 的源去安装一些依赖包，在无外网环境下，会导致部署失败！因此考虑将 MAAS 在部署过程中的依赖包提前下载好，做成本地的 APT 仓库来解决。 由于 MAAS 需要安装的依赖包并不多（一共 260M 左右），并不需要使用 apt-mirror 去搭建完整的 apt 仓库，我们将需要的依赖包都下载好，使用 apt-fptarchive 来发布我们的仓库。 ¶ 仓库制作 sudo -i ## 先删除本地的缓存的 deb 包 rm -rf /var/cache/apt/archives/*.deb ## 下载依赖包 apt -d reinstall -y amd64-microcode crda freeipmi-common freeipmi-tools grub-common grub-gfxpayload-lists grub-pc-bin grub-pc grub2-common intel-microcode ipm...</div></div></div></a><a class="pagination-related" href="/post/aa1bd7a9.html" title="雾都游记"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" onerror='onerror=null,src="/img/404.jpg"' alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">雾都游记</div></div><div class="info-2"><div class="info-item-1">¶ 第一天 18:30 落地，取得托运行李后，自江北机场 T3 航站楼乘坐地铁十号线（鲤鱼池方向）至红土地换乘地铁六号线（茶园方向）至小什字下车（8 号口），马路对面就是宾馆！！ 重庆地铁可使用支付宝刷码进站 宾馆前台在 16F，10-15F 是客房 企业金会员，有双早，但是早饭不好吃 紧承上一条，楼下马路对面就有花市豌杂面（如果不想吃汤面就和老板说要干溜），不想排队等座位的话，可以考虑打包去别的地方吃（隔壁就有类似大食堂的早餐店） 在宾馆休整些许后，步行出发去九村烤脑花（西西推荐，冤有头债有主，觉得不好吃不要找我），步行至洪崖洞店，在附近买了两杯一只酸奶牛后就餐；推荐香菜牛肉、烤茄子、烤鸡翅等 宾馆附近有三家九村烤脑花，分别在来福士、洪崖洞、解放碑，三个店离宾馆差不多距离，来福士店十点关门，所以建议去其他两个店 九村烤脑花是烧烤店，烤脑花为特色菜，其他菜也很好吃，人均 70~80，人越多越划算 吃完回酒店修锅，一夜无事 💤 ¶ 第二天 睡到中午，洗漱出门。 步行至解放碑吃小吃，较场口夜市区域购买降龙爪爪、蜜雪冰城冰激凌，后步行至石...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/45981961.html" title="SQL 语句的基本操作"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2017-04-04</div><div class="info-item-2">SQL 语句的基本操作</div></div><div class="info-2"><div class="info-item-1">¶ 数据库操作 创建数据库： CREATE DATABASE &lt;数据库名&gt; [其他选项] 使用数据库： USE &lt;数据库名&gt; 修改数据库： ALTER DATABASE &lt;数据库名&gt; 删除数据库： DROP DATABASE &lt;数据库名&gt; ¶ 数据表操作 创建表： CREATE TABLE &lt;表名&gt; （ &lt;列名1&gt;&lt;数据类型&gt;[&lt;列级完整性约束&gt;], [&lt;列名n&gt;&lt;数据类型&gt;[&lt;列级完整性约束&gt;]] ）; 例： create table studets ( id int not null auto_increment primary key, name varchar(8) not null, sex varchar(5) not null, score int(5) not null ) 修改基本表 ALTER TABLE...</div></div></div></a><a class="pagination-related" href="/post/5a67733d.html" title="SQL 进阶"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2017-04-17</div><div class="info-item-2">SQL 进阶</div></div><div class="info-2"><div class="info-item-1">我们都知道 select 的基本用法select &lt;字段名&gt; from &lt;表名&gt; [where &lt;限制条件&gt;]，然而select语句后面还可以跟很多限制条件。我们这次用 user 表来作为示范，下面是 user 表的结构： ¶Between、And、In、&lt;=、&gt;=、&lt;、&gt; 等条件查询 通过select * from table where id between 1 and 3和select * from table where id &gt;=1 and id &lt;= 3的返回结果，我们可以发现between and和&gt;= and &lt;=是等同的。 如果我们要查询的条件不是一个连续的数值，可以用in： select * from table where id in (2,4) ¶locate () 函数：locate(substr,str) 这个函数返回substr在字符串str中的第一个出现的位置，如果不存在则值为 0 ¶Count () 函数 count (字段名)：返回指定列的值的数目...</div></div></div></a><a class="pagination-related" href="/post/bc87c772.html" title="关于 timestamp 自动更新"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2017-02-09</div><div class="info-item-2">关于 timestamp 自动更新</div></div><div class="info-2"><div class="info-item-1">最近笔者在 “温习 TP 框架”（其实就是不会然后抓紧时间啃），从最简单 Blog 开始做起，以前学习的时候是跟着教程，用 time () 函数获取当前时间戳，然后用 int 型数据来存储。这一次我突然想用 Mysql 内置的时间类型的数据 ——timestamp。 Mysql 中常用到的除了 timestamp 之外还有 datetime，我们先来比较一下这两个的区别： timestamp 占用的存储空间为 4 个字节，所以它能表示的时间范围为 1970.1.1 08:00:01~2038.01.19 11:14:07，这个范围比较小，容易出现超出的情况。 datetime 占用的存储空间为 8 个字节，所以它能表示的时间范围为 1000.01.01 00:00:00~9999.12.31 23:59:59, 这个时间范围完全够用了。 其实 timestamp 这个时间范围目前也是够用的，而且我也只是来学习的，所以我就选择了这个数据类型。然而后来我发现我在修改表中数据的时候时间并没有自动更新，这就比较奇怪了，我当时的 sql 代码是这样的： date timest...</div></div></div></a></div></div><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/uploads/avatar.jpg" onerror='this.onerror=null,this.src="/img/friend_404.gif"' alt="avatar"></div><div class="author-info-name">SkyHive</div><div class="author-info-description">菜鸡运维一枚</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" href="https://github.com/skyhive"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/skyhive" target="_blank" title="Github"><i class="fab fa-github" style="color:#24292e"></i></a><a class="social-icon" href="mailto:skyhive35@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color:#4a7dbe"></i></a><a class="social-icon" href="https://blog.skyhive.tech/atom.xml" target="_blank"><i class="fas fa-rss"></i></a><a class="social-icon" href="https://www.xiaohongshu.com/user/profile/6723a94c000000001d02d7db" target="_blank" title="Red Note"><i class="fas fa-book" style="color:#d70000"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的小站，这里会分享我的一些技术总结，以及生活日常~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Galera-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">Galera 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Galera-%E9%9B%86%E7%BE%A4%E7%8A%B6%E6%80%81"><span class="toc-number">2.</span> <span class="toc-text">Galera 集群状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">3.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">搭建过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E4%BF%A1%E6%81%AF"><span class="toc-number">4.1.</span> <span class="toc-text">环境信息</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/11841089.html" title="HomeLab 系列 - VPN">HomeLab 系列 - VPN</a><time datetime="2025-11-03T02:13:13.000Z" title="发表于 2025-11-03 10:13:13">2025-11-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cb650389.html" title="HomeLab 系列 - 认证 (上)">HomeLab 系列 - 认证 (上)</a><time datetime="2025-10-30T06:40:20.000Z" title="发表于 2025-10-30 14:40:20">2025-10-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/3bd9168d.html" title="2025 大马榴莲季全攻略">2025 大马榴莲季全攻略</a><time datetime="2025-07-14T15:07:47.000Z" title="发表于 2025-07-14 23:07:47">2025-07-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/58a7bd86.html" title="2025 青甘大环线游记">2025 青甘大环线游记</a><time datetime="2025-06-22T01:57:54.000Z" title="发表于 2025-06-22 09:57:54">2025-06-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/1812e504.html" title="甲状腺乳头状癌治疗始末">甲状腺乳头状癌治疗始末</a><time datetime="2024-10-29T03:50:27.000Z" title="发表于 2024-10-29 11:50:27">2024-10-29</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2017 - 2025 By SkyHive</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.1"></script><script src="/js/main.js?v=5.5.1"></script><script src="https://cdn.staticfile.net/fancyapps-ui/6.0.33/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.staticfile.net/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.staticfile.net/node-snackbar/0.1.16/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.staticfile.net/mermaid/11.12.0/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://comment.skyhive.tech/',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.staticfile.net/waline/2.9.1/waline.css')
+        .then(() => import('https://cdn.staticfile.net/waline/2.9.1/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script src="https://cdn.staticfile.net/pjax/0.2.8/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span> 数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"></div><hr><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.1"></script></div></div><script src="https://fastly.jsdelivr.net/npm/hexo-tag-common@0.2.0/js/index.js"></script></body></html>

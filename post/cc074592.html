@@ -1,0 +1,307 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><link href="https://fastly.jsdelivr.net/npm/hexo-tag-common@0.2.0/css/index.css" rel="stylesheet"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>配置 SSH 免密登录遇到的坑 | SkyHive's Blog</title><meta name="author" content="SkyHive"><meta name="copyright" content="SkyHive"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台，中途遇到一个小插曲遂记录下来。 由于搭建过程中需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行 ssh-keygen -t rsa 然后一直回车，最后会在你主目录下生成一个.ssh目录，其中的id_rsa是你的密钥，id_rsa.pub是你要上传的公钥，known_hosts是你连接过的主机的信息"><meta property="og:type" content="article"><meta property="og:title" content="配置 SSH 免密登录遇到的坑"><meta property="og:url" content="https://skyhive.github.io/post/cc074592.html"><meta property="og:site_name" content="SkyHive&#39;s Blog"><meta property="og:description" content="最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台，中途遇到一个小插曲遂记录下来。 由于搭建过程中需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行 ssh-keygen -t rsa 然后一直回车，最后会在你主目录下生成一个.ssh目录，其中的id_rsa是你的密钥，id_rsa.pub是你要上传的公钥，known_hosts是你连接过的主机的信息"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://blogpic.skyhive.tech/pic/banner/john-towner.png"><meta property="article:published_time" content="2017-12-08T03:12:43.000Z"><meta property="article:modified_time" content="2025-11-05T02:19:51.969Z"><meta property="article:author" content="SkyHive"><meta property="article:tag" content="linux"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://blogpic.skyhive.tech/pic/banner/john-towner.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "配置 SSH 免密登录遇到的坑",
+  "url": "https://skyhive.github.io/post/cc074592.html",
+  "image": "https://blogpic.skyhive.tech/pic/banner/john-towner.png",
+  "datePublished": "2017-12-08T03:12:43.000Z",
+  "dateModified": "2025-11-05T02:19:51.969Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "SkyHive",
+      "url": "https://skyhive.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/"><link rel="canonical" href="https://skyhive.github.io/post/cc074592.html"><link rel="preconnect" href="https://cdn.staticfile.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><meta name="google-site-verification" content="83MwLF836at8faxuiJfSi7o6lPaQSRy2GAPO6kCY1BM"><link rel="stylesheet" href="/css/index.css?v=5.5.1"><link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.7.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.staticfile.net/node-snackbar/0.1.16/snackbar.min.css" media="print" onload='this.media="all"'><link rel="stylesheet" href="https://cdn.staticfile.net/fancyapps-ui/6.0.33/fancybox/fancybox.min.css" media="print" onload='this.media="all"'><script>(() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle=window.adsbygoogle||[]).push({google_ad_client:"ca-pub-4272530297151894",enable_page_level_ads:"true"})</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":"enable","top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":500,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: SkyHive","link":"链接: ","source":"来源: SkyHive's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.staticfile.net/egjs-infinitegrid/4.12.0/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE={title:"配置 SSH 免密登录遇到的坑",isHighlightShrink:!1,isToc:!1,pageType:"post"}</script><link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css"><link rel="stylesheet" href="/css/layout-overrides.css"><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="SkyHive's Blog" type="application/atom+xml"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')</script><link rel="stylesheet" href="https://cdn.staticfile.net/pace/1.2.4/themes/blue/pace-theme-minimal.min.css"><script src="https://cdn.staticfile.net/pace/1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/uploads/avatar.jpg" onerror='this.onerror=null,this.src="/img/friend_404.gif"' alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-clock"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image:url(https://blogpic.skyhive.tech/pic/banner/john-towner.png)"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SkyHive's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">配置 SSH 免密登录遇到的坑</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span> 返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-clock"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">配置 SSH 免密登录遇到的坑</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-12-08T03:12:43.000Z" title="发表于 2017-12-08 11:12:43">2017-12-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-05T02:19:51.969Z" title="更新于 2025-11-05 10:19:51">2025-11-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Tech/">技术相关</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">356</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2025-11-05 10:19:51&quot;}" hidden></div><p>最近在学校做一个云计算大赛，需要搭建一个 hadoop 的平台，中途遇到一个小插曲遂记录下来。</p><p>由于搭建过程中需要四台服务器能够互相免密访问，我们需要将四台服务器的公钥互相上传到各个机器，首先运行</p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ssh-keygen <span class="token parameter variable">-t</span> rsa<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>然后一直回车，最后会在你主目录下生成一个<code>.ssh</code>目录，其中的<code>id_rsa</code>是你的密钥，<code>id_rsa.pub</code>是你要上传的公钥，<code>known_hosts</code>是你连接过的主机的信息</p><p>我们需要在<code>.ssh</code>目录下建立一个<code>authorized_keys</code>文件，将各个主机的公钥信息存储在该文件下，然后各个主机就可以通过 ssh 免密登录了，至于具体的原理，大家可以网上自行科普一下，无非是一些加密解密的过程。</p><p>然而就在我以为万无一失的时候，造化弄人，我不管怎么搞都需要输密码，试过改 ssh 的配置文件也无法解决，最后 Google 到一个解决方法，说是目录的和文件的权限问题，<code>.ssh</code>目录的权限必须得是 <strong>700</strong>，而文件 <code>authorized_keys</code> 的权限必须是<strong> 644</strong>，而我当时是 664，这才导致无法进行免密登录，这里大家需要注意一下权限的问题，即使权限放大了也是不行的！</p></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://skyhive.github.io">SkyHive</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://skyhive.github.io/post/cc074592.html">https://skyhive.github.io/post/cc074592.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://skyhive.github.io" target="_blank">SkyHive's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux/">linux</a></div><div class="post-share"><div class="social-share" data-image="https://blogpic.skyhive.tech/pic/banner/john-towner.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.staticfile.net/butterfly-extsrc/1.1.6/sharejs/dist/css/share.min.css" media="print" onload='this.media="all"'><script src="https://cdn.staticfile.net/butterfly-extsrc/1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/uploads/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/uploads/wechatpay.jpg" alt="wechat"></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/uploads/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/uploads/alipay.jpg" alt="alipay"></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/691098d6.html" title="初探 Django 需要注意的事项"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" onerror='onerror=null,src="/img/404.jpg"' alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">初探 Django 需要注意的事项</div></div><div class="info-2"><div class="info-item-1">¶ 更改默认数据库为 MySQL Django 使用的默认数据库是 SQLite3，如果习惯使用的是 SQLite 的用户就可以不必更换数据库。 更换数据库的话在settings.py文件中DATABASES选项中进行更改 DATABASES = { 'default': { 'ENGINE': 'django.db.backends.mysql', 'NAME': '项目对应的数据库名称', 'USER': '登录mysql的帐户', 'PASSWORD': '登录mysql的密码', 'HOST': '127.0.0.1', #由于是在本地开发，所以是127.0.0.1 'PORT': '3306' #这里mysql使用的是默认的3306端口 } } ¶ 设置 Templates 的路径 在settings.py文件中的TEMPLATES选项中进行设置 'DIRS': [os.path.join(BASE_DIR, 'templates')] 其中BASE_DIR...</div></div></div></a><a class="pagination-related" href="/post/8164914c.html" title="Hadoop 简介"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" onerror='onerror=null,src="/img/404.jpg"' alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Hadoop 简介</div></div><div class="info-2"><div class="info-item-1">¶Hadoop 介绍 Hadoop 是 Apache 组织的一个分布式计算框架（java 语言），其最核心的设计就是：HDFS 和 MapReduce，HDFS 实现存储，MapReduce 实现原理分析处理。 ¶HDFS 文件系统 HDFS（Hadoop Distributed File System）是一个高度容错的系统，适合部署在廉价的机器上。HDFS 能提供高吞吐量的数据访问，适合那些有着超大数据集的应用程序。 ¶ 设计特点 大数据文件，适合大文件或者一堆大数据文件 文件分块存储，HDFS 会将一个完整的大文件平均分块存储到不同计算机上 流式数据访问，一次写入多次读写，和传统文件不同，它不支持动态改变文件内容，而是要求让文件一次写入就不做变化，要变化只能在文件末尾添加 廉价硬件 备份，为防止某个主机失效读取不到该主机的块文件，它将同一个文件块副本分配到其他某几个主机上 ¶Master / Slave 架构 一个 HDFS 集群是有一个 Namenode 和一定数目的 Datanode 组成。Namenode 作为中心服务器负责管理文件系统的 na...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/2a7a180a.html" title="修改 sudoers 文件导致 sudo 无法使用的解决办法"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2018-08-08</div><div class="info-item-2">修改 sudoers 文件导致 sudo 无法使用的解决办法</div></div><div class="info-2"><div class="info-item-1">之前因为修改过/etc/sudoers文件，有个地方语法错误，导致修改完成之后sudo命令无法使用 网上搜过很多解决办法，大都是重启进入单用户模式，以 Root 用户的身份修改sudoers文件，解决原本的语法错误。但是这个方法的硬条件是需要重启进入单用户模式，但是有的时候我们是以ssh的方式登录到 LInux 机器上去的，所以相应的也会有不需要重启的操作就能解决这种问题，当然这种操作也有一个硬条件 ——Linux 上已经安装了Pkttyagent和pkexec，我并不知道这两个软件是不是所有 Llinux 系统都预装，所以大家都自己拿捏一下。 那么进入正题 首先，我们需要开两个 session 连接到 Linux 机器上 第一步：在以第一个 session 上输入 echo $$ 得到你目前 Bash 的 PID。 第二步：在第二个 session 上输入 pkttyagent --process pid #这里的pid是上一步获取到的，直接复制过来就好了 第三步：回到第一个 session 中，输入 pkexec visudo 第四步：回到第二个 session，你会发现 B...</div></div></div></a><a class="pagination-related" href="/post/93f970d9.html" title="关于 Ubuntu 循环登录界面"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2018-04-20</div><div class="info-item-2">关于 Ubuntu 循环登录界面</div></div><div class="info-2"><div class="info-item-1">其实事情的起因很奇怪，前两天一直想升级 Ubuntu 18.04，不知道为什么 17.10 用着怪怪的，但是 18.04 又要到 4 月 26 号才发布，没有办法了只能 Beta 2 先用着试试了。 然后就是一顿正常的操作 ¶ 从 Ubuntu 17.10 升级到 18.04 Beta 2 # 先将当前系统更新 sudo apt update sudo apt upgrade #然后升级系统 sudo do-release-upgrade -d 然后就让系统自己去下载安装了，不过中途我在终端提示中看到了某个什么东西不可用，当然我也没有在意，估计更新到了正式版系统就没事了吧，结果这就埋下了伏笔。 ¶ 卡在了启动界面 没错，就是那个带着 Ubuntu logo，然后 logo 下面还有几个小点点的那个界面，卡的死死的。ESC 之后显示的状态应该是这样的 [Started] Gnome Display Manage 然后我当机立断的去 Google 了一下，不知道在哪里看到了一个答案是要进 Recovery mode 修复一下 dpkg，做完之后我觉得这并不够，开在启动界面的事情我第...</div></div></div></a><a class="pagination-related" href="/post/3d308a66.html" title="搭建属于自己的 Shadowsocks 服务"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2017-08-11</div><div class="info-item-2">搭建属于自己的 Shadowsocks 服务</div></div><div class="info-2"><div class="info-item-1">最近一直想自己搭一个 Shadowsocks 服务，并且利用服务器学习一些技术知识，但是国内的服务器实在是贵得很啊，像我这种苦逼大学生根本玩不起，无奈之下只好各种 Google 百度，最后找到了一些国外的 VPS 资源 BandwagonHost(搬瓦工 VPS)：据观察搬瓦工这个 VPS 还是算计比较便宜的，年付 $20 ，平均下来每个月只有 $1.6，而且套餐很良心很良心, 512MB 的内存，10GB 的 SSD，1TB 的流量是不是比国内很多主机都划算的很。 Vultr:同样也是 SSD VPS, 这个套餐看起来也还是很不错的，只不过每月两刀的套餐总是能被抢空。 Digital Ocean：也是我目前正在使用的，大家可以点击此链接注册，通过这个优惠链接注册的小伙伴们会直接获得 $10 的额度在你的账户余额里。而且他的这个套餐也是很诱人的，同样的 SSD VPS，20G 硬盘，每月 1TB 流量，1G 的带宽，只不过这个费用看起来太贵了，一个月需要 $5。 但是事情有这么简单吗？ 当然没有，鼎鼎大名的 gayhub 上有个提供给学生的 pack，...</div></div></div></a><a class="pagination-related" href="/post/d0b9a1b4.html" title="解决 Ubuntu 下 Apache 不解析 PHP 问题"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2017-07-13</div><div class="info-item-2">解决 Ubuntu 下 Apache 不解析 PHP 问题</div></div><div class="info-2"><div class="info-item-1">这两天笔者遇到了一个很操蛋的问题 ——Apache 无法解析 PHP 代码了，之前一直用的挺好的，突然就挂了，然后在网上疯狂的找解决办法，但是大都是 PHP5 的版本，而我却是 PHP7 的版本，我就先顺便把 5 版本的解决方法贴出来： 对 httpd.conf 配置文件做如下调整： 在 AddType application/x-gzip .gz .tgz 该行下面添加 AddType application/x-httpd-php .php 将 DirectoryIndex index.html 修改成 DirectoryIndex index.html index.htm index.php 将 #ServerName www.example.com:80 改成 ServerName localhost:80 然而 Ubuntu 下的 Apache 并没有 httpd.conf 这个配置文件，而是通过一个 apache2.conf 来引用每个部分的配置文件，这样在一个配置包里找到那一句配置也并不简单，而且我还没有找到。。。 不过皇天不负有心人，终于是找到了解...</div></div></div></a><a class="pagination-related" href="/post/9c2f7ad8.html" title="解决 Ubuntu 下搜狗拼音候选词乱码"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2018-05-29</div><div class="info-item-2">解决 Ubuntu 下搜狗拼音候选词乱码</div></div><div class="info-2"><div class="info-item-1">今天 Ubuntu 系统下的搜狗拼音突然抽疯了，中文输入的时候候选词区域都是全是一串无意义的英文字母，不知道是不是因为对 Linux 系统的支持问题还是怎么回事，解决办法也很简单，就是删除搜狗的配置文件，重新登录就好了，只是需要重新设置原来的配置 cd ~/.config rm -rf SogouPY* sogou* 别忘了注销再登录哦</div></div></div></a><a class="pagination-related" href="/post/4b016079.html" title="解决 Ubuntu 系统设置打不开"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2017-02-14</div><div class="info-item-2">解决 Ubuntu 系统设置打不开</div></div><div class="info-2"><div class="info-item-1">今天把 Ubuntu从16.04 更新到 16.10 之后卸载了些软件，之后蛋疼的发现系统设置打不开了，真是欲哭无泪。去网上搜了下发现是我之前由于卸载了 iBus 导致的，虽然我不懂为什么 iBus 和 Ubuntu 之间的关系为什么会如此紧密，但是既然发生了这种事情我也很绝望啊，只能按照网上的方法 sudo apt-get install ubuntu-desktop #这个会把Ubuntu预装的软件office还有Amazon什么的装回来，装完自己再慢慢卸载吧 或者他也提供了一次性的安装办法 sudo apt-get install ibus-pinyin unity-control-center unity-control-center-signon webaccounts-extension-common xul-ext-webaccounts 但是我眉头一皱，发现事情并不简单，我继续搜了下去，也有很多人遇到这种问题，发现还有更简单的办法 sudo apt-get install gnome-control-center #如果系统设置...</div></div></div></a></div></div><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/uploads/avatar.jpg" onerror='this.onerror=null,this.src="/img/friend_404.gif"' alt="avatar"></div><div class="author-info-name">SkyHive</div><div class="author-info-description">菜鸡运维一枚</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" href="https://github.com/skyhive"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/skyhive" target="_blank" title="Github"><i class="fab fa-github" style="color:#24292e"></i></a><a class="social-icon" href="mailto:skyhive35@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color:#4a7dbe"></i></a><a class="social-icon" href="https://blog.skyhive.tech/atom.xml" target="_blank"><i class="fas fa-rss"></i></a><a class="social-icon" href="https://www.xiaohongshu.com/user/profile/6723a94c000000001d02d7db" target="_blank" title="Red Note"><i class="fas fa-book" style="color:#d70000"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的小站，这里会分享我的一些技术总结，以及生活日常~</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/11841089.html" title="HomeLab 系列 - VPN">HomeLab 系列 - VPN</a><time datetime="2025-11-03T02:13:13.000Z" title="发表于 2025-11-03 10:13:13">2025-11-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cb650389.html" title="HomeLab 系列 - 认证 (上)">HomeLab 系列 - 认证 (上)</a><time datetime="2025-10-30T06:40:20.000Z" title="发表于 2025-10-30 14:40:20">2025-10-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/3bd9168d.html" title="2025 大马榴莲季全攻略">2025 大马榴莲季全攻略</a><time datetime="2025-07-14T15:07:47.000Z" title="发表于 2025-07-14 23:07:47">2025-07-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/58a7bd86.html" title="2025 青甘大环线游记">2025 青甘大环线游记</a><time datetime="2025-06-22T01:57:54.000Z" title="发表于 2025-06-22 09:57:54">2025-06-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/1812e504.html" title="甲状腺乳头状癌治疗始末">甲状腺乳头状癌治疗始末</a><time datetime="2024-10-29T03:50:27.000Z" title="发表于 2024-10-29 11:50:27">2024-10-29</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2017 - 2025 By SkyHive</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.1"></script><script src="/js/main.js?v=5.5.1"></script><script src="https://cdn.staticfile.net/fancyapps-ui/6.0.33/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.staticfile.net/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.staticfile.net/node-snackbar/0.1.16/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.staticfile.net/mermaid/11.12.0/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://comment.skyhive.tech/',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.staticfile.net/waline/2.9.1/waline.css')
+        .then(() => import('https://cdn.staticfile.net/waline/2.9.1/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script src="https://cdn.staticfile.net/pjax/0.2.8/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span> 数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"></div><hr><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.1"></script></div></div><script src="https://fastly.jsdelivr.net/npm/hexo-tag-common@0.2.0/js/index.js"></script></body></html>
