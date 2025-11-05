@@ -716,7 +716,7 @@ umami_analytics:
 # Google Adsense
 google_adsense:
   enable: true
-  auto_ads: flase
+  auto_ads: true
   js: https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js
   client: ca-pub-4272530297151894
   enable_page_level_ads: true
