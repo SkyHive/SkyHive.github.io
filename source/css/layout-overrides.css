@@ -1,0 +1,12 @@
+/* 覆盖默认的最大宽度 */
+.layout {
+    max-width: 1400px !important;
+}
+
+
+/* 覆盖屏幕宽度大于约 2000px 时的 max-width 设置 */
+@media screen and (min-width: 2000px) {
+    .layout {
+        max-width: 80% !important;
+    }
+}
