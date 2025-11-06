@@ -1,11 +1,16 @@
 ---
-title: Gitlab EE 版本破解
+title: Gitlab EE 版本自签名证书
 categories: 技术相关
 tags:
   - gitlab
 abbrlink: 77d7dd4e
 date: 2020-05-24 23:24:01
 ---
+
+{% note pink 'fas fa-car-crash' simple %}
+本教程仅作为学习交流使用，请勿用于商业用途！
+{% endnote %}
+
 ### 环境信息
 
 * Ubuntu 16.04
@@ -13,7 +18,7 @@ date: 2020-05-24 23:24:01
 
 > 配合 [Gitlab 单节点服务搭建](https://blog.skyhive.tech/post/dfc3ccac.html) 食用更好
 
-### 破解过程
+### 配置过程
 
 #### 安装依赖
 
