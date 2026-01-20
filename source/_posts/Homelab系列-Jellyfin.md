@@ -112,3 +112,23 @@ services:
 ### 配置
 
 详细的配置文档可以参考 [Jellyfin Post-Install Setup](https://jellyfin.org/docs/general/post-install/setup-wizard/) 和 [Jellyfin Administration Configuration](https://jellyfin.org/docs/general/administration/configuration)，这里仅记录一些常用的配置。
+
+#### 插件
+
+#### MeiamSub
+
+* `MeiamSub`
+  * `Github` 地址：
+  * `Jellyfin Repo` 地址：
+
+#### Media Bar
+
+* `Media Bar`
+  * `Github` 地址：
+  * `Jellyfin Repo` 地址：
+
+#### Meta Shark
+
+* `Meta Shark`
+  * `Github` 地址：
+  * `Jellyfin Repo` 地址：
