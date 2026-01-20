@@ -10,7 +10,7 @@ abbrlink: 41df0ec8
 date: 2026-01-19 17:45:10
 ---
 
-其实每一个折腾 `HomeLab` 的兄弟或多或少都离不开这两个词 -- `NAS`、`家庭影音`，为此也诞生出很多优秀的开源软件，比如 `Plex`、`Emby`、[`Jellyfin`](https://jellyfin.org) 等等。经过多年的调教与折腾，`Jellyfin` 这套方案也愈发成熟，这里简单记录一下部署过程和一些常用配置
+其实每一个折腾 `HomeLab` 的兄弟或多或少都离不开这两个词 -- `NAS` 和 `家庭影音`，为此也诞生出很多优秀的开源软件，比如 [`Emby`](https://emby.media)、[`Jellyfin`](https://jellyfin.org) 等等。经过多年的调教与折腾，`Jellyfin` 这套方案也愈发成熟，这里简单记录一下部署过程和一些常用配置
 
 <!--more-->
 
@@ -71,11 +71,44 @@ graph TD
     G --> T
 ```
 
-从图中可以看到 `Jellyfin` 的工作流程以及功能很简单：
+从图中可以看到 `Jellyfin` 的功能特点总结为如下几点：
 
 1. **全平台客户端**：Web/手机/TV/桌面，进度云端同步
 2. **实时硬件转码**：NVENC/QSV/VAAPI，带宽自适应
 3. **自动媒体整理**：TMDB 元数据 + 章节点生成，一键刮削海报与字幕
 4. **多用户家庭共享**：分级权限、家长控制、离线缓存
 5. **插件扩展**：主题、通知、第三方元数据，热插拔即装即用
-6. **开源免订阅**：本地部署，数据归自己，永无会员墙
+6. **开源**：本地部署，无数据泄露风险，无需付费
+
+### 部署
+
+详细的安装部署可以参考 [Jellyfin 官方文档](https://jellyfin.org/docs/general/installation/)，`Jellyfin` 支持多种操作系统和多种部署方式，由于笔者使用 Docker 部署，这里仅记录 Docker 的部署方式。`docker-compose.yaml` 参考如下：
+
+```yaml
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:10.11.5
+    container_name: jellyfin
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+      - JELLYFIN_PublishedServerUrl=http://<你宿主机 IP 地址>
+    ports:
+      - "8096:8096/tcp"
+      - "7359:7359/udp"
+    volumes:
+      - /volume1/mnt/data/jellyfin/config:/config
+      - /volume1/mnt/data/jellyfin/cache:/cache
+      # 这里挂载你的媒体文件目录
+      - /volume1/Documentary:/media/documentary:ro
+      - /volume1/Movie:/media/movie:ro
+      - /volume1/Series:/media/series:ro
+      - /volume1/Villa:/media/villa:ro
+    # 硬件加速
+    # devices:
+    #   - /dev/dri:/dev/dri
+```
+
+### 配置
+
+详细的配置文档可以参考 [Jellyfin Post-Install Setup](https://jellyfin.org/docs/general/post-install/setup-wizard/) 和 [Jellyfin Administration Configuration](https://jellyfin.org/docs/general/administration/configuration)，这里仅记录一些常用的配置。
