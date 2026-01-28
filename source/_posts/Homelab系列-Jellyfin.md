@@ -113,22 +113,53 @@ services:
 
 详细的配置文档可以参考 [Jellyfin Post-Install Setup](https://jellyfin.org/docs/general/post-install/setup-wizard/) 和 [Jellyfin Administration Configuration](https://jellyfin.org/docs/general/administration/configuration)，这里仅记录一些常用的配置。
 
-#### 插件
+#### 面子工程
 
-#### MeiamSub
+开源产品的功能固然重要，但是面子也很重要，难用的不要，丑出天际的也不能要。不过 `Jellyfin` 本身的 UI 设计就不算丑，在此基础之上还提供了两个方案：
 
-* `MeiamSub`
-  * `Github` 地址：
-  * `Jellyfin Repo` 地址：
+- [自定义 CSS](https://jellyfin.org/docs/general/clients/css-customization/)
+- [插件](https://jellyfin.org/docs/general/server/plugins/)：这里推荐一个用的比较多的插件 -- [Skin Maanger](https://github.com/danieladov/jellyfin-plugin-skin-manager)
 
-#### Media Bar
+我个人目前使用的是自定义 `CSS` 的方式，轻量且简单，使用别人写好的 `CSS` 都不需要做什么额外的配置，可参考下方配置
 
-* `Media Bar`
-  * `Github` 地址：
-  * `Jellyfin Repo` 地址：
+```css
+@import url("https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/ElegantFin-jellyfin-theme-build-latest-minified.css");
+```
 
-#### Meta Shark
+除了对界面进行美化之外，还有个插件可以在主页 `Banner` 实现随机推荐，效果也是一级棒。感兴趣的可以移步 [Media Bar](https://github.com/IAmParadox27/jellyfin-plugin-media-bar)，这个项目是从 [Jellyfin-Media-Bar](https://github.com/MakD/Jellyfin-Media-Bar) Fork 二开而来，配置简单，只需要如下几步即可：
 
-* `Meta Shark`
-  * `Github` 地址：
-  * `Jellyfin Repo` 地址：
+1. 将 `https://www.iamparadox.dev/jellyfin/plugins/manifest.json` 添加至 Plugin Repository
+2. 安装 `Media Bar` 和 `File Transformation` 两个插件（注意，`Jellyfin` 的版本要求在 `10.10.7` 以上）
+3. 重启 `Jellyfin` 服务
+
+这这时你就能够在首页看到自定义的 `CSS` 和 `Media Bar` 的效果了
+
+下面放两张图给大家看看效果
+
+![美化效果]()
+![美化效果]()
+
+#### 媒体库配置
+
+按照我个人的习惯，将媒体库分成了四个部分 -- `电影`、`电视剧`、`纪录片`、`九公斤`，分别对应 `Movie`、`Series`、`Documentary`、`Villa` 四个挂载进来的目录，其实你大可以将 `纪录片` 和 `电视剧` 合并在一个目录里，由于我在存储的时候就已经分开，这里我也分开配置了。
+
+媒体库的基础配置如下：
+
+- 首选下载语言：`Chinese`
+- 国家/地区：`People's Republic of China`
+- 优先使用内置的标题而不是文件名：**开启**
+- 启用实时监控：**开启**
+- 自动添加到合集：**开启**
+- 自动从互联网获取元数据并刷新：**每 30 天**
+- 元数据存储方式：**NFO**
+- 将媒体图像保存到媒体所在文件夹：**开启**
+- 保存字幕到媒体所在文件夹：**开启**
+
+除此之外，还需要额外再配置两个插件来完成 **刮削** 和 **字幕下载** 的功能
+
+- [Metashark](https://github.com/cxfksword/jellyfin-plugin-metashark)
+- [MeiamSubtitles](https://github.com/91270/MeiamSubtitles)
+
+先说两个插件的安装：
+
+1. Step1:
