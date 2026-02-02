@@ -162,4 +162,64 @@ services:
 
 先说两个插件的安装：
 
-1. Step1:
+1. Step1：分别在 Plugin Repository 添加如下地址：
+   - `https://ghfast.top/https://github.com/cxfksword/jellyfin-plugin-metashark/releases/download/manifest/manifest_cn.json`（国内加速地址） 或者 `https://github.com/cxfksword/jellyfin-plugin-metashark/releases/download/manifest/manifest.json`（国外地址）
+   - `https://github.com/91270/MeiamSubtitles.Release/raw/main/Plugin/manifest-stable.json`
+2. Step2：安装插件 -- `MetaShark`、`MeiamSub.Thunder` 和 `MeiamSub.Shooter`
+3. Step3：重启 `Jellyfin` 服务
+
+在媒体库中的配置就可以加入这两个插件相关的配置了：
+
+- 字幕下载器勾选：`MeiamSub.Thunder`、`MeiamSub.Shooter`
+- 元数据下载器和图片获取器勾选：`MetaShark`
+
+#### 转码配置
+
+`Jellyfin` 支持多种解码方式，具体可参考 [Jellyfin Transcoding](https://jellyfin.org/docs/general/post-install/transcoding/hardware-acceleration/) 中的内容，我们这里简单说说配置。根据官方文档提供的内容，整理出如下的硬件加速方案，大家根据你们 Jellyfin 部署的平台进行选择。
+
+| 显卡品牌          | 推荐加速方式 (Linux)       | 推荐加速方式 (Windows) |
+| ----------------- | -------------------------- | ---------------------- |
+| Intel (核显/独显) | QSV (Quick Sync) 或 VA-API | QSV                    |
+| NVIDIA (英伟达)   | NVENC/NVDEC                | NVENC                  |
+| AMD               | VA-API                     | AMF                    |
+| Apple (Mac)       | Video Toolbox              | Video Toolbox          |
+| Rockchip (瑞芯微) | RKMPP                      | N/A                    |
+
+这里还有一个概念，即 **完全加速** 和 **部分加速**。一个完整的转码过程包含多个阶段，我们的目标是让这些阶段全都使用 GPU 去完成，这样不仅节省了 CPU 的资源，同时也节省了 GPU 与 CPU 之间的数据交互（即 **零拷贝**），转码阶段参考如下：
+
+1. 解码（Decode）：读取原视频
+2. 处理（Scaling/Tone-mapping）：缩放分辨率、`HDR` 转 `SDR` 色彩映射
+3. 编码（Encode）：压缩成目标格式
+
+但是某些老的显卡只支持解码而不支持编码，这就是 **部分加速**。
+
+{% note warning no-icon %}
+
+**对于一些限制和建议：**
+
+- **H.264 10-bit**：官网文档里提到的几乎所有的 Intel、NVIDIA 和 AMD 显卡都不支持 `H.264 10-bit` 的硬件编码，如果遇到这种视频，系统会自动回退到 CPU 解码。建议优先使用 `H.265 (HEVC) 10-bit` 格式
+- **HDR 色彩映射**：如果你的设备是 HDR 的，但播放端（如旧手机或电脑）不支持 HDR，Jellyfin 可以通过显卡进行 **[硬件色调映射 (Tone-mapping)](https://jellyfin.org/docs/general/post-install/transcoding/hardware-acceleration/#hardware-accelerated-tone-mapping)**，将 `HDR` 画面完美转换为 `SDR`，防止画面发灰
+- **树莓派用户**：文档提到由于**树莓派 5** 删除了硬件编码器，Jellyfin 已经弃用了对树莓派的 `V4L2` 硬件加速支持，未来可能会出现兼容性问题
+
+{% endnote %}
+
+{% note success no-icon %}
+
+**一些性能优化**：
+
+- 内存： 如果你使用的是 Intel 或 AMD 的核显，建议组建双通道内存，这能显著提升显存带宽。
+- 缓存： 转码会产生大量临时文件，建议将转码暂存目录设置在 `SSD` 上，避免机械硬盘成为瓶颈。
+
+{% endnote %}
+
+可惜我的主板比较丐，虽然 CPU i3-7300T 有着不俗的核显，但是 `Supermicro X11SSL-F` 所拥有的 `Intel® C232` 芯片组并不支持 Intel 核显，所以上面提到的硬件加速我就无法使用了。
+
+#### Nginx 配置
+
+如果需要使用域名进行访问，可以参考官网文档 -- [Nginx 配置](https://jellyfin.org/docs/general/post-install/networking/reverse-proxy/nginx#nginx-from-a-subdomain-jellyfinexampleorg)
+
+我自己的 nginx 配置如下：
+
+```nginx
+
+```
