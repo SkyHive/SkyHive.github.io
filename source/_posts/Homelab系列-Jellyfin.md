@@ -10,11 +10,13 @@ abbrlink: 41df0ec8
 date: 2026-01-19 17:45:10
 ---
 
-其实每一个折腾 `HomeLab` 的兄弟或多或少都离不开这两个词 -- `NAS` 和 `家庭影音`，为此也诞生出很多优秀的开源软件，比如 [`Emby`](https://emby.media)、[`Jellyfin`](https://jellyfin.org) 等等。经过多年的调教与折腾，`Jellyfin` 这套方案也愈发成熟，这里简单记录一下部署过程和一些常用配置
+每一个折腾 `HomeLab` 的兄弟，最终的归宿除了用来“压泡面”的各种派，大概率都逃不过这两个词 —— **`NAS`** 和 **`家庭影音`**。毕竟，辛辛苦苦攒下来的“学习资料”，总得有个像样的展示柜吧？
+
+在开源界，[`Jellyfin`](https://jellyfin.org) 绝对是那个即使你一分钱不花，也能让你体验到“尊贵 VIP”待遇的神器。经过多年的调教（被坑）与折腾，这套方案现在的成熟度已经相当高了。
 
 <!--more-->
 
-话不多说，先来看看 `Jellyfin` 的架构图（该架构图由 AI 生成）
+老规矩，先上一张架构图镇楼（没错，AI 画的，看起来是不是特别唬人？）：
 
 ```mermaid
 graph TD
@@ -82,7 +84,9 @@ graph TD
 
 ### 部署
 
-详细的安装部署可以参考 [Jellyfin 官方文档](https://jellyfin.org/docs/general/installation/)，`Jellyfin` 支持多种操作系统和多种部署方式，由于笔者使用 Docker 部署，这里仅记录 Docker 的部署方式。`docker-compose.yaml` 参考如下：
+详细的部署方式多如牛毛，官方文档写得也很细。但在 2024 年（或者未来），**Docker** 绝对是首选。为什么？因为我们有洁癖，不想把宿主机搞得乱七八糟。
+
+直接上 `docker-compose.yaml`，复制粘贴即可食用：
 
 ```yaml
 services:
@@ -115,10 +119,10 @@ services:
 
 #### 面子工程
 
-开源产品的功能固然重要，但是面子也很重要，难用的不要，丑出天际的也不能要。不过 `Jellyfin` 本身的 UI 设计就不算丑，在此基础之上还提供了两个方案：
+俗话说得好，**颜值即正义**。功能再强大，长得像 Windows 98 也是不行的。好在 `Jellyfin` 底子不错，稍微打扮一下就能“艳压群芳”。在此基础之上还提供了两个方案：
 
 - [自定义 CSS](https://jellyfin.org/docs/general/clients/css-customization/)
-- [插件](https://jellyfin.org/docs/general/server/plugins/)：这里推荐一个用的比较多的插件 -- [Skin Maanger](https://github.com/danieladov/jellyfin-plugin-skin-manager)
+- [插件](https://jellyfin.org/docs/general/server/plugins/)：这里推荐一个用的比较多的插件 -- [Skin Manager](https://github.com/danieladov/jellyfin-plugin-skin-manager)
 
 我个人目前使用的是自定义 `CSS` 的方式，轻量且简单，使用别人写好的 `CSS` 都不需要做什么额外的配置，可参考下方配置
 
@@ -132,7 +136,7 @@ services:
 2. 安装 `Media Bar` 和 `File Transformation` 两个插件（注意，`Jellyfin` 的版本要求在 `10.10.7` 以上）
 3. 重启 `Jellyfin` 服务
 
-这这时你就能够在首页看到自定义的 `CSS` 和 `Media Bar` 的效果了
+这时你就能够在首页看到自定义的 `CSS` 和 `Media Bar` 的效果了
 
 下面放两张图给大家看看效果
 
@@ -141,7 +145,11 @@ services:
 
 #### 媒体库配置
 
-按照我个人的习惯，将媒体库分成了四个部分 -- `电影`、`电视剧`、`纪录片`、`九公斤`，分别对应 `Movie`、`Series`、`Documentary`、`Villa` 四个挂载进来的目录，其实你大可以将 `纪录片` 和 `电视剧` 合并在一个目录里，由于我在存储的时候就已经分开，这里我也分开配置了。
+按照我个人的习惯，将媒体库分成了四个部分 —— `电影`、`电视剧`、`纪录片`，以及那个**只可意会不可言传**的 `九公斤`。分别对应 `Movie`、`Series`、`Documentary` 以及 `Villa` 四个挂载进来的目录。
+
+> 至于 `九公斤` 到底是哪“九公斤”？咳咳，这是一个关于**成人向**的深奥话题，为了保持本文的纯洁性，咱们留到后续的某篇“深夜独处”系列中再单独探讨。
+
+说回正经的，其实你大可以将 `纪录片` 和 `电视剧` 合并在一个目录里，由于我在存储的时候就已经分开，这里我也分开配置了。
 
 媒体库的基础配置如下：
 
@@ -159,6 +167,14 @@ services:
 
 - [Metashark](https://github.com/cxfksword/jellyfin-plugin-metashark)
 - [MeiamSubtitles](https://github.com/91270/MeiamSubtitles)
+
+> **关于刮削的碎碎念**：
+>
+> 想要拥有一面完美的“海报墙”，光靠插件是不够的。**文件的命名规范**、**目录结构**以及 **MetaShark 的调教** 都是一门玄学。
+>
+> 这部分内容实在太过于庞大（且充满了踩坑血泪史），所以我决定将其剥离出来，作为 `HomeLab` 系列的独立篇章 —— **《从入门到入土：Jellyfin 完美刮削指南》** 和 **《Metashark 调教手册》**。
+>
+> 今天，为了让大家先跑起来，我们只进行最基础的“能用就行”版配置。
 
 先说两个插件的安装：
 
@@ -212,14 +228,129 @@ services:
 
 {% endnote %}
 
-可惜我的主板比较丐，虽然 CPU i3-7300T 有着不俗的核显，但是 `Supermicro X11SSL-F` 所拥有的 `Intel® C232` 芯片组并不支持 Intel 核显，所以上面提到的硬件加速我就无法使用了。
+说到这里，不得不提一下我那令人心碎的配置。
+
+虽然我的 CPU **i3-7300T** 自带了相当不错的核显，本应在转码界大杀四方。但遗憾的是，当初为了追求 Server 级的稳定性，我选了 **Supermicro X11SSL-F** 主板。这块主板搭载的 `Intel® C232` 芯片组，极其高冷地屏蔽了核显功能。
+
+所以，上述那些酷炫的硬件加速功能，我一个都用不了。每当我在外面看 4K 视频时，我的 CPU 都在机箱里默默流泪（疯狂满载）。**大家装机时千万避坑！**
 
 #### Nginx 配置
 
 如果需要使用域名进行访问，可以参考官网文档 -- [Nginx 配置](https://jellyfin.org/docs/general/post-install/networking/reverse-proxy/nginx#nginx-from-a-subdomain-jellyfinexampleorg)
 
-我自己的 nginx 配置如下：
+这一段配置比较长，如果你看着眼晕，可以直接 CV 大法（Copy & Paste）。
+
+<details>
+<summary>点击展开查看 Nginx 详细配置</summary>
 
 ```nginx
+server {
+    listen 80;
+    listen [::]:80;
+    server_name jellyfin.skyhive.tech;
 
+    # Uncomment to redirect HTTP to HTTPS
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name jellyfin.skyhive.tech;
+
+#NGINX_START
+
+
+    ## The default `client_max_body_size` is 1M, this might not be enough for some posters, etc.
+    client_max_body_size 100M;
+
+    # use a variable to store the upstream proxy
+    # in this example we are using a hostname which is resolved via DNS
+    # (if you aren't using DNS remove the resolver line and change the variable to point to an IP address e.g `set $jellyfin 127.0.0.1`)
+    set $jellyfin 192.168.2.156;
+    resolver 127.0.0.1 valid=30;
+    ssl_certificate /etc/nginx/ssl/full.pem;
+    ssl_certificate_key /etc/nginx/ssl/key.pem;
+    #include /etc/letsencrypt/options-ssl-nginx.conf;
+    #ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    add_header Strict-Transport-Security "max-age=31536000" always;
+    #ssl_trusted_certificate /etc/letsencrypt/live/DOMAIN_NAME/chain.pem;
+    #ssl_stapling on;
+    #ssl_stapling_verify on;
+
+    # Security / XSS Mitigation Headers
+    # NOTE: X-Frame-Options may cause issues with the webOS app
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+
+    # Content Security Policy
+    # See: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+    # Enforces https content and restricts JS/CSS to origin
+    # External Javascript (such as cast_sender.js for Chromecast) must be whitelisted.
+    # NOTE: The default CSP headers may cause issues with the webOS app
+    #add_header Content-Security-Policy "default-src https: data: blob: http://image.tmdb.org; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/cv/js/sender/v1/cast_sender.js https://www.gstatic.com/eureka/clank/95/cast_sender.js https://www.gstatic.com/eureka/clank/96/cast_sender.js https://www.gstatic.com/eureka/clank/97/cast_sender.js https://www.youtube.com blob:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; frame-ancestors 'self'";
+
+
+    location = / {
+        return 302 http://$host/web/;
+        #return 302 https://$host/web/;
+    }
+
+    location / {
+        # Proxy main Jellyfin traffic
+        proxy_pass http://$jellyfin:8096;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Protocol $scheme;
+        proxy_set_header X-Forwarded-Host $http_host;
+
+        # Disable buffering when the nginx proxy gets very resource heavy upon streaming
+        proxy_buffering off;
+    }
+
+    # location block for /web - This is purely for aesthetics so /web/#!/ works instead of having to go to /web/index.html/#!/
+    location = /web/ {
+        # Proxy main Jellyfin traffic
+        proxy_pass http://$jellyfin:8096/web/index.html;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Protocol $scheme;
+        proxy_set_header X-Forwarded-Host $http_host;
+    }
+
+    location /socket {
+        # Proxy Jellyfin Websockets traffic
+        proxy_pass http://$jellyfin:8096;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Protocol $scheme;
+        proxy_set_header X-Forwarded-Host $http_host;
+    }
+}
 ```
+
+</details>
+
+---
+
+### 最后碎碎念
+
+折腾 Jellyfin 的过程，其实就是不断满足自己收藏癖的过程。看着海报墙一点点填满，那种成就感或许只有 Homelab 玩家才懂。
+
+至于大家最关心的接下来的“大饼”：
+
+1.  **《从入门到入土：Jellyfin 完美刮削指南》**：教你如何整治那些乱七八糟的文件名。
+2.  **《Metashark 调教手册》**：让你的海报墙不再有“缺如”。
+3.  **神秘的 9kg 目录**：如果不加密会被爸妈看到怎么办？怎么自动下载最新的两性情感动作大片？
+
+别急，点个关注，下期 Homelab 系列，我们悄悄说 🤫。
