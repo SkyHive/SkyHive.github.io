@@ -1,0 +1,636 @@
+{
+  "store": {
+    "changchun": {
+      "name_cn": "长春市",
+      "coords": [
+        125.3180998,
+        43.8844201
+      ],
+      "source": "osm"
+    },
+    "changsha": {
+      "name_cn": "长沙市",
+      "coords": [
+        112.9708685,
+        28.1987538
+      ],
+      "source": "osm"
+    },
+    "chengdu": {
+      "name_cn": "成都市",
+      "coords": [
+        104.063315,
+        30.659867
+      ],
+      "source": "osm"
+    },
+    "chongqing": {
+      "name_cn": "重庆市",
+      "coords": [
+        106.5842092,
+        29.5697328
+      ],
+      "source": "osm"
+    },
+    "dalian": {
+      "name_cn": "大连市",
+      "coords": [
+        121.6098013,
+        38.9130495
+      ],
+      "source": "osm"
+    },
+    "guangzhou": {
+      "name_cn": "广州市",
+      "coords": [
+        113.2590064,
+        23.1288454
+      ],
+      "source": "osm"
+    },
+    "hangzhou": {
+      "name_cn": "杭州市",
+      "coords": [
+        120.2052342,
+        30.2489634
+      ],
+      "source": "osm"
+    },
+    "harbin": {
+      "name_cn": "哈尔滨市",
+      "coords": [
+        126.6276177,
+        45.7593633
+      ],
+      "source": "osm"
+    },
+    "huzhou": {
+      "name_cn": "湖州市",
+      "coords": [
+        120.0851114,
+        30.8942995
+      ],
+      "source": "osm"
+    },
+    "jiaxing": {
+      "name_cn": "嘉兴市",
+      "coords": [
+        120.7510971,
+        30.7474425
+      ],
+      "source": "osm"
+    },
+    "jieyang": {
+      "name_cn": "揭阳市",
+      "coords": [
+        116.3680354,
+        23.553156
+      ],
+      "source": "osm"
+    },
+    "lanzhou": {
+      "name_cn": "兰州市",
+      "coords": [
+        103.733224,
+        36.474436
+      ],
+      "source": "osm"
+    },
+    "london": {
+      "name_cn": "Greater London",
+      "coords": [
+        -0.1277653,
+        51.5074456
+      ],
+      "source": "osm"
+    },
+    "mohe": {
+      "name_cn": "漠河市",
+      "coords": [
+        122.7933319,
+        52.9759171
+      ],
+      "source": "osm"
+    },
+    "my_pen": {
+      "name_cn": "Lapangan Terbang Antarabangsa Pulau Pinang",
+      "coords": [
+        100.2747856,
+        5.2967319
+      ],
+      "source": "osm"
+    },
+    "nanjing": {
+      "name_cn": "南京市",
+      "coords": [
+        118.7788631,
+        32.0438284
+      ],
+      "source": "osm"
+    },
+    "nantong": {
+      "name_cn": "南通市",
+      "coords": [
+        120.8904588,
+        31.9827896
+      ],
+      "source": "osm"
+    },
+    "ningbo": {
+      "name_cn": "宁波市",
+      "coords": [
+        121.6203873,
+        29.8622194
+      ],
+      "source": "osm"
+    },
+    "quzhou": {
+      "name_cn": "衢州市",
+      "coords": [
+        118.8540924,
+        28.973887
+      ],
+      "source": "osm"
+    },
+    "shanghai": {
+      "name_cn": "上海市",
+      "coords": [
+        121.4700152,
+        31.2312707
+      ],
+      "source": "osm"
+    },
+    "shantou": {
+      "name_cn": "汕头市",
+      "coords": [
+        116.6775856,
+        23.3563921
+      ],
+      "source": "osm"
+    },
+    "shaoxing": {
+      "name_cn": "绍兴市",
+      "coords": [
+        120.576854,
+        29.9992425
+      ],
+      "source": "osm"
+    },
+    "shenyang": {
+      "name_cn": "沈阳市",
+      "coords": [
+        123.4279105,
+        41.8026095
+      ],
+      "source": "osm"
+    },
+    "shenzhen": {
+      "name_cn": "深圳市",
+      "coords": [
+        114.0545429,
+        22.5445741
+      ],
+      "source": "osm"
+    },
+    "suzhou": {
+      "name_cn": "苏州市",
+      "coords": [
+        120.6212881,
+        31.311123
+      ],
+      "source": "osm"
+    },
+    "wuhan": {
+      "name_cn": "武汉市",
+      "coords": [
+        114.2889707,
+        30.5611595
+      ],
+      "source": "osm"
+    },
+    "yangzhou": {
+      "name_cn": "扬州市",
+      "coords": [
+        119.4077658,
+        32.3968554
+      ],
+      "source": "osm"
+    },
+    "yuncheng": {
+      "name_cn": "运城市",
+      "coords": [
+        111.002141,
+        35.027637
+      ],
+      "source": "osm"
+    },
+    "zhoushan": {
+      "name_cn": "舟山市",
+      "coords": [
+        122.2030363,
+        29.9873344
+      ],
+      "source": "osm"
+    },
+    "上海": {
+      "name_cn": "上海市",
+      "coords": [
+        121.4700152,
+        31.2312707
+      ],
+      "source": "osm"
+    },
+    "兰州": {
+      "name_cn": "蘭",
+      "coords": [
+        137.6301197,
+        35.56075
+      ],
+      "source": "osm"
+    },
+    "南京": {
+      "name_cn": "南京市",
+      "coords": [
+        118.7788631,
+        32.0438284
+      ],
+      "source": "osm"
+    },
+    "南通": {
+      "name_cn": "南通市",
+      "coords": [
+        120.8904588,
+        31.9827896
+      ],
+      "source": "osm"
+    },
+    "吉隆坡": {
+      "name_cn": "Kuala Lumpur",
+      "coords": [
+        101.6942371,
+        3.1516964
+      ],
+      "source": "osm"
+    },
+    "哈尔滨": {
+      "name_cn": "哈尔滨市",
+      "coords": [
+        126.6276177,
+        45.7593633
+      ],
+      "source": "osm"
+    },
+    "嘉兴": {
+      "name_cn": "嘉兴市",
+      "coords": [
+        120.7510971,
+        30.7474425
+      ],
+      "source": "osm"
+    },
+    "大连": {
+      "name_cn": "大连市",
+      "coords": [
+        121.6098013,
+        38.9130495
+      ],
+      "source": "osm"
+    },
+    "宁波": {
+      "name_cn": "宁波市",
+      "coords": [
+        121.6203873,
+        29.8622194
+      ],
+      "source": "osm"
+    },
+    "广州": {
+      "name_cn": "廣",
+      "coords": [
+        139.5652753,
+        35.4783739
+      ],
+      "source": "osm"
+    },
+    "张掖": {
+      "name_cn": "张掖市",
+      "coords": [
+        99.924947,
+        39.121833
+      ],
+      "source": "osm"
+    },
+    "成都": {
+      "name_cn": "成都市",
+      "coords": [
+        104.063315,
+        30.659867
+      ],
+      "source": "osm"
+    },
+    "扬州": {
+      "name_cn": "揚",
+      "coords": [
+        132.4279737,
+        33.3875929
+      ],
+      "source": "osm"
+    },
+    "揭阳": {
+      "name_cn": "揭阳市",
+      "coords": [
+        116.3680354,
+        23.553156
+      ],
+      "source": "osm"
+    },
+    "敦煌": {
+      "name_cn": "敦煌市",
+      "coords": [
+        94.6607593,
+        40.1411004
+      ],
+      "source": "osm"
+    },
+    "新加坡": {
+      "name_cn": "Singapore",
+      "coords": [
+        103.8519072,
+        1.2899175
+      ],
+      "source": "osm"
+    },
+    "杭州": {
+      "name_cn": "Neghelle Airport",
+      "coords": [
+        39.7525564,
+        5.2758674
+      ],
+      "source": "osm"
+    },
+    "槟城": {
+      "name_cn": "滨城区",
+      "coords": [
+        118.0136196,
+        37.4311343
+      ],
+      "source": "osm"
+    },
+    "武汉": {
+      "name_cn": "武汉市",
+      "coords": [
+        114.2889707,
+        30.5611595
+      ],
+      "source": "osm"
+    },
+    "汕头": {
+      "name_cn": "汕头市",
+      "coords": [
+        116.6775856,
+        23.3563921
+      ],
+      "source": "osm"
+    },
+    "沈阳": {
+      "name_cn": "沈阳市",
+      "coords": [
+        123.4279105,
+        41.8026095
+      ],
+      "source": "osm"
+    },
+    "海北州": {
+      "name_cn": "海北藏族自治州 མཚོ་བཡྣང་བོད་རིགས་རང་སྐྱོང་ཁུལ།",
+      "coords": [
+        100.456559,
+        37.7191885
+      ],
+      "source": "osm"
+    },
+    "海西州": {
+      "name_cn": "海西蒙古族藏族自治州 མཚོ་ནུབ་སོག་རིགས་ཆ་བོད་རིགས་རང་སྐྱོང་ཁུལ།",
+      "coords": [
+        95.4597216,
+        37.0824853
+      ],
+      "source": "osm"
+    },
+    "深圳": {
+      "name_cn": "深圳市",
+      "coords": [
+        114.0545429,
+        22.5445741
+      ],
+      "source": "osm"
+    },
+    "湖州": {
+      "name_cn": "湖",
+      "coords": [
+        115.9095239,
+        29.214162
+      ],
+      "source": "osm"
+    },
+    "漠河": {
+      "name_cn": "漠河市",
+      "coords": [
+        122.7933319,
+        52.9759171
+      ],
+      "source": "osm"
+    },
+    "绍兴": {
+      "name_cn": "绍兴市",
+      "coords": [
+        120.576854,
+        29.9992425
+      ],
+      "source": "osm"
+    },
+    "舟山": {
+      "name_cn": "舟山市",
+      "coords": [
+        122.2030363,
+        29.9873344
+      ],
+      "source": "osm"
+    },
+    "苏州": {
+      "name_cn": "江苏省",
+      "coords": [
+        119.9999999,
+        33.0000001
+      ],
+      "source": "osm"
+    },
+    "衢州": {
+      "name_cn": "渠县",
+      "coords": [
+        107.006232,
+        30.9673488
+      ],
+      "source": "osm"
+    },
+    "西宁": {
+      "name_cn": "西宁市",
+      "coords": [
+        101.440811,
+        36.824463
+      ],
+      "source": "osm"
+    },
+    "运城": {
+      "name_cn": "运城市",
+      "coords": [
+        111.053715,
+        35.218039
+      ],
+      "source": "osm"
+    },
+    "酒泉": {
+      "name_cn": "酒泉市",
+      "coords": [
+        96.4560478,
+        40.2773513
+      ],
+      "source": "osm"
+    },
+    "重庆": {
+      "name_cn": "重庆市",
+      "coords": [
+        106.5842092,
+        29.5697328
+      ],
+      "source": "osm"
+    },
+    "长春": {
+      "name_cn": "长春市",
+      "coords": [
+        125.3180998,
+        43.8844201
+      ],
+      "source": "osm"
+    },
+    "长沙": {
+      "name_cn": "长沙市",
+      "coords": [
+        112.9708685,
+        28.1987538
+      ],
+      "source": "osm"
+    }
+  },
+  "aliases": {
+    "Changchun": "changchun",
+    "Changsha": "changsha",
+    "Chengdu": "chengdu",
+    "Chongqing": "chongqing",
+    "Dalian": "dalian",
+    "Greater London": "london",
+    "Guangzhou": "guangzhou",
+    "Hangzhou": "hangzhou",
+    "Harbin": "harbin",
+    "Huzhou": "huzhou",
+    "Jiaxing": "jiaxing",
+    "Jieyang": "jieyang",
+    "Kuala Lumpur": "吉隆坡",
+    "Lanzhou": "lanzhou",
+    "Lapangan Terbang Antarabangsa Pulau Pinang": "my_pen",
+    "London": "london",
+    "MY PEN": "my_pen",
+    "Mohe": "mohe",
+    "Nanjing": "nanjing",
+    "Nantong": "nantong",
+    "Neghelle Airport": "杭州",
+    "Ningbo": "ningbo",
+    "Quzhou": "quzhou",
+    "Shanghai": "shanghai",
+    "Shantou": "shantou",
+    "Shaoxing": "shaoxing",
+    "Shenyang": "shenyang",
+    "Shenzhen": "shenzhen",
+    "Singapore": "新加坡",
+    "Suzhou": "suzhou",
+    "Wuhan": "wuhan",
+    "Yangzhou": "yangzhou",
+    "Yuncheng": "yuncheng",
+    "Zhoushan": "zhoushan",
+    "上海": "上海",
+    "上海市": "上海",
+    "兰州": "兰州",
+    "兰州市": "lanzhou",
+    "南京": "南京",
+    "南京市": "南京",
+    "南通": "南通",
+    "南通市": "南通",
+    "吉隆坡": "吉隆坡",
+    "哈尔滨": "哈尔滨",
+    "哈尔滨市": "哈尔滨",
+    "嘉兴": "嘉兴",
+    "嘉兴市": "嘉兴",
+    "大连": "大连",
+    "大连市": "大连",
+    "宁波": "宁波",
+    "宁波市": "宁波",
+    "广州": "广州",
+    "广州市": "guangzhou",
+    "廣": "广州",
+    "张掖": "张掖",
+    "张掖市": "张掖",
+    "成都": "成都",
+    "成都市": "成都",
+    "扬州": "扬州",
+    "扬州市": "yangzhou",
+    "揚": "扬州",
+    "揭阳": "揭阳",
+    "揭阳市": "揭阳",
+    "敦煌": "敦煌",
+    "敦煌市": "敦煌",
+    "新加坡": "新加坡",
+    "杭州": "杭州",
+    "杭州市": "hangzhou",
+    "槟城": "槟城",
+    "武汉": "武汉",
+    "武汉市": "武汉",
+    "汕头": "汕头",
+    "汕头市": "汕头",
+    "江苏省": "苏州",
+    "沈阳": "沈阳",
+    "沈阳市": "沈阳",
+    "海北州": "海北州",
+    "海北藏族自治州 མཚོ་བཡྣང་བོད་རིགས་རང་སྐྱོང་ཁུལ།": "海北州",
+    "海西州": "海西州",
+    "海西蒙古族藏族自治州 མཚོ་ནུབ་སོག་རིགས་ཆ་བོད་རིགས་རང་སྐྱོང་ཁུལ།": "海西州",
+    "深圳": "深圳",
+    "深圳市": "深圳",
+    "渠县": "衢州",
+    "湖": "湖州",
+    "湖州": "湖州",
+    "湖州市": "huzhou",
+    "滨城区": "槟城",
+    "漠河": "漠河",
+    "漠河市": "mohe",
+    "绍兴": "绍兴",
+    "绍兴市": "绍兴",
+    "舟山": "舟山",
+    "舟山市": "舟山",
+    "苏州": "苏州",
+    "苏州市": "suzhou",
+    "蘭": "兰州",
+    "衢州": "衢州",
+    "衢州市": "quzhou",
+    "西宁": "西宁",
+    "西宁市": "西宁",
+    "运城": "运城",
+    "运城市": "yuncheng",
+    "酒泉": "酒泉",
+    "酒泉市": "酒泉",
+    "重庆": "重庆",
+    "重庆市": "重庆",
+    "长春": "长春",
+    "长春市": "长春",
+    "长沙": "长沙",
+    "长沙市": "长沙"
+  }
+}
