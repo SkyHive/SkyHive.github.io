@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       '@skyhive/hexo-next-charts':
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: file://home/skyhive/skyhive_project/hexo-next-charts
+        version: file:../hexo-next-charts
       babel-preset-mobx:
         specifier: ^2.0.0
         version: 2.0.0(@babel/core@7.28.5)
@@ -1002,8 +1002,8 @@ packages:
     resolution: {integrity: sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==}
     engines: {node: '>=6'}
 
-  '@skyhive/hexo-next-charts@1.0.1':
-    resolution: {integrity: sha512-z2G77n0PkEhsZtCryZ2PP5bc/o2AFyGYrP3Hkle9xjvJfbQ4xC93oWSGNr9AHFJYZCuHAIov0VfrUbKknLWkBQ==}
+  '@skyhive/hexo-next-charts@file:../hexo-next-charts':
+    resolution: {directory: ../hexo-next-charts, type: directory}
 
   '@szmarczak/http-timer@1.1.2':
     resolution: {integrity: sha512-XIB2XbzHTN6ieIjfIMV9hlVcfPU26s2vafYWQcZHWXHOxiaRZYEDKEwdl129Zyg50+foYV2jCgtrqSA6qNuNSA==}
@@ -6401,7 +6401,7 @@ snapshots:
 
   '@sindresorhus/is@0.14.0': {}
 
-  '@skyhive/hexo-next-charts@1.0.1':
+  '@skyhive/hexo-next-charts@file:../hexo-next-charts':
     dependencies:
       axios: 1.13.5
       p-limit: 3.1.0

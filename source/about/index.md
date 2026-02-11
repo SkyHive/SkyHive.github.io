@@ -49,6 +49,7 @@ travels:
   - { code: "MY PEN", label: "槟城", effect: true } # 混合对象写法
   - "吉隆坡"
   - "新加坡"
+
 ---
 ## 基本属性
 
@@ -56,7 +57,7 @@ travels:
 
 运维工程师，喜欢折腾各种有趣的玩意儿，技术能力如下：
 
-{% echart radar skills %}
+{% echart radar skills height:600px %}
 
 ## 爱好
 
@@ -70,3 +71,4 @@ travels:
 ### 足迹
 
 {% echart map travels title:"我的足迹" map:world-cn height:800px %}
+
