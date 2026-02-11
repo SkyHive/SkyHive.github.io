@@ -1,5 +1,0 @@
-ignoredBuiltDependencies:
-  - '@parcel/watcher'
-  - ejs
-  - hexo-util
-  - highlight.js
