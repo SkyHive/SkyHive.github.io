@@ -65,9 +65,6 @@ importers:
       hexo-neat:
         specifier: ^1.0.9
         version: 1.0.9
-      hexo-next-charts:
-        specifier: file:/home/skyhive/skyhive_gitlab/hexo-next-charts
-        version: '@skyhive/hexo-next-charts@file:../hexo-next-charts'
       hexo-pangu:
         specifier: ^0.4.1
         version: 0.4.1
@@ -1010,9 +1007,6 @@ packages:
 
   '@skyhive/hexo-next-charts@1.1.1':
     resolution: {integrity: sha512-hzibyPE5j2884DTrVr1H8iDUkbGJxcgz/rrRLs5IAdiaLEn82XO628Ee5mVJqncW+/5Nz3RbHnb5/zFSx0af6A==}
-
-  '@skyhive/hexo-next-charts@file:../hexo-next-charts':
-    resolution: {directory: ../hexo-next-charts, type: directory}
 
   '@szmarczak/http-timer@1.1.2':
     resolution: {integrity: sha512-XIB2XbzHTN6ieIjfIMV9hlVcfPU26s2vafYWQcZHWXHOxiaRZYEDKEwdl129Zyg50+foYV2jCgtrqSA6qNuNSA==}
@@ -6395,13 +6389,6 @@ snapshots:
   '@sindresorhus/is@0.14.0': {}
 
   '@skyhive/hexo-next-charts@1.1.1':
-    dependencies:
-      axios: 1.13.5
-      p-limit: 3.1.0
-    transitivePeerDependencies:
-      - debug
-
-  '@skyhive/hexo-next-charts@file:../hexo-next-charts':
     dependencies:
       axios: 1.13.5
       p-limit: 3.1.0
