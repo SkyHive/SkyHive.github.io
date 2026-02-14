@@ -11,7 +11,6 @@ skills:
   - { label: "Shell", value: 60 }
   - { label: "Python", value: 45 }
 
-
 travels:
   - { code: "Shanghai", label: "上海", effect: true } # 自动获取坐标
   - { code: "Hangzhou", label: "杭州", effect: true } # 中文名自动支持
@@ -49,8 +48,8 @@ travels:
   - { code: "MY PEN", label: "槟城", effect: true } # 混合对象写法
   - "吉隆坡"
   - "新加坡"
-
 ---
+
 ## 基本属性
 
 1997 年生人，出生于南京，发迹于上海，现居于杭州，想发财奈何没有能力
@@ -71,4 +70,3 @@ travels:
 ### 足迹
 
 {% echart map travels title:"我的足迹" map:world-cn height:800px %}
-
