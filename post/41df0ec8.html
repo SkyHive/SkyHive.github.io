@@ -1,0 +1,471 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><link href="https://fastly.jsdelivr.net/npm/hexo-tag-common@0.2.0/css/index.css" rel="stylesheet"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Homelab 系列 - Jellyfin | SkyHive's Blog</title><meta name="author" content="SkyHive"><meta name="copyright" content="SkyHive"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="每一个折腾 HomeLab 的兄弟，最终的归宿除了用来 “压泡面” 的各种派，大概率都逃不过这两个词 —— NAS 和 家庭影音。毕竟，辛辛苦苦攒下来的 “学习资料”，总得有个像样的展示柜吧？ 在开源界，Jellyfin 绝对是那个即使你一分钱不花，也能让你体验到 “尊贵 VIP” 待遇的神器。经过多年的调教（被坑）与折腾，这套方案现在的成熟度已经相当高了。"><meta property="og:type" content="article"><meta property="og:title" content="Homelab 系列 - Jellyfin"><meta property="og:url" content="https://blog.skyhive.tech/post/41df0ec8.html"><meta property="og:site_name" content="SkyHive&#39;s Blog"><meta property="og:description" content="每一个折腾 HomeLab 的兄弟，最终的归宿除了用来 “压泡面” 的各种派，大概率都逃不过这两个词 —— NAS 和 家庭影音。毕竟，辛辛苦苦攒下来的 “学习资料”，总得有个像样的展示柜吧？ 在开源界，Jellyfin 绝对是那个即使你一分钱不花，也能让你体验到 “尊贵 VIP” 待遇的神器。经过多年的调教（被坑）与折腾，这套方案现在的成熟度已经相当高了。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://blogpic.skyhive.tech/pic/banner/john-towner.png"><meta property="article:published_time" content="2026-02-04T15:06:10.000Z"><meta property="article:modified_time" content="2026-02-14T03:28:25.558Z"><meta property="article:author" content="SkyHive"><meta property="article:tag" content="jellyfin"><meta property="article:tag" content="nas"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://blogpic.skyhive.tech/pic/banner/john-towner.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Homelab 系列 - Jellyfin",
+  "url": "https://blog.skyhive.tech/post/41df0ec8.html",
+  "image": "https://blogpic.skyhive.tech/pic/banner/john-towner.png",
+  "datePublished": "2026-02-04T15:06:10.000Z",
+  "dateModified": "2026-02-14T03:28:25.558Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "SkyHive",
+      "url": "https://blog.skyhive.tech"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/"><link rel="canonical" href="https://blog.skyhive.tech/post/41df0ec8.html"><link rel="preconnect" href="https://cdn.staticfile.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><meta name="google-site-verification" content="83MwLF836at8faxuiJfSi7o6lPaQSRy2GAPO6kCY1BM"><link rel="stylesheet" href="/css/index.css?v=5.5.1"><link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.7.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.staticfile.net/node-snackbar/0.1.16/snackbar.min.css" media="print" onload='this.media="all"'><link rel="stylesheet" href="https://cdn.staticfile.net/fancyapps-ui/6.0.33/fancybox/fancybox.min.css" media="print" onload='this.media="all"'><script>(() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":"enable","top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":500,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":150,"languages":{"author":"作者: SkyHive","link":"链接: ","source":"来源: SkyHive's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"已切换为繁体中文","cht_to_chs":"已切换为简体中文","day_to_night":"已切换为深色模式","night_to_day":"已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.staticfile.net/egjs-infinitegrid/4.12.0/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE={title:"Homelab 系列 - Jellyfin",isHighlightShrink:!1,isToc:!0,pageType:"post"}</script><link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css"><link rel="stylesheet" href="/css/layout-overrides.css"><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="SkyHive's Blog" type="application/atom+xml"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')</script><link rel="stylesheet" href="https://cdn.staticfile.net/pace/1.2.4/themes/blue/pace-theme-minimal.min.css"><script src="https://cdn.staticfile.net/pace/1.2.4/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/uploads/avatar.jpg" onerror='this.onerror=null,this.src="/img/friend_404.gif"' alt="avatar"></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">50</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-clock"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image:url(https://blogpic.skyhive.tech/pic/banner/john-towner.png)"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SkyHive's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">Homelab 系列 - Jellyfin</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span> 返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-clock"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Homelab 系列 - Jellyfin</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-02-04T15:06:10.000Z" title="发表于 2026-02-04 23:06:10">2026-02-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-14T03:28:25.558Z" title="更新于 2026-02-14 11:28:25">2026-02-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Tech/">技术相关</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;已经过了&quot;,&quot;messageNext&quot;:&quot;天自上次更新，文章内容可能已过时。&quot;,&quot;postUpdate&quot;:&quot;2026-02-14 11:28:25&quot;}" hidden></div><p>每一个折腾 <code>HomeLab</code> 的兄弟，最终的归宿除了用来 “压泡面” 的各种派，大概率都逃不过这两个词 —— <strong><code>NAS</code></strong> 和 <strong><code>家庭影音</code></strong>。毕竟，辛辛苦苦攒下来的 “学习资料”，总得有个像样的展示柜吧？</p><p>在开源界，<a href="https://jellyfin.org"><code>Jellyfin</code></a> 绝对是那个即使你一分钱不花，也能让你体验到 “尊贵 VIP” 待遇的神器。经过多年的调教（被坑）与折腾，这套方案现在的成熟度已经相当高了。</p><span id="more"></span><p>老规矩，先上一张架构图镇楼（没错，AI 画的，看起来是不是特别唬人？）：</p><pre><code class="mermaid">graph TD
+    classDef core fill:#6d28d9,stroke:#a855f7,color:white,stroke-width:2px
+    classDef client fill:#2563eb,stroke:#60a5fa,color:white,stroke-width:2px
+    classDef media fill:#0f766e,stroke:#06b6d4,color:white,stroke-width:2px
+    classDef plugin fill:#c2410c,stroke:#fb923c,color:white,stroke-width:2px
+    classDef external fill:#475569,stroke:#94a3b8,color:white,stroke-width:2px
+    classDef func fill:#1e40af,stroke:#3b82f6,color:white,stroke-width:2px
+
+    subgraph "🌐 客户端层"
+        A[Web客户端]:::client
+        B[移动应用]:::client
+        C[TV端]:::client
+        D[桌面程序]:::client
+    end
+
+    subgraph "🚀 核心服务层"
+        E[API网关]:::core
+        F[认证授权]:::core
+        G[媒体引擎]:::core
+        H[插件管理器]:::core
+    end
+
+    subgraph "🎬 媒体处理层"
+        I[智能转码]:::media
+        J[元数据管理]:::media
+        K[字幕服务]:::media
+        L[章节分析]:::media
+    end
+
+    subgraph "🔌 插件生态"
+        M[主题引擎]:::plugin
+        N[元数据刮削]:::plugin
+        O[通知服务]:::plugin
+        P[播放器扩展]:::plugin
+    end
+
+    subgraph "🔗 外部系统"
+        Q[存储系统]:::external
+        R[直播源]:::external
+        S[DVR服务]:::external
+        T[云同步]:::external
+    end
+
+
+
+    A &amp; B &amp; C &amp; D --&gt; E
+    E --&gt; F &amp; G &amp; H
+    G --&gt; I &amp; J &amp; K &amp; L
+    H --&gt; M &amp; N &amp; O &amp; P
+    G --&gt; Q
+    R --&gt; S
+    G --&gt; T</code></pre><p>从图中可以看到 <code>Jellyfin</code> 的功能特点总结为如下几点：</p><ol><li class="lvl-3"><p><strong>全平台客户端</strong>：Web/手机/TV/桌面，进度云端同步</p></li><li class="lvl-3"><p><strong>实时硬件转码</strong>：NVENC/QSV/VAAPI，带宽自适应</p></li><li class="lvl-3"><p><strong>自动媒体整理</strong>：TMDB 元数据 + 章节点生成，一键刮削海报与字幕</p></li><li class="lvl-3"><p><strong>多用户家庭共享</strong>：分级权限、家长控制、离线缓存</p></li><li class="lvl-3"><p><strong>插件扩展</strong>：主题、通知、第三方元数据，热插拔即装即用</p></li><li class="lvl-3"><p><strong>开源</strong>：本地部署，无数据泄露风险，无需付费</p></li></ol><h3 id="部署"><a class="header-anchor" href="#部署">¶</a> 部署</h3><p>详细的部署方式多如牛毛，官方文档写得也很细。但在 2024 年（或者未来），<strong>Docker</strong> 绝对是首选。为什么？因为我们有洁癖，不想把宿主机搞得乱七八糟。</p><p>直接上 <code>docker-compose.yaml</code>，复制粘贴即可食用：</p><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">jellyfin</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> jellyfin/jellyfin<span class="token punctuation">:</span>10.11.5
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> jellyfin
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> unless<span class="token punctuation">-</span>stopped
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> TZ=Asia/Shanghai
+      <span class="token punctuation">-</span> JELLYFIN_PublishedServerUrl=http<span class="token punctuation">:</span>//&lt;你宿主机 IP 地址<span class="token punctuation">&gt;</span>
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"8096:8096/tcp"</span>
+      <span class="token punctuation">-</span> <span class="token string">"7359:7359/udp"</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> /volume1/mnt/data/jellyfin/config<span class="token punctuation">:</span>/config
+      <span class="token punctuation">-</span> /volume1/mnt/data/jellyfin/cache<span class="token punctuation">:</span>/cache
+      <span class="token comment"># 这里挂载你的媒体文件目录</span>
+      <span class="token punctuation">-</span> /volume1/Documentary<span class="token punctuation">:</span>/media/documentary<span class="token punctuation">:</span>ro
+      <span class="token punctuation">-</span> /volume1/Movie<span class="token punctuation">:</span>/media/movie<span class="token punctuation">:</span>ro
+      <span class="token punctuation">-</span> /volume1/Series<span class="token punctuation">:</span>/media/series<span class="token punctuation">:</span>ro
+      <span class="token punctuation">-</span> /volume1/Villa<span class="token punctuation">:</span>/media/villa<span class="token punctuation">:</span>ro
+    <span class="token comment"># 硬件加速</span>
+    <span class="token comment"># devices:</span>
+    <span class="token comment">#   - /dev/dri:/dev/dri</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="配置"><a class="header-anchor" href="#配置">¶</a> 配置</h3><p>详细的配置文档可以参考 <a href="https://jellyfin.org/docs/general/post-install/setup-wizard/">Jellyfin Post-Install Setup</a> 和 <a href="https://jellyfin.org/docs/general/administration/configuration">Jellyfin Administration Configuration</a>，这里仅记录一些常用的配置。</p><h4 id="面子工程"><a class="header-anchor" href="#面子工程">¶</a> 面子工程</h4><p>俗话说得好，<strong>颜值即正义</strong>。功能再强大，长得像 Windows 98 也是不行的。好在 <code>Jellyfin</code> 底子不错，稍微打扮一下就能 “艳压群芳”。在此基础之上还提供了两个方案：</p><ul class="lvl-0"><li class="lvl-2"><p><a href="https://jellyfin.org/docs/general/clients/css-customization/">自定义 CSS</a></p></li><li class="lvl-2"><p><a href="https://jellyfin.org/docs/general/server/plugins/">插件</a>：这里推荐一个用的比较多的插件 – <a href="https://github.com/danieladov/jellyfin-plugin-skin-manager">Skin Manager</a></p></li></ul><p>我个人目前使用的是自定义 <code>CSS</code> 的方式，轻量且简单，使用别人写好的 <code>CSS</code> 都不需要做什么额外的配置，可参考下方配置</p><pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token atrule"><span class="token rule">@import</span> <span class="token url"><span class="token function">url</span><span class="token punctuation">(</span><span class="token string url">"https://cdn.jsdelivr.net/gh/lscambo13/ElegantFin@main/Theme/ElegantFin-jellyfin-theme-build-latest-minified.css"</span><span class="token punctuation">)</span></span><span class="token punctuation">;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>除了对界面进行美化之外，还有个插件可以在主页 <code>Banner</code> 实现随机推荐，效果也是一级棒。感兴趣的可以移步 <a href="https://github.com/IAmParadox27/jellyfin-plugin-media-bar">Media Bar</a>，这个项目是从 <a href="https://github.com/MakD/Jellyfin-Media-Bar">Jellyfin-Media-Bar</a> Fork 二开而来，配置简单，只需要如下几步即可：</p><ol><li class="lvl-3"><p>将 <code>https://www.iamparadox.dev/jellyfin/plugins/manifest.json</code> 添加至 Plugin Repository</p></li><li class="lvl-3"><p>安装 <code>Media Bar</code> 和 <code>File Transformation</code> 两个插件（注意，<code>Jellyfin</code> 的版本要求在 <code>10.10.7</code> 以上）</p></li><li class="lvl-3"><p>重启 <code>Jellyfin</code> 服务</p></li></ol><p>这时你就能够在首页看到自定义的 <code>CSS</code> 和 <code>Media Bar</code> 的效果了</p><p>下面放几张图给大家看看效果</p><p><img src="https://blogpic.skyhive.tech/pic/jellyfin/banner.png" alt="首页 Banner"><br><img src="https://blogpic.skyhive.tech/pic/jellyfin/movie_wall.png" alt="电影墙"><br><img src="https://blogpic.skyhive.tech/pic/jellyfin/detail_page.png" alt="美化效果"></p><h4 id="媒体库配置"><a class="header-anchor" href="#媒体库配置">¶</a> 媒体库配置</h4><p>按照我个人的习惯，将媒体库分成了四个部分 —— <code>电影</code>、<code>电视剧</code>、<code>纪录片</code>，以及那个<strong>只可意会不可言传</strong>的 <code>九公斤</code>。分别对应 <code>Movie</code>、<code>Series</code>、<code>Documentary</code> 以及 <code>Villa</code> 四个挂载进来的目录。</p><blockquote><p><code>九公斤</code> 到底是什么？咳咳，这是一个关于<strong>成人向</strong>的深奥话题，为了保持本文的纯洁性，咱们留到后续的某篇文章中再单独探讨。</p></blockquote><p>说回正经的，其实你大可以将 <code>纪录片</code> 和 <code>电视剧</code> 合并在一个目录里，由于我在存储的时候就已经分开，这里我也分开配置了。</p><p>媒体库的基础配置如下：</p><ul class="lvl-0"><li class="lvl-2"><p>首选下载语言：<code>Chinese</code></p></li><li class="lvl-2"><p>国家 / 地区：<code>People's Republic of China</code></p></li><li class="lvl-2"><p>优先使用内置的标题而不是文件名：<strong>开启</strong></p></li><li class="lvl-2"><p>启用实时监控：<strong>开启</strong></p></li><li class="lvl-2"><p>自动添加到合集：<strong>开启</strong></p></li><li class="lvl-2"><p>自动从互联网获取元数据并刷新：<strong>每 30 天</strong></p></li><li class="lvl-2"><p>元数据存储方式：<strong>NFO</strong></p></li><li class="lvl-2"><p>将媒体图像保存到媒体所在文件夹：<strong>开启</strong></p></li><li class="lvl-2"><p>保存字幕到媒体所在文件夹：<strong>开启</strong></p></li></ul><p>除此之外，还需要额外再配置两个插件来完成 <strong>刮削</strong> 和 <strong>字幕下载</strong> 的功能</p><ul class="lvl-0"><li class="lvl-2"><p><a href="https://github.com/cxfksword/jellyfin-plugin-metashark">Metashark</a></p></li><li class="lvl-2"><p><a href="https://github.com/91270/MeiamSubtitles">MeiamSubtitles</a></p></li></ul><blockquote><p>想要拥有一面完美的 “海报墙”，光靠插件是不够的。<strong>文件的命名规范</strong>、<strong>目录结构</strong>以及 <strong>刮削的调教</strong> 都是一门玄学。</p><p>这部分内容实在太过于庞大（且充满了踩坑血泪史），所以我决定将其剥离出来，作为 <code>HomeLab</code> 系列的独立篇章。</p><p>今天，为了让大家先跑起来，我们只进行最基础的<em>能用就行</em>的配置。</p></blockquote><p>先说两个插件的安装：</p><ol><li class="lvl-3"><p>Step1：分别在 Plugin Repository 添加如下地址：</p><ul class="lvl-2"><li class="lvl-5">MetaShark（由国内加速地址和国外地址，大家按需选择）：<ul class="lvl-4"><li class="lvl-7">国内加速地址：<code>https://ghfast.top/https://github.com/cxfksword/jellyfin-plugin-metashark/releases/download/manifest/manifest_cn.json</code></li><li class="lvl-7">国外地址：<code>https://github.com/cxfksword/jellyfin-plugin-metashark/releases/download/manifest/manifest.json</code></li></ul></li><li class="lvl-5">MeiamSubtitles：<code>https://github.com/91270/MeiamSubtitles.Release/raw/main/Plugin/manifest-stable.json</code></li></ul></li><li class="lvl-3"><p>Step2：安装插件 – <code>MetaShark</code>、<code>MeiamSub.Thunder</code> 和 <code>MeiamSub.Shooter</code></p></li><li class="lvl-3"><p>Step3：重启 <code>Jellyfin</code> 服务</p></li></ol><p>在媒体库中的配置就可以加入这两个插件相关的配置了：</p><ul class="lvl-0"><li class="lvl-2"><p>字幕下载器勾选：<code>MeiamSub.Thunder</code>、<code>MeiamSub.Shooter</code></p></li><li class="lvl-2"><p>元数据下载器和图片获取器勾选：<code>MetaShark</code></p></li></ul><h4 id="转码配置"><a class="header-anchor" href="#转码配置">¶</a> 转码配置</h4><p><code>Jellyfin</code> 支持多种解码方式，具体可参考 <a href="https://jellyfin.org/docs/general/post-install/transcoding/hardware-acceleration/">Jellyfin Transcoding</a> 中的内容，我们这里简单说说配置。根据官方文档提供的内容，整理出如下的硬件加速方案，大家根据你们 Jellyfin 部署的平台进行选择。</p><table><thead><tr><th>显卡品牌</th><th>推荐加速方式 (Linux)</th><th>推荐加速方式 (Windows)</th></tr></thead><tbody><tr><td>Intel (核显 / 独显)</td><td>QSV (Quick Sync) 或 VA - API</td><td>QSV</td></tr><tr><td>NVIDIA (英伟达)</td><td>NVENC/NVDEC</td><td>NVENC</td></tr><tr><td>AMD</td><td>VA-API</td><td>AMF</td></tr><tr><td>Apple (Mac)</td><td>Video Toolbox</td><td>Video Toolbox</td></tr><tr><td>Rockchip (瑞芯微)</td><td>RKMPP</td><td>N/A</td></tr></tbody></table><p>这里还有一个概念，即 <strong>完全加速</strong> 和 <strong>部分加速</strong>。一个完整的转码过程包含多个阶段，我们的目标是让这些阶段全都使用 GPU 去完成，这样不仅节省了 CPU 的资源，同时也节省了 GPU 与 CPU 之间的数据交互（即 <strong>零拷贝</strong>），转码阶段参考如下：</p><ol><li class="lvl-3"><p>解码（Decode）：读取原视频</p></li><li class="lvl-3"><p>处理（Scaling/Tone-mapping）：缩放分辨率、<code>HDR</code> 转 <code>SDR</code> 色彩映射</p></li><li class="lvl-3"><p>编码（Encode）：压缩成目标格式</p></li></ol><p>但是某些老的显卡只支持解码而不支持编码，这就是 <strong>部分加速</strong>。</p><div class="note warning no-icon flat"><p><strong>对于一些限制和建议：</strong></p><ul class="lvl-0"><li class="lvl-2"><strong>H.264 10-bit</strong>：官网文档里提到的几乎所有的 Intel、NVIDIA 和 AMD 显卡都不支持 <code>H.264 10-bit</code> 的硬件编码，如果遇到这种视频，系统会自动回退到 CPU 解码。建议优先使用 <code>H.265 (HEVC) 10-bit</code> 格式</li><li class="lvl-2"><strong>HDR 色彩映射</strong>：如果你的设备是 HDR 的，但播放端（如旧手机或电脑）不支持 HDR，Jellyfin 可以通过显卡进行 <strong><a href="https://jellyfin.org/docs/general/post-install/transcoding/hardware-acceleration/#hardware-accelerated-tone-mapping">硬件色调映射 (Tone-mapping)</a></strong>，将 <code>HDR</code> 画面完美转换为 <code>SDR</code>，防止画面发灰</li><li class="lvl-2"><strong>树莓派用户</strong>：文档提到由于<strong>树莓派 5</strong> 删除了硬件编码器，Jellyfin 已经弃用了对树莓派的 <code>V4L2</code> 硬件加速支持，未来可能会出现兼容性问题</li></ul></div><div class="note success no-icon flat"><p><strong>一些性能优化</strong>：</p><ul class="lvl-0"><li class="lvl-2">内存： 如果你使用的是 Intel 或 AMD 的核显，建议组建双通道内存，这能显著提升显存带宽。</li><li class="lvl-2">缓存： 转码会产生大量临时文件，建议将转码暂存目录设置在 <code>SSD</code> 上，避免机械硬盘成为瓶颈。</li></ul></div><p>说到这里，不得不提一下我那令人心碎的配置。</p><p>虽然我的 CPU <strong>i3-7300T</strong> 自带了相当不错的核显，本应在转码界大杀四方。但遗憾的是，当初为了追求 Server 级的稳定性，我选了 <strong>Supermicro X11SSL-F</strong> 主板。这块主板搭载的 <code>Intel® C232</code> 芯片组，极其高冷地屏蔽了核显功能。</p><p>所以，上述那些酷炫的硬件加速功能，我一个都用不了。每当我在外面看 4K 视频时，我的 CPU 都在机箱里默默流泪（疯狂满载）。<strong>大家装机时千万避坑！</strong></p><h4 id="Nginx-配置"><a class="header-anchor" href="#Nginx-配置">¶</a>Nginx 配置</h4><p>如果需要使用域名进行访问，可以参考官网文档 – <a href="https://jellyfin.org/docs/general/post-install/networking/reverse-proxy/nginx#nginx-from-a-subdomain-jellyfinexampleorg">Nginx 配置</a></p><p>这一段配置比较长，如果你看着眼晕，可以直接 CV 大法（Copy &amp; Paste）。</p><details><summary>点击展开查看 Nginx 详细配置</summary><pre class="line-numbers language-nginx" data-language="nginx"><code class="language-nginx"><span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">80</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">listen</span> [::]:80</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span> jellyfin.skyhive.tech</span><span class="token punctuation">;</span>
+
+    <span class="token comment"># Uncomment to redirect HTTP to HTTPS</span>
+    <span class="token directive"><span class="token keyword">return</span> <span class="token number">301</span> https://<span class="token variable">$host</span><span class="token variable">$request_uri</span></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token directive"><span class="token keyword">server</span></span> <span class="token punctuation">{</span>
+    <span class="token directive"><span class="token keyword">listen</span> <span class="token number">443</span> ssl http2</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">listen</span> [::]:443 ssl http2</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">server_name</span> jellyfin.skyhive.tech</span><span class="token punctuation">;</span>
+
+<span class="token comment">#NGINX_START</span>
+
+
+    <span class="token comment">## The default `client_max_body_size` is 1M, this might not be enough for some posters, etc.</span>
+    <span class="token directive"><span class="token keyword">client_max_body_size</span> <span class="token number">100M</span></span><span class="token punctuation">;</span>
+
+    <span class="token comment"># use a variable to store the upstream proxy</span>
+    <span class="token comment"># in this example we are using a hostname which is resolved via DNS</span>
+    <span class="token comment"># (if you aren't using DNS remove the resolver line and change the variable to point to an IP address e.g `set $jellyfin 127.0.0.1`)</span>
+    <span class="token directive"><span class="token keyword">set</span> <span class="token variable">$jellyfin</span> &lt;JELLYFIN_IP&gt;</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">resolver</span> 127.0.0.1 valid=30</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">ssl_certificate</span> /etc/nginx/ssl/full.pem</span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">ssl_certificate_key</span> /etc/nginx/ssl/key.pem</span><span class="token punctuation">;</span>
+    <span class="token comment">#include /etc/letsencrypt/options-ssl-nginx.conf;</span>
+    <span class="token comment">#ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;</span>
+    <span class="token directive"><span class="token keyword">add_header</span> Strict-Transport-Security <span class="token string">"max-age=31536000"</span> always</span><span class="token punctuation">;</span>
+    <span class="token comment">#ssl_trusted_certificate /etc/letsencrypt/live/DOMAIN_NAME/chain.pem;</span>
+    <span class="token comment">#ssl_stapling on;</span>
+    <span class="token comment">#ssl_stapling_verify on;</span>
+
+    <span class="token comment"># Security / XSS Mitigation Headers</span>
+    <span class="token comment"># NOTE: X-Frame-Options may cause issues with the webOS app</span>
+    <span class="token directive"><span class="token keyword">add_header</span> X-Frame-Options <span class="token string">"SAMEORIGIN"</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">add_header</span> X-XSS-Protection <span class="token string">"1; mode=block"</span></span><span class="token punctuation">;</span>
+    <span class="token directive"><span class="token keyword">add_header</span> X-Content-Type-Options <span class="token string">"nosniff"</span></span><span class="token punctuation">;</span>
+
+    <span class="token comment"># Content Security Policy</span>
+    <span class="token comment"># See: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP</span>
+    <span class="token comment"># Enforces https content and restricts JS/CSS to origin</span>
+    <span class="token comment"># External Javascript (such as cast_sender.js for Chromecast) must be whitelisted.</span>
+    <span class="token comment"># NOTE: The default CSP headers may cause issues with the webOS app</span>
+    <span class="token comment">#add_header Content-Security-Policy "default-src https: data: blob: http://image.tmdb.org; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/cv/js/sender/v1/cast_sender.js https://www.gstatic.com/eureka/clank/95/cast_sender.js https://www.gstatic.com/eureka/clank/96/cast_sender.js https://www.gstatic.com/eureka/clank/97/cast_sender.js https://www.youtube.com blob:; worker-src 'self' blob:; connect-src 'self'; object-src 'none'; frame-ancestors 'self'";</span>
+
+
+    <span class="token directive"><span class="token keyword">location</span> = /</span> <span class="token punctuation">{</span>
+        <span class="token directive"><span class="token keyword">return</span> <span class="token number">302</span> http://<span class="token variable">$host</span>/web/</span><span class="token punctuation">;</span>
+        <span class="token comment">#return 302 https://$host/web/;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token directive"><span class="token keyword">location</span> /</span> <span class="token punctuation">{</span>
+        <span class="token comment"># Proxy main Jellyfin traffic</span>
+        <span class="token directive"><span class="token keyword">proxy_pass</span> http://<span class="token variable">$jellyfin</span>:8096</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> Host <span class="token variable">$host</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Real-IP <span class="token variable">$remote_addr</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-For <span class="token variable">$proxy_add_x_forwarded_for</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-Proto <span class="token variable">$scheme</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-Protocol <span class="token variable">$scheme</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-Host <span class="token variable">$http_host</span></span><span class="token punctuation">;</span>
+
+        <span class="token comment"># Disable buffering when the nginx proxy gets very resource heavy upon streaming</span>
+        <span class="token directive"><span class="token keyword">proxy_buffering</span> <span class="token boolean">off</span></span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment"># location block for /web - This is purely for aesthetics so /web/#!/ works instead of having to go to /web/index.html/#!/</span>
+    <span class="token directive"><span class="token keyword">location</span> = /web/</span> <span class="token punctuation">{</span>
+        <span class="token comment"># Proxy main Jellyfin traffic</span>
+        <span class="token directive"><span class="token keyword">proxy_pass</span> http://<span class="token variable">$jellyfin</span>:8096/web/index.html</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> Host <span class="token variable">$host</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Real-IP <span class="token variable">$remote_addr</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-For <span class="token variable">$proxy_add_x_forwarded_for</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-Proto <span class="token variable">$scheme</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-Protocol <span class="token variable">$scheme</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-Host <span class="token variable">$http_host</span></span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token directive"><span class="token keyword">location</span> /socket</span> <span class="token punctuation">{</span>
+        <span class="token comment"># Proxy Jellyfin Websockets traffic</span>
+        <span class="token directive"><span class="token keyword">proxy_pass</span> http://<span class="token variable">$jellyfin</span>:8096</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_http_version</span> 1.1</span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> Upgrade <span class="token variable">$http_upgrade</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> Connection <span class="token string">"upgrade"</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> Host <span class="token variable">$host</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Real-IP <span class="token variable">$remote_addr</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-For <span class="token variable">$proxy_add_x_forwarded_for</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-Proto <span class="token variable">$scheme</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-Protocol <span class="token variable">$scheme</span></span><span class="token punctuation">;</span>
+        <span class="token directive"><span class="token keyword">proxy_set_header</span> X-Forwarded-Host <span class="token variable">$http_host</span></span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></details><hr><h3 id="最后碎碎念"><a class="header-anchor" href="#最后碎碎念">¶</a> 最后碎碎念</h3><p>折腾 Jellyfin 的过程，其实就是不断满足自己收藏癖的过程。看着海报墙一点点填满，那种成就感或许只有 Homelab 玩家才懂。</p><p>那么家庭影音的部分肯定也不会就到此为止了，刮削才是重头戏，未来还会继续更新以下内容：</p><ol><li class="lvl-4"><p><strong>从入门到入土：Jellyfin 完美刮削指南</strong>：教你如何整治那些乱七八糟的文件名。</p></li><li class="lvl-4"><p><strong>Metashark 调教手册</strong>：让你的海报墙不再有 “缺如”。</p></li><li class="lvl-4"><p><strong>神秘的 九公斤 目录</strong>：教育资料如何刮削整理？</p></li></ol><p>别急，后续慢慢更新 🤫。</p></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.skyhive.tech">SkyHive</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.skyhive.tech/post/41df0ec8.html">https://blog.skyhive.tech/post/41df0ec8.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.skyhive.tech" target="_blank">SkyHive's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/jellyfin/">jellyfin</a><a class="post-meta__tags" href="/tags/nas/">nas</a></div><div class="post-share"><div class="social-share" data-image="https://blogpic.skyhive.tech/pic/banner/john-towner.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.staticfile.net/butterfly-extsrc/1.1.6/sharejs/dist/css/share.min.css" media="print" onload='this.media="all"'><script src="https://cdn.staticfile.net/butterfly-extsrc/1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/uploads/wechatpay.jpg" target="_blank"><img class="post-qr-code-img" src="/uploads/wechatpay.jpg" alt="wechat"></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/uploads/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/uploads/alipay.jpg" alt="alipay"></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/post/11841089.html" title="HomeLab 系列 - VPN"><img class="cover" src="https://blogpic.skyhive.tech/pic/banner/john-towner.png" onerror='onerror=null,src="/img/404.jpg"' alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">HomeLab 系列 - VPN</div></div><div class="info-2"><div class="info-item-1">原本路由器上的 Openwrt 已经自带了 OpenVPN Server，但是最近有需要开多账号给同事来访问家里的服务器资源，索性就稍稍改造一下，让 OpenVPN 支持多用户登录，顺便结合上一篇 HomeLab 系列 - 认证 (上) 用 LLDAP 管理用户。 ¶ 选型 OpenVPN 是一个老牌的开源 VPN 系统了，中心化的网络要求你必须得有一个公网 IP 地址，如果没有 IP 地址的可以尝试使用 Zerotier 这种解决方案。 那么言归正传，OpenVPN 和 OpenVPN-AS(Access Server) 的部署在网上有很多，简单说下区别： 特性 OpenVPN (社区版) OpenVPN Access Server (企业版) 核心性质 开源的底层协议和软件 基于开源核心的商业产品 授权模式 完全免费 按并发连接数收费，提供免费 2 个连接 安装配置 复杂：手动编辑配置文件、管理证书、设置路由和防火墙。 极简：基于 Web 的图形化界面，几分钟内即可完成部署。 用户管理 手动为每个用户生成证书和配置文件。 内置用户管理系统，支持本地...</div></div></div></a></nav><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/uploads/avatar.jpg" onerror='this.onerror=null,this.src="/img/friend_404.gif"' alt="avatar"></div><div class="author-info-name">SkyHive</div><div class="author-info-description">菜鸡运维一枚</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">50</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" href="https://github.com/skyhive"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/skyhive" target="_blank" title="Github"><i class="fab fa-github" style="color:#24292e"></i></a><a class="social-icon" href="mailto:skyhive35@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color:#4a7dbe"></i></a><a class="social-icon" href="https://blog.skyhive.tech/atom.xml" target="_blank"><i class="fas fa-rss"></i></a><a class="social-icon" href="https://www.xiaohongshu.com/user/profile/6723a94c000000001d02d7db" target="_blank" title="Red Note"><i class="fas fa-book" style="color:#d70000"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的小站，这里会分享我的一些技术总结，以及生活日常~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2"><span class="toc-number">1.</span> <span class="toc-text">部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%AD%90%E5%B7%A5%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">面子工程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AA%92%E4%BD%93%E5%BA%93%E9%85%8D%E7%BD%AE"><span class="toc-number">2.2.</span> <span class="toc-text">媒体库配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AC%E7%A0%81%E9%85%8D%E7%BD%AE"><span class="toc-number">2.3.</span> <span class="toc-text">转码配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Nginx-%E9%85%8D%E7%BD%AE"><span class="toc-number">2.4.</span> <span class="toc-text">Nginx 配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E7%A2%8E%E7%A2%8E%E5%BF%B5"><span class="toc-number">3.</span> <span class="toc-text">最后碎碎念</span></a></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>Homelab</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/41df0ec8.html" title="Homelab 系列 - Jellyfin">Homelab 系列 - Jellyfin</a><time datetime="2026-02-04T15:06:10.000Z" title="发表于 2026-02-04 23:06:10">2026-02-04</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/41df0ec8.html" title="Homelab 系列 - Jellyfin">Homelab 系列 - Jellyfin</a><time datetime="2026-02-04T15:06:10.000Z" title="发表于 2026-02-04 23:06:10">2026-02-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/11841089.html" title="HomeLab 系列 - VPN">HomeLab 系列 - VPN</a><time datetime="2025-11-03T02:13:13.000Z" title="发表于 2025-11-03 10:13:13">2025-11-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cb650389.html" title="HomeLab 系列 - 认证 (上)">HomeLab 系列 - 认证 (上)</a><time datetime="2025-10-30T06:40:20.000Z" title="发表于 2025-10-30 14:40:20">2025-10-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/3bd9168d.html" title="2025 大马榴莲季全攻略">2025 大马榴莲季全攻略</a><time datetime="2025-07-14T15:07:47.000Z" title="发表于 2025-07-14 23:07:47">2025-07-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/58a7bd86.html" title="2025 青甘大环线游记">2025 青甘大环线游记</a><time datetime="2025-06-22T01:57:54.000Z" title="发表于 2025-06-22 09:57:54">2025-06-22</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2017 - 2026 By SkyHive</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.1"></script><script src="/js/main.js?v=5.5.1"></script><script src="https://cdn.staticfile.net/fancyapps-ui/6.0.33/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.staticfile.net/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.staticfile.net/node-snackbar/0.1.16/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.staticfile.net/mermaid/11.12.0/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://comment.skyhive.tech/',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.staticfile.net/waline/2.9.1/waline.css')
+        .then(() => import('https://cdn.staticfile.net/waline/2.9.1/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !true) {
+    if (true) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script src="https://cdn.staticfile.net/pjax/0.2.8/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span> 数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"></div><hr><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.1"></script></div></div><script src="https://fastly.jsdelivr.net/npm/hexo-tag-common@0.2.0/js/index.js"></script></body></html>
