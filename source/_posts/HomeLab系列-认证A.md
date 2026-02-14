@@ -5,9 +5,9 @@ abbrlink: cb650389
 date: 2025-10-30 14:40:20
 categories: 技术相关
 tags:
-- lldap
-- authelia
-- auth
+  - lldap
+  - authelia
+  - auth
 ---
 
 其实不管是在家里还是在企业里都有一个绕不过去的问题 -- 认证（~~当然如果你在家里所有的系统都只用一个账号，当就不用看这篇文章了~~）,过去的一段时间内我都是使用本地帐号游走在各个系统。由于系统职能不同，各个系统的账号也不尽相同，例如 Confluence、Gitea 这类我会创建自己的用户账号，但是 Zabbix、Grafana 这类监控系统我就会直接用默认的 Admin 账号（我承认这是习惯不好），但是如果家庭中不止一个用户呢，如果你的这些服务还需要开放到公网让更多人使用呢？
@@ -28,12 +28,12 @@ tags:
 graph TB
     %% 用户访问层
     User[用户]
-    
+
     %% 应用系统层
     App1[支持 LDAP 的应用<br/>e.g. Confluence, Jellyfin]
     App2[仅支持 SSO 的应用<br/>e.g. Cloudreve, Immich]
     App3[其他支持 LDAP 的系统<br/>e.g. VPN, 文件服务器]
-    
+
     %% Authelia 内部组件
     subgraph Authelia["Authelia - SSO 服务"]
         A_Portal[Web Portal<br/>登录界面]
@@ -42,23 +42,23 @@ graph TB
         A_Session[会话管理]
         A_SSO[SSO 协议处理<br/>OIDC/OAuth2]
     end
-    
+
     %% LLDAP 服务
     LLDAP[LLDAP<br/>轻量级 LDAP 服务]
     LLDAP_UI[Web UI 管理界面]
-    
+
     %% 数据存储层
     UserDB[(用户数据库)]
-    
+
     %% 连接关系
     User --> App1
     User --> App2
     User --> App3
-    
+
     %% LDAP 认证流
     App1 -->|LDAP 绑定/认证| LLDAP
     App3 -->|LDAP 协议| LLDAP
-    
+
     %% SSO 认证流
     App2 -->|重定向到 SSO| A_Portal
     A_Portal --> A_Auth
@@ -67,18 +67,18 @@ graph TB
     A_2FA --> A_Session
     A_Session --> A_SSO
     A_SSO -->|返回令牌| App2
-    
+
     %% 管理关系
     LLDAP_UI -->|用户管理| LLDAP
     LLDAP -->|读写数据| UserDB
-    
+
     %% 深色模式友好的样式定义
     classDef user fill:#1e3a5f,stroke:#4fc3f7,stroke-width:2px,color:#ffffff
     classDef app fill:#4527a0,stroke:#b388ff,stroke-width:2px,color:#ffffff
     classDef service fill:#1b5e20,stroke:#69f0ae,stroke-width:2px,color:#ffffff
     classDef component fill:#37474f,stroke:#ffd54f,stroke-width:1px,color:#ffffff
     classDef storage fill:#bf360c,stroke:#ffab91,stroke-width:2px,color:#ffffff
-    
+
     class User user
     class App1,App2,App3 app
     class Authelia,LLDAP service
@@ -117,28 +117,28 @@ services:
       #- "$PWD/lldap_data:/data"
     environment:
       - TZ=Asia/Shanghai
-      - LLDAP_JWT_SECRET='y1,Qmy8TPc4I^7xV,rE&uNh43oyXW/e|'
-      - LLDAP_KEY_SEED='[3W/lTqN.H5||gCKrFDlu|f.wpMT):e-'
+      - LLDAP_JWT_SECRET='<JWT_SECRET>'
+      - LLDAP_KEY_SEED='<KEY_SEED>'
       - LLDAP_LDAP_BASE_DN=dc=skyhive,dc=com
-      - LLDAP_LDAP_USER_PASS=adminPas$waord
+      - LLDAP_LDAP_USER_PASS=<ADMIN_PASSWORD>
 ```
 
 一些说明：
 
-* ports
-  * `3890`：默认的 ldap 端口，即不含 ssl 加密
-  * `6360`：ldaps（ldap over ssl），开启需要同时设置 `env LLDAP_LDAPS_OPTIONS__ENABLED=true`
-  * `1710`：web ui 端口
-* env:
-  * `LLDAP_JWT_SECRET`：可以使用项目根目录中 `generate_secrets.sh` 生成
-  * `LLDAP_KEY_SEED`：可以使用项目根目录中 `generate_secrets.sh` 生成
-  * `LLDAP_LDAP_BASE_DN`：LDAP BASE Domain，一般和你的网站域名区分开来
-  * `LLDAP_LDAP_USER_PASS`：管理员密码
+- ports
+  - `3890`：默认的 ldap 端口，即不含 ssl 加密
+  - `6360`：ldaps（ldap over ssl），开启需要同时设置 `env LLDAP_LDAPS_OPTIONS__ENABLED=true`
+  - `1710`：web ui 端口
+- env:
+  - `LLDAP_JWT_SECRET`：可以使用项目根目录中 `generate_secrets.sh` 生成
+  - `LLDAP_KEY_SEED`：可以使用项目根目录中 `generate_secrets.sh` 生成
+  - `LLDAP_LDAP_BASE_DN`：LDAP BASE Domain，一般和你的网站域名区分开来
+  - `LLDAP_LDAP_USER_PASS`：管理员密码
 
 另外 `LLDAP` 默认将数据存储在 `sqlite` 中，如果需要使用 `MySQL` 或者 `Postgresql` 作为后端数据库，则需要配置如下 `env`：
 
-* LLDAP_DATABASE_URL=mysql://mysql-user:password@mysql-server/my-database
-* LLDAP_DATABASE_URL=postgres://postgres-user:password@postgres-server/my-database
+- LLDAP_DATABASE_URL=mysql://mysql-user:password@mysql-server/my-database
+- LLDAP_DATABASE_URL=postgres://postgres-user:password@postgres-server/my-database
 
 ### Authelia
 
@@ -153,29 +153,29 @@ services:
 ```yaml
 services:
   authelia:
-    container_name: 'authelia'
-    image: 'docker.io/authelia/authelia:latest'
-    restart: 'unless-stopped'
+    container_name: "authelia"
+    image: "docker.io/authelia/authelia:latest"
+    restart: "unless-stopped"
     ports:
       - 9091:9091
     networks:
       authelia: {}
     environment:
-      TZ: 'Asia/Shanghai'
+      TZ: "Asia/Shanghai"
     volumes:
-      - '${PWD}/config:/config'
-      - '${PWD}/data:/data'
+      - "${PWD}/config:/config"
+      - "${PWD}/data:/data"
 
   redis:
-    image: 'redis:alpine'
-    container_name: 'redis'
+    image: "redis:alpine"
+    container_name: "redis"
     volumes:
-      - './redis:/data'
+      - "./redis:/data"
     networks:
       authelia: {}
-    restart: 'unless-stopped'
+    restart: "unless-stopped"
     environment:
-      TZ: 'Asia/Shanghai'
+      TZ: "Asia/Shanghai"
 
 networks:
   authelia:
@@ -190,20 +190,20 @@ networks:
 ###############################################################
 
 server:
-  address: 'tcp://:9091'
+  address: "tcp://:9091"
   endpoints:
     authz:
       auth-request:
-        implementation: 'AuthRequest'
+        implementation: "AuthRequest"
 log:
-  level: 'debug'
+  level: "debug"
 
 totp:
-  issuer: 'authelia.com'
+  issuer: "authelia.com"
 
 identity_validation:
   reset_password:
-    jwt_secret: 'AqU4EmS3IDBEDLcK*****************ZIqIHdPYiMwF1LY8OYRr'
+    jwt_secret: "AqU4EmS3IDBEDLcK*****************ZIqIHdPYiMwF1LY8OYRr"
 
 # duo_api:
 #  hostname: api-123456789.example.com
@@ -216,50 +216,50 @@ authentication_backend:
   #    path: '/config/users_database.yml'
   #
   ldap: # 上面部署的 lldap 配置
-    implementation: 'lldap'
-    address: 'ldap://192.168.2.12:3890' 
-    base_dn: 'dc=skyhive,dc=com'
-    user: 'UID=lldap,ou=people,dc=skyhive,dc=com'
-    password: '\P)F*******kST'
+    implementation: "lldap"
+    address: "ldap://<INTERNAL_IP>:3890"
+    base_dn: "dc=skyhive,dc=com"
+    user: "UID=lldap,ou=people,dc=skyhive,dc=com"
+    password: "<LDAP_PASSWORD>"
 
 access_control:
-  default_policy: 'deny'
+  default_policy: "deny"
   rules:
     # Rules applied to everyone
-    - domain: '*.skyhive.tech'
-      policy: 'bypass'
+    - domain: "*.skyhive.tech"
+      policy: "bypass"
 
 session:
   # This secret can also be set using the env variables AUTHELIA_SESSION_SECRET_FILE
-  secret: 'XJQds3WCadzsNHY8Cq*****************GJ2m6nu9HbyX07Z2crqbRO3rXK'
+  secret: "<SESSION_SECRET>"
 
   cookies:
-    - name: 'authelia_session'
-      domain: 'skyhive.tech'  # Should match whatever your root protected domain is
-      authelia_url: 'https://auth.skyhive.tech'   # authelia sso 地址
-      default_redirection_url: 'https://confluence.skyhive.tech' # 这里是当你直接登录 auth.skyhive.tech 后跳转的网站页面
-      expiration: '1 hour'
-      inactivity: '5 minutes'
+    - name: "authelia_session"
+      domain: "skyhive.tech" # Should match whatever your root protected domain is
+      authelia_url: "https://auth.skyhive.tech" # authelia sso 地址
+      default_redirection_url: "https://confluence.skyhive.tech" # 这里是当你直接登录 auth.skyhive.tech 后跳转的网站页面
+      expiration: "1 hour"
+      inactivity: "5 minutes"
 
   redis:
-    host: 'redis'
+    host: "redis"
     port: 6379
     # This secret can also be set using the env variables AUTHELIA_SESSION_REDIS_PASSWORD_FILE
     # password: authelia
 
 regulation:
   max_retries: 3
-  find_time: '2 minutes'
-  ban_time: '5 minutes'
+  find_time: "2 minutes"
+  ban_time: "5 minutes"
 
 storage:
-  encryption_key: 'd4yohU2v2fzwIoObdGY1****************L5wbgMT227XvmJad1z'
+  encryption_key: "d4yohU2v2fzwIoObdGY1****************L5wbgMT227XvmJad1z"
   local:
-    path: '/data/db.sqlite3'
+    path: "/data/db.sqlite3"
 
 notifier:
   filesystem:
-    filename: '/config/notification.txt'
+    filename: "/config/notification.txt"
 ```
 
 如果你没有对接认证后端的话，可以使用本地账户，用 `config/users_database.yml` 来进行声明用户配置（同时要在上述 `configuration.yml` 中配置 authentication_backend 为 file，详见：[First Factor](https://www.authelia.com/configuration/first-factor/file/)），users 的配置参考如下：
@@ -294,7 +294,7 @@ server {
   ssl_session_timeout  10m;
   add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
-  set $upstream http://192.168.2.12:9091;
+  set $upstream http://<INTERNAL_IP>:9091;
 
   location / {
       include /etc/nginx/snippets/proxy.conf;

@@ -178,10 +178,10 @@ services:
 先说两个插件的安装：
 
 1. Step1：分别在 Plugin Repository 添加如下地址：
-    * MetaShark（由国内加速地址和国外地址，大家按需选择）：
-        - 国内加速地址：`https://ghfast.top/https://github.com/cxfksword/jellyfin-plugin-metashark/releases/download/manifest/manifest_cn.json`
-        - 国外地址：`https://github.com/cxfksword/jellyfin-plugin-metashark/releases/download/manifest/manifest.json`
-    * MeiamSubtitles：`https://github.com/91270/MeiamSubtitles.Release/raw/main/Plugin/manifest-stable.json`
+   - MetaShark（由国内加速地址和国外地址，大家按需选择）：
+     - 国内加速地址：`https://ghfast.top/https://github.com/cxfksword/jellyfin-plugin-metashark/releases/download/manifest/manifest_cn.json`
+     - 国外地址：`https://github.com/cxfksword/jellyfin-plugin-metashark/releases/download/manifest/manifest.json`
+   - MeiamSubtitles：`https://github.com/91270/MeiamSubtitles.Release/raw/main/Plugin/manifest-stable.json`
 2. Step2：安装插件 -- `MetaShark`、`MeiamSub.Thunder` 和 `MeiamSub.Shooter`
 3. Step3：重启 `Jellyfin` 服务
 
@@ -268,7 +268,7 @@ server {
     # use a variable to store the upstream proxy
     # in this example we are using a hostname which is resolved via DNS
     # (if you aren't using DNS remove the resolver line and change the variable to point to an IP address e.g `set $jellyfin 127.0.0.1`)
-    set $jellyfin 192.168.2.156;
+    set $jellyfin <JELLYFIN_IP>;
     resolver 127.0.0.1 valid=30;
     ssl_certificate /etc/nginx/ssl/full.pem;
     ssl_certificate_key /etc/nginx/ssl/key.pem;
