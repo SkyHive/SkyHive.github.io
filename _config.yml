@@ -217,7 +217,6 @@ markdown:
 ## Themes: https://hexo.io/themes/
 theme: butterfly
 
-<<<<<<< HEAD
 ## Hexo Next Charts
 ## https://github.com/SkyHive/hexo-next-charts/
 next_charts:
@@ -228,19 +227,6 @@ next_charts:
     map_cdn:
       world: https://cdn.jsdelivr.net/npm/echarts/map/js/world.js
       china: https://cdn.jsdelivr.net/npm/echarts/map/js/china.js
-=======
-
-## hexo-next-charts
-## https://github.com/SkyHive/hexo-next-charts
-next_charts:
-    echarts:
-      cdn: https://cdn.jsdelivr.net/npm/echarts@6.0.0/dist/echarts.min.js
-      use_v5_theme: false  # 默认，保持 v5 视觉风格
-      map_cdn:
-        world: https://cdn.jsdelivr.net/npm/echarts/map/js/world.js
-        china: https://cdn.jsdelivr.net/npm/echarts/map/js/china.js
-
->>>>>>> dbe1347a (update)
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
