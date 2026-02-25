@@ -217,6 +217,17 @@ markdown:
 ## Themes: https://hexo.io/themes/
 theme: butterfly
 
+## Hexo Next Charts
+## https://github.com/SkyHive/hexo-next-charts/
+next_charts:
+  echarts:
+    # 自定义 ECharts CDN 地址
+    cdn: https://cdn.jsdelivr.net/npm/echarts@6.0.0/dist/echarts.min.js
+    # 自定义地图 CDN 回退地址
+    map_cdn:
+      world: https://cdn.jsdelivr.net/npm/echarts/map/js/world.js
+      china: https://cdn.jsdelivr.net/npm/echarts/map/js/china.js
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
