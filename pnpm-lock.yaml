@@ -27,7 +27,7 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2
       hexo-butterfly-extjs:
-        specifier: ^1.5.2
+        specifier: ^1.5.5
         version: 1.5.5(marked@17.0.2)(preact@8.1.0)(react-dom@15.7.0(react@15.7.0))(react@15.7.0)
       hexo-cli:
         specifier: ^4.3.2
@@ -120,17 +120,17 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0
       npm:
-        specifier: ^11.6.2
+        specifier: ^11.10.0
         version: 11.10.0
       npm-check:
         specifier: ^6.0.1
         version: 6.0.1
     devDependencies:
       '@babel/core':
-        specifier: ^7.28.5
+        specifier: ^7.29.0
         version: 7.29.0
       '@babel/preset-env':
-        specifier: ^7.28.5
+        specifier: ^7.29.0
         version: 7.29.0(@babel/core@7.29.0)
       '@babel/preset-react':
         specifier: ^7.28.5
@@ -1429,6 +1429,7 @@ packages:
 
   balalaika@1.0.1:
     resolution: {integrity: sha512-Dm34IdrZodZhRMCItzQNk2l4xjND/A9vbgd5YZgOXhEeNKEeosL7AvP9nJALQjvaBvLUc5ngwqT89FYGrG9gGQ==}
+    deprecated: Please use tsimmes instead https://www.npmjs.com/package/tsimmes
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -2584,11 +2585,11 @@ packages:
 
   glob@6.0.4:
     resolution: {integrity: sha512-MKZeRNyYZAVVVG1oZeLaWie1uweH40m9AZwIwxyPbTSX4hHrVYSzLg0Ro5Z5R7XKkIX+Cc6oD1rqeDJnwsB8/A==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   global-dirs@3.0.1:
     resolution: {integrity: sha512-NBcGGFbBA9s1VzD41QXDG+3++t9Mn5t1FpLdhESY6oKY4gYTFpX4wO3sqGUa0Srjtbfj3szX0RnemmrVRUdULA==}
@@ -5080,7 +5081,7 @@ packages:
 
   uuid@3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
-    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   validate-npm-package-license@3.0.4:
@@ -5244,8 +5245,8 @@ packages:
       utf-8-validate:
         optional: true
 
-  ws@8.19.0:
-    resolution: {integrity: sha512-blAT2mjOEIi0ZzruJfIhb3nps74PRWTCz1IjglWEEpQl5XS/UNama6u2/rjFkDDouqr4L67ry+1aGIALViWjDg==}
+  ws@8.20.1:
+    resolution: {integrity: sha512-It4dO0K5v//JtTXuPkfEOaI3uUN87iYPnqo/ZzqCoG3g8uhA66QUMs/SrM0YK7/NAu+r4LMh/9dq2A7k+rHs+w==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -9228,7 +9229,7 @@ snapshots:
       whatwg-encoding: 3.1.1
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.2.0
-      ws: 8.19.0
+      ws: 8.20.1
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -11280,7 +11281,7 @@ snapshots:
     dependencies:
       async-limiter: 1.0.1
 
-  ws@8.19.0: {}
+  ws@8.20.1: {}
 
   xdg-basedir@4.0.0: {}
 
