@@ -8,7 +8,15 @@
   "pnpm": {
     "overrides": {
       "hexo>strip-ansi": "^6.0.0"
-    }
+    },
+    "onlyBuiltDependencies": [],
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "ejs",
+      "fsevents",
+      "hexo-util",
+      "highlight.js"
+    ]
   },
   "dependencies": {
     "@skyhive/hexo-next-charts": "^1.1.2",
@@ -18,7 +26,6 @@
     "hexo-admonition": "^1.1.2",
     "hexo-butterfly-extjs": "^1.5.2",
     "hexo-cli": "^4.3.2",
-    "hexo-deployer-git": "^4.0.0",
     "hexo-filter-highlight": "1.0.0",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-baidu-sitemap": "^0.1.9",
@@ -54,5 +61,16 @@
     "@babel/core": "^7.28.5",
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-react": "^7.28.5"
+  },
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": "22.x",
+    "pnpm": "10.28.0"
+  },
+  "scripts": {
+    "build": "hexo clean && hexo generate && node tools/check-build.mjs",
+    "check:build": "node tools/check-build.mjs",
+    "dev": "hexo server",
+    "clean": "hexo clean"
   }
 }

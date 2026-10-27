@@ -120,26 +120,6 @@ symbols_count_time:
   wpm: 300
   suffix: "mins."
 
-#- hexo-qiniu-sync
-
-#qiniu:
-#  offline: false
-#  sync: true
-#  bucket: skyhive-blog
-#  access_key: WHGjx2q-9FCQ4tn1lKBTk9m2XKJl7-eWqnk1j4lu
-#  secret_key: 7cNco0zVDPBdICudWRG5wWmcFoLUoo9MhEkpjq_S
-#  dirPrefix:
-#  urlPrefix: http://old5ws7lp.bkt.clouddn.com
-#  local_dir: picture
-#  update_exist: true
-#  image:
-#    folder: images
-#    extend:
-#  js:
-#    folder: js
-#  css: 
-#    folder: css
-#
 # hexo-filter-plugin (https://github.com/Jamling/hexo-filter-highlight) config 
 ## highlight in frontend, the plugin (backend) just do some prepare work.
 ## you need to read the docs on https://github.com/Jamling/hexo-filter-highlight to getting start
@@ -228,9 +208,4 @@ next_charts:
       world: https://cdn.jsdelivr.net/npm/echarts/map/js/world.js
       china: https://cdn.jsdelivr.net/npm/echarts/map/js/china.js
 
-# Deployment
-## Docs: https://hexo.io/docs/deployment.html
-deploy:
-  type: git
-  repository: git@github.com:SkyHive/SkyHive.github.io.git
-  branch: master
+# Deployment is handled by the Vercel Git integration; see vercel.json.

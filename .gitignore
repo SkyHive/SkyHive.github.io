@@ -7,3 +7,9 @@ public/
 .deploy*/
 themes/next.bak
 .vscode
+.vercel/
+.env
+.env.*
+!.env.example
+*:Zone.Identifier
+.cache/
