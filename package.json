@@ -60,7 +60,10 @@
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "@babel/preset-env": "^7.28.5",
-    "@babel/preset-react": "^7.28.5"
+    "@babel/preset-react": "^7.28.5",
+    "@fortawesome/fontawesome-free": "6.7.1",
+    "fonteditor-core": "2.6.3",
+    "postcss": "8.5.32"
   },
   "packageManager": "pnpm@10.28.0",
   "engines": {
@@ -68,9 +71,10 @@
     "pnpm": "10.28.0"
   },
   "scripts": {
-    "build": "hexo clean && hexo generate && node tools/check-build.mjs",
+    "build": "node tools/build-icons.mjs && hexo clean && hexo generate && node tools/check-build.mjs",
     "check:build": "node tools/check-build.mjs",
-    "dev": "hexo server",
-    "clean": "hexo clean"
+    "dev": "node tools/build-icons.mjs && hexo server",
+    "clean": "hexo clean",
+    "build:icons": "node tools/build-icons.mjs"
   }
 }

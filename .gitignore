@@ -13,3 +13,4 @@ themes/next.bak
 !.env.example
 *:Zone.Identifier
 .cache/
+/source/assets/fontawesome/

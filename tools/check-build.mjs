@@ -15,6 +15,8 @@ const required = [
   'css/index.css',
   'js/main.js',
   'assets/charts/maps/world_cn.json',
+  'assets/fontawesome/fontawesome-subset.css',
+  'assets/fontawesome/manifest.json',
 ];
 
 async function requireOutput(relativePath) {
@@ -59,8 +61,31 @@ try {
   }
   assert(links.size > 0, 'No published articles found');
 
+  const icons = JSON.parse(await readFile(path.join(output, 'assets/fontawesome/manifest.json'), 'utf8'));
+  for (const font of Object.values(icons.fonts)) {
+    await requireOutput(`assets/fontawesome/${font.filename}`);
+  }
+  const mainCss = await readFile(path.join(output, 'css/index.css'), 'utf8');
+  assert(mainCss.includes('SkyHive Icons'), 'Theme pseudo-elements must use the local icon family');
+  assert(!mainCss.includes('Maple Mono'), 'Global web font unexpectedly re-enabled');
+
   for await (const file of walk(output)) {
     assert(!file.endsWith(':Zone.Identifier'), `Unexpected Windows metadata: ${file}`);
+    if (!file.endsWith('.html')) continue;
+    const html = await readFile(file, 'utf8');
+    assert(!html.includes('fontsapi.zeoseven.com'), `External global font in ${file}`);
+    assert(!/https?:\/\/[^"'\s<>]*\/font-awesome\//.test(html), `Full external icon stylesheet in ${file}`);
+    for (const match of html.matchAll(/<i\b[^>]*\bclass=(?:"([^"]*)"|'([^']*)'|([^\s>]+))/g)) {
+      const classes = (match[1] ?? match[2] ?? match[3]).split(/\s+/);
+      const style = classes.some(name => ['fab', 'fa-brands'].includes(name)) ? 'brands'
+        : classes.some(name => ['far', 'fa-regular'].includes(name)) ? 'regular' : 'solid';
+      for (const name of classes) {
+        const codepoint = icons.iconCodepoints[name];
+        if (codepoint !== undefined) {
+          assert(icons.fonts[style].unicodes.includes(codepoint), `Missing ${style} glyph ${name} in ${file}`);
+        }
+      }
+    }
   }
   console.log(`Build verified: ${required.length} required files, ${links.size} article URLs, valid search index.`);
 } catch (error) {
