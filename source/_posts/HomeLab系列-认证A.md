@@ -203,7 +203,7 @@ totp:
 
 identity_validation:
   reset_password:
-    jwt_secret: "AqU4EmS3IDBEDLcK*****************ZIqIHdPYiMwF1LY8OYRr"
+    jwt_secret: "<GENERATE_YOUR_OWN_JWT_SECRET>"
 
 # duo_api:
 #  hostname: api-123456789.example.com
@@ -253,7 +253,7 @@ regulation:
   ban_time: "5 minutes"
 
 storage:
-  encryption_key: "d4yohU2v2fzwIoObdGY1****************L5wbgMT227XvmJad1z"
+  encryption_key: "<GENERATE_YOUR_OWN_STORAGE_ENCRYPTION_KEY>"
   local:
     path: "/data/db.sqlite3"
 
@@ -269,8 +269,8 @@ users:
   authelia:
     disabled: false
     displayname: 'Authelia User'
-    # Password is authelia
-    password: '$6$rounds=50000$BpLnfgDsc2WD8F2q$Zis.ixdg9s/UOJYrs56b5QEZFiZECu0qZVNsIYxBaNJ7ucIL.nlxVCT5tqh8KHG8X4tlwCFm5r6NTOZZ5qRFN/
+    # Generate a unique password hash for your own account
+    password: "<GENERATE_YOUR_OWN_PASSWORD_HASH>"
     email: 'authelia@authelia.com'
     groups:
       - 'admins'
